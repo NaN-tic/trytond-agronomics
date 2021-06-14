@@ -1,0 +1,11 @@
+<tree>
+  <field name="plantation"/>
+  <field name="crop"/>
+  <field name="variety"/>
+  <field name="species"/>
+  <field name="ecological"/>
+  <field name="denomination_origin"/>
+  <field name="table"/>
+  <field name="premium"/>
+  <field name="max_production"/>
+</tree>

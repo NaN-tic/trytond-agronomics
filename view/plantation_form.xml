@@ -1,0 +1,14 @@
+<form>
+  <label name="code"/>
+  <field name="code"/>
+  <label name="party"/>
+  <field name="party"/>
+  <notebook>
+    <page name="enclosures">
+      <field name="enclosures" widget="many2many"/>
+    </page>
+    <page name="parcels">
+      <field name="parcels" widget="many2many"/>
+    </page>
+  </notebook>
+</form>

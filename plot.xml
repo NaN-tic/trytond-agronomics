@@ -1,0 +1,406 @@
+<tryton>
+    <data>
+        <record model="res.group" id="group_agronomics">
+            <field name="name">Agronomics</field>
+        </record>
+        <record model="res.group" id="group_agronomics_admin">
+            <field name="name">Agronomics Administration</field>
+            <field name="parent" ref="group_agronomics"/>
+        </record>
+        <record model="res.user-res.group" id="user_admin_group_agronomics">
+            <field name="user" ref="res.user_admin"/>
+            <field name="group" ref="group_agronomics"/>
+        </record>
+        <record model="res.user-res.group" id="user_admin_group_agronomics_admin">
+            <field name="user" ref="res.user_admin"/>
+            <field name="group" ref="group_agronomics_admin"/>
+        </record>
+
+        <menuitem name="Agronomics" sequence="0" id="menu_agronomics"
+            icon="tryton-settings"/>
+
+        <record model="ir.ui.menu-res.group" id="menu_agronomics_group_agronomics">
+            <field name="menu" ref="menu_agronomics"/>
+            <field name="group" ref="group_agronomics"/>
+        </record>
+        <record model="ir.ui.menu-res.group"
+                id="menu_agronomics_group_agronomics_admin">
+            <field name="menu" ref="menu_agronomics"/>
+            <field name="group" ref="group_agronomics_admin"/>
+        </record>
+
+        <menuitem name="Configuration" sequence="0" id="menu_configuration"
+            parent="menu_agronomics"  icon="tryton-settings"/>
+
+        <record model="ir.ui.menu-res.group" id="menu_configuration_group_agronomics">
+            <field name="menu" ref="menu_configuration"/>
+            <field name="group" ref="group_agronomics"/>
+        </record>
+        <record model="ir.ui.menu-res.group"
+                id="menu_configuration  _group_agronomics_admin">
+            <field name="menu" ref="menu_configuration"/>
+            <field name="group" ref="group_agronomics_admin"/>
+        </record>
+
+        <!-- Enclosure -->
+
+        <record model="ir.ui.view" id="enclosure_view_form">
+            <field name="model">agronomics.enclosure</field>
+            <field name="type">form</field>
+            <field name="name">enclosure_form</field>
+        </record>
+        <record model="ir.ui.view" id="enclosure_view_tree">
+            <field name="model">agronomics.enclosure</field>
+            <field name="type">tree</field>
+            <field name="priority" eval="20"/>
+            <field name="name">enclosure_list</field>
+        </record>
+
+        <record model="ir.action.act_window" id="act_enclosure_tree">
+            <field name="name">Enclosures</field>
+            <field name="res_model">agronomics.enclosure</field>
+        </record>
+
+        <record model="ir.action.act_window.view" id="act_enclosure_tree_view1">
+            <field name="sequence" eval="10"/>
+            <field name="view" ref="enclosure_view_tree"/>
+            <field name="act_window" ref="act_enclosure_tree"/>
+        </record>
+        <record model="ir.action.act_window.view" id="act_enclosure_tree_view2">
+            <field name="sequence" eval="20"/>
+            <field name="view" ref="enclosure_view_form"/>
+            <field name="act_window" ref="act_enclosure_tree"/>
+        </record>
+
+        <menuitem parent="menu_agronomics" sequence="1"
+            action="act_enclosure_tree" id="menu_enclosure_list"/>
+
+        <record model="ir.ui.menu-res.group"
+                id="menu_enclosure_list_group_agronomics">
+            <field name="menu" ref="menu_enclosure_list"/>
+            <field name="group" ref="group_agronomics"/>
+        </record>
+        <record model="ir.ui.menu-res.group"
+                id="menu_enclosure_list_group_agronomics_admin">
+            <field name="menu" ref="menu_enclosure_list"/>
+            <field name="group" ref="group_agronomics_admin"/>
+        </record>
+      <!-- Crop -->
+
+      <record model="ir.ui.view" id="crop_view_form">
+          <field name="model">agronomics.crop</field>
+          <field name="type">form</field>
+          <field name="name">crop_form</field>
+      </record>
+      <record model="ir.ui.view" id="crop_view_tree">
+          <field name="model">agronomics.crop</field>
+          <field name="type">tree</field>
+          <field name="priority" eval="20"/>
+          <field name="name">crop_list</field>
+      </record>
+
+      <record model="ir.action.act_window" id="act_crop_tree">
+          <field name="name">Crop</field>
+          <field name="res_model">agronomics.crop</field>
+      </record>
+
+      <record model="ir.action.act_window.view" id="act_crop_tree_view1">
+          <field name="sequence" eval="10"/>
+          <field name="view" ref="crop_view_tree"/>
+          <field name="act_window" ref="act_crop_tree"/>
+      </record>
+      <record model="ir.action.act_window.view" id="act_crop_tree_view2">
+          <field name="sequence" eval="20"/>
+          <field name="view" ref="crop_view_form"/>
+          <field name="act_window" ref="act_crop_tree"/>
+      </record>
+
+      <menuitem parent="menu_agronomics" sequence="1"
+          action="act_crop_tree" id="menu_crop_list"/>
+
+      <record model="ir.ui.menu-res.group"
+              id="menu_crop_list_group_agronomics">
+          <field name="menu" ref="menu_crop_list"/>
+          <field name="group" ref="group_agronomics"/>
+      </record>
+      <record model="ir.ui.menu-res.group"
+              id="menu_crop_list_group_agronomics_admin">
+          <field name="menu" ref="menu_crop_list"/>
+          <field name="group" ref="group_agronomics_admin"/>
+      </record>
+    <!-- Denomination Of Origin -->
+
+    <record model="ir.ui.view" id="do_view_form">
+        <field name="model">agronomics.denomination_of_origin</field>
+        <field name="type">form</field>
+        <field name="name">do_form</field>
+    </record>
+    <record model="ir.ui.view" id="do_view_tree">
+        <field name="model">agronomics.denomination_of_origin</field>
+        <field name="type">tree</field>
+        <field name="priority" eval="20"/>
+        <field name="name">do_list</field>
+    </record>
+
+    <record model="ir.action.act_window" id="act_do_tree">
+        <field name="name">Denomination Of Origin</field>
+        <field name="res_model">agronomics.denomination_of_origin</field>
+    </record>
+
+    <record model="ir.action.act_window.view" id="act_do_tree_view1">
+        <field name="sequence" eval="10"/>
+        <field name="view" ref="do_view_tree"/>
+        <field name="act_window" ref="act_do_tree"/>
+    </record>
+    <record model="ir.action.act_window.view" id="act_do_tree_view2">
+        <field name="sequence" eval="20"/>
+        <field name="view" ref="do_view_form"/>
+        <field name="act_window" ref="act_do_tree"/>
+    </record>
+
+    <menuitem parent="menu_agronomics" sequence="1"
+        action="act_do_tree" id="menu_do_list"/>
+
+    <record model="ir.ui.menu-res.group"
+            id="menu_do_list_group_agronomics">
+        <field name="menu" ref="menu_do_list"/>
+        <field name="group" ref="group_agronomics"/>
+    </record>
+    <record model="ir.ui.menu-res.group"
+            id="menu_do_list_group_agronomics_admin">
+        <field name="menu" ref="menu_do_list"/>
+        <field name="group" ref="group_agronomics_admin"/>
+    </record>
+    <!-- Max Production Allowed-->
+
+    <record model="ir.ui.view" id="max_production_allowed_view_form">
+        <field name="model">agronomics.max.production.allowed</field>
+        <field name="type">form</field>
+        <field name="name">max_production_allowed_form</field>
+    </record>
+    <record model="ir.ui.view" id="max_production_allowed_view_tree">
+        <field name="model">agronomics.max.production.allowed</field>
+        <field name="type">tree</field>
+        <field name="priority" eval="20"/>
+        <field name="name">max_production_allowed_list</field>
+    </record>
+
+    <record model="ir.action.act_window" id="act_max_production_allowed_tree">
+        <field name="name">Max Production Allowed</field>
+        <field name="res_model">agronomics.max.production.allowed</field>
+    </record>
+
+    <record model="ir.action.act_window.view" id="act_max_production_allowed_tree_view1">
+        <field name="sequence" eval="10"/>
+        <field name="view" ref="max_production_allowed_view_tree"/>
+        <field name="act_window" ref="act_max_production_allowed_tree"/>
+    </record>
+    <record model="ir.action.act_window.view" id="act_max_production_allowed_tree_view2">
+        <field name="sequence" eval="20"/>
+        <field name="view" ref="max_production_allowed_view_form"/>
+        <field name="act_window" ref="act_max_production_allowed_tree"/>
+    </record>
+
+    <menuitem parent="menu_agronomics" sequence="1"
+        action="act_max_production_allowed_tree" id="menu_max_production_allowed_list"/>
+    <record model="ir.ui.menu-res.group"
+            id="menu_max_production_allowed_list_group_agronomics">
+        <field name="menu" ref="menu_max_production_allowed_list"/>
+        <field name="group" ref="group_agronomics"/>
+    </record>
+    <record model="ir.ui.menu-res.group"
+            id="menu_max_production_allowed_list_group_agronomics_admin">
+        <field name="menu" ref="menu_max_production_allowed_list"/>
+        <field name="group" ref="group_agronomics_admin"/>
+    </record>
+
+  <!-- Irrigation -->
+
+  <record model="ir.ui.view" id="irrigation_view_form">
+      <field name="model">agronomics.irrigation</field>
+      <field name="type">form</field>
+      <field name="name">irrigation_form</field>
+  </record>
+  <record model="ir.ui.view" id="irrigation_view_tree">
+      <field name="model">agronomics.irrigation</field>
+      <field name="type">tree</field>
+      <field name="priority" eval="20"/>
+      <field name="name">irrigation_list</field>
+  </record>
+
+  <record model="ir.action.act_window" id="act_irrigation_tree">
+      <field name="name">Irrigation</field>
+      <field name="res_model">agronomics.irrigation</field>
+  </record>
+
+  <record model="ir.action.act_window.view" id="act_irrigation_tree_view1">
+      <field name="sequence" eval="10"/>
+      <field name="view" ref="irrigation_view_tree"/>
+      <field name="act_window" ref="act_irrigation_tree"/>
+  </record>
+  <record model="ir.action.act_window.view" id="act_irrigation_tree_view2">
+      <field name="sequence" eval="20"/>
+      <field name="view" ref="irrigation_view_form"/>
+      <field name="act_window" ref="act_irrigation_tree"/>
+  </record>
+
+  <menuitem parent="menu_agronomics" sequence="1"
+      action="act_irrigation_tree" id="menu_irrigation_list"/>
+  <record model="ir.ui.menu-res.group"
+          id="menu_irrigation_list_group_agronomics">
+      <field name="menu" ref="menu_irrigation_list"/>
+      <field name="group" ref="group_agronomics"/>
+  </record>
+  <record model="ir.ui.menu-res.group"
+          id="menu_irrigation_list_group_agronomics_admin">
+      <field name="menu" ref="menu_irrigation_list"/>
+      <field name="group" ref="group_agronomics_admin"/>
+  </record>
+
+  <!-- Plantation -->
+
+  <record model="ir.ui.view" id="plantation_view_form">
+      <field name="model">agronomics.plantation</field>
+      <field name="type">form</field>
+      <field name="name">plantation_form</field>
+  </record>
+  <record model="ir.ui.view" id="plantation_view_tree">
+      <field name="model">agronomics.plantation</field>
+      <field name="type">tree</field>
+      <field name="priority" eval="20"/>
+      <field name="name">plantation_list</field>
+  </record>
+
+  <record model="ir.action.act_window" id="act_plantation_tree">
+      <field name="name">Plantation</field>
+      <field name="res_model">agronomics.plantation</field>
+  </record>
+
+  <record model="ir.action.act_window.view" id="act_plantation_tree_view1">
+      <field name="sequence" eval="10"/>
+      <field name="view" ref="plantation_view_tree"/>
+      <field name="act_window" ref="act_plantation_tree"/>
+  </record>
+  <record model="ir.action.act_window.view" id="act_plantation_tree_view2">
+      <field name="sequence" eval="20"/>
+      <field name="view" ref="plantation_view_form"/>
+      <field name="act_window" ref="act_plantation_tree"/>
+  </record>
+
+  <menuitem parent="menu_agronomics" sequence="1"
+      action="act_plantation_tree" id="menu_plantation_list"/>
+
+  <record model="ir.ui.menu-res.group"
+          id="menu_plantation_list_group_agronomics">
+      <field name="menu" ref="menu_plantation_list"/>
+      <field name="group" ref="group_agronomics"/>
+  </record>
+  <record model="ir.ui.menu-res.group"
+          id="menu_plantation_list_group_agronomics_admin">
+      <field name="menu" ref="menu_plantation_list"/>
+      <field name="group" ref="group_agronomics_admin"/>
+  </record>
+
+  <!-- Ecological -->
+
+  <record model="ir.ui.view" id="ecological_view_form">
+      <field name="model">agronomics.ecological</field>
+      <field name="type">form</field>
+      <field name="name">ecological_form</field>
+  </record>
+  <record model="ir.ui.view" id="ecological_view_tree">
+      <field name="model">agronomics.ecological</field>
+      <field name="type">tree</field>
+      <field name="priority" eval="20"/>
+      <field name="name">ecological_list</field>
+  </record>
+
+  <record model="ir.action.act_window" id="act_ecological_tree">
+      <field name="name">Ecological</field>
+      <field name="res_model">agronomics.ecological</field>
+  </record>
+
+  <record model="ir.action.act_window.view" id="act_ecological_tree_view1">
+      <field name="sequence" eval="10"/>
+      <field name="view" ref="ecological_view_tree"/>
+      <field name="act_window" ref="act_ecological_tree"/>
+  </record>
+  <record model="ir.action.act_window.view" id="act_ecological_tree_view2">
+      <field name="sequence" eval="20"/>
+      <field name="view" ref="ecological_view_form"/>
+      <field name="act_window" ref="act_ecological_tree"/>
+  </record>
+
+  <menuitem parent="menu_agronomics" sequence="1"
+      action="act_ecological_tree" id="menu_ecological_list"/>
+  <record model="ir.ui.menu-res.group"
+          id="menu_ecological_list_group_agronomics">
+      <field name="menu" ref="menu_ecological_list"/>
+      <field name="group" ref="group_agronomics"/>
+  </record>
+  <record model="ir.ui.menu-res.group"
+          id="menu_ecological_list_group_agronomics_admin">
+      <field name="menu" ref="menu_ecological_list"/>
+      <field name="group" ref="group_agronomics_admin"/>
+  </record>
+
+  <!-- Parcel -->
+
+  <record model="ir.ui.view" id="parcel_view_form">
+      <field name="model">agronomics.parcel</field>
+      <field name="type">form</field>
+      <field name="name">parcel_form</field>
+  </record>
+  <record model="ir.ui.view" id="parcel_view_tree">
+      <field name="model">agronomics.parcel</field>
+      <field name="type">tree</field>
+      <field name="priority" eval="20"/>
+      <field name="name">parcel_list</field>
+  </record>
+
+  <record model="ir.action.act_window" id="act_parcel_tree">
+      <field name="name">Parcel</field>
+      <field name="res_model">agronomics.parcel</field>
+  </record>
+
+  <record model="ir.action.act_window.view" id="act_parcel_tree_view1">
+      <field name="sequence" eval="10"/>
+      <field name="view" ref="parcel_view_tree"/>
+      <field name="act_window" ref="act_parcel_tree"/>
+  </record>
+  <record model="ir.action.act_window.view" id="act_parcel_tree_view2">
+      <field name="sequence" eval="20"/>
+      <field name="view" ref="parcel_view_form"/>
+      <field name="act_window" ref="act_parcel_tree"/>
+  </record>
+
+  <menuitem parent="menu_agronomics" sequence="1"
+      action="act_parcel_tree" id="menu_parcel_list"/>
+  <record model="ir.ui.menu-res.group"
+          id="menu_parcel_list_group_agronomics">
+      <field name="menu" ref="menu_parcel_list"/>
+      <field name="group" ref="group_agronomics"/>
+  </record>
+  <record model="ir.ui.menu-res.group"
+          id="menu_parcel_list_group_agronomics_admin">
+      <field name="menu" ref="menu_parcel_list"/>
+      <field name="group" ref="group_agronomics_admin"/>
+  </record>
+
+  <!-- Beneficiary -->
+
+  <record model="ir.ui.view" id="beneficiary_view_form">
+      <field name="model">agronomics.beneficiary</field>
+      <field name="type">form</field>
+      <field name="name">beneficiary_form</field>
+  </record>
+  <record model="ir.ui.view" id="beneficiary_view_tree">
+      <field name="model">agronomics.beneficiary</field>
+      <field name="type">tree</field>
+      <field name="priority" eval="20"/>
+      <field name="name">beneficiary_list</field>
+  </record>
+
+
+</data>
+</tryton>

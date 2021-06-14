@@ -1,0 +1,5 @@
+<tree>
+  <field name="municipality_sigpac"/>
+  <field name="province_sigpac"/>
+  <field name="surface_sigpac"/>
+</tree>

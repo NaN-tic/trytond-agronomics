@@ -1,0 +1,291 @@
+#
+msgid ""
+msgstr "Content-Type: text/plain; charset=utf-8\n"
+
+msgctxt "field:agronomics.beneficiary,parcel:"
+msgid "Parcel"
+msgstr "Parcel·la"
+
+msgctxt "field:agronomics.beneficiary,party:"
+msgid "Beneficiary"
+msgstr "Beneficiari"
+
+msgctxt "field:agronomics.beneficiary,percent:"
+msgid "Percent"
+msgstr "Percentatge"
+
+msgctxt "field:agronomics.crop,code:"
+msgid "Code"
+msgstr "Codi"
+
+msgctxt "field:agronomics.crop,end_date:"
+msgid "End Date"
+msgstr "Data finalització"
+
+msgctxt "field:agronomics.crop,name:"
+msgid "Name"
+msgstr "Nom"
+
+msgctxt "field:agronomics.crop,start_date:"
+msgid "Start Date"
+msgstr "Data inicial"
+
+msgctxt "field:agronomics.denomination_of_origin,name:"
+msgid "Name"
+msgstr "Nom"
+
+msgctxt "field:agronomics.ecological,name:"
+msgid "Name"
+msgstr "Nom"
+
+msgctxt "field:agronomics.enclosure,aggregate_sigpac:"
+msgid "Aggragate Sigpac"
+msgstr "Agregat Sigpac"
+
+msgctxt "field:agronomics.enclosure,enclosure_sigpac:"
+msgid "Enclosure Sigpac"
+msgstr "Recinte Sigpac"
+
+msgctxt "field:agronomics.enclosure,municipality_sigpac:"
+msgid "Municipality Sigpac"
+msgstr "Municipi Sigpac"
+
+msgctxt "field:agronomics.enclosure,parcel_sigpac:"
+msgid "Parcel Sigpac"
+msgstr "Parcel·la Sigpac"
+
+msgctxt "field:agronomics.enclosure,plantation:"
+msgid "Plantation"
+msgstr "Plantació"
+
+msgctxt "field:agronomics.enclosure,polygon_sigpac:"
+msgid "Polygon Sigpac"
+msgstr "Poligon Sigpac"
+
+msgctxt "field:agronomics.enclosure,province_sigpac:"
+msgid "Province Sigpac"
+msgstr "Província"
+
+msgctxt "field:agronomics.enclosure,surface_sigpac:"
+msgid "Surface Sigpac"
+msgstr "Superficie Sigpag"
+
+msgctxt "field:agronomics.enclosure,zone_sigpac:"
+msgid "Zone Sigpac"
+msgstr "Zona Sigpac"
+
+msgctxt "field:agronomics.irrigation,name:"
+msgid "Name"
+msgstr "Nom"
+
+msgctxt "field:agronomics.max.production.allowed,crop:"
+msgid "Crop"
+msgstr "Collita"
+
+msgctxt "field:agronomics.max.production.allowed,denomination_origin:"
+msgid "Denomination of Origin"
+msgstr "Denominació d'origen"
+
+msgctxt "field:agronomics.max.production.allowed,max_production:"
+msgid "Max Production (kg/ha)"
+msgstr "Producció Màxima (kg/ha)"
+
+msgctxt "field:agronomics.max.production.allowed,product:"
+msgid "Product"
+msgstr "Productes"
+
+msgctxt "field:agronomics.max.production.allowed,variety:"
+msgid "Variety"
+msgstr "Varietat"
+
+msgctxt "field:agronomics.parcel,beneficiaries:"
+msgid "Beneficiaries"
+msgstr "Beneficiaris"
+
+msgctxt "field:agronomics.parcel,crop:"
+msgid "Crop"
+msgstr "Collita"
+
+msgctxt "field:agronomics.parcel,denomination_origin:"
+msgid "Denomination of Origin"
+msgstr "Denominació d'origen"
+
+msgctxt "field:agronomics.parcel,ecological:"
+msgid "Ecological"
+msgstr "Ecològic"
+
+msgctxt "field:agronomics.parcel,irrigation:"
+msgid "Irrigation"
+msgstr "Irrigació"
+
+msgctxt "field:agronomics.parcel,max_production:"
+msgid "Max Production"
+msgstr "Producció Màxima"
+
+msgctxt "field:agronomics.parcel,plant_number:"
+msgid "Plant number"
+msgstr "Número de plantes"
+
+msgctxt "field:agronomics.parcel,plantation:"
+msgid "Plantation"
+msgstr "Plantació"
+
+msgctxt "field:agronomics.parcel,premium:"
+msgid "Premium"
+msgstr "Premium"
+
+msgctxt "field:agronomics.parcel,producer:"
+msgid "Party"
+msgstr "Tercers"
+
+msgctxt "field:agronomics.parcel,species:"
+msgid "Spices"
+msgstr "Espècie"
+
+msgctxt "field:agronomics.parcel,surface:"
+msgid "Surface"
+msgstr "Superfície"
+
+msgctxt "field:agronomics.parcel,table:"
+msgid "Table"
+msgstr "Taula"
+
+msgctxt "field:agronomics.parcel,tenure_regime:"
+msgid "Teneru Regime"
+msgstr "Règim tinença"
+
+msgctxt "field:agronomics.parcel,variety:"
+msgid "Variety"
+msgstr "Varietat"
+
+msgctxt "field:agronomics.plantation,code:"
+msgid "Code"
+msgstr "Codi"
+
+msgctxt "field:agronomics.plantation,enclosures:"
+msgid "Enclosure"
+msgstr "Recinte"
+
+msgctxt "field:agronomics.plantation,parcels:"
+msgid "Parcel"
+msgstr "Parcel·la"
+
+msgctxt "field:agronomics.plantation,party:"
+msgid "Party"
+msgstr "Tercers"
+
+msgctxt "model:agronomics.beneficiary,name:"
+msgid "Beneficiaries"
+msgstr "Beneficiaris"
+
+msgctxt "model:agronomics.crop,name:"
+msgid "Crop"
+msgstr "Collita"
+
+msgctxt "model:agronomics.denomination_of_origin,name:"
+msgid "Denomination Of Origin"
+msgstr "Denominació Origen"
+
+msgctxt "model:agronomics.ecological,name:"
+msgid "Ecological"
+msgstr "Ecològic"
+
+msgctxt "model:agronomics.enclosure,name:"
+msgid "Enclosure"
+msgstr "Recinte"
+
+msgctxt "model:agronomics.irrigation,name:"
+msgid "Irrigation"
+msgstr "Irrigació"
+
+msgctxt "model:agronomics.max.production.allowed,name:"
+msgid "Max Production Allowed"
+msgstr "Màxima Producció Permesa"
+
+msgctxt "model:agronomics.parcel,name:"
+msgid "Parcel"
+msgstr "Parcel·la"
+
+msgctxt "model:agronomics.plantation,name:"
+msgid "Plantation"
+msgstr "Plantació"
+
+msgctxt "model:ir.action,name:act_crop_tree"
+msgid "Crop"
+msgstr "Collita"
+
+msgctxt "model:ir.action,name:act_do_tree"
+msgid "Denomination Of Origin"
+msgstr "Denominació d'origen"
+
+msgctxt "model:ir.action,name:act_ecological_tree"
+msgid "Ecological"
+msgstr "Ecològic"
+
+msgctxt "model:ir.action,name:act_enclosure_tree"
+msgid "Enclosures"
+msgstr "Recinte"
+
+msgctxt "model:ir.action,name:act_irrigation_tree"
+msgid "Irrigation"
+msgstr "Irrigació"
+
+msgctxt "model:ir.action,name:act_max_production_allowed_tree"
+msgid "Max Production Allowed"
+msgstr "Màxima Producció Permesa"
+
+msgctxt "model:ir.action,name:act_parcel_tree"
+msgid "Parcel"
+msgstr "Parcel·la"
+
+msgctxt "model:ir.action,name:act_plantation_tree"
+msgid "Plantation"
+msgstr "Plantació"
+
+msgctxt "model:ir.ui.menu,name:menu_agronomics"
+msgid "Agronomics"
+msgstr "Agronomics"
+
+msgctxt "model:ir.ui.menu,name:menu_configuration"
+msgid "Configuration"
+msgstr "Configuració"
+
+msgctxt "model:ir.ui.menu,name:menu_crop_list"
+msgid "Crop"
+msgstr "Collita"
+
+msgctxt "model:ir.ui.menu,name:menu_do_list"
+msgid "Denomination Of Origin"
+msgstr "Denominació Origen"
+
+msgctxt "model:ir.ui.menu,name:menu_ecological_list"
+msgid "Ecological"
+msgstr "Ecològic"
+
+msgctxt "model:ir.ui.menu,name:menu_enclosure_list"
+msgid "Enclosures"
+msgstr "Recinte"
+
+msgctxt "model:ir.ui.menu,name:menu_irrigation_list"
+msgid "Irrigation"
+msgstr "Irrigació"
+
+msgctxt "model:ir.ui.menu,name:menu_max_production_allowed_list"
+msgid "Max Production Allowed"
+msgstr "Màxima Producció Permesa"
+
+msgctxt "model:ir.ui.menu,name:menu_parcel_list"
+msgid "Parcel"
+msgstr "Parcel·la"
+
+msgctxt "model:ir.ui.menu,name:menu_plantation_list"
+msgid "Plantation"
+msgstr "Plantació"
+
+msgctxt "model:res.group,name:group_agronomics"
+msgid "Agronomics"
+msgstr "Agronomics"
+
+msgctxt "model:res.group,name:group_agronomics_admin"
+msgid "Agronomics Administration"
+msgstr "Administració Agronomics"

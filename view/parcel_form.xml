@@ -1,0 +1,29 @@
+<form>
+  <label name="crop"/>
+  <field name="crop"/>
+  <label name="plantation"/>
+  <field name="plantation"/>
+  <label name="variety"/>
+  <field name="variety"/>
+  <label name="species"/>
+  <field name="species"/>
+  <label name="ecological"/>
+  <field name="ecological"/>
+  <label name="denomination_origin"/>
+  <field name="denomination_origin"/>
+  <label name="table"/>
+  <field name="table"/>
+  <label name="premium"/>
+  <field name="premium"/>
+  <label name="max_production"/>
+  <field name="max_production"/>
+  <label name="plant_number"/>
+  <field name="plant_number"/>
+  <label name="producer"/>
+  <field name="producer"/>
+  <label name="irrigation"/>
+  <field name="irrigation"/>
+  <label name="tenure_regime"/>
+  <field name="tenure_regime" colspan="4"/>
+  <field name="beneficiaries" colspan="4"/>
+</form>

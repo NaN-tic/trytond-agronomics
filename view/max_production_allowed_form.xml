@@ -1,0 +1,12 @@
+<form>
+  <label name="crop"/>
+  <field name="crop"/>
+  <label name="product"/>
+  <field name="product"/>
+  <label name="denomination_origin"/>
+  <field name="denomination_origin"/>
+  <label name="variety"/>
+  <field name="variety"/>
+  <label name="max_production"/>
+  <field name="max_production"/>
+</form>

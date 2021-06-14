@@ -1,0 +1,9 @@
+<form>
+  <label name="party"/>
+  <field name="party"/>
+  <label name="percent"/>
+  <field name="percent"/>
+  <label name="parcel"/>
+  <field name="parcel"/>
+
+</form>

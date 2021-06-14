@@ -1,0 +1,20 @@
+<form>
+  <label name="aggregate_sigpac"/>
+  <field name="aggregate_sigpac"/>
+  <label name="parcel_sigpac"/>
+  <field name="parcel_sigpac"/>
+  <label name="municipality_sigpac"/>
+  <field name="municipality_sigpac"/>
+  <label name="province_sigpac"/>
+  <field name="province_sigpac"/>
+  <label name="polygon_sigpac"/>
+  <field name="polygon_sigpac"/>
+  <label name="enclosure_sigpac"/>
+  <field name="enclosure_sigpac"/>
+  <label name="zone_sigpac"/>
+  <field name="zone_sigpac"/>
+  <label name="surface_sigpac"/>
+  <field name="surface_sigpac"/>
+  <label name="plantation"/>
+  <field name="plantation"/>
+</form>

@@ -1,0 +1,8 @@
+<tree>
+  <field name="crop"/>
+  <field name="product"/>
+  <field name="denomination_origin"/>
+  <field name="variety"/>
+  <field name="max_production"/>
+
+</tree>
