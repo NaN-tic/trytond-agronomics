@@ -388,7 +388,6 @@
   </record>
 
   <!-- Beneficiary -->
-
   <record model="ir.ui.view" id="beneficiary_view_form">
       <field name="model">agronomics.beneficiary</field>
       <field name="type">form</field>
