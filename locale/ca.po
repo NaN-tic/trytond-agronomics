@@ -123,7 +123,7 @@ msgid "Irrigation"
 msgstr "Irrigació"
 
 msgctxt "field:agronomics.parcel,max_production:"
-msgid "Max. Production"
+msgid "Max Production"
 msgstr "Producció Màxima"
 
 msgctxt "field:agronomics.parcel,plant_number:"
@@ -189,6 +189,14 @@ msgstr "Parcel·la"
 msgctxt "field:agronomics.plantation,party:"
 msgid "Party"
 msgstr "Tercers"
+
+msgctxt "field:party.party,parcels:"
+msgid "Parcels"
+msgstr "Parceles"
+
+msgctxt "field:party.party,plantations:"
+msgid "Plantation"
+msgstr "Plantacións"
 
 msgctxt "model:agronomics.beneficiary,name:"
 msgid "Beneficiaries"
