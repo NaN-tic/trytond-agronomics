@@ -275,7 +275,7 @@ msgid ""
 "Beneficiaris of Crop \"%(crop)s\" and Plantation \"%(plantation)s\" must sum"
 " 100."
 msgstr ""
-"Els % Beneficiares de les collites \"%(crop)s\" i la plantació "
+"Els Beneficiares de les collites \"%(crop)s\" i la plantació "
 "\"%(plantation)s\" han de sumar 100."
 
 msgctxt "model:ir.ui.menu,name:menu_agronomics"
