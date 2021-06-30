@@ -3,10 +3,10 @@
   <field name="crop"/>
   <label name="plantation"/>
   <field name="plantation"/>
-  <label name="variety"/>
-  <field name="variety"/>
   <label name="species"/>
   <field name="species"/>
+  <label name="variety"/>
+  <field name="variety"/>
   <label name="ecological"/>
   <field name="ecological"/>
   <label name="table"/>
