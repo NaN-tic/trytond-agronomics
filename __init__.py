@@ -14,6 +14,7 @@ def register():
         plot.Plantation,
         plot.Ecological,
         plot.Parcel,
+        plot.ParcelDo,
         plot.Beneficiaries,
         module='agronomics', type_='model')
     Pool.register(

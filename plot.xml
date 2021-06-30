@@ -72,7 +72,7 @@
             <field name="act_window" ref="act_enclosure_tree"/>
         </record>
 
-        <menuitem parent="menu_agronomics" sequence="1"
+        <menuitem parent="menu_configuration" sequence="1"
             action="act_enclosure_tree" id="menu_enclosure_list"/>
 
         <record model="ir.ui.menu-res.group"
@@ -115,7 +115,7 @@
           <field name="act_window" ref="act_crop_tree"/>
       </record>
 
-      <menuitem parent="menu_agronomics" sequence="1"
+      <menuitem parent="menu_configuration" sequence="1"
           action="act_crop_tree" id="menu_crop_list"/>
 
       <record model="ir.ui.menu-res.group"
@@ -158,7 +158,7 @@
         <field name="act_window" ref="act_do_tree"/>
     </record>
 
-    <menuitem parent="menu_agronomics" sequence="1"
+    <menuitem parent="menu_configuration" sequence="1"
         action="act_do_tree" id="menu_do_list"/>
 
     <record model="ir.ui.menu-res.group"
@@ -201,7 +201,7 @@
         <field name="act_window" ref="act_max_production_allowed_tree"/>
     </record>
 
-    <menuitem parent="menu_agronomics" sequence="1"
+    <menuitem parent="menu_configuration" sequence="1"
         action="act_max_production_allowed_tree" id="menu_max_production_allowed_list"/>
     <record model="ir.ui.menu-res.group"
             id="menu_max_production_allowed_list_group_agronomics">
@@ -244,7 +244,7 @@
       <field name="act_window" ref="act_irrigation_tree"/>
   </record>
 
-  <menuitem parent="menu_agronomics" sequence="1"
+  <menuitem parent="menu_configuration" sequence="1"
       action="act_irrigation_tree" id="menu_irrigation_list"/>
   <record model="ir.ui.menu-res.group"
           id="menu_irrigation_list_group_agronomics">
@@ -331,7 +331,7 @@
       <field name="act_window" ref="act_ecological_tree"/>
   </record>
 
-  <menuitem parent="menu_agronomics" sequence="1"
+  <menuitem parent="menu_configuration" sequence="1"
       action="act_ecological_tree" id="menu_ecological_list"/>
   <record model="ir.ui.menu-res.group"
           id="menu_ecological_list_group_agronomics">

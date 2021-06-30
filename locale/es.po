@@ -92,11 +92,15 @@ msgstr "Producción Máxima (kg/ha)"
 
 msgctxt "field:agronomics.max.production.allowed,product:"
 msgid "Product"
-msgstr "Productos"
+msgstr "Producto"
 
 msgctxt "field:agronomics.max.production.allowed,variety:"
 msgid "Variety"
 msgstr "Variedad"
+
+msgctxt "field:agronomics.parcel,all_do:"
+msgid "All DO"
+msgstr "Todos los DO"
 
 msgctxt "field:agronomics.parcel,beneficiaries:"
 msgid "Beneficiaries"
@@ -119,7 +123,7 @@ msgid "Irrigation"
 msgstr "Irrigación"
 
 msgctxt "field:agronomics.parcel,max_production:"
-msgid "Max Production"
+msgid "Max. Production"
 msgstr "Producción Máxima"
 
 msgctxt "field:agronomics.parcel,plant_number:"
@@ -136,9 +140,13 @@ msgstr "Premium"
 
 msgctxt "field:agronomics.parcel,producer:"
 msgid "Party"
-msgstr "Terceros"
+msgstr "Productor"
 
 msgctxt "field:agronomics.parcel,species:"
+msgid "Spices"
+msgstr "Especie"
+
+msgctxt "field:agronomics.parcel,spieces:"
 msgid "Spices"
 msgstr "Especie"
 
@@ -157,6 +165,14 @@ msgstr "Regimen tinéncia"
 msgctxt "field:agronomics.parcel,variety:"
 msgid "Variety"
 msgstr "Variedad"
+
+msgctxt "field:agronomics.parcel-agronomics.do,do:"
+msgid "Denomination Origin"
+msgstr "Denominación de origen"
+
+msgctxt "field:agronomics.parcel-agronomics.do,parcel:"
+msgid "Parcel"
+msgstr "Parcela"
 
 msgctxt "field:agronomics.plantation,code:"
 msgid "Code"
@@ -206,6 +222,10 @@ msgctxt "model:agronomics.parcel,name:"
 msgid "Parcel"
 msgstr "Parcela"
 
+msgctxt "model:agronomics.parcel-agronomics.do,name:"
+msgid "Parcel - Denomination Origin"
+msgstr ""
+
 msgctxt "model:agronomics.plantation,name:"
 msgid "Plantation"
 msgstr "Plantación"
@@ -241,6 +261,14 @@ msgstr "Parcela"
 msgctxt "model:ir.action,name:act_plantation_tree"
 msgid "Plantation"
 msgstr "Plantación"
+
+msgctxt "model:ir.message,text:msg_beneficiaris_percent"
+msgid ""
+"Beneficiaris of Crop \"%(crop)s\" and Plantation \"%(plantation)s\" must sum"
+" 100."
+msgstr ""
+"El % de los beneficiarios de la cosecha \"%(crop)s\" y de la plantación "
+"\"%(plantation)s\" han de sumar 100."
 
 msgctxt "model:ir.ui.menu,name:menu_agronomics"
 msgid "Agronomics"
