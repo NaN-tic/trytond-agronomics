@@ -6,5 +6,11 @@ this repository contains the full copyright notices and license terms. -->
     <record model="ir.message" id="msg_beneficiaris_percent">
         <field name="text">Beneficiaris of Crop "%(crop)s" and Plantation "%(plantation)s" must sum 100.</field>
     </record>
+    <record model="ir.message" id="msg_vintage_limit">
+        <field name="text">This product cannot have more than one Vintage because of its agronomic type.</field>
+    </record>
+    <record model="ir.message" id="msg_variety_limit">
+        <field name="text">This product cannot have more than one Variety because of its agronomic type.</field>
+    </record>
   </data>
 </tryton>

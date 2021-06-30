@@ -1,0 +1,109 @@
+<tryton>
+    <data>
+        <!-- Product Template-->
+        <record model="ir.ui.view" id="template_view_form">
+            <field name="model">product.template</field>
+            <field name="name">template_form</field>
+            <field name="inherit" ref="product.template_view_form"/>
+        </record>
+        <record model="ir.ui.view" id="template_view_tree">
+            <field name="model">product.template</field>
+            <field name="name">template_list</field>
+            <field name="inherit" ref="product.template_view_tree"/>
+        </record>
+        <!-- Product Variant-->
+        <record model="ir.ui.view" id="product_view_form">
+            <field name="model">product.product</field>
+            <field name="name">product_form</field>
+            <field name="inherit" ref="product.product_view_form"/>
+        </record>
+        <record model="ir.ui.view" id="product_view_tree">
+            <field name="model">product.product</field>
+            <field name="name">product_list</field>
+            <field name="inherit" ref="product.product_view_tree"/>
+        </record>
+        <!-- Certification -->
+        <record model="ir.ui.view" id="certification_view_form">
+            <field name="model">agronomics.certification</field>
+            <field name="type">form</field>
+            <field name="name">certification_form</field>
+        </record>
+        <record model="ir.ui.view" id="certification_view_tree">
+            <field name="model">agronomics.certification</field>
+            <field name="type">tree</field>
+            <field name="priority" eval="20"/>
+            <field name="name">certification_list</field>
+        </record>
+
+        <record model="ir.action.act_window" id="act_certification_tree">
+            <field name="name">Certification</field>
+            <field name="res_model">agronomics.certification</field>
+        </record>
+
+        <record model="ir.action.act_window.view" id="act_certification_tree_view">
+            <field name="sequence" eval="10"/>
+            <field name="view" ref="certification_view_tree"/>
+            <field name="act_window" ref="act_certification_tree"/>
+        </record>
+        <record model="ir.action.act_window.view" id="act_certification_form_view">
+            <field name="sequence" eval="20"/>
+            <field name="view" ref="certification_view_form"/>
+            <field name="act_window" ref="act_certification_tree"/>
+        </record>
+
+        <menuitem parent="menu_agronomics" sequence="1"
+            action="act_certification_tree" id="menu_certification_list"/>
+        <record model="ir.ui.menu-res.group"
+                id="menu_certification_list_group_agronomics">
+            <field name="menu" ref="menu_certification_list"/>
+            <field name="group" ref="group_agronomics"/>
+        </record>
+        <record model="ir.ui.menu-res.group"
+                id="menu_certification_list_group_agronomics_admin">
+            <field name="menu" ref="menu_certification_list"/>
+            <field name="group" ref="group_agronomics_admin"/>
+        </record>
+
+        <!-- Container -->
+        <record model="ir.ui.view" id="container_view_form">
+            <field name="model">agronomics.container</field>
+            <field name="type">form</field>
+            <field name="name">container_form</field>
+        </record>
+        <record model="ir.ui.view" id="container_view_tree">
+            <field name="model">agronomics.container</field>
+            <field name="type">tree</field>
+            <field name="priority" eval="20"/>
+            <field name="name">container_list</field>
+        </record>
+
+        <record model="ir.action.act_window" id="act_container_tree">
+            <field name="name">Container</field>
+            <field name="res_model">agronomics.container</field>
+        </record>
+
+        <record model="ir.action.act_window.view" id="act_container_tree_view">
+            <field name="sequence" eval="10"/>
+            <field name="view" ref="container_view_tree"/>
+            <field name="act_window" ref="act_container_tree"/>
+        </record>
+        <record model="ir.action.act_window.view" id="act_container_form_view">
+            <field name="sequence" eval="20"/>
+            <field name="view" ref="container_view_form"/>
+            <field name="act_window" ref="act_container_tree"/>
+        </record>
+
+        <menuitem parent="menu_agronomics" sequence="1"
+            action="act_container_tree" id="menu_container_list"/>
+        <record model="ir.ui.menu-res.group"
+                id="menu_container_list_group_agronomics">
+            <field name="menu" ref="menu_container_list"/>
+            <field name="group" ref="group_agronomics"/>
+        </record>
+        <record model="ir.ui.menu-res.group"
+                id="menu_container_list_group_agronomics_admin">
+            <field name="menu" ref="menu_container_list"/>
+            <field name="group" ref="group_agronomics_admin"/>
+        </record>
+    </data>
+</tryton>

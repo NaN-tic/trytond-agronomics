@@ -1,0 +1,10 @@
+<data>
+    <xpath expr="/form/notebook/page[@id='general']/field[@name='cost_price_method']" position="after">
+        <label name="agronomic_type"/>
+        <field name="agronomic_type"/>
+        <label name="container"/>
+        <field name="container"/>
+        <label name="capacity"/>
+        <field name="capacity"/>
+    </xpath>
+</data>
