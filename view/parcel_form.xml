@@ -9,8 +9,6 @@
   <field name="species"/>
   <label name="ecological"/>
   <field name="ecological"/>
-  <label name="denomination_origin"/>
-  <field name="denomination_origin"/>
   <label name="table"/>
   <field name="table"/>
   <label name="premium"/>
@@ -23,7 +21,11 @@
   <field name="producer"/>
   <label name="irrigation"/>
   <field name="irrigation"/>
+  <label name="surface"/>
+  <field name="surface"/>
+  <newline/>
   <label name="tenure_regime"/>
-  <field name="tenure_regime" colspan="4"/>
+  <field name="tenure_regime" colspan="3"/>
+  <field name="denomination_origin" colspan="4"/>
   <field name="beneficiaries" colspan="4"/>
 </form>
