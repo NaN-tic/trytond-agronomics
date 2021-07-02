@@ -4,8 +4,7 @@
             <field name="vintage" colspan="2"/>
             <field name="variety" colspan="2"/>
             <field name="do" colspan="2"/>
-            <label name="ecological"/>
-            <field name="ecological"/>
+            <field name="ecological" colspan="2"/>
             <label name="quality_sample"/>
             <field name="quality_sample"/>
             <label name="certification"/>

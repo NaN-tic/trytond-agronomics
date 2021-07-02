@@ -32,11 +32,11 @@ class Template(metaclass=PoolMeta):
     agronomic_type = fields.Selection([
             (None, ''),
             ('grape', "Grape"),
-            ('flower-wort', "Flower Wort"),
-            ('firs-and-third-wort', "First and Third Wort"),
+            ('do-wort', "DO Wort"),
+            ('not-do-wort', "Not DO Wort"),
             ('wine', "Wine"),
             ('bottled-wine', "Bottled Wine"),
-            ], "Agronomic Type", select=True, required=True,)
+            ], "Agronomic Type", select=True)
     container = fields.Many2One('agronomics.container', 'Container',
         states={
             'invisible': Eval('agronomic_type') != 'bottled-wine',
@@ -67,10 +67,11 @@ class Product(metaclass=PoolMeta):
         'product', 'do', 'DO',
         states={
             'invisible': Eval('agronomic_type').in_(
-                ['firs-and-third-wort']
+                ['not-do-wort']
             )
         }, depends=['agronomic_type'])
-    ecological = fields.Many2One('agronomics.ecological', 'Ecological')
+    ecological = fields.Many2Many('product.product-agronomics.ecological',
+        'product', 'ecological', 'Ecological')
     quality_sample = fields.Many2One('quality.sample', 'Quality Sample',
         states={
             'invisible': ~ Eval('agronomic_type').in_(
@@ -92,7 +93,7 @@ class Product(metaclass=PoolMeta):
     def validate(cls, products):
         for product in products:
             if (product.agronomic_type in
-                    ['grape', 'flower-wort', 'firsts-wort', 'bottled-wine']):
+                    ['grape', 'do-wort', 'not-do-wort', 'bottled-wine']):
                 if len(product.vintage) > 1:
                     raise UserError(gettext('agronomics.msg_vintage_limit'))
             if (product.agronomic_type in
@@ -125,4 +126,13 @@ class ProductDO(ModelSQL):
     product = fields.Many2One('product.product', 'Product',
         ondelete='CASCADE', select=True, required=True)
     do = fields.Many2One('agronomics.denomination_of_origin', 'DO',
+        ondelete='CASCADE', select=True, required=True)
+
+
+class ProductEcological(ModelSQL):
+    "Product - Ecological"
+    __name__ = 'product.product-agronomics.ecological'
+    product = fields.Many2One('product.product', 'Product',
+        ondelete='CASCADE', select=True, required=True)
+    ecological = fields.Many2One('agronomics.ecological', 'Ecological',
         ondelete='CASCADE', select=True, required=True)

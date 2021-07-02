@@ -162,10 +162,6 @@ msgctxt "field:agronomics.parcel,species:"
 msgid "Spices"
 msgstr "Especie"
 
-msgctxt "field:agronomics.parcel,spieces:"
-msgid "Spices"
-msgstr "Especie"
-
 msgctxt "field:agronomics.parcel,surface:"
 msgid "Surface"
 msgstr "Superficie"
@@ -213,6 +209,7 @@ msgstr "Parcelas"
 msgctxt "field:party.party,plantations:"
 msgid "Plantation"
 msgstr "Plantaciónes"
+
 msgctxt "field:product.product,agronomic_type:"
 msgid "Agronomic Type"
 msgstr "Tipo Agronómico"
@@ -278,6 +275,14 @@ msgid "DO"
 msgstr "DO"
 
 msgctxt "field:product.product-agronomics.denomination_of_origin,product:"
+msgid "Product"
+msgstr "Productos"
+
+msgctxt "field:product.product-agronomics.ecological,ecological:"
+msgid "Ecological"
+msgstr "Ecológico"
+
+msgctxt "field:product.product-agronomics.ecological,product:"
 msgid "Product"
 msgstr "Productos"
 
@@ -396,6 +401,7 @@ msgid ""
 msgstr ""
 "Los beneficiarios de la cosecha \"%(crop)s\" y de la plantación "
 "\"%(plantation)s\" han de sumar 100."
+
 msgctxt "model:ir.message,text:msg_variety_limit"
 msgid ""
 "This product cannot have more than one Variety because of its agronomic "
@@ -466,6 +472,10 @@ msgctxt "model:product.product-agronomics.denomination_of_origin,name:"
 msgid "Product - DO"
 msgstr "Producto - DO"
 
+msgctxt "model:product.product-agronomics.ecological,name:"
+msgid "Product - Ecological"
+msgstr "Producto - Ecológico"
+
 msgctxt "model:product.product-product.taxon,name:"
 msgid "Product - Variety"
 msgstr "Producto - Variedad"
@@ -483,16 +493,16 @@ msgid "Bottled Wine"
 msgstr "Vino Embotellado"
 
 msgctxt "selection:product.product,agronomic_type:"
-msgid "First and Third Wort"
-msgstr "Mosto Primeras y Terceras"
-
-msgctxt "selection:product.product,agronomic_type:"
-msgid "Flower Wort"
-msgstr "Mosto Flor"
+msgid "DO Wort"
+msgstr "Mosto DO"
 
 msgctxt "selection:product.product,agronomic_type:"
 msgid "Grape"
 msgstr "Uva"
+
+msgctxt "selection:product.product,agronomic_type:"
+msgid "Not DO Wort"
+msgstr "Mosto no DO"
 
 msgctxt "selection:product.product,agronomic_type:"
 msgid "Wine"
@@ -503,16 +513,16 @@ msgid "Bottled Wine"
 msgstr "Vino Embotellado"
 
 msgctxt "selection:product.template,agronomic_type:"
-msgid "First and Third Wort"
-msgstr "Mosto Primeras y Terceras"
-
-msgctxt "selection:product.template,agronomic_type:"
-msgid "Flower Wort"
-msgstr "Mosto Flor"
+msgid "DO Wort"
+msgstr "Mosto DO"
 
 msgctxt "selection:product.template,agronomic_type:"
 msgid "Grape"
 msgstr "Uva"
+
+msgctxt "selection:product.template,agronomic_type:"
+msgid "Not DO Wort"
+msgstr "Mosto no DO"
 
 msgctxt "selection:product.template,agronomic_type:"
 msgid "Wine"

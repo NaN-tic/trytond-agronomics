@@ -25,6 +25,7 @@ def register():
         product.Product,
         product.ProductCrop,
         product.ProductDO,
+        product.ProductEcological,
         product.ProductVariety,
         product.Template,
         module='agronomics', type_='model')
