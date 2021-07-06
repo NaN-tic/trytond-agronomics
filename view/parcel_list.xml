@@ -7,5 +7,7 @@
   <field name="all_do"/>
   <field name="table"/>
   <field name="premium"/>
+  <field name="producer"/>
   <field name="max_production"/>
+  <field name="denomination_origin" tree_invisible="1"/>
 </tree>
