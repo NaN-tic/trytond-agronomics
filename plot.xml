@@ -400,6 +400,148 @@
       <field name="name">beneficiary_list</field>
   </record>
 
+  <record model="ir.model.access" id="access_enclosure">
+      <field name="model" search="[('model', '=', 'agronomics.enclosure')]"/>
+      <field name="perm_read" eval="True"/>
+      <field name="perm_write" eval="False"/>
+      <field name="perm_create" eval="False"/>
+      <field name="perm_delete" eval="False"/>
+  </record>
+  <record model="ir.model.access" id="access_enclosure_agronomics_admin">
+      <field name="model" search="[('model', '=', 'agronomics.enclosure')]"/>
+      <field name="group" ref="agronomics.group_agronomics_admin"/>
+      <field name="perm_read" eval="True"/>
+      <field name="perm_write" eval="True"/>
+      <field name="perm_create" eval="True"/>
+      <field name="perm_delete" eval="True"/>
+  </record>
 
+  <record model="ir.model.access" id="access_crop">
+      <field name="model" search="[('model', '=', 'agronomics.crop')]"/>
+      <field name="perm_read" eval="True"/>
+      <field name="perm_write" eval="False"/>
+      <field name="perm_create" eval="False"/>
+      <field name="perm_delete" eval="False"/>
+  </record>
+  <record model="ir.model.access" id="access_crop_agronomics_admin">
+      <field name="model" search="[('model', '=', 'agronomics.crop')]"/>
+      <field name="group" ref="agronomics.group_agronomics_admin"/>
+      <field name="perm_read" eval="True"/>
+      <field name="perm_write" eval="True"/>
+      <field name="perm_create" eval="True"/>
+      <field name="perm_delete" eval="True"/>
+  </record>
+
+  <record model="ir.model.access" id="access_denomination_of_origin">
+      <field name="model" search="[('model', '=', 'agronomics.denomination_of_origin')]"/>
+      <field name="perm_read" eval="True"/>
+      <field name="perm_write" eval="False"/>
+      <field name="perm_create" eval="False"/>
+      <field name="perm_delete" eval="False"/>
+  </record>
+  <record model="ir.model.access" id="access_denomination_of_origin_agronomics_admin">
+      <field name="model" search="[('model', '=', 'agronomics.denomination_of_origin')]"/>
+      <field name="group" ref="agronomics.group_agronomics_admin"/>
+      <field name="perm_read" eval="True"/>
+      <field name="perm_write" eval="True"/>
+      <field name="perm_create" eval="True"/>
+      <field name="perm_delete" eval="True"/>
+  </record>
+
+  <record model="ir.model.access" id="access_max_production_allowed">
+      <field name="model" search="[('model', '=', 'agronomics.max.production.allowed')]"/>
+      <field name="perm_read" eval="True"/>
+      <field name="perm_write" eval="False"/>
+      <field name="perm_create" eval="False"/>
+      <field name="perm_delete" eval="False"/>
+  </record>
+  <record model="ir.model.access" id="access_max_production_allowed_agronomics_admin">
+      <field name="model" search="[('model', '=', 'agronomics.max.production.allowed')]"/>
+      <field name="group" ref="agronomics.group_agronomics_admin"/>
+      <field name="perm_read" eval="True"/>
+      <field name="perm_write" eval="True"/>
+      <field name="perm_create" eval="True"/>
+      <field name="perm_delete" eval="True"/>
+  </record>
+
+  <record model="ir.model.access" id="access_irrigation">
+      <field name="model" search="[('model', '=', 'agronomics.irrigation')]"/>
+      <field name="perm_read" eval="True"/>
+      <field name="perm_write" eval="False"/>
+      <field name="perm_create" eval="False"/>
+      <field name="perm_delete" eval="False"/>
+  </record>
+  <record model="ir.model.access" id="access_irrigation_agronomics_admin">
+      <field name="model" search="[('model', '=', 'agronomics.irrigation')]"/>
+      <field name="group" ref="agronomics.group_agronomics_admin"/>
+      <field name="perm_read" eval="True"/>
+      <field name="perm_write" eval="True"/>
+      <field name="perm_create" eval="True"/>
+      <field name="perm_delete" eval="True"/>
+  </record>
+
+  <record model="ir.model.access" id="access_plantation">
+      <field name="model" search="[('model', '=', 'agronomics.plantation')]"/>
+      <field name="perm_read" eval="True"/>
+      <field name="perm_write" eval="False"/>
+      <field name="perm_create" eval="False"/>
+      <field name="perm_delete" eval="False"/>
+  </record>
+  <record model="ir.model.access" id="access_plantation_agronomics_admin">
+      <field name="model" search="[('model', '=', 'agronomics.plantation')]"/>
+      <field name="group" ref="agronomics.group_agronomics_admin"/>
+      <field name="perm_read" eval="True"/>
+      <field name="perm_write" eval="True"/>
+      <field name="perm_create" eval="True"/>
+      <field name="perm_delete" eval="True"/>
+  </record>
+
+  <record model="ir.model.access" id="access_ecological">
+      <field name="model" search="[('model', '=', 'agronomics.ecological')]"/>
+      <field name="perm_read" eval="True"/>
+      <field name="perm_write" eval="False"/>
+      <field name="perm_create" eval="False"/>
+      <field name="perm_delete" eval="False"/>
+  </record>
+  <record model="ir.model.access" id="access_ecological_agronomics_admin">
+      <field name="model" search="[('model', '=', 'agronomics.ecological')]"/>
+      <field name="group" ref="agronomics.group_agronomics_admin"/>
+      <field name="perm_read" eval="True"/>
+      <field name="perm_write" eval="True"/>
+      <field name="perm_create" eval="True"/>
+      <field name="perm_delete" eval="True"/>
+  </record>
+
+  <record model="ir.model.access" id="access_parcel">
+      <field name="model" search="[('model', '=', 'agronomics.parcel')]"/>
+      <field name="perm_read" eval="True"/>
+      <field name="perm_write" eval="False"/>
+      <field name="perm_create" eval="False"/>
+      <field name="perm_delete" eval="False"/>
+  </record>
+  <record model="ir.model.access" id="access_parcel_agronomics_admin">
+      <field name="model" search="[('model', '=', 'agronomics.parcel')]"/>
+      <field name="group" ref="agronomics.group_agronomics_admin"/>
+      <field name="perm_read" eval="True"/>
+      <field name="perm_write" eval="True"/>
+      <field name="perm_create" eval="True"/>
+      <field name="perm_delete" eval="True"/>
+  </record>
+
+  <record model="ir.model.access" id="access_beneficiary">
+      <field name="model" search="[('model', '=', 'agronomics.beneficiary')]"/>
+      <field name="perm_read" eval="True"/>
+      <field name="perm_write" eval="False"/>
+      <field name="perm_create" eval="False"/>
+      <field name="perm_delete" eval="False"/>
+  </record>
+  <record model="ir.model.access" id="access_beneficiary_agronomics_admin">
+      <field name="model" search="[('model', '=', 'agronomics.beneficiary')]"/>
+      <field name="group" ref="agronomics.group_agronomics_admin"/>
+      <field name="perm_read" eval="True"/>
+      <field name="perm_write" eval="True"/>
+      <field name="perm_create" eval="True"/>
+      <field name="perm_delete" eval="True"/>
+  </record>
 </data>
 </tryton>

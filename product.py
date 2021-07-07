@@ -10,6 +10,7 @@ from trytond.i18n import gettext
 class Certification(ModelSQL, ModelView):
     "Certification"
     __name__ = 'agronomics.certification'
+    _rec_name = 'number'
 
     number = fields.Char('Number')
     date = fields.Date('Date')
@@ -59,19 +60,20 @@ class Template(metaclass=PoolMeta):
 class Product(metaclass=PoolMeta):
     __name__ = 'product.product'
 
-    vintage = fields.Many2Many('product.product-agronomics.crop', 'product',
-        'crop', 'Vintage')
-    variety = fields.Many2Many('product.product-product.taxon', 'product',
-        'variety', 'Variety')
-    do = fields.Many2Many('product.product-agronomics.denomination_of_origin',
-        'product', 'do', 'DO',
+    vintages = fields.Many2Many('product.product-agronomics.crop', 'product',
+        'crop', 'Vintages')
+    varieties = fields.Many2Many('product.product-product.taxon', 'product',
+        'variety', 'Varieties')
+    denominations_of_origin = fields.Many2Many(
+        'product.product-agronomics.denomination_of_origin', 'product',
+        'do', 'DOs',
         states={
             'invisible': Eval('agronomic_type').in_(
                 ['not-do-wort']
             )
         }, depends=['agronomic_type'])
-    ecological = fields.Many2Many('product.product-agronomics.ecological',
-        'product', 'ecological', 'Ecological')
+    ecologicals = fields.Many2Many('product.product-agronomics.ecological',
+        'product', 'ecological', 'Ecologicals')
     quality_sample = fields.Many2One('quality.sample', 'Quality Sample',
         states={
             'invisible': ~ Eval('agronomic_type').in_(
@@ -94,12 +96,14 @@ class Product(metaclass=PoolMeta):
         for product in products:
             if (product.agronomic_type in
                     ['grape', 'do-wort', 'not-do-wort', 'bottled-wine']):
-                if len(product.vintage) > 1:
-                    raise UserError(gettext('agronomics.msg_vintage_limit'))
+                if len(product.vintages) > 1:
+                    raise UserError(gettext('agronomics.msg_vintage_limit',
+                    product=product.rec_name))
             if (product.agronomic_type in
                     ['grape']):
-                if len(product.variety) > 1:
-                    raise UserError(gettext('agronomics.msg_variety_limit'))
+                if len(product.varieties) > 1:
+                    raise UserError(gettext('agronomics.msg_variety_limit',
+                    product=product.rec_name))
 
 
 class ProductCrop(ModelSQL):
