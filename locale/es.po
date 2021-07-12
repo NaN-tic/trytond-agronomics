@@ -14,6 +14,22 @@ msgctxt "field:agronomics.beneficiary,percent:"
 msgid "Percent"
 msgstr "Porcentaje"
 
+msgctxt "field:agronomics.certification,date:"
+msgid "Date"
+msgstr "Fecha"
+
+msgctxt "field:agronomics.certification,number:"
+msgid "Number"
+msgstr "Número"
+
+msgctxt "field:agronomics.container,capacity:"
+msgid "Capacity"
+msgstr "Capacidad"
+
+msgctxt "field:agronomics.container,name:"
+msgid "Name"
+msgstr "Nombre"
+
 msgctxt "field:agronomics.crop,code:"
 msgid "Code"
 msgstr "Código"
@@ -146,10 +162,6 @@ msgctxt "field:agronomics.parcel,species:"
 msgid "Spices"
 msgstr "Especie"
 
-msgctxt "field:agronomics.parcel,spieces:"
-msgid "Spices"
-msgstr "Especie"
-
 msgctxt "field:agronomics.parcel,surface:"
 msgid "Surface"
 msgstr "Superficie"
@@ -198,9 +210,113 @@ msgctxt "field:party.party,plantations:"
 msgid "Plantation"
 msgstr "Plantaciónes"
 
+msgctxt "field:product.product,agronomic_type:"
+msgid "Agronomic Type"
+msgstr "Tipo Agronómico"
+
+msgctxt "field:product.product,alcohol_volume:"
+msgid "Alcohol Volume"
+msgstr "Volumen Alcohol"
+
+msgctxt "field:product.product,capacity:"
+msgid "Capacity"
+msgstr "Capacidad"
+
+msgctxt "field:product.product,certification:"
+msgid "Certification"
+msgstr "Certificación"
+
+msgctxt "field:product.product,container:"
+msgid "Container"
+msgstr "Envase"
+
+msgctxt "field:product.product,denominations_of_origin:"
+msgid "DOs"
+msgstr "DOs"
+
+msgctxt "field:product.product,ecologicals:"
+msgid "Ecologicals"
+msgstr "Ecológicos"
+
+msgctxt "field:product.product,needs_sample:"
+msgid "Needs Samples"
+msgstr "Requiere muestras"
+
+msgctxt "field:product.product,quality_sample:"
+msgid "Quality Sample"
+msgstr "Muestra de calidad"
+
+msgctxt "field:product.product,shipment_in_quality_template:"
+msgid "Shipment In Quality Template"
+msgstr "Plantilla calidad albarán de entrada"
+
+msgctxt "field:product.product,shipment_out_quality_template:"
+msgid "Shipment Out Quality Template"
+msgstr "Plantilla calidad albarán de salida"
+
+msgctxt "field:product.product,varieties:"
+msgid "Varieties"
+msgstr "Variedades"
+
+msgctxt "field:product.product,vintages:"
+msgid "Vintages"
+msgstr "Cosechas"
+
+msgctxt "field:product.product-agronomics.crop,crop:"
+msgid "Crop"
+msgstr "Cosecha"
+
+msgctxt "field:product.product-agronomics.crop,product:"
+msgid "Product"
+msgstr "Productos"
+
+msgctxt "field:product.product-agronomics.denomination_of_origin,do:"
+msgid "DO"
+msgstr "DO"
+
+msgctxt "field:product.product-agronomics.denomination_of_origin,product:"
+msgid "Product"
+msgstr "Productos"
+
+msgctxt "field:product.product-agronomics.ecological,ecological:"
+msgid "Ecological"
+msgstr "Ecológico"
+
+msgctxt "field:product.product-agronomics.ecological,product:"
+msgid "Product"
+msgstr "Productos"
+
+msgctxt "field:product.product-product.taxon,product:"
+msgid "Product"
+msgstr "Productos"
+
+msgctxt "field:product.product-product.taxon,variety:"
+msgid "Variety"
+msgstr "Variedad"
+
+msgctxt "field:product.template,agronomic_type:"
+msgid "Agronomic Type"
+msgstr "Tipo Agronómico"
+
+msgctxt "field:product.template,capacity:"
+msgid "Capacity"
+msgstr "Capacidad"
+
+msgctxt "field:product.template,container:"
+msgid "Container"
+msgstr "Envase"
+
 msgctxt "model:agronomics.beneficiary,name:"
 msgid "Beneficiaries"
 msgstr "Beneficiarios"
+
+msgctxt "model:agronomics.certification,name:"
+msgid "Certification"
+msgstr "Certificación"
+
+msgctxt "model:agronomics.container,name:"
+msgid "Container"
+msgstr "Envase"
 
 msgctxt "model:agronomics.crop,name:"
 msgid "Crop"
@@ -237,6 +353,14 @@ msgstr ""
 msgctxt "model:agronomics.plantation,name:"
 msgid "Plantation"
 msgstr "Plantación"
+
+msgctxt "model:ir.action,name:act_certification_tree"
+msgid "Certification"
+msgstr "Certificación"
+
+msgctxt "model:ir.action,name:act_container_tree"
+msgid "Container"
+msgstr "Envase"
 
 msgctxt "model:ir.action,name:act_crop_tree"
 msgid "Crop"
@@ -278,13 +402,37 @@ msgstr ""
 "Los beneficiarios de la cosecha \"%(crop)s\" y de la plantación "
 "\"%(plantation)s\" han de sumar 100."
 
+msgctxt "model:ir.message,text:msg_variety_limit"
+msgid ""
+"Product \"%(product)s\" cannot have more than one Variety because of its "
+"agronomic type."
+msgstr ""
+"El producto \"%(product)s\"  no puede tener más de una variedad debido a su "
+"Tipo Agronómico"
+
+msgctxt "model:ir.message,text:msg_vintage_limit"
+msgid ""
+"Product \"%(product)s\" cannot have more than one Vintage because of its "
+"agronomic type."
+msgstr ""
+"El producto \"%(product)s\"  no puede tener más de una cosecha debido a su "
+"Tipo Agronómico"
+
 msgctxt "model:ir.ui.menu,name:menu_agronomics"
 msgid "Agronomics"
 msgstr "Agronomics"
 
+msgctxt "model:ir.ui.menu,name:menu_certification_list"
+msgid "Certification"
+msgstr "Certificación"
+
 msgctxt "model:ir.ui.menu,name:menu_configuration"
 msgid "Configuration"
 msgstr "Configuración"
+
+msgctxt "model:ir.ui.menu,name:menu_container_list"
+msgid "Container"
+msgstr "Envase"
 
 msgctxt "model:ir.ui.menu,name:menu_crop_list"
 msgid "Crop"
@@ -318,6 +466,22 @@ msgctxt "model:ir.ui.menu,name:menu_plantation_list"
 msgid "Plantation"
 msgstr "Plantación"
 
+msgctxt "model:product.product-agronomics.crop,name:"
+msgid "Product - Crop"
+msgstr "Producto - Cosecha"
+
+msgctxt "model:product.product-agronomics.denomination_of_origin,name:"
+msgid "Product - DO"
+msgstr "Producto - DO"
+
+msgctxt "model:product.product-agronomics.ecological,name:"
+msgid "Product - Ecological"
+msgstr "Producto - Ecológico"
+
+msgctxt "model:product.product-product.taxon,name:"
+msgid "Product - Variety"
+msgstr "Producto - Variedad"
+
 msgctxt "model:res.group,name:group_agronomics"
 msgid "Agronomics"
 msgstr "Agronomics"
@@ -325,3 +489,47 @@ msgstr "Agronomics"
 msgctxt "model:res.group,name:group_agronomics_admin"
 msgid "Agronomics Administration"
 msgstr "Agronomics Administración"
+
+msgctxt "selection:product.product,agronomic_type:"
+msgid "Bottled Wine"
+msgstr "Vino Embotellado"
+
+msgctxt "selection:product.product,agronomic_type:"
+msgid "DO Wort"
+msgstr "Mosto DO"
+
+msgctxt "selection:product.product,agronomic_type:"
+msgid "Grape"
+msgstr "Uva"
+
+msgctxt "selection:product.product,agronomic_type:"
+msgid "Not DO Wort"
+msgstr "Mosto no DO"
+
+msgctxt "selection:product.product,agronomic_type:"
+msgid "Wine"
+msgstr "Vino"
+
+msgctxt "selection:product.template,agronomic_type:"
+msgid "Bottled Wine"
+msgstr "Vino Embotellado"
+
+msgctxt "selection:product.template,agronomic_type:"
+msgid "DO Wort"
+msgstr "Mosto DO"
+
+msgctxt "selection:product.template,agronomic_type:"
+msgid "Grape"
+msgstr "Uva"
+
+msgctxt "selection:product.template,agronomic_type:"
+msgid "Not DO Wort"
+msgstr "Mosto no DO"
+
+msgctxt "selection:product.template,agronomic_type:"
+msgid "Wine"
+msgstr "Vino"
+
+msgctxt "view:product.product:"
+msgid "Agronomics"
+msgstr "Agronomics"

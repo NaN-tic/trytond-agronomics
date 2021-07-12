@@ -1,0 +1,6 @@
+<form>
+  <label name="number"/>
+  <field name="number"/>
+  <label name="date"/>
+  <field name="date"/>
+</form>
