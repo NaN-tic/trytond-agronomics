@@ -1,0 +1,6 @@
+<form>
+  <label name="name"/>
+  <field name="name"/>
+  <label name="capacity"/>
+  <field name="capacity"/>
+</form>

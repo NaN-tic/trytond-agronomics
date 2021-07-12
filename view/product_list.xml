@@ -1,0 +1,13 @@
+<data>
+    <xpath expr="/tree" position="inside">
+        <field name="vintages" tree_invisible="1"/>
+        <field name="varieties" tree_invisible="1"/>
+        <field name="denominations_of_origin" tree_invisible="1"/>
+        <field name="ecologicals" tree_invisible="1"/>
+        <field name="quality_sample" tree_invisible="1"/>
+        <field name="certification" tree_invisible="1"/>
+        <field name="alcohol_volume" tree_invisible="1"/>
+        <field name="container" tree_invisible="1"/>
+        <field name="capacity" tree_invisible="1"/>
+    </xpath>
+</data>
