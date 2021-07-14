@@ -268,9 +268,7 @@ class WineMixin(Model):
                     field_name = '%s,%s' % (cls.__name__, key)
                     label = (Translation.get_source(field_name, 'field', language)
                         or getattr(cls, key).string)
-                    data += '<h2>%s</h2>%s' % (label, getattr(record, key))
+                    data += '<b>%s</b>%s' % (label, getattr(record, key))
             res[record.id] = data
-        print('.....'  * 10)
-        print(res)
 
         return res
