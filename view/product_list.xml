@@ -9,5 +9,30 @@
         <field name="alcohol_volume" tree_invisible="1"/>
         <field name="container" tree_invisible="1"/>
         <field name="capacity" tree_invisible="1"/>
+        <field name="wine_likely_alcohol_content" tree_invisible="1"/>
+        <field name="wine_botrytis" tree_invisible="1"/>
+        <field name="wine_alcohol_content" tree_invisible="1"/>
+        <field name="wine_density" tree_invisible="1"/>
+        <field name="wine_temperature" tree_invisible="1"/>
+        <field name="wine_ph" tree_invisible="1"/>
+        <field name="wine_free_sulphur" tree_invisible="1"/>
+        <field name="wine_total_sulphur" tree_invisible="1"/>
+        <field name="wine_tartaric_acidity" tree_invisible="1"/>
+        <field name="wine_volatility" tree_invisible="1"/>
+        <field name="wine_malic_acid" tree_invisible="1"/>
+        <field name="wine_lactic_acid" tree_invisible="1"/>
+        <field name="wine_protein_stability" tree_invisible="1"/>
+        <field name="wine_tartaric_stability" tree_invisible="1"/>
+        <field name="wine_turbidity" tree_invisible="1"/>
+        <field name="wine_glucose_fructose" tree_invisible="1"/>
+        <field name="wine_color_intensity" tree_invisible="1"/>
+        <field name="wine_tone" tree_invisible="1"/>
+        <field name="wine_clogging" tree_invisible="1"/>
+        <field name="wine_overall_impression" tree_invisible="1"/>
+        <field name="wine_observing_phase" tree_invisible="1"/>
+        <field name="wine_smelling_phase" tree_invisible="1"/>
+        <field name="wine_tasting_phase" tree_invisible="1"/>
+        <field name="wine_quality_confirm" tree_invisible="1"/>
+        <field name="wine_quality_success" tree_invisible="1"/>
     </xpath>
 </data>

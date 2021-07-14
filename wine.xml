@@ -1,0 +1,101 @@
+<tryton>
+    <data>
+        <!-- quality.proof data-->
+        <record model="quality.proof.template" id="wine_likely_alcohol_content">
+            <field name="name">Grau esperat</field>
+            <field name="type">quantitative</field>
+        </record>
+        <record model="quality.proof.template" id="wine_botrytis">
+            <field name="name">Botrytis</field>
+            <field name="type">quantitative</field>
+        </record>
+        <record model="quality.proof.template" id="wine_alcohol_content">
+            <field name="name">Grau alcohol</field>
+            <field name="type">quantitative</field>
+        </record>
+        <record model="quality.proof.template" id="wine_density">
+            <field name="name">Densitat</field>
+            <field name="type">quantitative</field>
+        </record>
+        <record model="quality.proof.template" id="wine_temperature">
+            <field name="name">Temperatura</field>
+            <field name="type">quantitative</field>
+        </record>
+        <record model="quality.proof.template" id="wine_ph">
+            <field name="name">PH</field>
+            <field name="type">quantitative</field>
+        </record>
+        <record model="quality.proof.template" id="wine_free_sulphur">
+            <field name="name">Sulfuros lliure</field>
+            <field name="type">quantitative</field>
+        </record>
+        <record model="quality.proof.template" id="wine_total_sulphur">
+            <field name="name">Sulfurós Total</field>
+            <field name="type">quantitative</field>
+        </record>
+        <record model="quality.proof.template" id="wine_tartaric_acidity">
+            <field name="name">Acidesa tartàric</field>
+            <field name="type">quantitative</field>
+        </record>
+        <record model="quality.proof.template" id="wine_volatility">
+            <field name="name">Volatil</field>
+            <field name="type">quantitative</field>
+        </record>
+        <record model="quality.proof.template" id="wine_malic_acid">
+            <field name="name">Àcid màlic</field>
+            <field name="type">quantitative</field>
+        </record>
+        <record model="quality.proof.template" id="wine_lactic_acid">
+            <field name="name">Àcil lactica</field>
+            <field name="type">quantitative</field>
+        </record>
+        <record model="quality.proof.template" id="wine_protein_stability">
+            <field name="name">Estabilitat proteica</field>
+            <field name="type">quantitative</field>
+        </record>
+        <record model="quality.proof.template" id="wine_tartaric_stability">
+            <field name="name">Estabilitat tartarica</field>
+            <field name="type">quantitative</field>
+        </record>
+        <record model="quality.proof.template" id="wine_turbidity">
+            <field name="name">Terbolesa</field>
+            <field name="type">quantitative</field>
+        </record>
+        <record model="quality.proof.template" id="wine_glucose_fructose">
+            <field name="name">Glucosa/fructosa</field>
+            <field name="type">quantitative</field>
+        </record>
+        <record model="quality.proof.template" id="wine_color_intensity">
+            <field name="name">Intensitat colorant</field>
+            <field name="type">quantitative</field>
+        </record>
+        <record model="quality.proof.template" id="wine_tone">
+            <field name="name">Tonalitat</field>
+            <field name="type">quantitative</field>
+        </record>
+        <record model="quality.proof.template" id="wine_clogging">
+            <field name="name">Colmatacio</field>
+            <field name="type">quantitative</field>
+        </record>
+        <record model="quality.proof.template" id="wine_overall_impression">
+            <field name="name">Impresió general</field>
+            <field name="type">quantitative</field>
+        </record>
+        <record model="quality.proof.template" id="wine_observing_phase">
+            <field name="name">Fase visual</field>
+            <field name="type">quantitative</field>
+        </record>
+        <record model="quality.proof.template" id="wine_smelling_phase">
+            <field name="name">Fase olfactiva</field>
+            <field name="type">quantitative</field>
+        </record>
+        <record model="quality.proof.template" id="wine_tasting_phase">
+            <field name="name">Fase gustativa</field>
+            <field name="type">quantitative</field>
+        </record>
+        <record model="quality.proof.template" id="wine_notes">
+            <field name="name">Observacions</field>
+            <field name="type">quantitative</field>
+        </record>
+    </data>
+</tryton>

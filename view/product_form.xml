@@ -1,6 +1,6 @@
 <data>
     <xpath expr="/form/notebook" position="inside">
-        <page string="Agronomics" id="agrnomics">
+        <page string="Agronomics" id="agronomics">
             <field name="vintages" colspan="2"/>
             <field name="varieties" colspan="2"/>
             <field name="denominations_of_origin" colspan="2"/>
@@ -15,6 +15,62 @@
             <field name="container"/>
             <label name="capacity"/>
             <field name="capacity"/>
+        </page>
+    </xpath>
+    <xpath expr="/form/notebook" position="inside">
+        <page string="Quality" id="agronomics-quality">
+            <label name="wine_quality_confirm"/>
+            <field name="wine_quality_confirm"/>
+            <label name="wine_quality_success"/>
+            <field name="wine_quality_success"/>
+            <label name="wine_likely_alcohol_content"/>
+            <field name="wine_likely_alcohol_content"/>
+            <label name="wine_botrytis"/>
+            <field name="wine_botrytis"/>
+            <label name="wine_alcohol_content"/>
+            <field name="wine_alcohol_content"/>
+            <label name="wine_density"/>
+            <field name="wine_density"/>
+            <label name="wine_temperature"/>
+            <field name="wine_temperature"/>
+            <label name="wine_ph"/>
+            <field name="wine_ph"/>
+            <label name="wine_free_sulphur"/>
+            <field name="wine_free_sulphur"/>
+            <label name="wine_total_sulphur"/>
+            <field name="wine_total_sulphur"/>
+            <label name="wine_tartaric_acidity"/>
+            <field name="wine_tartaric_acidity"/>
+            <label name="wine_volatility"/>
+            <field name="wine_volatility"/>
+            <label name="wine_malic_acid"/>
+            <field name="wine_malic_acid"/>
+            <label name="wine_lactic_acid"/>
+            <field name="wine_lactic_acid"/>
+            <label name="wine_protein_stability"/>
+            <field name="wine_protein_stability"/>
+            <label name="wine_tartaric_stability"/>
+            <field name="wine_tartaric_stability"/>
+            <label name="wine_turbidity"/>
+            <field name="wine_turbidity"/>
+            <label name="wine_glucose_fructose"/>
+            <field name="wine_glucose_fructose"/>
+            <label name="wine_color_intensity"/>
+            <field name="wine_color_intensity"/>
+            <label name="wine_tone"/>
+            <field name="wine_tone"/>
+            <label name="wine_clogging"/>
+            <field name="wine_clogging"/>
+            <label name="wine_overall_impression"/>
+            <field name="wine_overall_impression"/>
+            <label name="wine_observing_phase"/>
+            <field name="wine_observing_phase"/>
+            <label name="wine_smelling_phase"/>
+            <field name="wine_smelling_phase"/>
+            <label name="wine_tasting_phase"/>
+            <field name="wine_tasting_phase"/>
+            <separator name="wine_comment" colspan="4"/>
+            <field name="wine_comment" widget="richtext" toolbar="0" yexpand="1" yfill="1" colspan="4"/>
         </page>
     </xpath>
 </data>

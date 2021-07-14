@@ -1,10 +1,11 @@
 # This file is part of Tryton.  The COPYRIGHT file at the top level of
 # this repository contains the full copyright notices and license terms.
 from trytond.model import ModelSQL, ModelView, fields
-from trytond.pool import PoolMeta, Pool
+from trytond.pool import PoolMeta
 from trytond.pyson import Eval
 from trytond.exceptions import UserError
 from trytond.i18n import gettext
+from trytond.modules.agronomics.wine import WineMixin
 
 
 class Certification(ModelSQL, ModelView):
@@ -35,6 +36,9 @@ class Template(metaclass=PoolMeta):
             ('grape', "Grape"),
             ('do-wort', "DO Wort"),
             ('not-do-wort', "Not DO Wort"),
+            ('unfiltered-wine', 'Unfiltered Wine'),
+            ('filtered-wine', 'Filtered Wine'),
+            ('clarified-wine', 'Clarified Wine'),
             ('wine', "Wine"),
             ('bottled-wine', "Bottled Wine"),
             ], "Agronomic Type", select=True)
@@ -57,7 +61,7 @@ class Template(metaclass=PoolMeta):
         return [('container.capacity',) + tuple(clause[1:])]
 
 
-class Product(metaclass=PoolMeta):
+class Product(WineMixin, metaclass=PoolMeta):
     __name__ = 'product.product'
 
     vintages = fields.Many2Many('product.product-agronomics.crop', 'product',
@@ -77,18 +81,21 @@ class Product(metaclass=PoolMeta):
     quality_sample = fields.Many2One('quality.sample', 'Quality Sample',
         states={
             'invisible': ~ Eval('agronomic_type').in_(
-                ['wine', 'bottled-wine']
+                ['wine', 'unfiltered-wine', 'filtered-wine', 'clarified-wine',
+                    'bottled-wine']
             )
         }, depends=['agronomic_type'])
     certification = fields.Many2One('agronomics.certification',
         'Certification', states={
             'invisible': ~ Eval('agronomic_type').in_(
-                ['wine', 'bottled-wine']
+                ['wine', 'unfiltered-wine', 'filtered-wine', 'clarified-wine',
+                    'bottled-wine']
             )
         }, depends=['agronomic_type'])
     alcohol_volume = fields.Numeric('Alcohol Volume', digits=(16, 2), states={
             'invisible': ~ Eval('agronomic_type').in_(
-                ['wine', 'bottled-wine']
+                ['wine', 'unfiltered-wine', 'filtered-wine', 'clarified-wine',
+                    'bottled-wine']
             )}, depends=['agronomic_type'])
 
     @classmethod

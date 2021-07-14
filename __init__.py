@@ -5,6 +5,7 @@ from trytond.pool import Pool
 from . import party
 from . import plot
 from . import product
+from . import quality
 
 
 def register():
@@ -28,6 +29,7 @@ def register():
         product.ProductEcological,
         product.ProductVariety,
         product.Template,
+        quality.QualityTest,
         module='agronomics', type_='model')
     Pool.register(
         module='agronomics', type_='wizard')
