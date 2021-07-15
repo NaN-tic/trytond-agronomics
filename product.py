@@ -1,5 +1,6 @@
 # This file is part of Tryton.  The COPYRIGHT file at the top level of
 # this repository contains the full copyright notices and license terms.
+from decimal import Decimal
 from trytond.model import ModelSQL, ModelView, fields
 from trytond.pool import PoolMeta
 from trytond.pyson import Eval
@@ -91,7 +92,7 @@ class Product(WineMixin, metaclass=PoolMeta):
 
     def get_capacity(self, name):
         if self.template.container and self.wine_alcohol_content:
-            return (float(self.template.container.capacity) * self.wine_alcohol_content) / 100
+            return Decimal((float(self.template.container.capacity) * float(self.wine_alcohol_content)) / 100)
 
     @classmethod
     def validate(cls, products):
