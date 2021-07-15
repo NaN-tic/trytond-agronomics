@@ -16,6 +16,8 @@ class QualityTest(metaclass=PoolMeta):
 
         super(QualityTest, cls).confirmed(tests)
 
+        today = Date.today()
+
         # get all key from ir.model.data
         to_write = []
         proof_templates = []
@@ -50,9 +52,11 @@ class QualityTest(metaclass=PoolMeta):
 
                 values[key] = round(line.value, _WINE_DIGITS)
                 values[key + '_comment'] = line.internal_description
+                values[key + '_confirm'] = today
+                values[key + '_success'] = line.success
 
             if values:
-                values['wine_quality_confirm'] = Date.today()
+                values['wine_quality_confirm'] = today
                 values['wine_quality_success'] = test.success
 
                 to_write.extend(([test.document], values))

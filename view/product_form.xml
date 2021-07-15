@@ -18,59 +18,176 @@
         </page>
     </xpath>
     <xpath expr="/form/notebook" position="inside">
-        <page string="Quality" id="agronomics-quality">
+        <page string="Quality" id="agronomics-quality" col="6">
             <label name="wine_quality_confirm"/>
             <field name="wine_quality_confirm"/>
             <label name="wine_quality_success"/>
             <field name="wine_quality_success"/>
+            <newline/>
+
             <label name="wine_likely_alcohol_content"/>
             <field name="wine_likely_alcohol_content"/>
+            <label name="wine_likely_alcohol_content_confirm"/>
+            <field name="wine_likely_alcohol_content_confirm"/>
+            <label name="wine_likely_alcohol_content_success"/>
+            <field name="wine_likely_alcohol_content_success"/>
+
             <label name="wine_botrytis"/>
             <field name="wine_botrytis"/>
+            <label name="wine_botrytis_confirm"/>
+            <field name="wine_botrytis_confirm"/>
+            <label name="wine_botrytis_success"/>
+            <field name="wine_botrytis_success"/>
+
             <label name="wine_alcohol_content"/>
             <field name="wine_alcohol_content"/>
+            <label name="wine_alcohol_content_confirm"/>
+            <field name="wine_alcohol_content_confirm"/>
+            <label name="wine_alcohol_content_success"/>
+            <field name="wine_alcohol_content_success"/>
+
             <label name="wine_density"/>
             <field name="wine_density"/>
+            <label name="wine_density_confirm"/>
+            <field name="wine_density_confirm"/>
+            <label name="wine_density_success"/>
+            <field name="wine_density_success"/>
+
             <label name="wine_temperature"/>
             <field name="wine_temperature"/>
+            <label name="wine_temperature_confirm"/>
+            <field name="wine_temperature_confirm"/>
+            <label name="wine_temperature_success"/>
+            <field name="wine_temperature_success"/>
+
             <label name="wine_ph"/>
             <field name="wine_ph"/>
+            <label name="wine_ph_confirm"/>
+            <field name="wine_ph_confirm"/>
+            <label name="wine_ph_success"/>
+            <field name="wine_ph_success"/>
+
             <label name="wine_free_sulphur"/>
             <field name="wine_free_sulphur"/>
+            <label name="wine_free_sulphur_confirm"/>
+            <field name="wine_free_sulphur_confirm"/>
+            <label name="wine_free_sulphur_success"/>
+            <field name="wine_free_sulphur_success"/>
+
             <label name="wine_total_sulphur"/>
             <field name="wine_total_sulphur"/>
+            <label name="wine_total_sulphur_confirm"/>
+            <field name="wine_total_sulphur_confirm"/>
+            <label name="wine_total_sulphur_success"/>
+            <field name="wine_total_sulphur_success"/>
+
             <label name="wine_tartaric_acidity"/>
             <field name="wine_tartaric_acidity"/>
+            <label name="wine_tartaric_acidity_confirm"/>
+            <field name="wine_tartaric_acidity_confirm"/>
+            <label name="wine_tartaric_acidity_success"/>
+            <field name="wine_tartaric_acidity_success"/>
+
             <label name="wine_volatility"/>
             <field name="wine_volatility"/>
+            <label name="wine_volatility_confirm"/>
+            <field name="wine_volatility_confirm"/>
+            <label name="wine_volatility_success"/>
+            <field name="wine_volatility_success"/>
+
             <label name="wine_malic_acid"/>
             <field name="wine_malic_acid"/>
+            <label name="wine_malic_acid_confirm"/>
+            <field name="wine_malic_acid_confirm"/>
+            <label name="wine_malic_acid_success"/>
+            <field name="wine_malic_acid_success"/>
+
             <label name="wine_lactic_acid"/>
             <field name="wine_lactic_acid"/>
+            <label name="wine_lactic_acid_confirm"/>
+            <field name="wine_lactic_acid_confirm"/>
+            <label name="wine_lactic_acid_success"/>
+            <field name="wine_lactic_acid_success"/>
+
             <label name="wine_protein_stability"/>
             <field name="wine_protein_stability"/>
+            <label name="wine_protein_stability_confirm"/>
+            <field name="wine_protein_stability_confirm"/>
+            <label name="wine_protein_stability_success"/>
+            <field name="wine_protein_stability_success"/>
+
             <label name="wine_tartaric_stability"/>
             <field name="wine_tartaric_stability"/>
+            <label name="wine_tartaric_stability_confirm"/>
+            <field name="wine_tartaric_stability_confirm"/>
+            <label name="wine_tartaric_stability_success"/>
+            <field name="wine_tartaric_stability_success"/>
+
             <label name="wine_turbidity"/>
             <field name="wine_turbidity"/>
+            <label name="wine_turbidity_confirm"/>
+            <field name="wine_turbidity_confirm"/>
+            <label name="wine_turbidity_success"/>
+            <field name="wine_turbidity_success"/>
+
             <label name="wine_glucose_fructose"/>
             <field name="wine_glucose_fructose"/>
+            <label name="wine_glucose_fructose_confirm"/>
+            <field name="wine_glucose_fructose_confirm"/>
+            <label name="wine_glucose_fructose_success"/>
+            <field name="wine_glucose_fructose_success"/>
+
             <label name="wine_color_intensity"/>
             <field name="wine_color_intensity"/>
+            <label name="wine_color_intensity_confirm"/>
+            <field name="wine_color_intensity_confirm"/>
+            <label name="wine_color_intensity_success"/>
+            <field name="wine_color_intensity_success"/>
+
             <label name="wine_tone"/>
             <field name="wine_tone"/>
+            <label name="wine_tone_confirm"/>
+            <field name="wine_tone_confirm"/>
+            <label name="wine_tone_success"/>
+            <field name="wine_tone_success"/>
+
             <label name="wine_clogging"/>
             <field name="wine_clogging"/>
+            <label name="wine_clogging_confirm"/>
+            <field name="wine_clogging_confirm"/>
+            <label name="wine_clogging_success"/>
+            <field name="wine_clogging_success"/>
+
             <label name="wine_overall_impression"/>
             <field name="wine_overall_impression"/>
+            <label name="wine_overall_impression_confirm"/>
+            <field name="wine_overall_impression_confirm"/>
+            <label name="wine_overall_impression_success"/>
+            <field name="wine_overall_impression_success"/>
+
             <label name="wine_observing_phase"/>
             <field name="wine_observing_phase"/>
+            <label name="wine_observing_phase_confirm"/>
+            <field name="wine_observing_phase_confirm"/>
+            <label name="wine_observing_phase_success"/>
+            <field name="wine_observing_phase_success"/>
+
             <label name="wine_smelling_phase"/>
             <field name="wine_smelling_phase"/>
+            <label name="wine_smelling_phase_confirm"/>
+            <field name="wine_smelling_phase_confirm"/>
+            <label name="wine_smelling_phase_success"/>
+            <field name="wine_smelling_phase_success"/>
+
             <label name="wine_tasting_phase"/>
             <field name="wine_tasting_phase"/>
-            <separator name="wine_comment" colspan="4"/>
-            <field name="wine_comment" widget="richtext" toolbar="0" yexpand="1" yfill="1" colspan="4"/>
+            <label name="wine_tasting_phase_confirm"/>
+            <field name="wine_tasting_phase_confirm"/>
+            <label name="wine_tasting_phase_success"/>
+            <field name="wine_tasting_phase_success"/>
+
+            <separator name="wine_quality_comment" colspan="6"/>
+            <field name="wine_quality_comment" widget="richtext" toolbar="0" yexpand="1" yfill="1" colspan="6"/>
         </page>
     </xpath>
 </data>
