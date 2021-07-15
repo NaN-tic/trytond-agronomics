@@ -91,7 +91,7 @@ class Product(WineMixin, metaclass=PoolMeta):
 
     def get_capacity(self, name):
         if self.template.container and self.wine_alcohol_content:
-            return (self.template.container.capacity * self.wine_alcohol_content) / 100
+            return (float(self.template.container.capacity) * self.wine_alcohol_content) / 100
 
     @classmethod
     def validate(cls, products):
