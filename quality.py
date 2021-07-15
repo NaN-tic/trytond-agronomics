@@ -1,6 +1,7 @@
 # This file is part of Tryton.  The COPYRIGHT file at the top level of
 # this repository contains the full copyright notices and license terms.
 from trytond.pool import PoolMeta, Pool
+from trytond.model import fields, Model
 from trytond.modules.agronomics.wine import _WINE_DIGITS
 
 
@@ -63,3 +64,34 @@ class QualityTest(metaclass=PoolMeta):
 
         if to_write:
             Product.write(*to_write)
+
+
+class TestLineMixin(Model):
+    product = fields.Function(fields.Many2One('product.product', 'Product', select=True),
+        'get_product', searcher='search_product')
+
+    def get_product(self, name):
+        Product = Pool().get('product.product')
+        if isinstance(self.test.document, Product):
+            return self.test.document.id
+
+    @classmethod
+    def search_product(cls, name, clause):
+        Product = Pool().get('product.product')
+
+        _, operator, value = clause[0:3]
+        if isinstance(value, list):
+            values = [('%s,%s' % ('product.product',
+                v.id if isinstance(v, Product) else v)) for v in value]
+        else:
+            values = '%s,%s' % ('product.product',
+                value.id if isinstance(value, Product) else value)
+        return [('test.document', operator, values)]
+
+
+class QuantitativeTestLine(TestLineMixin, metaclass=PoolMeta):
+    __name__ = 'quality.quantitative.test.line'
+
+
+class QualitativeTestLine(TestLineMixin, metaclass=PoolMeta):
+    __name__ = 'quality.qualitative.test.line'

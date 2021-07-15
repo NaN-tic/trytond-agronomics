@@ -27,7 +27,8 @@
         <record model="ir.action.act_window" id="act_product_quality_test">
             <field name="name">Quality Test</field>
             <field name="res_model">quality.test</field>
-            <field name="domain"
+            <field
+                name="domain"
                 eval="[If(Eval('active_ids', []) == [Eval('active_id')], ('document.id', '=', Eval('active_id'), 'product.product'), ('document.id', 'in', Eval('active_ids'), 'product.product'))]"
                 pyson="1"/>
         </record>
@@ -35,6 +36,34 @@
             <field name="keyword">form_relate</field>
             <field name="model">product.product,-1</field>
             <field name="action" ref="act_product_quality_test"/>
+        </record>
+
+        <record model="ir.action.act_window" id="act_product_quantitative_test_lines">
+            <field name="name">Quantitative Lines</field>
+            <field name="res_model">quality.quantitative.test.line</field>
+            <field
+                name="domain"
+                eval="[If(Eval('active_ids', []) == [Eval('active_id')], ('product', '=', Eval('active_id')), ('product', 'in', Eval('active_ids')))]"
+                pyson="1"/>
+        </record>
+        <record model="ir.action.keyword" id="act_product_quantitative_test_lines_keyword">
+            <field name="keyword">form_relate</field>
+            <field name="model">product.product,-1</field>
+            <field name="action" ref="act_product_quantitative_test_lines"/>
+        </record>
+
+        <record model="ir.action.act_window" id="act_product_qualitative_test_lines">
+            <field name="name">Qualitative Lines</field>
+            <field name="res_model">quality.qualitative.test.line</field>
+            <field
+                name="domain"
+                eval="[If(Eval('active_ids', []) == [Eval('active_id')], ('product', '=', Eval('active_id')), ('product', 'in', Eval('active_ids')))]"
+                pyson="1"/>
+        </record>
+        <record model="ir.action.keyword" id="act_product_qualitative_test_lines_keyword">
+            <field name="keyword">form_relate</field>
+            <field name="model">product.product,-1</field>
+            <field name="action" ref="act_product_qualitative_test_lines"/>
         </record>
 
         <!-- Certification -->

@@ -30,6 +30,8 @@ def register():
         product.ProductVariety,
         product.Template,
         quality.QualityTest,
+        quality.QuantitativeTestLine,
+        quality.QualitativeTestLine,
         module='agronomics', type_='model')
     Pool.register(
         module='agronomics', type_='wizard')
