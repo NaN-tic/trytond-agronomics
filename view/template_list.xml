@@ -2,5 +2,6 @@
     <xpath expr="/tree" position="inside">
         <field name="agronomic_type" tree_invisible="1"/>
         <field name="container" tree_invisible="1"/>
+        <field name="capacity" tree_invisible="1"/>
     </xpath>
 </data>

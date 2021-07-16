@@ -47,6 +47,19 @@ class Template(metaclass=PoolMeta):
         states={
             'invisible': Eval('agronomic_type') != 'bottled-wine',
         }, depends=['agronomic_type'])
+    capacity = fields.Function(fields.Numeric('Capacity', digits=(16, 2),
+        states={
+            'invisible': Eval('agronomic_type') != 'bottled-wine',
+        }, depends=['agronomic_type']), 'get_capacity',
+        searcher='search_capacity')
+
+    def get_capacity(self, name):
+        if self.container:
+            return self.container.capacity
+
+    @classmethod
+    def search_capacity(cls, name, clause):
+        return [('container.capacity',) + tuple(clause[1:])]
 
 
 class Product(WineMixin, metaclass=PoolMeta):
@@ -85,14 +98,6 @@ class Product(WineMixin, metaclass=PoolMeta):
                 ['wine', 'unfiltered-wine', 'filtered-wine', 'clarified-wine',
                     'bottled-wine']
             )}, depends=['agronomic_type'])
-    capacity = fields.Function(fields.Numeric('Capacity', digits=(16, 2),
-        states={
-            'invisible': Eval('agronomic_type') != 'bottled-wine',
-        }, depends=['agronomic_type']), 'get_capacity')
-
-    def get_capacity(self, name):
-        if self.template.container and self.wine_alcohol_content:
-            return Decimal((float(self.template.container.capacity) * float(self.wine_alcohol_content)) / 100)
 
     @classmethod
     def validate(cls, products):

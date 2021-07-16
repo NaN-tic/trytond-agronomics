@@ -4,5 +4,7 @@
         <field name="agronomic_type"/>
         <label name="container"/>
         <field name="container"/>
+        <label name="capacity"/>
+        <field name="capacity"/>
     </xpath>
 </data>
