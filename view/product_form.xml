@@ -19,12 +19,6 @@
     </xpath>
     <xpath expr="/form/notebook" position="inside">
         <page string="Quality" id="agronomics-quality" col="6">
-            <label name="wine_quality_confirm"/>
-            <field name="wine_quality_confirm"/>
-            <label name="wine_quality_success"/>
-            <field name="wine_quality_success"/>
-            <newline/>
-
             <label name="wine_likely_alcohol_content"/>
             <field name="wine_likely_alcohol_content"/>
             <label name="wine_likely_alcohol_content_confirm"/>

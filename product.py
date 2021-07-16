@@ -93,11 +93,11 @@ class Product(WineMixin, metaclass=PoolMeta):
                     'bottled-wine']
             )
         }, depends=['agronomic_type'])
-    alcohol_volume = fields.Numeric('Alcohol Volume', digits=(16, 2), states={
+    alcohol_volume = fields.Function(fields.Numeric('Alcohol Volume', digits=(16, 2), states={
             'invisible': ~ Eval('agronomic_type').in_(
                 ['wine', 'unfiltered-wine', 'filtered-wine', 'clarified-wine',
                     'bottled-wine']
-            )}, depends=['agronomic_type'])
+            )}, depends=['agronomic_type']), 'get_alcohol_volume')
 
     @classmethod
     def validate(cls, products):
@@ -112,6 +112,12 @@ class Product(WineMixin, metaclass=PoolMeta):
                 if len(product.varieties) > 1:
                     raise UserError(gettext('agronomics.msg_variety_limit',
                     product=product.rec_name))
+
+    def get_alcohol_volume(self, name):
+        if self.template.capacity and self.wine_alcohol_content:
+            return Decimal(
+                (float(self.template.capacity) * float(self.wine_alcohol_content))
+                    / 100).quantize(Decimal(str(10 ** -2)))
 
 
 class ProductCrop(ModelSQL):

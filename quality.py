@@ -57,9 +57,6 @@ class QualityTest(metaclass=PoolMeta):
                 values[key + '_success'] = line.success
 
             if values:
-                values['wine_quality_confirm'] = today
-                values['wine_quality_success'] = test.success
-
                 to_write.extend(([test.document], values))
 
         if to_write:

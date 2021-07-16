@@ -13,10 +13,6 @@ _WINE_DIGITS = 4
 
 
 class WineMixin(Model):
-    wine_quality_confirm = fields.Date('Quality Confirm', readonly=True)
-    wine_quality_success = fields.Boolean('Quality Success', readonly=True, states={
-            'invisible': ~Bool(Eval('wine_quality_confirm', None)),
-        }, depends=['wine_quality_confirm'])
     wine_quality_comment = fields.Function(fields.Text('Wine Quality Comments'),
         'get_wine_quality_comment')
 
