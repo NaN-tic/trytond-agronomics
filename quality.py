@@ -21,33 +21,31 @@ class QualityTest(metaclass=PoolMeta):
 
         # get all key from ir.model.data
         to_write = []
-        proof_templates = []
+        proof_ids = []
         for test in tests:
-            if not test.document or test.document.__name__ != 'product.product':
+            if not test.document or not isinstance(test.document, Product):
                 continue
 
-            proof_templates += [line.proof.template
-                                    for line in test.quantitative_lines
-                                        if line.proof and line.proof.template]
+            proof_ids += [line.proof for line in test.quantitative_lines
+                                    if line.proof]
+        if not proof_ids:
+            return
 
         datas = ModelData.search([
             ('module', '=', 'agronomics'),
-            ('db_id', 'in', [pt.id for pt in proof_templates]),
-            ('model', '=', 'quality.proof.template')
+            ('db_id', 'in', proof_ids),
+            ('model', '=', 'quality.proof')
             ])
         data_key = dict((x.db_id, x.fs_id) for x in datas)
 
         # check all quantitative lines has key and update the product
         for test in tests:
-            if not test.document or test.document.__name__ != 'product.product':
+            if not test.document or not isinstance(test.document, Product):
                 continue
 
             values = {}
             for line in test.quantitative_lines:
-                if not line.proof.template:
-                    continue
-
-                key = data_key.get(line.proof.template.id)
+                key = data_key.get(line.proof.id)
                 if not key:
                     continue
 

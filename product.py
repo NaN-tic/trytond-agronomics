@@ -117,7 +117,8 @@ class Product(WineMixin, metaclass=PoolMeta):
         if self.template.capacity and self.wine_alcohol_content:
             return Decimal(
                 (float(self.template.capacity) * float(self.wine_alcohol_content))
-                    / 100).quantize(Decimal(str(10 ** -2)))
+                    / 100).quantize(
+                        Decimal(str(10 ** -self.__class__.alcohol_volume.digits[1])))
 
 
 class ProductCrop(ModelSQL):
