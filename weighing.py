@@ -90,7 +90,7 @@ class Weighing(Workflow, ModelSQL, ModelView):
         'weighing', 'plantation', 'plantations', states={
             'readonly': Eval('state').in_(READONLY),
             'required': Eval('state') == 'process',
-            })
+            }, size=4)
     state = fields.Selection([
                 ('draft', "Draft"),
                 ('processing', "Processing"),
@@ -239,6 +239,8 @@ class Weighing(Workflow, ModelSQL, ModelView):
     @classmethod
     def check_percent_beneficiaries(cls, records):
         for record in records:
+            if record.state == 'draft':
+                continue
             percent = sum([x.percent for x in record.beneficiaries])
             if record.beneficiaries and abs(100 - round(percent, 2)) > 0.0001:
                 raise UserError(gettext('agronomics.msg_beneficiaris_percent',
