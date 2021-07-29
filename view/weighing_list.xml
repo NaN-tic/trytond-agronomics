@@ -1,0 +1,15 @@
+<tree>
+  <field name="number"/>
+  <field name="weighing_date"/>
+  <field name="weighing_center"/>
+  <field name="crop"/>
+  <field name="product"/>
+  <field name="variety"/>
+  <field name="all_do"/>
+  <field name="table"/>
+  <field name="ecological"/>
+  <field name="weight"/>
+  <field name="tara"/>
+  <field name="netweight"/>
+  <field name="state"/>
+</tree>

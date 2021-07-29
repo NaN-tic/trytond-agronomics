@@ -48,6 +48,8 @@ class Template(metaclass=PoolMeta):
         }, depends=['agronomic_type']), 'get_capacity',
         searcher='search_capacity')
 
+    quality_weighing = fields.Many2One('quality.template', 'Quality Weighing')
+
     def get_capacity(self, name):
         if self.container:
             return self.container.capacity
