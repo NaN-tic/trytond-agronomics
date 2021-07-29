@@ -17,7 +17,7 @@
   <field name="table"/>
   <label name="ecological"/>
   <field name="ecological"/>
-  <group col="6" colspan="4">
+  <group col="6" colspan="4" id="weight">
     <label name="weight"/>
     <field name="weight"/>
     <label name="tara"/>

@@ -211,7 +211,7 @@ class Weighing(Workflow, ModelSQL, ModelView):
         return parcel.product and parcel.product.id
 
     @fields.depends('plantations')
-    def on_change_with_contract(self):
+    def on_change_with_purchase_contract(self):
         parcel = self.get_parcel()
         if not parcel:
             return
