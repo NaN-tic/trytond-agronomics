@@ -287,8 +287,8 @@ msgid "Weighing Center"
 msgstr "Centre de pesada"
 
 msgctxt "field:agronomics.weighing,weighing_date:"
-msgid "Sale Date"
-msgstr "Data venda"
+msgid "Date"
+msgstr "Data"
 
 msgctxt "field:agronomics.weighing,weight:"
 msgid "Weight"

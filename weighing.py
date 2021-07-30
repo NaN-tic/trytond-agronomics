@@ -28,7 +28,7 @@ class Weighing(Workflow, ModelSQL, ModelView):
     _rec_name = 'number'
 
     number = fields.Char('Number', readonly=True, select=True)
-    weighing_date = fields.Date('Sale Date', states={
+    weighing_date = fields.Date('Date', states={
             'readonly': Eval('state').in_(READONLY),
             'required': True
             }, depends=['state'])
@@ -48,7 +48,7 @@ class Weighing(Workflow, ModelSQL, ModelView):
             'readonly': Eval('state').in_(READONLY),
             'required': Eval('state') == 'in_analysis',
             }, depends=['state'])
-    product = fields.Many2One('product.product', 'Product', states={
+    product = fields.Many2One('product.template', 'Product', states={
             'readonly': Eval('state').in_(READONLY),
             'required': Eval('state') == 'in_analysis',
             }, depends=['state'])
