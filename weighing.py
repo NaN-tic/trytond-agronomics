@@ -256,7 +256,7 @@ class Weighing(Workflow, ModelSQL, ModelView):
             with_rec_name=False)
         product = Product(**default_product_values)
         for weighing in weighings:
-            product.template = weighing.product.template
+            product.template = weighing.product
             product.denominations_of_origin = weighing.denomination_origin
             product.ecologicals = [weighing.ecological]
             product.varieties = [weighing.variety.id]
