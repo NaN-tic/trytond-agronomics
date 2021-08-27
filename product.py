@@ -99,8 +99,7 @@ class Product(metaclass=PoolMeta):
                 if len(product.vintages) > 1:
                     raise UserError(gettext('agronomics.msg_vintage_limit',
                     product=product.rec_name))
-            if (product.agronomic_type in
-                    ['grape']):
+            if product.agronomic_type == 'grape':
                 if len(product.varieties) > 1:
                     raise UserError(gettext('agronomics.msg_variety_limit',
                     product=product.rec_name))
