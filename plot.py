@@ -19,6 +19,7 @@ class Enclosure(ModelSQL, ModelView):
     surface_sigpac = fields.Numeric('Surface Sigpac')
     plantation = fields.Many2One('agronomics.plantation', 'Plantation')
 
+
 class Crop(ModelSQL, ModelView):
     "Crop"
     __name__ = 'agronomics.crop'
