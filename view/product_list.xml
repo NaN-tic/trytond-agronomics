@@ -9,5 +9,120 @@
         <field name="alcohol_volume" tree_invisible="1"/>
         <field name="container" tree_invisible="1"/>
         <field name="capacity" tree_invisible="1"/>
+
+        <field name="wine_likely_alcohol_content" tree_invisible="1"/>
+        <field name="wine_likely_alcohol_content_comment" tree_invisible="1"/>
+        <field name="wine_likely_alcohol_content_confirm" tree_invisible="1"/>
+        <field name="wine_likely_alcohol_content_success" tree_invisible="1"/>
+
+        <field name="wine_botrytis" tree_invisible="1"/>
+        <field name="wine_botrytis_comment" tree_invisible="1"/>
+        <field name="wine_botrytis_confirm" tree_invisible="1"/>
+        <field name="wine_botrytis_success" tree_invisible="1"/>
+
+        <field name="wine_alcohol_content" tree_invisible="1"/>
+        <field name="wine_alcohol_content_comment" tree_invisible="1"/>
+        <field name="wine_alcohol_content_confirm" tree_invisible="1"/>
+        <field name="wine_alcohol_content_success" tree_invisible="1"/>
+
+        <field name="wine_density" tree_invisible="1"/>
+        <field name="wine_density_comment" tree_invisible="1"/>
+        <field name="wine_density_confirm" tree_invisible="1"/>
+        <field name="wine_density_success" tree_invisible="1"/>
+
+        <field name="wine_temperature" tree_invisible="1"/>
+        <field name="wine_temperature_comment" tree_invisible="1"/>
+        <field name="wine_temperature_confirm" tree_invisible="1"/>
+        <field name="wine_temperature_success" tree_invisible="1"/>
+
+        <field name="wine_ph" tree_invisible="1"/>
+        <field name="wine_ph_comment" tree_invisible="1"/>
+        <field name="wine_ph_confirm" tree_invisible="1"/>
+        <field name="wine_ph_success" tree_invisible="1"/>
+
+        <field name="wine_free_sulphur" tree_invisible="1"/>
+        <field name="wine_free_sulphur_comment" tree_invisible="1"/>
+        <field name="wine_free_sulphur_confirm" tree_invisible="1"/>
+        <field name="wine_free_sulphur_success" tree_invisible="1"/>
+
+        <field name="wine_total_sulphur" tree_invisible="1"/>
+        <field name="wine_total_sulphur_comment" tree_invisible="1"/>
+        <field name="wine_total_sulphur_confirm" tree_invisible="1"/>
+        <field name="wine_total_sulphur_success" tree_invisible="1"/>
+
+        <field name="wine_tartaric_acidity" tree_invisible="1"/>
+        <field name="wine_tartaric_acidity_comment" tree_invisible="1"/>
+        <field name="wine_tartaric_acidity_confirm" tree_invisible="1"/>
+        <field name="wine_tartaric_acidity_success" tree_invisible="1"/>
+
+        <field name="wine_volatility" tree_invisible="1"/>
+        <field name="wine_volatility_comment" tree_invisible="1"/>
+        <field name="wine_volatility_confirm" tree_invisible="1"/>
+        <field name="wine_volatility_success" tree_invisible="1"/>
+
+        <field name="wine_malic_acid" tree_invisible="1"/>
+        <field name="wine_malic_acid_comment" tree_invisible="1"/>
+        <field name="wine_malic_acid_confirm" tree_invisible="1"/>
+        <field name="wine_malic_acid_success" tree_invisible="1"/>
+
+        <field name="wine_lactic_acid" tree_invisible="1"/>
+        <field name="wine_lactic_acid_comment" tree_invisible="1"/>
+        <field name="wine_lactic_acid_confirm" tree_invisible="1"/>
+        <field name="wine_lactic_acid_success" tree_invisible="1"/>
+
+        <field name="wine_protein_stability" tree_invisible="1"/>
+        <field name="wine_protein_stability_comment" tree_invisible="1"/>
+        <field name="wine_protein_stability_confirm" tree_invisible="1"/>
+        <field name="wine_protein_stability_success" tree_invisible="1"/>
+
+        <field name="wine_tartaric_stability" tree_invisible="1"/>
+        <field name="wine_tartaric_stability_comment" tree_invisible="1"/>
+        <field name="wine_tartaric_stability_confirm" tree_invisible="1"/>
+        <field name="wine_tartaric_stability_success" tree_invisible="1"/>
+
+        <field name="wine_turbidity" tree_invisible="1"/>
+        <field name="wine_turbidity_comment" tree_invisible="1"/>
+        <field name="wine_turbidity_confirm" tree_invisible="1"/>
+        <field name="wine_turbidity_success" tree_invisible="1"/>
+
+        <field name="wine_glucose_fructose" tree_invisible="1"/>
+        <field name="wine_glucose_fructose_comment" tree_invisible="1"/>
+        <field name="wine_glucose_fructose_confirm" tree_invisible="1"/>
+        <field name="wine_glucose_fructose_success" tree_invisible="1"/>
+
+        <field name="wine_color_intensity" tree_invisible="1"/>
+        <field name="wine_color_intensity_comment" tree_invisible="1"/>
+        <field name="wine_color_intensity_confirm" tree_invisible="1"/>
+        <field name="wine_color_intensity_success" tree_invisible="1"/>
+
+        <field name="wine_tone" tree_invisible="1"/>
+        <field name="wine_tone_comment" tree_invisible="1"/>
+        <field name="wine_tone_confirm" tree_invisible="1"/>
+        <field name="wine_tone_success" tree_invisible="1"/>
+
+        <field name="wine_clogging" tree_invisible="1"/>
+        <field name="wine_clogging_comment" tree_invisible="1"/>
+        <field name="wine_clogging_confirm" tree_invisible="1"/>
+        <field name="wine_clogging_success" tree_invisible="1"/>
+
+        <field name="wine_overall_impression" tree_invisible="1"/>
+        <field name="wine_overall_impression_comment" tree_invisible="1"/>
+        <field name="wine_overall_impression_confirm" tree_invisible="1"/>
+        <field name="wine_overall_impression_success" tree_invisible="1"/>
+
+        <field name="wine_observing_phase" tree_invisible="1"/>
+        <field name="wine_observing_phase_comment" tree_invisible="1"/>
+        <field name="wine_observing_phase_confirm" tree_invisible="1"/>
+        <field name="wine_observing_phase_success" tree_invisible="1"/>
+
+        <field name="wine_smelling_phase" tree_invisible="1"/>
+        <field name="wine_smelling_phase_comment" tree_invisible="1"/>
+        <field name="wine_smelling_phase_confirm" tree_invisible="1"/>
+        <field name="wine_smelling_phase_success" tree_invisible="1"/>
+
+        <field name="wine_tasting_phase" tree_invisible="1"/>
+        <field name="wine_tasting_phase_comment" tree_invisible="1"/>
+        <field name="wine_tasting_phase_confirm" tree_invisible="1"/>
+        <field name="wine_tasting_phase_success" tree_invisible="1"/>
     </xpath>
 </data>
