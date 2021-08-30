@@ -139,8 +139,8 @@ msgid "Irrigation"
 msgstr "Irrigación"
 
 msgctxt "field:agronomics.parcel,max_production:"
-msgid "Max Production"
-msgstr "Producción Máxima"
+msgid "Max. Production"
+msgstr "Max. producción"
 
 msgctxt "field:agronomics.parcel,plant_number:"
 msgid "Plant number"
@@ -348,7 +348,7 @@ msgstr "Parcela"
 
 msgctxt "model:agronomics.parcel-agronomics.do,name:"
 msgid "Parcel - Denomination Origin"
-msgstr ""
+msgstr "Parecela - Denominación de origen"
 
 msgctxt "model:agronomics.plantation,name:"
 msgid "Plantation"
@@ -492,11 +492,19 @@ msgstr "Agronomics Administración"
 
 msgctxt "selection:product.product,agronomic_type:"
 msgid "Bottled Wine"
-msgstr "Vino Embotellado"
+msgstr "Vino embotellado"
+
+msgctxt "selection:product.product,agronomic_type:"
+msgid "Clarified Wine"
+msgstr "Vino clarificado"
 
 msgctxt "selection:product.product,agronomic_type:"
 msgid "DO Wort"
 msgstr "Mosto DO"
+
+msgctxt "selection:product.product,agronomic_type:"
+msgid "Filtered Wine"
+msgstr "Vino filtrado"
 
 msgctxt "selection:product.product,agronomic_type:"
 msgid "Grape"
@@ -505,6 +513,10 @@ msgstr "Uva"
 msgctxt "selection:product.product,agronomic_type:"
 msgid "Not DO Wort"
 msgstr "Mosto no DO"
+
+msgctxt "selection:product.product,agronomic_type:"
+msgid "Unfiltered Wine"
+msgstr "Vino en rama"
 
 msgctxt "selection:product.product,agronomic_type:"
 msgid "Wine"
@@ -512,11 +524,19 @@ msgstr "Vino"
 
 msgctxt "selection:product.template,agronomic_type:"
 msgid "Bottled Wine"
-msgstr "Vino Embotellado"
+msgstr "Vino embotellado"
+
+msgctxt "selection:product.template,agronomic_type:"
+msgid "Clarified Wine"
+msgstr "Vino clarificado"
 
 msgctxt "selection:product.template,agronomic_type:"
 msgid "DO Wort"
 msgstr "Mosto DO"
+
+msgctxt "selection:product.template,agronomic_type:"
+msgid "Filtered Wine"
+msgstr "Vino filtrado"
 
 msgctxt "selection:product.template,agronomic_type:"
 msgid "Grape"
@@ -525,6 +545,10 @@ msgstr "Uva"
 msgctxt "selection:product.template,agronomic_type:"
 msgid "Not DO Wort"
 msgstr "Mosto no DO"
+
+msgctxt "selection:product.template,agronomic_type:"
+msgid "Unfiltered Wine"
+msgstr "Vino en rama"
 
 msgctxt "selection:product.template,agronomic_type:"
 msgid "Wine"
