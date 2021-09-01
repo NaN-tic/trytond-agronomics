@@ -1,0 +1,202 @@
+<tryton>
+    <data>
+
+      <!-- Weighing Center -->
+
+      <record model="ir.ui.view" id="weighing_center_view_form">
+          <field name="model">agronomics.weighing.center</field>
+          <field name="type">form</field>
+          <field name="name">weighing_center_form</field>
+      </record>
+      <record model="ir.ui.view" id="weighing_center_view_tree">
+          <field name="model">agronomics.weighing.center</field>
+          <field name="type">tree</field>
+          <field name="priority" eval="20"/>
+          <field name="name">weighing_center_list</field>
+      </record>
+
+      <record model="ir.action.act_window" id="act_weighing_center_action">
+          <field name="name">Weighing Center</field>
+          <field name="res_model">agronomics.weighing.center</field>
+      </record>
+
+      <record model="ir.action.act_window.view" id="act_weighing_center_tree_view1">
+          <field name="sequence" eval="10"/>
+          <field name="view" ref="weighing_center_view_tree"/>
+          <field name="act_window" ref="act_weighing_center_action"/>
+      </record>
+      <record model="ir.action.act_window.view" id="act_weighing_center_tree_view2">
+          <field name="sequence" eval="20"/>
+          <field name="view" ref="weighing_center_view_form"/>
+          <field name="act_window" ref="act_weighing_center_action"/>
+      </record>
+
+      <menuitem parent="menu_configuration" sequence="1"
+          action="act_weighing_center_action" id="menu_weighing_center_list"/>
+
+      <record model="ir.ui.menu-res.group"
+              id="menu_weighing_center_list_group_agronomics">
+          <field name="menu" ref="menu_weighing_center_list"/>
+          <field name="group" ref="group_agronomics"/>
+      </record>
+      <record model="ir.ui.menu-res.group"
+              id="menu_weighing_center_list_group_agronomics_admin">
+          <field name="menu" ref="menu_weighing_center_list"/>
+          <field name="group" ref="group_agronomics_admin"/>
+      </record>
+
+
+      <!-- Weighing -->
+
+      <record model="ir.ui.view" id="weighing_view_form">
+          <field name="model">agronomics.weighing</field>
+          <field name="type">form</field>
+          <field name="name">weighing_form</field>
+      </record>
+      <record model="ir.ui.view" id="weighing_view_tree">
+          <field name="model">agronomics.weighing</field>
+          <field name="type">tree</field>
+          <field name="priority" eval="20"/>
+          <field name="name">weighing_list</field>
+      </record>
+
+      <record model="ir.action.act_window" id="act_weighing_action">
+          <field name="name">Weighing</field>
+          <field name="res_model">agronomics.weighing</field>
+      </record>
+
+      <record model="ir.action.act_window.view" id="act_weighing_tree_view1">
+          <field name="sequence" eval="10"/>
+          <field name="view" ref="weighing_view_tree"/>
+          <field name="act_window" ref="act_weighing_action"/>
+      </record>
+      <record model="ir.action.act_window.view" id="act_weighing_tree_view2">
+          <field name="sequence" eval="20"/>
+          <field name="view" ref="weighing_view_form"/>
+          <field name="act_window" ref="act_weighing_action"/>
+      </record>
+
+      <record model="ir.action.act_window.domain" id="act_weighing_domain_draft">
+          <field name="name">Draft</field>
+          <field name="sequence" eval="10"/>
+          <field name="domain"
+              eval="[('state', '=', 'draft')]"
+              pyson="1"/>
+          <field name="act_window" ref="act_weighing_action"/>
+      </record>
+
+      <record model="ir.action.act_window.domain" id="act_weighing_domain_processing">
+          <field name="name">Processing</field>
+          <field name="sequence" eval="10"/>
+          <field name="domain"
+              eval="[('state', '=', 'processing')]"
+              pyson="1"/>
+          <field name="act_window" ref="act_weighing_action"/>
+      </record>
+
+
+      <record model="ir.action.act_window.domain" id="act_weighing_domain_analysis">
+          <field name="name">In Analysis</field>
+          <field name="sequence" eval="10"/>
+          <field name="domain"
+              eval="[('state', '=', 'in_analysis')]"
+              pyson="1"/>
+          <field name="act_window" ref="act_weighing_action"/>
+      </record>
+
+
+      <record model="ir.action.act_window.domain" id="act_weighing_domain_all">
+          <field name="name">All</field>
+          <field name="sequence" eval="10"/>
+          <field name="domain"/>
+          <field name="act_window" ref="act_weighing_action"/>
+      </record>
+
+
+      <menuitem parent="menu_agronomics" sequence="1"
+          action="act_weighing_action" id="menu_weighing_list"/>
+
+      <record model="ir.ui.menu-res.group"
+              id="menu_weighing_list_group_agronomics">
+          <field name="menu" ref="menu_weighing_list"/>
+          <field name="group" ref="group_agronomics"/>
+      </record>
+      <record model="ir.ui.menu-res.group"
+              id="menu_weighing_list_group_agronomics_admin">
+          <field name="menu" ref="menu_weighing_list"/>
+          <field name="group" ref="group_agronomics_admin"/>
+      </record>
+
+      <record model="ir.sequence.type" id="sequence_type_weighing">
+          <field name="name">Weighing</field>
+      </record>
+
+      <record model="ir.sequence.type-res.group"
+          id="sequence_type_weighing_group_admin">
+          <field name="sequence_type" ref="sequence_type_weighing"/>
+          <field name="group" ref="res.group_admin"/>
+      </record>
+      <record model="ir.sequence.type-res.group"
+          id="sequence_type_weighing_group_sale_admin">
+          <field name="sequence_type" ref="sequence_type_weighing"/>
+          <field name="group" ref="group_agronomics_admin"/>
+      </record>
+
+      <record model="ir.sequence" id="sequence_weighing">
+          <field name="name">Weighing</field>
+          <field name="sequence_type" ref="sequence_type_weighing"/>
+      </record>
+
+
+      <record model="ir.model.button" id="weighing_draft_button">
+          <field name="name">draft</field>
+          <field name="string">Draft</field>
+          <field name="model" search="[('model', '=', 'agronomics.weighing')]"/>
+      </record>
+      <record model="ir.model.button-res.group" id="weighing_draft_button_group_agronomics">
+          <field name="button" ref="weighing_draft_button"/>
+          <field name="group" ref="group_agronomics"/>
+      </record>
+
+      <record model="ir.model.button" id="weighing_process_button">
+          <field name="name">process</field>
+          <field name="string">Process</field>
+          <field name="model" search="[('model', '=', 'agronomics.weighing')]"/>
+      </record>
+      <record model="ir.model.button-res.group" id="weighing_process_button_group_agronomics">
+          <field name="button" ref="weighing_process_button"/>
+          <field name="group" ref="group_agronomics"/>
+      </record>
+
+      <record model="ir.model.button" id="weighing_analysis_button">
+          <field name="name">analysis</field>
+          <field name="string">Analysis</field>
+          <field name="model" search="[('model', '=', 'agronomics.weighing')]"/>
+      </record>
+      <record model="ir.model.button-res.group" id="weighing_analysis_button_group_agronomics">
+          <field name="button" ref="weighing_analysis_button"/>
+          <field name="group" ref="group_agronomics"/>
+      </record>
+
+      <record model="ir.model.button" id="weighing_cancel_button">
+          <field name="name">cancel</field>
+          <field name="string">Cancel</field>
+          <field name="model" search="[('model', '=', 'agronomics.weighing')]"/>
+      </record>
+      <record model="ir.model.button-res.group" id="weighing_cancel_button_group_agronomics">
+          <field name="button" ref="weighing_cancel_button"/>
+          <field name="group" ref="group_agronomics"/>
+      </record>
+
+      <record model="ir.model.button" id="weighing_done_button">
+          <field name="name">done</field>
+          <field name="string">Done</field>
+          <field name="model" search="[('model', '=', 'agronomics.weighing')]"/>
+      </record>
+      <record model="ir.model.button-res.group" id="weighing_done_button_group_agronomics">
+          <field name="button" ref="weighing_done_button"/>
+          <field name="group" ref="group_agronomics"/>
+      </record>
+
+    </data>
+</tryton>

@@ -3,6 +3,8 @@
   <field name="crop"/>
   <label name="plantation"/>
   <field name="plantation"/>
+  <label name="product"/>
+  <field name="product"/>
   <label name="species"/>
   <field name="species"/>
   <label name="variety"/>
