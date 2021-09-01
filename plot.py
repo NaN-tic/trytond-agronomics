@@ -6,7 +6,7 @@ from trytond.i18n import gettext
 from trytond.exceptions import UserError
 
 class Enclosure(ModelSQL, ModelView):
-    """ Enclosure """
+    "Enclosure"
     __name__ = 'agronomics.enclosure'
 
     aggregate_sigpac = fields.Numeric('Aggragate Sigpac')
@@ -19,8 +19,9 @@ class Enclosure(ModelSQL, ModelView):
     surface_sigpac = fields.Numeric('Surface Sigpac')
     plantation = fields.Many2One('agronomics.plantation', 'Plantation')
 
+
 class Crop(ModelSQL, ModelView):
-    """ Crop """
+    "Crop"
     __name__ = 'agronomics.crop'
 
     code = fields.Char('Code', required=True)
@@ -30,14 +31,14 @@ class Crop(ModelSQL, ModelView):
 
 
 class DenominationOrigin(ModelSQL, ModelView):
-    """ Denomination Of Origin """
+    "Denomination of Origin"
     __name__ = 'agronomics.denomination_of_origin'
 
     name = fields.Char('Name', required=True)
 
 
 class MaxProductionAllowed(ModelSQL, ModelView):
-    """ Max Production Allowed """
+    "Max Production Allowed"
     __name__ = 'agronomics.max.production.allowed'
 
     crop = fields.Many2One('agronomics.crop', 'Crop', required=True)
@@ -51,13 +52,14 @@ class MaxProductionAllowed(ModelSQL, ModelView):
 
 
 class Irrigation(ModelSQL, ModelView):
-    """ Irrigation """
+    "Irrigation"
     __name__ = 'agronomics.irrigation'
 
     name = fields.Char('Name', required=True)
 
+
 class Plantation(ModelSQL, ModelView):
-    """ Plantation """
+    "Plantation"
     __name__ = 'agronomics.plantation'
 
     code = fields.Char('Code', required=True)
@@ -73,14 +75,14 @@ class Plantation(ModelSQL, ModelView):
 
 
 class Ecological(ModelSQL, ModelView):
-    """ Ecological """
+    "Ecological"
     __name__ = 'agronomics.ecological'
 
     name = fields.Char('Name', required=True)
 
 
 class Parcel(ModelSQL, ModelView):
-    """ Parcel """
+    "Parcel"
     __name__ = 'agronomics.parcel'
 
     plantation = fields.Many2One('agronomics.plantation', 'Plantation',
@@ -136,8 +138,9 @@ class Parcel(ModelSQL, ModelView):
         return round(float(min([x.max_production for x in max_production])
             )*self.surface, 2)
 
+
 class ParcelDo(ModelSQL):
-    'Parcel - Denomination Origin'
+    "Parcel - Denomination Origin"
     __name__ = 'agronomics.parcel-agronomics.do'
 
     parcel = fields.Many2One('agronomics.parcel', 'Parcel')
@@ -146,7 +149,7 @@ class ParcelDo(ModelSQL):
 
 
 class Beneficiaries(ModelSQL, ModelView):
-    """ Beneficiaries """
+    "Beneficiaries"
     __name__ = 'agronomics.beneficiary'
 
     party = fields.Many2One('party.party', 'Beneficiary', required=True)

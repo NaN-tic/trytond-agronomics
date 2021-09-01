@@ -6,6 +6,7 @@ from . import party
 from . import plot
 from . import product
 from . import weighing
+from . import quality
 
 
 def register():
@@ -33,6 +34,9 @@ def register():
         weighing.Weighing,
         weighing.WeighingPlantation,
         weighing.WeighingDo,
+        quality.QualityTest,
+        quality.QuantitativeTestLine,
+        quality.QualitativeTestLine,
         module='agronomics', type_='model')
     Pool.register(
         module='agronomics', type_='wizard')

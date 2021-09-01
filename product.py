@@ -1,10 +1,12 @@
 # This file is part of Tryton.  The COPYRIGHT file at the top level of
 # this repository contains the full copyright notices and license terms.
+from decimal import Decimal
 from trytond.model import ModelSQL, ModelView, fields
-from trytond.pool import PoolMeta, Pool
+from trytond.pool import PoolMeta
 from trytond.pyson import Eval
 from trytond.exceptions import UserError
 from trytond.i18n import gettext
+from trytond.modules.agronomics.wine import WineMixin
 
 
 class Certification(ModelSQL, ModelView):
@@ -35,6 +37,9 @@ class Template(metaclass=PoolMeta):
             ('grape', "Grape"),
             ('do-wort', "DO Wort"),
             ('not-do-wort', "Not DO Wort"),
+            ('unfiltered-wine', 'Unfiltered Wine'),
+            ('filtered-wine', 'Filtered Wine'),
+            ('clarified-wine', 'Clarified Wine'),
             ('wine', "Wine"),
             ('bottled-wine', "Bottled Wine"),
             ], "Agronomic Type", select=True)
@@ -59,7 +64,7 @@ class Template(metaclass=PoolMeta):
         return [('container.capacity',) + tuple(clause[1:])]
 
 
-class Product(metaclass=PoolMeta):
+class Product(WineMixin, metaclass=PoolMeta):
     __name__ = 'product.product'
 
     vintages = fields.Many2Many('product.product-agronomics.crop', 'product',
@@ -79,19 +84,22 @@ class Product(metaclass=PoolMeta):
     quality_sample = fields.Many2One('quality.sample', 'Quality Sample',
         states={
             'invisible': ~ Eval('agronomic_type').in_(
-                ['wine', 'bottled-wine']
+                ['wine', 'unfiltered-wine', 'filtered-wine', 'clarified-wine',
+                    'bottled-wine']
             )
         }, depends=['agronomic_type'])
     certification = fields.Many2One('agronomics.certification',
         'Certification', states={
             'invisible': ~ Eval('agronomic_type').in_(
-                ['wine', 'bottled-wine']
+                ['wine', 'unfiltered-wine', 'filtered-wine', 'clarified-wine',
+                    'bottled-wine']
             )
         }, depends=['agronomic_type'])
-    alcohol_volume = fields.Numeric('Alcohol Volume', digits=(16, 2), states={
+    alcohol_volume = fields.Function(fields.Numeric('Alcohol Volume', digits=(16, 2), states={
             'invisible': ~ Eval('agronomic_type').in_(
-                ['wine', 'bottled-wine']
-            )}, depends=['agronomic_type'])
+                ['wine', 'unfiltered-wine', 'filtered-wine', 'clarified-wine',
+                    'bottled-wine']
+            )}, depends=['agronomic_type']), 'get_alcohol_volume')
 
     @classmethod
     def validate(cls, products):
@@ -101,11 +109,17 @@ class Product(metaclass=PoolMeta):
                 if len(product.vintages) > 1:
                     raise UserError(gettext('agronomics.msg_vintage_limit',
                     product=product.rec_name))
-            if (product.agronomic_type in
-                    ['grape']):
+            if product.agronomic_type == 'grape':
                 if len(product.varieties) > 1:
                     raise UserError(gettext('agronomics.msg_variety_limit',
                     product=product.rec_name))
+
+    def get_alcohol_volume(self, name):
+        if self.template.capacity and self.wine_alcohol_content:
+            return Decimal(
+                (float(self.template.capacity) * float(self.wine_alcohol_content))
+                    / 100).quantize(
+                        Decimal(str(10 ** -self.__class__.alcohol_volume.digits[1])))
 
 
 class ProductCrop(ModelSQL):

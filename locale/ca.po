@@ -484,7 +484,7 @@ msgstr "Parcel·la"
 
 msgctxt "model:agronomics.parcel-agronomics.do,name:"
 msgid "Parcel - Denomination Origin"
-msgstr ""
+msgstr "Parcel·la - Denominació d'origen"
 
 msgctxt "model:agronomics.plantation,name:"
 msgid "Plantation"
@@ -729,11 +729,19 @@ msgstr "Processos"
 
 msgctxt "selection:product.product,agronomic_type:"
 msgid "Bottled Wine"
-msgstr "Vi Embotellat"
+msgstr "Vi embotellat"
+
+msgctxt "selection:product.product,agronomic_type:"
+msgid "Clarified Wine"
+msgstr "Vi clarificat"
 
 msgctxt "selection:product.product,agronomic_type:"
 msgid "DO Wort"
 msgstr "Most DO"
+
+msgctxt "selection:product.product,agronomic_type:"
+msgid "Filtered Wine"
+msgstr "Vi filtrat"
 
 msgctxt "selection:product.product,agronomic_type:"
 msgid "Grape"
@@ -742,6 +750,10 @@ msgstr "Raïm"
 msgctxt "selection:product.product,agronomic_type:"
 msgid "Not DO Wort"
 msgstr "Most no DO"
+
+msgctxt "selection:product.product,agronomic_type:"
+msgid "Unfiltered Wine"
+msgstr "Vi en rama"
 
 msgctxt "selection:product.product,agronomic_type:"
 msgid "Wine"
@@ -749,11 +761,19 @@ msgstr "Vi"
 
 msgctxt "selection:product.template,agronomic_type:"
 msgid "Bottled Wine"
-msgstr "Vi Embotellat"
+msgstr "Vi embotellat"
+
+msgctxt "selection:product.template,agronomic_type:"
+msgid "Clarified Wine"
+msgstr "Vi clarificat"
 
 msgctxt "selection:product.template,agronomic_type:"
 msgid "DO Wort"
 msgstr "Most DO"
+
+msgctxt "selection:product.template,agronomic_type:"
+msgid "Filtered Wine"
+msgstr "Vi filtrat"
 
 msgctxt "selection:product.template,agronomic_type:"
 msgid "Grape"
@@ -762,6 +782,10 @@ msgstr "Raïm"
 msgctxt "selection:product.template,agronomic_type:"
 msgid "Not DO Wort"
 msgstr "Most no DO"
+
+msgctxt "selection:product.template,agronomic_type:"
+msgid "Unfiltered Wine"
+msgstr "Vi en rama"
 
 msgctxt "selection:product.template,agronomic_type:"
 msgid "Wine"
