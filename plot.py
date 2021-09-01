@@ -88,6 +88,7 @@ class Parcel(ModelSQL, ModelView):
     plantation = fields.Many2One('agronomics.plantation', 'Plantation',
         required=True)
     crop = fields.Many2One('agronomics.crop', 'Crop', required=True)
+    product = fields.Many2One('product.template', 'Product', required=True)
     species = fields.Many2One('product.taxon', 'Spices',
         domain=[('rank', '=', 'species')], required=True,
         depends=['species'])
@@ -153,4 +154,5 @@ class Beneficiaries(ModelSQL, ModelView):
 
     party = fields.Many2One('party.party', 'Beneficiary', required=True)
     percent = fields.Float('Percent', digits=(16, 2), required=True)
-    parcel = fields.Many2One('agronomics.parcel', 'Parcel', required=True)
+    parcel = fields.Many2One('agronomics.parcel', 'Parcel')
+    weighing = fields.Many2One('agronomics.weighing', 'Weighing')

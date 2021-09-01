@@ -14,6 +14,10 @@ msgctxt "field:agronomics.beneficiary,percent:"
 msgid "Percent"
 msgstr "Porcentaje"
 
+msgctxt "field:agronomics.beneficiary,weighing:"
+msgid "Weighing"
+msgstr "Pesada"
+
 msgctxt "field:agronomics.certification,date:"
 msgid "Date"
 msgstr "Fecha"
@@ -139,8 +143,8 @@ msgid "Irrigation"
 msgstr "Irrigación"
 
 msgctxt "field:agronomics.parcel,max_production:"
-msgid "Max. Production"
 msgstr "Max. producción"
+msgstr "Producción Máxima"
 
 msgctxt "field:agronomics.parcel,plant_number:"
 msgid "Plant number"
@@ -157,6 +161,10 @@ msgstr "Premium"
 msgctxt "field:agronomics.parcel,producer:"
 msgid "Party"
 msgstr "Productor"
+
+msgctxt "field:agronomics.parcel,product:"
+msgid "Product"
+msgstr "Productos"
 
 msgctxt "field:agronomics.parcel,species:"
 msgid "Spices"
@@ -202,6 +210,126 @@ msgctxt "field:agronomics.plantation,party:"
 msgid "Party"
 msgstr "Terceros"
 
+msgctxt "field:agronomics.weighing,all_do:"
+msgid "All DO"
+msgstr "Todos los DO"
+
+msgctxt "field:agronomics.weighing,beneficiaries:"
+msgid "Beneficiaries"
+msgstr "Beneficiarios"
+
+msgctxt "field:agronomics.weighing,crop:"
+msgid "Crop"
+msgstr "Cosecha"
+
+msgctxt "field:agronomics.weighing,denomination_origin:"
+msgid "Denomination of Origin"
+msgstr "Denominación de origen"
+
+msgctxt "field:agronomics.weighing,do:"
+msgid "Denomination Origin"
+msgstr "Denominación de origen"
+
+msgctxt "field:agronomics.weighing,ecological:"
+msgid "Ecological"
+msgstr "Ecológico"
+
+msgctxt "field:agronomics.weighing,net_weight:"
+msgid "Net Weight"
+msgstr "Peso neto"
+
+msgctxt "field:agronomics.weighing,netweight:"
+msgid "Net Weight"
+msgstr "Peso neto"
+
+msgctxt "field:agronomics.weighing,number:"
+msgid "Number"
+msgstr "Número"
+
+msgctxt "field:agronomics.weighing,plantations:"
+msgid "plantations"
+msgstr "Plantación"
+
+msgctxt "field:agronomics.weighing,product:"
+msgid "Product"
+msgstr "Productos"
+
+msgctxt "field:agronomics.weighing,product_created:"
+msgid "Product Created"
+msgstr ""
+
+msgctxt "field:agronomics.weighing,purchase_contract:"
+msgid "Purchase Contract"
+msgstr "Contrato de compra"
+
+msgctxt "field:agronomics.weighing,quality_test:"
+msgid "Test"
+msgstr "Test"
+
+msgctxt "field:agronomics.weighing,state:"
+msgid "State"
+msgstr "Estado"
+
+msgctxt "field:agronomics.weighing,table:"
+msgid "Table"
+msgstr "Mesa"
+
+msgctxt "field:agronomics.weighing,tara:"
+msgid "Tara"
+msgstr "Tara"
+
+msgctxt "field:agronomics.weighing,variety:"
+msgid "Variety"
+msgstr "Variedad"
+
+msgctxt "field:agronomics.weighing,weighing_center:"
+msgid "Weighing Center"
+msgstr "Centro de pesada"
+
+msgctxt "field:agronomics.weighing,weighing_date:"
+msgid "Date"
+msgstr "Fecha"
+
+msgctxt "field:agronomics.weighing,weight:"
+msgid "Weight"
+msgstr "Peso"
+
+msgctxt "field:agronomics.weighing-agronomics.do,do:"
+msgid "Denomination Origin"
+msgstr "Denominación de origen"
+
+msgctxt "field:agronomics.weighing-agronomics.do,weighing:"
+msgid "Weighing"
+msgstr "Pesada"
+
+msgctxt "field:agronomics.weighing-agronomics.plantation,Plantation:"
+msgid "Plantation"
+msgstr "Plantaciónes"
+
+msgctxt "field:agronomics.weighing-agronomics.plantation,plantation:"
+msgid "Plantation"
+msgstr "Plantaciónes"
+
+msgctxt "field:agronomics.weighing-agronomics.plantation,weighing:"
+msgid "Weighing"
+msgstr "Pesada"
+
+msgctxt "field:agronomics.weighing-agronomics.plantations,Plantation:"
+msgid "Plantation"
+msgstr "Plantaciónes"
+
+msgctxt "field:agronomics.weighing-agronomics.plantations,weighing:"
+msgid "Weighing"
+msgstr "Pesada"
+
+msgctxt "field:agronomics.weighing.center,name:"
+msgid "Name"
+msgstr "Nombre"
+
+msgctxt "field:agronomics.weighing.center,weighing_sequence:"
+msgid "Weighing Sequence"
+msgstr "Secuencia"
+
 msgctxt "field:party.party,parcels:"
 msgid "Parcels"
 msgstr "Parcelas"
@@ -245,6 +373,10 @@ msgstr "Requiere muestras"
 msgctxt "field:product.product,quality_sample:"
 msgid "Quality Sample"
 msgstr "Muestra de calidad"
+
+msgctxt "field:product.product,quality_weighing:"
+msgid "Quality Weighing"
+msgstr "Calidad pesada"
 
 msgctxt "field:product.product,shipment_in_quality_template:"
 msgid "Shipment In Quality Template"
@@ -306,6 +438,10 @@ msgctxt "field:product.template,container:"
 msgid "Container"
 msgstr "Envase"
 
+msgctxt "field:product.template,quality_weighing:"
+msgid "Quality Weighing"
+msgstr "Calidad pesada"
+
 msgctxt "model:agronomics.beneficiary,name:"
 msgid "Beneficiaries"
 msgstr "Beneficiarios"
@@ -348,11 +484,31 @@ msgstr "Parcela"
 
 msgctxt "model:agronomics.parcel-agronomics.do,name:"
 msgid "Parcel - Denomination Origin"
-msgstr "Parecela - Denominación de origen"
+msgstr "Parcela - Denominación de origen"
 
 msgctxt "model:agronomics.plantation,name:"
 msgid "Plantation"
 msgstr "Plantación"
+
+msgctxt "model:agronomics.weighing,name:"
+msgid "Weighing"
+msgstr "Pesada"
+
+msgctxt "model:agronomics.weighing-agronomics.do,name:"
+msgid "Weighing - Denomination Origin"
+msgstr "Pesada - Denominación de origen"
+
+msgctxt "model:agronomics.weighing-agronomics.plantation,name:"
+msgid "Weighing - Plantations"
+msgstr "Pesada - Plantación"
+
+msgctxt "model:agronomics.weighing-agronomics.plantations,name:"
+msgid "Weighing - Plantations"
+msgstr "Pesada - Plantación"
+
+msgctxt "model:agronomics.weighing.center,name:"
+msgid "Weighing Center"
+msgstr "Centro de pesada"
 
 msgctxt "model:ir.action,name:act_certification_tree"
 msgid "Certification"
@@ -394,6 +550,31 @@ msgctxt "model:ir.action,name:act_plantation_tree"
 msgid "Plantation"
 msgstr "Plantación"
 
+msgctxt "model:ir.action,name:act_weighing_action"
+msgid "Weighing"
+msgstr "Pesada"
+
+msgctxt "model:ir.action,name:act_weighing_center_action"
+msgid "Weighing Center"
+msgstr "Centro de pesada"
+
+msgctxt "model:ir.action.act_window.domain,name:act_weighing_domain_all"
+msgid "All"
+msgstr "Todos"
+
+msgctxt "model:ir.action.act_window.domain,name:act_weighing_domain_analysis"
+msgid "In Analysis"
+msgstr ""
+
+msgctxt "model:ir.action.act_window.domain,name:act_weighing_domain_draft"
+msgid "Draft"
+msgstr "Esborany"
+
+msgctxt ""
+"model:ir.action.act_window.domain,name:act_weighing_domain_processing"
+msgid "Processing"
+msgstr "Procesos"
+
 msgctxt "model:ir.message,text:msg_beneficiaris_percent"
 msgid ""
 "Beneficiaris of Crop \"%(crop)s\" and Plantation \"%(plantation)s\" must sum"
@@ -417,6 +598,34 @@ msgid ""
 msgstr ""
 "El producto \"%(product)s\"  no puede tener más de una cosecha debido a su "
 "Tipo Agronómico"
+
+msgctxt "model:ir.model.button,string:weighing_analysis_button"
+msgid "Analysis"
+msgstr "Análisis"
+
+msgctxt "model:ir.model.button,string:weighing_cancel_button"
+msgid "Cancel"
+msgstr "Cancel·lar"
+
+msgctxt "model:ir.model.button,string:weighing_done_button"
+msgid "Done"
+msgstr "Realizado"
+
+msgctxt "model:ir.model.button,string:weighing_draft_button"
+msgid "Draft"
+msgstr "Esborany"
+
+msgctxt "model:ir.model.button,string:weighing_process_button"
+msgid "Process"
+msgstr "Procesar"
+
+msgctxt "model:ir.sequence,name:sequence_weighing"
+msgid "Weighing"
+msgstr "Pesada"
+
+msgctxt "model:ir.sequence.type,name:sequence_type_weighing"
+msgid "Weighing"
+msgstr "Pesada"
 
 msgctxt "model:ir.ui.menu,name:menu_agronomics"
 msgid "Agronomics"
@@ -466,6 +675,14 @@ msgctxt "model:ir.ui.menu,name:menu_plantation_list"
 msgid "Plantation"
 msgstr "Plantación"
 
+msgctxt "model:ir.ui.menu,name:menu_weighing_center_list"
+msgid "Weighing Center"
+msgstr "Centro de pesada"
+
+msgctxt "model:ir.ui.menu,name:menu_weighing_list"
+msgid "Weighing"
+msgstr "Pesada"
+
 msgctxt "model:product.product-agronomics.crop,name:"
 msgid "Product - Crop"
 msgstr "Producto - Cosecha"
@@ -489,6 +706,26 @@ msgstr "Agronomics"
 msgctxt "model:res.group,name:group_agronomics_admin"
 msgid "Agronomics Administration"
 msgstr "Agronomics Administración"
+
+msgctxt "selection:agronomics.weighing,state:"
+msgid "Cancelled"
+msgstr "Cancelado"
+
+msgctxt "selection:agronomics.weighing,state:"
+msgid "Done"
+msgstr "Realizado"
+
+msgctxt "selection:agronomics.weighing,state:"
+msgid "Draft"
+msgstr "Esborany"
+
+msgctxt "selection:agronomics.weighing,state:"
+msgid "In Analysis"
+msgstr "En Análisis"
+
+msgctxt "selection:agronomics.weighing,state:"
+msgid "Processing"
+msgstr "Procesos"
 
 msgctxt "selection:product.product,agronomic_type:"
 msgid "Bottled Wine"

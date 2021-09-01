@@ -1,6 +1,7 @@
 <tree>
   <field name="plantation"/>
   <field name="crop"/>
+  <field name="product"/>
   <field name="variety"/>
   <field name="species"/>
   <field name="ecological"/>

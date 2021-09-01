@@ -6,5 +6,8 @@
         <field name="container"/>
         <label name="capacity"/>
         <field name="capacity"/>
+        <label name="quality_weighing"/>
+        <field name="quality_weighing"/>
     </xpath>
+
 </data>
