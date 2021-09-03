@@ -64,13 +64,21 @@ class Template(metaclass=PoolMeta):
         return [('container.capacity',) + tuple(clause[1:])]
 
 
+class ProductVariety(ModelSQL, ModelView):
+    'Product Variety'
+    __name__ = 'product.variety'
+
+    variety = fields.Many2One('product.taxon', 'Variety', required=True)
+    percent = fields.Float('Percent', digits=(16, 4), required=True)
+    product = fields.Many2One('product.product', 'Product', required=True)
+
+
 class Product(WineMixin, metaclass=PoolMeta):
     __name__ = 'product.product'
 
     vintages = fields.Many2Many('product.product-agronomics.crop', 'product',
         'crop', 'Vintages')
-    varieties = fields.Many2Many('product.product-product.taxon', 'product',
-        'variety', 'Varieties')
+    varieties = fields.One2Many('product.variety', 'product', 'Varieties')
     denominations_of_origin = fields.Many2Many(
         'product.product-agronomics.denomination_of_origin', 'product',
         'do', 'DOs',
@@ -128,15 +136,6 @@ class ProductCrop(ModelSQL):
     product = fields.Many2One('product.product', 'Product',
         ondelete='CASCADE', select=True, required=True)
     crop = fields.Many2One('agronomics.crop', 'Crop',
-        ondelete='CASCADE', select=True, required=True)
-
-
-class ProductVariety(ModelSQL):
-    "Product - Variety"
-    __name__ = 'product.product-product.taxon'
-    product = fields.Many2One('product.product', 'Product',
-        ondelete='CASCADE', select=True, required=True)
-    variety = fields.Many2One('product.taxon', 'Variety',
         ondelete='CASCADE', select=True, required=True)
 
 

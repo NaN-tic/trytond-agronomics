@@ -1,0 +1,114 @@
+<tryton>
+  <data>
+    <!-- Production Template -->
+    <record model="ir.ui.view" id="production_template_view_form">
+        <field name="model">production.template</field>
+        <field name="type">form</field>
+        <field name="name">production_template_form</field>
+    </record>
+    <record model="ir.ui.view" id="production_template_view_tree">
+        <field name="model">production.template</field>
+        <field name="type">tree</field>
+        <field name="priority" eval="20"/>
+        <field name="name">production_template_list</field>
+    </record>
+
+    <record model="ir.action.act_window" id="act_production_template_tree">
+        <field name="name">Production Template</field>
+        <field name="res_model">production.template</field>
+    </record>
+
+    <record model="ir.action.act_window.view" id="act_production_template_tree_view">
+        <field name="sequence" eval="10"/>
+        <field name="view" ref="production_template_view_tree"/>
+        <field name="act_window" ref="act_production_template_tree"/>
+    </record>
+    <record model="ir.action.act_window.view" id="act_production_template_form_view">
+        <field name="sequence" eval="20"/>
+        <field name="view" ref="production_template_view_form"/>
+        <field name="act_window" ref="act_production_template_tree"/>
+    </record>
+
+    <menuitem parent="production.menu_configuration" sequence="1"
+        action="act_production_template_tree" id="menu_production_template_list"/>
+
+    <record model="ir.ui.menu-res.group"
+            id="menu_production_template_list_group_productions">
+        <field name="menu" ref="menu_production_template_list"/>
+        <field name="group" ref="production.group_production"/>
+    </record>
+    <record model="ir.ui.menu-res.group"
+            id="menu_production_template_list_group_productions_admin">
+        <field name="menu" ref="menu_production_template_list"/>
+        <field name="group" ref="production.group_production_admin"/>
+    </record>
+
+    <!-- Production Template Line -->
+    <record model="ir.ui.view" id="production_template_line_view_form">
+        <field name="model">production.template.line</field>
+        <field name="type">form</field>
+        <field name="name">production_template_line_form</field>
+    </record>
+    <record model="ir.ui.view" id="production_template_line_view_tree">
+        <field name="model">production.template.line</field>
+        <field name="type">tree</field>
+        <field name="priority" eval="20"/>
+        <field name="name">production_template_line_list</field>
+    </record>
+
+    <record model="ir.action.act_window" id="act_production_template_line_tree">
+        <field name="name">Production Template Line</field>
+        <field name="res_model">production.template.line</field>
+    </record>
+
+
+    <!-- Production Output Distribution -->
+    <record model="ir.ui.view" id="production_output_distribution_view_form">
+        <field name="model">production.output.distribution</field>
+        <field name="type">form</field>
+        <field name="name">production_output_distribution_form</field>
+    </record>
+    <record model="ir.ui.view" id="production_output_distribution_view_tree">
+        <field name="model">production.output.distribution</field>
+        <field name="type">tree</field>
+        <field name="priority" eval="20"/>
+        <field name="name">production_output_distribution_list</field>
+    </record>
+
+    <record model="ir.action.act_window" id="act_production_output_distribution_tree">
+        <field name="name">Production Output Distribution</field>
+        <field name="res_model">production.output.distribution</field>
+    </record>
+
+    <!-- Production Enology -->
+    <record model="ir.ui.view" id="production_enology_product_view_form">
+        <field name="model">production.enology.product</field>
+        <field name="type">form</field>
+        <field name="name">production_enology_product_form</field>
+    </record>
+    <record model="ir.ui.view" id="production_enology_product_view_tree">
+        <field name="model">production.enology.product</field>
+        <field name="type">tree</field>
+        <field name="priority" eval="20"/>
+        <field name="name">production_enology_product_list</field>
+    </record>
+
+    <record model="ir.action.act_window" id="act_production_enology_product_tree">
+        <field name="name">Production Enology Product</field>
+        <field name="res_model">production.enology.product</field>
+    </record>
+
+    <record model="ir.ui.view" id="production_view_form">
+        <field name="model">production</field>
+        <field name="inherit" ref="production.production_view_form"/>
+        <field name="name">production_form</field>
+    </record>
+
+    <record model="ir.ui.view" id="production_view_list">
+        <field name="model">production</field>
+        <field name="inherit" ref="production.production_view_list"/>
+        <field name="name">production_list</field>
+    </record>
+
+  </data>
+</tryton>

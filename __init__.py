@@ -7,7 +7,7 @@ from . import plot
 from . import product
 from . import weighing
 from . import quality
-
+from . import production
 
 def register():
     Pool.register(
@@ -37,6 +37,13 @@ def register():
         quality.QualityTest,
         quality.QuantitativeTestLine,
         quality.QualitativeTestLine,
+        production.ProductionTemplate,
+        production.ProductionTemplateLine,
+        production.ProductionTemplateInputsProductTemplate,
+        production.ProductionTemplateOutputsProductTemplate,
+        production.Production,
+        production.OutputDistribution,
+        production.ProductionEnologyProduct,
         module='agronomics', type_='model')
     Pool.register(
         module='agronomics', type_='wizard')
