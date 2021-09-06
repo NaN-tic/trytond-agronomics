@@ -185,7 +185,7 @@ Create Production Template::
     >>> production_template.uom = kg
     >>> production_template.quantity = 10000
     >>> production_template.pass_feature = True
-    >>> production_template.inputs.append(product.template)
+    >>> production_template.inputs.append(productA.template)
     >>> production_template.outputs.append(mostflor)
     >>> production_template.outputs.append(mostprimeres)
     >>> line = ProductionTemplateLine()
@@ -312,8 +312,10 @@ Create Production
   >>> production.reload()
   >>> len(production.output_distribution)
   3
-  >>> #[x.name for x in production.allowed_output_products]
-  >>> #[x.name for x in production.production_template.outputs]
+  >>> [x.name for x in production.allowed_enology_products]
+  ['Raim Blanc', 'Raim Blanc', 'Raim Blanc', 'Raim Blanc']
+  >>> [x.name for x in production.production_template.inputs]
+  ['Raim Blanc']
   >>> production.click('assign_try')
   True
   >>> production.click('run')
