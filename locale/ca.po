@@ -370,6 +370,10 @@ msgctxt "field:product.product,needs_sample:"
 msgid "Needs Samples"
 msgstr "Necesita mostres"
 
+msgctxt "field:product.product,production_quality_template:"
+msgid "Production Quality Template"
+msgstr ""
+
 msgctxt "field:product.product,quality_sample:"
 msgid "Quality Sample"
 msgstr "Mostra de qualitat"
@@ -393,6 +397,378 @@ msgstr "Varietats"
 msgctxt "field:product.product,vintages:"
 msgid "Vintages"
 msgstr "Collites"
+
+msgctxt "field:product.product,wine_alcohol_content:"
+msgid "Alcohol Content"
+msgstr ""
+
+msgctxt "field:product.product,wine_alcohol_content_comment:"
+msgid "Alcohol Content Comment"
+msgstr ""
+
+msgctxt "field:product.product,wine_alcohol_content_confirm:"
+msgid "Alcohol Content Confirm"
+msgstr ""
+
+msgctxt "field:product.product,wine_alcohol_content_success:"
+msgid "Alcohol Content Success"
+msgstr ""
+
+msgctxt "field:product.product,wine_botrytis:"
+msgid "Botrytis"
+msgstr ""
+
+msgctxt "field:product.product,wine_botrytis_comment:"
+msgid "Botrytis Comment"
+msgstr ""
+
+msgctxt "field:product.product,wine_botrytis_confirm:"
+msgid "Botrytis Confirm"
+msgstr ""
+
+msgctxt "field:product.product,wine_botrytis_success:"
+msgid "Botrytis Success"
+msgstr ""
+
+msgctxt "field:product.product,wine_clogging:"
+msgid "Clogging"
+msgstr ""
+
+msgctxt "field:product.product,wine_clogging_comment:"
+msgid "Clogging Comment"
+msgstr ""
+
+msgctxt "field:product.product,wine_clogging_confirm:"
+msgid "Clogging Confirm"
+msgstr ""
+
+msgctxt "field:product.product,wine_clogging_success:"
+msgid "Clogging Success"
+msgstr ""
+
+msgctxt "field:product.product,wine_color_intensity:"
+msgid "Color Intensity"
+msgstr ""
+
+msgctxt "field:product.product,wine_color_intensity_comment:"
+msgid "Color Intensity Comment"
+msgstr ""
+
+msgctxt "field:product.product,wine_color_intensity_confirm:"
+msgid "Color Intensity Confirm"
+msgstr ""
+
+msgctxt "field:product.product,wine_color_intensity_success:"
+msgid "Color Intensity Success"
+msgstr ""
+
+msgctxt "field:product.product,wine_density:"
+msgid "Density"
+msgstr ""
+
+msgctxt "field:product.product,wine_density_comment:"
+msgid "Density Comment"
+msgstr ""
+
+msgctxt "field:product.product,wine_density_confirm:"
+msgid "Density Comment Confirm"
+msgstr ""
+
+msgctxt "field:product.product,wine_density_success:"
+msgid "Density Comment Success"
+msgstr ""
+
+msgctxt "field:product.product,wine_free_sulphur:"
+msgid "Free Sulphur"
+msgstr ""
+
+msgctxt "field:product.product,wine_free_sulphur_comment:"
+msgid "Free Sulphur Comment"
+msgstr ""
+
+msgctxt "field:product.product,wine_free_sulphur_confirm:"
+msgid "Free Sulphur Confirm"
+msgstr ""
+
+msgctxt "field:product.product,wine_free_sulphur_success:"
+msgid "Free Sulphur Success"
+msgstr ""
+
+msgctxt "field:product.product,wine_glucose_fructose:"
+msgid "Glucose/Fructose"
+msgstr ""
+
+msgctxt "field:product.product,wine_glucose_fructose_comment:"
+msgid "Glucose/Fructose Comment"
+msgstr ""
+
+msgctxt "field:product.product,wine_glucose_fructose_confirm:"
+msgid "Glucose/Fructose Confirm"
+msgstr ""
+
+msgctxt "field:product.product,wine_glucose_fructose_success:"
+msgid "Glucose/Fructose Success"
+msgstr ""
+
+msgctxt "field:product.product,wine_lactic_acid:"
+msgid "Lactic Acid"
+msgstr ""
+
+msgctxt "field:product.product,wine_lactic_acid_comment:"
+msgid "Lactic Acid Comment"
+msgstr ""
+
+msgctxt "field:product.product,wine_lactic_acid_confirm:"
+msgid "Lactic Acid Confirm"
+msgstr ""
+
+msgctxt "field:product.product,wine_lactic_acid_success:"
+msgid "Lactic Acid Success"
+msgstr ""
+
+msgctxt "field:product.product,wine_likely_alcohol_content:"
+msgid "Likely Alcohol Content"
+msgstr ""
+
+msgctxt "field:product.product,wine_likely_alcohol_content_comment:"
+msgid "Likely Alcohol Content Comment"
+msgstr ""
+
+msgctxt "field:product.product,wine_likely_alcohol_content_confirm:"
+msgid "Likely Alcohol Content Confirm"
+msgstr ""
+
+msgctxt "field:product.product,wine_likely_alcohol_content_success:"
+msgid "Likely Alcohol Content Success"
+msgstr ""
+
+msgctxt "field:product.product,wine_malic_acid:"
+msgid "Malic Acid"
+msgstr ""
+
+msgctxt "field:product.product,wine_malic_acid_comment:"
+msgid "Malic Acid Comment"
+msgstr ""
+
+msgctxt "field:product.product,wine_malic_acid_confirm:"
+msgid "Malic Acid Confirm"
+msgstr ""
+
+msgctxt "field:product.product,wine_malic_acid_success:"
+msgid "Malic Acid Success"
+msgstr ""
+
+msgctxt "field:product.product,wine_observing_phase:"
+msgid "Observing Phase"
+msgstr ""
+
+msgctxt "field:product.product,wine_observing_phase_comment:"
+msgid "Observing Phase Comment"
+msgstr ""
+
+msgctxt "field:product.product,wine_observing_phase_confirm:"
+msgid "Observing Phase Confirm"
+msgstr ""
+
+msgctxt "field:product.product,wine_observing_phase_success:"
+msgid "Observing Phase Success"
+msgstr ""
+
+msgctxt "field:product.product,wine_overall_impression:"
+msgid "Overall Impression"
+msgstr ""
+
+msgctxt "field:product.product,wine_overall_impression_comment:"
+msgid "Overall Impression Comment"
+msgstr ""
+
+msgctxt "field:product.product,wine_overall_impression_confirm:"
+msgid "Overall Impression Confirm"
+msgstr ""
+
+msgctxt "field:product.product,wine_overall_impression_success:"
+msgid "Overall Impression Success"
+msgstr ""
+
+msgctxt "field:product.product,wine_ph:"
+msgid "PH"
+msgstr ""
+
+msgctxt "field:product.product,wine_ph_comment:"
+msgid "PH Comment"
+msgstr ""
+
+msgctxt "field:product.product,wine_ph_confirm:"
+msgid "PH Confirm"
+msgstr ""
+
+msgctxt "field:product.product,wine_ph_success:"
+msgid "PH Success"
+msgstr ""
+
+msgctxt "field:product.product,wine_protein_stability:"
+msgid "Protein Stability"
+msgstr ""
+
+msgctxt "field:product.product,wine_protein_stability_comment:"
+msgid "Protein Stability Comment"
+msgstr ""
+
+msgctxt "field:product.product,wine_protein_stability_confirm:"
+msgid "Protein Stability Confirm"
+msgstr ""
+
+msgctxt "field:product.product,wine_protein_stability_success:"
+msgid "Protein Stability Success"
+msgstr ""
+
+msgctxt "field:product.product,wine_quality_comment:"
+msgid "Wine Quality Comments"
+msgstr ""
+
+msgctxt "field:product.product,wine_smelling_phase:"
+msgid "Smelling Phase"
+msgstr ""
+
+msgctxt "field:product.product,wine_smelling_phase_comment:"
+msgid "Smelling Phase Comment"
+msgstr ""
+
+msgctxt "field:product.product,wine_smelling_phase_confirm:"
+msgid "Smelling Phase Confirm"
+msgstr ""
+
+msgctxt "field:product.product,wine_smelling_phase_success:"
+msgid "Smelling Phase Success"
+msgstr ""
+
+msgctxt "field:product.product,wine_tartaric_acidity:"
+msgid "Tartaric Acidity"
+msgstr ""
+
+msgctxt "field:product.product,wine_tartaric_acidity_comment:"
+msgid "Tartaric Acidity Comment"
+msgstr ""
+
+msgctxt "field:product.product,wine_tartaric_acidity_confirm:"
+msgid "Tartaric Acidity Confirm"
+msgstr ""
+
+msgctxt "field:product.product,wine_tartaric_acidity_success:"
+msgid "Tartaric Acidity Success"
+msgstr ""
+
+msgctxt "field:product.product,wine_tartaric_stability:"
+msgid "Tartaric Stability"
+msgstr ""
+
+msgctxt "field:product.product,wine_tartaric_stability_comment:"
+msgid "Tartaric Stability Comment"
+msgstr ""
+
+msgctxt "field:product.product,wine_tartaric_stability_confirm:"
+msgid "Tartaric Stability Confirm"
+msgstr ""
+
+msgctxt "field:product.product,wine_tartaric_stability_success:"
+msgid "Tartaric Stability Success"
+msgstr ""
+
+msgctxt "field:product.product,wine_tasting_phase:"
+msgid "Tasting Phase"
+msgstr ""
+
+msgctxt "field:product.product,wine_tasting_phase_comment:"
+msgid "Tasting Phase Comment"
+msgstr ""
+
+msgctxt "field:product.product,wine_tasting_phase_confirm:"
+msgid "Tasting Phase Confirm"
+msgstr ""
+
+msgctxt "field:product.product,wine_tasting_phase_success:"
+msgid "Tasting Phase Success"
+msgstr ""
+
+msgctxt "field:product.product,wine_temperature:"
+msgid "Temperature"
+msgstr ""
+
+msgctxt "field:product.product,wine_temperature_comment:"
+msgid "Temperature Comment"
+msgstr ""
+
+msgctxt "field:product.product,wine_temperature_confirm:"
+msgid "Temperature Confirm"
+msgstr ""
+
+msgctxt "field:product.product,wine_temperature_success:"
+msgid "Temperature Success"
+msgstr ""
+
+msgctxt "field:product.product,wine_tone:"
+msgid "Tone"
+msgstr ""
+
+msgctxt "field:product.product,wine_tone_comment:"
+msgid "Tone Comment"
+msgstr ""
+
+msgctxt "field:product.product,wine_tone_confirm:"
+msgid "Tone Confirm"
+msgstr ""
+
+msgctxt "field:product.product,wine_tone_success:"
+msgid "Tone Success"
+msgstr ""
+
+msgctxt "field:product.product,wine_total_sulphur:"
+msgid "Total Sulphur"
+msgstr ""
+
+msgctxt "field:product.product,wine_total_sulphur_comment:"
+msgid "Total Sulphur Comment"
+msgstr ""
+
+msgctxt "field:product.product,wine_total_sulphur_confirm:"
+msgid "Total Sulphur Confirm"
+msgstr ""
+
+msgctxt "field:product.product,wine_total_sulphur_success:"
+msgid "Total Sulphur Success"
+msgstr ""
+
+msgctxt "field:product.product,wine_turbidity:"
+msgid "Turbidity"
+msgstr ""
+
+msgctxt "field:product.product,wine_turbidity_comment:"
+msgid "Turbidity Comment"
+msgstr ""
+
+msgctxt "field:product.product,wine_turbidity_confirm:"
+msgid "Turbidity Confirm"
+msgstr ""
+
+msgctxt "field:product.product,wine_turbidity_success:"
+msgid "Turbidity Success"
+msgstr ""
+
+msgctxt "field:product.product,wine_volatility:"
+msgid "Volatility"
+msgstr ""
+
+msgctxt "field:product.product,wine_volatility_comment:"
+msgid "Volatility Comment"
+msgstr ""
+
+msgctxt "field:product.product,wine_volatility_confirm:"
+msgid "Volatility Confirm"
+msgstr ""
+
+msgctxt "field:product.product,wine_volatility_success:"
+msgid "Volatility Success"
+msgstr ""
 
 msgctxt "field:product.product-agronomics.crop,crop:"
 msgid "Crop"
@@ -442,6 +818,194 @@ msgctxt "field:product.template,quality_weighing:"
 msgid "Quality Weighing"
 msgstr "Qualitat pesada"
 
+#, fuzzy
+msgctxt "field:product.variety,percent:"
+msgid "Percent"
+msgstr "Percentatge"
+
+#, fuzzy
+msgctxt "field:product.variety,product:"
+msgid "Product"
+msgstr "Productes"
+
+#, fuzzy
+msgctxt "field:product.variety,variety:"
+msgid "Variety"
+msgstr "Varietat"
+
+msgctxt "field:production,allowed_enology_products:"
+msgid "Allowed Enology Products"
+msgstr "Productes vinícules permesos"
+
+msgctxt "field:production,allowed_output_products:"
+msgid "Allowed Output Products"
+msgstr "Productes permesos a la sortida"
+
+msgctxt "field:production,enology_products:"
+msgid "Enology Products"
+msgstr "Productes Vinícules"
+
+msgctxt "field:production,output_distribution:"
+msgid "Output Distribution"
+msgstr "Distribució de sortides"
+
+msgctxt "field:production,production_template:"
+msgid "Production Template"
+msgstr "Plantilla de producció"
+
+#, fuzzy
+msgctxt "field:production.enology.product,product:"
+msgid "Product"
+msgstr "Productes"
+
+#, fuzzy
+msgctxt "field:production.enology.product,production:"
+msgid "Production"
+msgstr "Producció"
+
+#, fuzzy
+msgctxt "field:production.enology.product,quantity:"
+msgid "Quantity"
+msgstr "Quantitat"
+
+#, fuzzy
+msgctxt "field:production.enology.product,unit_digits:"
+msgid "Unit Digits"
+msgstr "Dígits de la unitat"
+
+#, fuzzy
+msgctxt "field:production.enology.product,uom:"
+msgid "Uom"
+msgstr "UdM"
+
+msgctxt "field:production.output.distribution,final_quantity:"
+msgid "Final Quantity"
+msgstr "Quantitat Final"
+
+msgctxt "field:production.output.distribution,initial_quantity:"
+msgid "Initial Quantity"
+msgstr "Quantitat inicial"
+
+#, fuzzy
+msgctxt "field:production.output.distribution,location:"
+msgid "Location"
+msgstr "Ubicació"
+
+msgctxt "field:production.output.distribution,produced_quantity:"
+msgid "Produced Quantity"
+msgstr "Quantitat produia"
+
+#, fuzzy
+msgctxt "field:production.output.distribution,product:"
+msgid "Template"
+msgstr "Plantilla"
+
+#, fuzzy
+msgctxt "field:production.output.distribution,production:"
+msgid "Production"
+msgstr "Producció"
+
+#, fuzzy
+msgctxt "field:production.output.distribution,unit_digits:"
+msgid "Unit Digits"
+msgstr "Dígits de la unitat"
+
+#, fuzzy
+msgctxt "field:production.output.distribution,uom:"
+msgid "Uom"
+msgstr "UdM"
+
+msgctxt "field:production.template,enology_products:"
+msgid "Production Template"
+msgstr "Plantilla de producció"
+
+#, fuzzy
+msgctxt "field:production.template,inputs:"
+msgid "Inputs"
+msgstr "Entrades"
+
+#, fuzzy
+msgctxt "field:production.template,name:"
+msgid "Name"
+msgstr "Nom"
+
+#, fuzzy
+msgctxt "field:production.template,outputs:"
+msgid "Outputs"
+msgstr "Sortides"
+
+msgctxt "field:production.template,pass_feature:"
+msgid "Pass on Feature"
+msgstr "Passar propietats"
+
+#, fuzzy
+msgctxt "field:production.template,quantity:"
+msgid "Quantity"
+msgstr "Quantitat"
+
+#, fuzzy
+msgctxt "field:production.template,unit_digits:"
+msgid "Unit Digits"
+msgstr "Dígits de la unitat"
+
+#, fuzzy
+msgctxt "field:production.template,uom:"
+msgid "Uom"
+msgstr "UdM"
+
+msgctxt ""
+"field:production.template.inputs-product.template,production_template:"
+msgid "Production Template"
+msgstr "Plantilla de producció"
+
+#, fuzzy
+msgctxt "field:production.template.inputs-product.template,template:"
+msgid "Template"
+msgstr "Plantilla"
+
+msgctxt "field:production.template.line,product:"
+msgid "Producte"
+msgstr "Producte"
+
+msgctxt "field:production.template.line,production_template:"
+msgid "Production Template"
+msgstr "Plantilla de producció"
+
+#, fuzzy
+msgctxt "field:production.template.line,quantity:"
+msgid "Quantity"
+msgstr "Quantitat"
+
+#, fuzzy
+msgctxt "field:production.template.line,unit_digits:"
+msgid "Unit Digits"
+msgstr "Dígits de la unitat"
+
+#, fuzzy
+msgctxt "field:production.template.line,uom:"
+msgid "Uom"
+msgstr "UdM"
+
+msgctxt ""
+"field:production.template.outputs-product.template,production_template:"
+msgid "Production Template"
+msgstr "Plantilla de producció"
+
+#, fuzzy
+msgctxt "field:production.template.outputs-product.template,template:"
+msgid "Product"
+msgstr "Productes"
+
+#, fuzzy
+msgctxt "field:quality.qualitative.test.line,product:"
+msgid "Product"
+msgstr "Productes"
+
+#, fuzzy
+msgctxt "field:quality.quantitative.test.line,product:"
+msgid "Product"
+msgstr "Productes"
+
 msgctxt "model:agronomics.beneficiary,name:"
 msgid "Beneficiaries"
 msgstr "Beneficiaris"
@@ -458,8 +1022,9 @@ msgctxt "model:agronomics.crop,name:"
 msgid "Crop"
 msgstr "Collita"
 
+#, fuzzy
 msgctxt "model:agronomics.denomination_of_origin,name:"
-msgid "Denomination Of Origin"
+msgid "Denomination of Origin"
 msgstr "Denominació Origen"
 
 msgctxt "model:agronomics.ecological,name:"
@@ -549,6 +1114,21 @@ msgstr "Parcel·la"
 msgctxt "model:ir.action,name:act_plantation_tree"
 msgid "Plantation"
 msgstr "Plantació"
+
+#, fuzzy
+msgctxt "model:ir.action,name:act_product_qualitative_test_lines"
+msgid "Qualitative Lines"
+msgstr "Línies qualitatives"
+
+#, fuzzy
+msgctxt "model:ir.action,name:act_product_quality_test"
+msgid "Quality Test"
+msgstr "Test de qualitat"
+
+#, fuzzy
+msgctxt "model:ir.action,name:act_product_quantitative_test_lines"
+msgid "Quantitative Lines"
+msgstr "Línia quantitativa"
 
 msgctxt "model:ir.action,name:act_weighing_action"
 msgid "Weighing"
@@ -698,6 +1278,226 @@ msgstr "Producte - Ecològic"
 msgctxt "model:product.product-product.taxon,name:"
 msgid "Product - Variety"
 msgstr "Producte - Varietat"
+
+msgctxt "model:product.variety,name:"
+msgid "Product Variety"
+msgstr "Varietat"
+
+msgctxt "model:production.enology.product,name:"
+msgid "Production Enology Product"
+msgstr "Productes Vinícules"
+
+msgctxt "model:production.output.distribution,name:"
+msgid "Output Distribution"
+msgstr "Distribució de sortides"
+
+msgctxt "model:production.template,name:"
+msgid "Produciton Template"
+msgstr "Plantilla de producció"
+
+msgctxt "model:production.template.inputs-product.template,name:"
+msgid "Production Template Inputs- Product Template"
+msgstr ""
+
+msgctxt "model:production.template.line,name:"
+msgid "Production Template Line"
+msgstr "Línia Plantilla de producció"
+
+msgctxt "model:production.template.outputs-product.template,name:"
+msgid "Production Template Inputs- Product Template"
+msgstr ""
+
+msgctxt "model:quality.proof,name:wine_alcohol_content"
+msgid "Grau alcohol"
+msgstr ""
+
+msgctxt "model:quality.proof,name:wine_botrytis"
+msgid "Botrytis"
+msgstr ""
+
+msgctxt "model:quality.proof,name:wine_clogging"
+msgid "Colmatacio"
+msgstr ""
+
+msgctxt "model:quality.proof,name:wine_color_intensity"
+msgid "Intensitat colorant"
+msgstr ""
+
+msgctxt "model:quality.proof,name:wine_density"
+msgid "Densitat"
+msgstr ""
+
+msgctxt "model:quality.proof,name:wine_free_sulphur"
+msgid "Sulfuros lliure"
+msgstr ""
+
+msgctxt "model:quality.proof,name:wine_glucose_fructose"
+msgid "Glucosa/fructosa"
+msgstr ""
+
+msgctxt "model:quality.proof,name:wine_lactic_acid"
+msgid "Àcil lactica"
+msgstr ""
+
+msgctxt "model:quality.proof,name:wine_likely_alcohol_content"
+msgid "Grau esperat"
+msgstr ""
+
+msgctxt "model:quality.proof,name:wine_malic_acid"
+msgid "Àcid màlic"
+msgstr ""
+
+msgctxt "model:quality.proof,name:wine_notes"
+msgid "Observacions"
+msgstr ""
+
+msgctxt "model:quality.proof,name:wine_observing_phase"
+msgid "Fase visual"
+msgstr ""
+
+msgctxt "model:quality.proof,name:wine_overall_impression"
+msgid "Impresió general"
+msgstr ""
+
+msgctxt "model:quality.proof,name:wine_ph"
+msgid "PH"
+msgstr ""
+
+msgctxt "model:quality.proof,name:wine_protein_stability"
+msgid "Estabilitat proteica"
+msgstr ""
+
+msgctxt "model:quality.proof,name:wine_smelling_phase"
+msgid "Fase olfactiva"
+msgstr ""
+
+msgctxt "model:quality.proof,name:wine_tartaric_acidity"
+msgid "Acidesa tartàric"
+msgstr ""
+
+msgctxt "model:quality.proof,name:wine_tartaric_stability"
+msgid "Estabilitat tartarica"
+msgstr ""
+
+msgctxt "model:quality.proof,name:wine_tasting_phase"
+msgid "Fase gustativa"
+msgstr ""
+
+msgctxt "model:quality.proof,name:wine_temperature"
+msgid "Temperatura"
+msgstr ""
+
+msgctxt "model:quality.proof,name:wine_tone"
+msgid "Tonalitat"
+msgstr ""
+
+msgctxt "model:quality.proof,name:wine_total_sulphur"
+msgid "Sulfurós Total"
+msgstr ""
+
+msgctxt "model:quality.proof,name:wine_turbidity"
+msgid "Terbolesa"
+msgstr ""
+
+msgctxt "model:quality.proof,name:wine_volatility"
+msgid "Volatil"
+msgstr ""
+
+msgctxt "model:quality.proof.method,name:wine_alcohol_content_method"
+msgid "Grau alcohol"
+msgstr ""
+
+msgctxt "model:quality.proof.method,name:wine_botrytis_method"
+msgid "Botrytis"
+msgstr ""
+
+msgctxt "model:quality.proof.method,name:wine_clogging_method"
+msgid "Colmatacio"
+msgstr ""
+
+msgctxt "model:quality.proof.method,name:wine_color_intensity_method"
+msgid "Intensitat colorant"
+msgstr ""
+
+msgctxt "model:quality.proof.method,name:wine_density_method"
+msgid "Densitat"
+msgstr ""
+
+msgctxt "model:quality.proof.method,name:wine_free_sulphur_method"
+msgid "Sulfuros lliure"
+msgstr ""
+
+msgctxt "model:quality.proof.method,name:wine_glucose_fructose_method"
+msgid "Glucosa/fructosa"
+msgstr ""
+
+msgctxt "model:quality.proof.method,name:wine_lactic_acid_method"
+msgid "Àcil lactica"
+msgstr ""
+
+msgctxt "model:quality.proof.method,name:wine_likely_alcohol_content_method"
+msgid "Grau esperat"
+msgstr ""
+
+msgctxt "model:quality.proof.method,name:wine_malic_acid_method"
+msgid "Àcid màlic"
+msgstr ""
+
+msgctxt "model:quality.proof.method,name:wine_notes_method"
+msgid "Observacions"
+msgstr ""
+
+msgctxt "model:quality.proof.method,name:wine_observing_phase_method"
+msgid "Fase visual"
+msgstr ""
+
+msgctxt "model:quality.proof.method,name:wine_overall_impression_method"
+msgid "Impresió general"
+msgstr ""
+
+msgctxt "model:quality.proof.method,name:wine_ph_method"
+msgid "PH"
+msgstr ""
+
+msgctxt "model:quality.proof.method,name:wine_protein_stability_method"
+msgid "Estabilitat proteica"
+msgstr ""
+
+msgctxt "model:quality.proof.method,name:wine_smelling_phase_method"
+msgid "Fase olfactiva"
+msgstr ""
+
+msgctxt "model:quality.proof.method,name:wine_tartaric_acidity_method"
+msgid "Acidesa tartàric"
+msgstr ""
+
+msgctxt "model:quality.proof.method,name:wine_tartaric_stability_method"
+msgid "Estabilitat tartarica"
+msgstr ""
+
+msgctxt "model:quality.proof.method,name:wine_tasting_phase_method"
+msgid "Fase gustativa"
+msgstr ""
+
+msgctxt "model:quality.proof.method,name:wine_temperature_method"
+msgid "Temperatura"
+msgstr ""
+
+msgctxt "model:quality.proof.method,name:wine_tone_method"
+msgid "Tonalitat"
+msgstr ""
+
+msgctxt "model:quality.proof.method,name:wine_total_sulphur_method"
+msgid "Sulfurós Total"
+msgstr ""
+
+msgctxt "model:quality.proof.method,name:wine_turbidity_method"
+msgid "Terbolesa"
+msgstr ""
+
+msgctxt "model:quality.proof.method,name:wine_volatility_method"
+msgid "Volatil"
+msgstr ""
 
 msgctxt "model:res.group,name:group_agronomics"
 msgid "Agronomics"
