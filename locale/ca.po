@@ -143,7 +143,7 @@ msgid "Irrigation"
 msgstr "Irrigació"
 
 msgctxt "field:agronomics.parcel,max_production:"
-msgid "Max. Production"
+msgid "Max Production"
 msgstr "Producció Màxima"
 
 msgctxt "field:agronomics.parcel,plant_number:"
@@ -818,17 +818,14 @@ msgctxt "field:product.template,quality_weighing:"
 msgid "Quality Weighing"
 msgstr "Qualitat pesada"
 
-#, fuzzy
 msgctxt "field:product.variety,percent:"
 msgid "Percent"
 msgstr "Percentatge"
 
-#, fuzzy
 msgctxt "field:product.variety,product:"
 msgid "Product"
 msgstr "Productes"
 
-#, fuzzy
 msgctxt "field:product.variety,variety:"
 msgid "Variety"
 msgstr "Varietat"
@@ -853,27 +850,22 @@ msgctxt "field:production,production_template:"
 msgid "Production Template"
 msgstr "Plantilla de producció"
 
-#, fuzzy
 msgctxt "field:production.enology.product,product:"
 msgid "Product"
 msgstr "Productes"
 
-#, fuzzy
 msgctxt "field:production.enology.product,production:"
 msgid "Production"
 msgstr "Producció"
 
-#, fuzzy
 msgctxt "field:production.enology.product,quantity:"
 msgid "Quantity"
 msgstr "Quantitat"
 
-#, fuzzy
 msgctxt "field:production.enology.product,unit_digits:"
 msgid "Unit Digits"
 msgstr "Dígits de la unitat"
 
-#, fuzzy
 msgctxt "field:production.enology.product,uom:"
 msgid "Uom"
 msgstr "UdM"
@@ -886,7 +878,6 @@ msgctxt "field:production.output.distribution,initial_quantity:"
 msgid "Initial Quantity"
 msgstr "Quantitat inicial"
 
-#, fuzzy
 msgctxt "field:production.output.distribution,location:"
 msgid "Location"
 msgstr "Ubicació"
@@ -895,22 +886,18 @@ msgctxt "field:production.output.distribution,produced_quantity:"
 msgid "Produced Quantity"
 msgstr "Quantitat produia"
 
-#, fuzzy
 msgctxt "field:production.output.distribution,product:"
 msgid "Template"
 msgstr "Plantilla"
 
-#, fuzzy
 msgctxt "field:production.output.distribution,production:"
 msgid "Production"
 msgstr "Producció"
 
-#, fuzzy
 msgctxt "field:production.output.distribution,unit_digits:"
 msgid "Unit Digits"
 msgstr "Dígits de la unitat"
 
-#, fuzzy
 msgctxt "field:production.output.distribution,uom:"
 msgid "Uom"
 msgstr "UdM"
@@ -919,17 +906,14 @@ msgctxt "field:production.template,enology_products:"
 msgid "Production Template"
 msgstr "Plantilla de producció"
 
-#, fuzzy
 msgctxt "field:production.template,inputs:"
 msgid "Inputs"
 msgstr "Entrades"
 
-#, fuzzy
 msgctxt "field:production.template,name:"
 msgid "Name"
 msgstr "Nom"
 
-#, fuzzy
 msgctxt "field:production.template,outputs:"
 msgid "Outputs"
 msgstr "Sortides"
@@ -938,17 +922,14 @@ msgctxt "field:production.template,pass_feature:"
 msgid "Pass on Feature"
 msgstr "Passar propietats"
 
-#, fuzzy
 msgctxt "field:production.template,quantity:"
 msgid "Quantity"
 msgstr "Quantitat"
 
-#, fuzzy
 msgctxt "field:production.template,unit_digits:"
 msgid "Unit Digits"
 msgstr "Dígits de la unitat"
 
-#, fuzzy
 msgctxt "field:production.template,uom:"
 msgid "Uom"
 msgstr "UdM"
@@ -958,7 +939,6 @@ msgctxt ""
 msgid "Production Template"
 msgstr "Plantilla de producció"
 
-#, fuzzy
 msgctxt "field:production.template.inputs-product.template,template:"
 msgid "Template"
 msgstr "Plantilla"
@@ -971,17 +951,14 @@ msgctxt "field:production.template.line,production_template:"
 msgid "Production Template"
 msgstr "Plantilla de producció"
 
-#, fuzzy
 msgctxt "field:production.template.line,quantity:"
 msgid "Quantity"
 msgstr "Quantitat"
 
-#, fuzzy
 msgctxt "field:production.template.line,unit_digits:"
 msgid "Unit Digits"
 msgstr "Dígits de la unitat"
 
-#, fuzzy
 msgctxt "field:production.template.line,uom:"
 msgid "Uom"
 msgstr "UdM"
@@ -991,17 +968,14 @@ msgctxt ""
 msgid "Production Template"
 msgstr "Plantilla de producció"
 
-#, fuzzy
 msgctxt "field:production.template.outputs-product.template,template:"
 msgid "Product"
 msgstr "Productes"
 
-#, fuzzy
 msgctxt "field:quality.qualitative.test.line,product:"
 msgid "Product"
 msgstr "Productes"
 
-#, fuzzy
 msgctxt "field:quality.quantitative.test.line,product:"
 msgid "Product"
 msgstr "Productes"
@@ -1022,7 +996,6 @@ msgctxt "model:agronomics.crop,name:"
 msgid "Crop"
 msgstr "Collita"
 
-#, fuzzy
 msgctxt "model:agronomics.denomination_of_origin,name:"
 msgid "Denomination of Origin"
 msgstr "Denominació Origen"
@@ -1115,20 +1088,33 @@ msgctxt "model:ir.action,name:act_plantation_tree"
 msgid "Plantation"
 msgstr "Plantació"
 
-#, fuzzy
 msgctxt "model:ir.action,name:act_product_qualitative_test_lines"
 msgid "Qualitative Lines"
 msgstr "Línies qualitatives"
 
-#, fuzzy
 msgctxt "model:ir.action,name:act_product_quality_test"
 msgid "Quality Test"
 msgstr "Test de qualitat"
 
-#, fuzzy
 msgctxt "model:ir.action,name:act_product_quantitative_test_lines"
 msgid "Quantitative Lines"
 msgstr "Línia quantitativa"
+
+msgctxt "model:ir.action,name:act_production_enology_product_tree"
+msgid "Production Enology Product"
+msgstr "Productes Vinícules"
+
+msgctxt "model:ir.action,name:act_production_output_distribution_tree"
+msgid "Production Output Distribution"
+msgstr ""
+
+msgctxt "model:ir.action,name:act_production_template_line_tree"
+msgid "Production Template Line"
+msgstr "Línia Plantilla de producció"
+
+msgctxt "model:ir.action,name:act_production_template_tree"
+msgid "Production Template"
+msgstr "Plantilla de producció"
 
 msgctxt "model:ir.action,name:act_weighing_action"
 msgid "Weighing"
@@ -1162,6 +1148,14 @@ msgid ""
 msgstr ""
 "Els Beneficiares de les collites \"%(crop)s\" i la plantació "
 "\"%(plantation)s\" han de sumar 100."
+
+msgctxt "model:ir.message,text:msg_uom_not_fit"
+msgid ""
+"Inputs from Production template \"%(producttion)s\" must be of uom "
+"\"%(uom)s\" and we have \"%(uoms)s.\" ."
+msgstr ""
+"Les entrades de la plantilla de producció \"%(production)s\" ha de tenir la "
+"uom \"%(uom)s\" i ens trobem \"%(uoms)\"."
 
 msgctxt "model:ir.message,text:msg_variety_limit"
 msgid ""
@@ -1254,6 +1248,10 @@ msgstr "Parcel·la"
 msgctxt "model:ir.ui.menu,name:menu_plantation_list"
 msgid "Plantation"
 msgstr "Plantació"
+
+msgctxt "model:ir.ui.menu,name:menu_production_template_list"
+msgid "Production Template"
+msgstr "Plantilla de producció"
 
 msgctxt "model:ir.ui.menu,name:menu_weighing_center_list"
 msgid "Weighing Center"

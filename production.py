@@ -2,7 +2,7 @@
 # this repository contains the full copyright notices and license terms.
 from trytond.model import ModelSQL, ModelView, fields
 from trytond.pool import PoolMeta, Pool
-from trytond.pyson import Eval, Bool
+from trytond.pyson import Eval, Bool, If
 from trytond.exceptions import UserError
 from trytond.i18n import gettext
 from decimal import Decimal
@@ -27,7 +27,7 @@ class ProductionTemplate(ModelSQL, ModelView):
         'production_template', 'template', "Outputs")
 
     enology_products = fields.One2Many('production.template.line',
-        'production_template', 'Production Template')
+        'production_template', 'Complementary Products')
     pass_feature = fields.Boolean('Pass on Feature')
 
     @fields.depends('uom')
@@ -41,7 +41,8 @@ class ProductionTemplate(ModelSQL, ModelView):
         for record in records:
             category_uom = record.uom.category
             uoms = [i.default_uom.category for i in record.inputs]
-            if not all(uoms+[category_uom]):
+            uoms.append(category_uom)
+            if len(list(set(uoms))) > 1:
                 raise UserError(gettext('agronomics.msg_uom_not_fit',
                     production=record.rec_name,
                     uom=record.uom.rec_name,
@@ -106,10 +107,11 @@ class Production(metaclass=PoolMeta):
     enology_products = fields.One2Many('production.enology.product',
         'production', "Enology Products",
         domain=[('product', 'in', Eval('allowed_enology_products')),
-                ('product.quantity', '>', 0)],
+                If((Eval('state').in_(['waiting', 'draft'])),
+                    ('product.quantity', '>', 0), ())],
         states={
             'invisible': ~Bool(Eval('production_template'))
-        }, depends=['allowed_enology_products'])
+        }, depends=['allowed_enology_products', 'state'])
     output_distribution = fields.One2Many('production.output.distribution',
         'production', 'Output Distribution',
         # domain=[('product', 'in', Eval('allowed_ouput_products'))],
@@ -163,14 +165,14 @@ class Production(metaclass=PoolMeta):
                 move.production_input = production
                 moves.append(move)
                 input_quantity += Uom.compute_qty(enology.uom, enology.quantity,
-                    production.production_template.uom)
+                    production.production_template.uom, round=True)
             enology_products = (production.production_template and
                 production.production_template.enology_products or [])
             for enology in enology_products:
                 quantity = Uom.compute_qty(enology.uom, enology.quantity,
-                    production.production_template.uom)
+                    production.production_template.uom, round=True)
                 ratio = quantity / (input_quantity or 1)
-                qty = Decimal(str(input_quantity*ratio))
+                qty = enology.uom.round(input_quantity*ratio)
                 move = production._move(production.picking_location,
                     production.location,
                     production.company,
