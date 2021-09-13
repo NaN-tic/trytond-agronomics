@@ -143,7 +143,7 @@ msgid "Irrigation"
 msgstr "Irrigació"
 
 msgctxt "field:agronomics.parcel,max_production:"
-msgid "Max. Production"
+msgid "Max Production"
 msgstr "Producció Màxima"
 
 msgctxt "field:agronomics.parcel,plant_number:"

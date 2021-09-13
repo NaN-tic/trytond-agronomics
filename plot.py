@@ -104,7 +104,7 @@ class Parcel(ModelSQL, ModelView):
     surface = fields.Float('Surface', digits=(16, 2), required=True)
     producer = fields.Many2One('party.party', 'Party')
     irrigation = fields.Many2One('agronomics.irrigation', 'Irrigation')
-    max_production = fields.Function(fields.Float("Max. Production",
+    max_production = fields.Function(fields.Float("Max Production",
         digits=(16, 2)), 'get_max_production')
     tenure_regime = fields.Char('Teneru Regime')
     beneficiaries = fields.One2Many('agronomics.beneficiary', 'parcel',
