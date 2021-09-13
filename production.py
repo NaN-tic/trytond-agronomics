@@ -150,11 +150,15 @@ class Production(metaclass=PoolMeta):
     def wait(cls, productions):
         Move = Pool().get('stock.move')
         Uom = Pool().get('product.uom')
+        OutputDistribution = Pool().get('production.output.distribution')
         moves = []
         delete = []
+        outputs = []
+        delete_outputs = []
         for production in productions:
-            delete = [x for x in production.inputs]
+            delete += [x for x in production.inputs]
             input_quantity = 0
+            template_qty = production.production_template.quantity
             for enology in production.enology_products:
                 move = production._move(production.picking_location,
                     production.location,
@@ -171,8 +175,8 @@ class Production(metaclass=PoolMeta):
             for enology in enology_products:
                 quantity = Uom.compute_qty(enology.uom, enology.quantity,
                     production.production_template.uom, round=True)
-                ratio = quantity / (input_quantity or 1)
-                qty = enology.uom.round(input_quantity*ratio)
+                qty = quantity * (input_quantity or 1) / template_qty
+                qty = enology.uom.round(qty)
                 move = production._move(production.picking_location,
                     production.location,
                     production.company,
@@ -182,6 +186,16 @@ class Production(metaclass=PoolMeta):
                 move.production_input = production
                 moves.append(move)
 
+            for output_product in production.production_template.outputs:
+                delete_outputs += [x for x in production.output_distribution]
+                od = OutputDistribution()
+                od.product = output_product
+                od.uom = od.on_change_with_uom()
+                od.production = production
+                outputs.append(od)
+
+        OutputDistribution.delete(delete_outputs)
+        OutputDistribution.save(outputs)
         Move.save(moves)
         Move.delete(delete)
         super().wait(productions)
@@ -253,19 +267,34 @@ class OutputDistribution(ModelSQL, ModelView):
     production = fields.Many2One('production', 'Production',
         required=True)
     product = fields.Many2One('product.template', 'Template', required=True)
-    location = fields.Many2One('stock.location', 'Location', required=True)
+    location = fields.Many2One('stock.location', 'Location',
+        states={
+            'required': Eval('production_state').in_(['done'])
+        }, depends=['production_state'])
     uom = fields.Many2One('product.uom', 'Uom')
     unit_digits = fields.Function(fields.Integer('Unit Digits'),
         'on_change_with_unit_digits')
     initial_quantity = fields.Float('Initial Quantity',
         digits=(16, Eval('unit_digits', 2)),
-        depends=['unit_digits'], readonly=True)
+        depends=['unit_digits'])
+    initial_quantity_readonly = fields.Function(fields.Float('Initial Quantity',
+        digits=(16, Eval('unit_digits', 2)),
+        depends=['unit_digits']), 'on_change_with_initial_quantity_readonly')
     final_quantity = fields.Float('Final Quantity',
         digits=(16, Eval('unit_digits', 2)),
-        depends=['unit_digits'], readonly=True)
-    produced_quantity = fields.Float('Produced Quantity',
-        digits=(16, Eval('unit_digits', 2)),
         depends=['unit_digits'])
+    produced_quantity = fields.Function(fields.Float('Produced Quantity',
+        digits=(16, Eval('unit_digits', 2)),
+        depends=['unit_digits']), 'on_change_with_produced_quantity')
+    production_state = fields.Function(fields.Selection([
+        ('request', 'Request'), ('draft', 'Draft'), ('waiting', 'Waiting'),
+        ('assigned', 'Assigned'), ('running', 'Running'), ('done', 'Done'),
+        ('cancelled', 'Cancelled')], 'State'),
+        'on_change_with_production_state')
+
+    @fields.depends('production')
+    def on_change_with_production_state(self, name=None):
+        return self.production and self.production.state
 
     @fields.depends('product')
     def on_change_with_uom(self):
@@ -285,7 +314,6 @@ class OutputDistribution(ModelSQL, ModelView):
         Product = Pool().get('product.product')
         if not self.product:
             self.initial_quantity = 0
-            self.final_quantity = self.produced_quantity
             return
         if not self.location:
             return
@@ -293,10 +321,7 @@ class OutputDistribution(ModelSQL, ModelView):
         context['locations'] = [self.location.id]
         with Transaction().set_context(context):
             quantities = Product.get_quantity(self.product.products, 'quantity')
-
         self.initial_quantity = sum(quantities.values())
-        self.final_quantity = self.initial_quantity + (self.produced_quantity
-            or 0)
 
     @fields.depends('location', methods=['on_change_product'])
     def on_change_location(self):
@@ -304,10 +329,23 @@ class OutputDistribution(ModelSQL, ModelView):
             return
         self.on_change_product()
 
-    @fields.depends('produced_quantity', 'final_quantity', 'initial_quantity')
-    def on_change_produced_quantity(self):
-        self.final_quantity = ((self.initial_quantity or 0) +
-            (self.produced_quantity or 0))
+    @fields.depends('product', 'location')
+    def on_change_with_initial_quantity_readonly(self, name=None):
+        Product = Pool().get('product.product')
+        if not self.product or not self.location:
+            return
+        if self.initial_quantity:
+            return self.initial_quantity
+        context = Transaction().context
+        context['locations'] = [self.location.id]
+        with Transaction().set_context(context):
+            quantities = Product.get_quantity(self.product.products, 'quantity')
+        return sum(quantities.values())
+
+    @fields.depends('final_quantity', 'initial_quantity')
+    def on_change_with_produced_quantity(self, name=None):
+        return ((self.final_quantity or 0) -
+            (self.initial_quantity or 0))
 
 class ProductionEnologyProduct(ModelSQL, ModelView):
     'Production Enology Product'
