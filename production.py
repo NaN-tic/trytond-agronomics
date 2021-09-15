@@ -156,6 +156,9 @@ class Production(metaclass=PoolMeta):
         outputs = []
         delete_outputs = []
         for production in productions:
+            if not production.production_template:
+                continue
+
             delete += [x for x in production.inputs]
             input_quantity = 0
             template_qty = production.production_template.quantity
