@@ -211,7 +211,8 @@ class Production(metaclass=PoolMeta):
         Uom = Pool().get('product.uom')
         total_output = sum([Uom.compute_qty(x.uom, x.quantity,
             x.product.default_uom)
-            for x in self.inputs])
+            for x in self.inputs if x.product.template in
+                self.production_template.inputs])
         vintages = []
         do = []
         ecologicals = []
@@ -225,17 +226,17 @@ class Production(metaclass=PoolMeta):
         product.vintages = list(set(vintages))
         varieties = {}
         for input in self.inputs:
-            percent = round(input.quantity/total_output, 2)
+            percent = round(input.quantity/total_output, 6)
             for variety in input.product.varieties:
                 new_variety = varieties.get(variety.variety)
                 if not new_variety:
                     new_variety = Variety()
                     new_variety.percent = 0
                 new_variety.variety = variety.variety
-                new_variety.percent += variety.percent/100*percent
+                new_variety.percent += variety.percent/100.0*percent
                 varieties[new_variety.variety] = new_variety
         for key, variety in varieties.items():
-            variety.percent = "%.4f" % round(100*variety.percent, 4)
+            variety.percent = "%.4f" % round(100.0*variety.percent, 4)
         product.varieties = varieties.values()
         return product
 
@@ -248,7 +249,8 @@ class Production(metaclass=PoolMeta):
                 product = production.create_variant(distrib.product,
                     production.production_template.pass_feature)
                 product = production.pass_feature(product)
-                move = production._move(production.location,
+                move = production._move(
+                    production.location,
                     distrib.location,
                     production.company,
                     product,
@@ -292,7 +294,7 @@ class OutputDistribution(ModelSQL, ModelView):
         ('cancelled', 'Cancelled')], 'State'),
         'on_change_with_production_state')
 
-    @fields.depends('production')
+    @fields.depends('production', '_parent_production.state')
     def on_change_with_production_state(self, name=None):
         return self.production and self.production.state
 
@@ -329,7 +331,7 @@ class OutputDistribution(ModelSQL, ModelView):
             return
         self.on_change_product()
 
-    @fields.depends('product', 'location')
+    @fields.depends('product', 'location', 'initial_quantity')
     def on_change_with_initial_quantity_readonly(self, name=None):
         Product = Pool().get('product.product')
         if not self.product or not self.location:

@@ -278,40 +278,26 @@ Create Production
   6
   >>> input, = [i for i in production.inputs if i.product == product2]
   >>> input.quantity
-  100.0
+  180.0
   >>> input, = [i for i in production.inputs if i.product == product3]
   >>> input.quantity
-  50.0
+  90.0
   >>> input, = [i for i in production.inputs if i.product == product4]
   >>> input.quantity
-  150.0
+  270.0
 
-  >>> OutputDistribution = Model.get('production.output.distribution')
-  >>> m1 = OutputDistribution()
-  >>> m1.production = production
-  >>> m1.product = mostflor
-  >>> m1.location = storage
-  >>> m1.produced_quantity = 3000
-  >>> production.output_distribution.append(m1)
+  >>> (o1, o2) = production.output_distribution
+  >>> o1.location = storage
+  >>> o1.final_quantity = 5000
+  >>> o1.save()
 
-  >>> m2 = OutputDistribution()
-  >>> m2.production = production
-  >>> m2.product = mostflor
-  >>> m2.location = storage
-  >>> m2.produced_quantity = 1500
-  >>> production.output_distribution.append(m2)
+  >>> o2.location = storage
+  >>> o2.final_quantity = 10000
+  >>> o2.save()
 
-  >>> m3 = OutputDistribution()
-  >>> m3.production = production
-  >>> m3.product = mostprimeres
-  >>> m3.location = storage
-  >>> m3.produced_quantity = 3500
-  >>> production.output_distribution.append(m3)
-  >>> #import pdb; pdb.set_trace()
-  >>> production.save()
   >>> production.reload()
   >>> len(production.output_distribution)
-  3
+  2
   >>> [x.name for x in production.allowed_enology_products]
   ['Raim Blanc', 'Raim Blanc', 'Raim Blanc', 'Raim Blanc']
   >>> [x.name for x in production.production_template.inputs]
@@ -321,11 +307,11 @@ Create Production
   >>> production.click('run')
   >>> production.click('done')
   >>> len(production.outputs)
-  3
+  2
   >>> most = production.outputs[0]
   >>> len(most.product.varieties)
   2
   >>> [(x.variety.name, x.percent) for x in most.product.varieties]
-  [('Parellada', 16.0), ('Macabeu', 82.0)]
+  [('Parellada', 16.6667), ('Macabeu', 83.3334)]
   >>> [x.name for x in most.product.denominations_of_origin]
   ['Catalunya']
