@@ -1,7 +1,7 @@
 <tree>
   <field name="number"/>
-  <field name="weighting_date"/>
-  <field name="weighting_center"/>
+  <field name="weighing_date"/>
+  <field name="weighing_center"/>
   <field name="crop"/>
   <field name="product"/>
   <field name="variety"/>

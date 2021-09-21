@@ -8,32 +8,32 @@ from trytond.exceptions import UserError
 from trytond.transaction import Transaction
 from datetime import datetime
 
-class WeightingCenter(ModelSQL, ModelView):
-    """ Weighting Center """
-    __name__ = 'agronomics.weighting.center'
+class WeighingCenter(ModelSQL, ModelView):
+    """ Weighing Center """
+    __name__ = 'agronomics.weighing.center'
 
     name = fields.Char('Name', required=True)
-    weighting_sequence = fields.Many2One('ir.sequence', 'Weighting Sequence',
+    weighing_sequence = fields.Many2One('ir.sequence', 'Weighing Sequence',
         domain=[
-            ('sequence_type', '=', Id('agronomics', 'sequence_type_weighting'))
+            ('sequence_type', '=', Id('agronomics', 'sequence_type_weighing'))
         ])
 
 
 READONLY = ['processing', 'in_analysis', 'done', 'cancelled']
 READONLY2 = ['draft', 'in_analysis', 'done', 'cancelled']
 
-class Weighting(Workflow, ModelSQL, ModelView):
-    """ Weighting """
-    __name__ = 'agronomics.weighting'
+class Weighing(Workflow, ModelSQL, ModelView):
+    """ Weighing """
+    __name__ = 'agronomics.weighing'
     _rec_name = 'number'
 
     number = fields.Char('Number', readonly=True, select=True)
-    weighting_date = fields.Date('Date', states={
+    weighing_date = fields.Date('Date', states={
             'readonly': Eval('state').in_(READONLY),
             'required': True
             }, depends=['state'])
-    weighting_center = fields.Many2One('agronomics.weighting.center',
-        'Weighting Center', states={
+    weighing_center = fields.Many2One('agronomics.weighing.center',
+        'Weighing Center', states={
             'readonly': Eval('state').in_(READONLY),
             'required': True
         }, depends=['state'])
@@ -76,18 +76,18 @@ class Weighting(Workflow, ModelSQL, ModelView):
             'readonly': Eval('state').in_(READONLY2),
             'required': Eval('state') == 'in_analysis',
             })
-    beneficiaries = fields.One2Many('agronomics.beneficiary', 'weighting',
+    beneficiaries = fields.One2Many('agronomics.beneficiary', 'weighing',
         'Beneficiaries', states={
                 'readonly': Eval('state').in_(READONLY2),
                 'required': Eval('state') == 'in_analysis',
                 })
-    denomination_origin = fields.Many2Many('agronomics.weighting-agronomics.do',
-        'weighting', 'do', 'Denomination of Origin', states={
+    denomination_origin = fields.Many2Many('agronomics.weighing-agronomics.do',
+        'weighing', 'do', 'Denomination of Origin', states={
             'readonly': Eval('state').in_(READONLY2),
             'required': Eval('state') == 'in_analysis',
             })
-    plantations = fields.Many2Many('agronomics.weighting-agronomics.plantation',
-        'weighting', 'plantation', 'plantations', states={
+    plantations = fields.Many2Many('agronomics.weighing-agronomics.plantation',
+        'weighing', 'plantation', 'plantations', states={
             'readonly': Eval('state').in_(READONLY),
             'required': Eval('state') == 'process',
             }, size=4)
@@ -106,9 +106,9 @@ class Weighting(Workflow, ModelSQL, ModelView):
 
     @classmethod
     def __setup__(cls):
-        super(Weighting, cls).__setup__()
+        super(Weighing, cls).__setup__()
         cls._order = [
-            ('weighting_date', 'DESC NULLS FIRST'),
+            ('weighing_date', 'DESC NULLS FIRST'),
             ('id', 'DESC'),
             ]
         cls._transitions |= set((
@@ -146,7 +146,7 @@ class Weighting(Workflow, ModelSQL, ModelView):
                 })
 
     @staticmethod
-    def default_weighting_date():
+    def default_weighing_date():
         Date = Pool().get('ir.date')
         return Date.today()
 
@@ -157,11 +157,11 @@ class Weighting(Workflow, ModelSQL, ModelView):
     def get_all_do(self, name):
         return ",".join([x.name for x in self.denomination_origin])
 
-    @fields.depends('weighting_date')
+    @fields.depends('weighing_date')
     def on_change_with_crop(self):
         Crop = Pool().get('agronomics.crop')
-        crop = Crop.search([('start_date', '<=', self.weighting_date),
-            ('end_date', '>=', self.weighting_date)], limit=1)
+        crop = Crop.search([('start_date', '<=', self.weighing_date),
+            ('end_date', '>=', self.weighing_date)], limit=1)
         if not crop:
             return
         return crop[0].id
@@ -249,31 +249,31 @@ class Weighting(Workflow, ModelSQL, ModelView):
 
     @classmethod
     @Workflow.transition('in_analysis')
-    def analysis(cls, weightings):
+    def analysis(cls, weighings):
         pool = Pool()
         Product = pool.get('product.product')
         default_product_values = Product.default_get(Product._fields.keys(),
             with_rec_name=False)
         product = Product(**default_product_values)
-        for weighting in weightings:
-            product.template = weighting.product
-            product.denominations_of_origin = weighting.denomination_origin
-            product.ecologicals = [weighting.ecological]
-            product.varieties = [weighting.variety.id]
-            product.vintages = [weighting.crop.id]
-            weighting.product_created = product
-            weighting.quality_test = weighting.create_quality_test()
+        for weighing in weighings:
+            product.template = weighing.product
+            product.denominations_of_origin = weighing.denomination_origin
+            product.ecologicals = [weighing.ecological]
+            product.varieties = [weighing.variety.id]
+            product.vintages = [weighing.crop.id]
+            weighing.product_created = product
+            weighing.quality_test = weighing.create_quality_test()
 
-        cls.save(weightings)
+        cls.save(weighings)
 
     def create_quality_test(self):
         pool = Pool()
         QualityTest = pool.get('quality.test')
 
         with Transaction().set_context(_check_access=False):
-            if not (self.product and self.product.quality_weighting):
+            if not (self.product and self.product.quality_weighing):
                 return
-            template = self.product.quality_weighting
+            template = self.product.quality_weighing
             test = QualityTest(
                 test_date=datetime.now(),
                 templates=[template],
@@ -284,32 +284,32 @@ class Weighting(Workflow, ModelSQL, ModelView):
 
     @classmethod
     @Workflow.transition('draft')
-    def draft(cls, weightings):
+    def draft(cls, weighings):
         pass
 
     @classmethod
     @Workflow.transition('done')
-    def done(cls, weightings):
+    def done(cls, weighings):
         pass
 
     @classmethod
     @Workflow.transition('processing')
-    def process(cls, weightings):
+    def process(cls, weighings):
         Beneficiary = Pool().get('agronomics.beneficiary')
         to_save = []
 
-        for weighting in weightings:
-            if weighting.beneficiaries:
-                Beneficiary.delete([x for x in weighting.beneficiaries])
+        for weighing in weighings:
+            if weighing.beneficiaries:
+                Beneficiary.delete([x for x in weighing.beneficiaries])
 
-            parcel = weighting.get_parcel()
+            parcel = weighing.get_parcel()
             if not parcel:
                 continue
 
             for ben in parcel.beneficiaries:
                 b = Beneficiary()
                 b.party = ben.party
-                b.weighting = weighting
+                b.weighing = weighing
                 b.percent = ben.percent
                 to_save.append(b)
 
@@ -318,47 +318,47 @@ class Weighting(Workflow, ModelSQL, ModelView):
 
     @classmethod
     @Workflow.transition('cancel')
-    def cancel(cls, weightings):
+    def cancel(cls, weighings):
         pass
 
     @classmethod
-    def set_number(cls, weighting_center):
-        WeightingCenter = Pool().get('agronomics.weighting.center')
-        weighting_center = WeightingCenter(weighting_center)
-        return (weighting_center.weighting_sequence and
-            weighting_center.weighting_sequence.get())
+    def set_number(cls, weighing_center):
+        WeighingCenter = Pool().get('agronomics.weighing.center')
+        weighing_center = WeighingCenter(weighing_center)
+        return (weighing_center.weighing_sequence and
+            weighing_center.weighing_sequence.get())
 
     @classmethod
     def create(cls, vlist):
         vlist = [v.copy() for v in vlist]
         for values in vlist:
             if not values.get('number'):
-                values['number'] = cls.set_number(values.get('weighting_center'))
+                values['number'] = cls.set_number(values.get('weighing_center'))
         return super().create(vlist)
 
     @classmethod
-    def copy(cls, weightings, default=None):
+    def copy(cls, weighings, default=None):
         if default is None:
             default = {}
         else:
             default = default.copy()
         default.setdefault('beneficiaries', None)
-        return super().copy(weightings, default=default)
+        return super().copy(weighings, default=default)
 
 
-class WeightingDo(ModelSQL):
-    'Weighting - Denomination Origin'
-    __name__ = 'agronomics.weighting-agronomics.do'
+class WeighingDo(ModelSQL):
+    'Weighing - Denomination Origin'
+    __name__ = 'agronomics.weighing-agronomics.do'
 
-    weighting = fields.Many2One('agronomics.weighting', 'Weighting')
+    weighing = fields.Many2One('agronomics.weighing', 'Weighing')
     do = fields.Many2One('agronomics.denomination_of_origin',
         'Denomination Origin')
 
 
-class WeightingPlantation(ModelSQL):
-    'Weighting - Plantations'
-    __name__ = 'agronomics.weighting-agronomics.plantation'
+class WeighingPlantation(ModelSQL):
+    'Weighing - Plantations'
+    __name__ = 'agronomics.weighing-agronomics.plantation'
 
-    weighting = fields.Many2One('agronomics.weighting', 'Weighting')
+    weighing = fields.Many2One('agronomics.weighing', 'Weighing')
     plantation = fields.Many2One('agronomics.plantation',
         'Plantation')

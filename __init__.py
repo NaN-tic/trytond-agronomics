@@ -5,7 +5,7 @@ from trytond.pool import Pool
 from . import party
 from . import plot
 from . import product
-from . import weighting
+from . import weighing
 from . import quality
 
 
@@ -30,10 +30,10 @@ def register():
         product.ProductEcological,
         product.ProductVariety,
         product.Template,
-        weighting.WeightingCenter,
-        weighting.Weighting,
-        weighting.WeightingPlantation,
-        weighting.WeightingDo,
+        weighing.WeighingCenter,
+        weighing.Weighing,
+        weighing.WeighingPlantation,
+        weighing.WeighingDo,
         quality.QualityTest,
         quality.QuantitativeTestLine,
         quality.QualitativeTestLine,
