@@ -1,6 +1,6 @@
 <form>
   <label name="name"/>
   <field name="name"/>
-  <label name="weighing_sequence"/>
-  <field name="weighing_sequence"/>
+  <label name="weighting_sequence"/>
+  <field name="weighting_sequence"/>
 </form>
