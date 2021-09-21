@@ -1,10 +1,10 @@
 <form>
   <label name="number"/>
   <field name="number"/>
-  <label name="weighting_date"/>
-  <field name="weighting_date"/>
-  <label name="weighting_center"/>
-  <field name="weighting_center"/>
+  <label name="weighing_date"/>
+  <field name="weighing_date"/>
+  <label name="weighing_center"/>
+  <field name="weighing_center"/>
   <label name="crop"/>
   <field name="crop"/>
   <label name="purchase_contract"/>
