@@ -155,4 +155,4 @@ class Beneficiaries(ModelSQL, ModelView):
     party = fields.Many2One('party.party', 'Beneficiary', required=True)
     percent = fields.Float('Percent', digits=(16, 2), required=True)
     parcel = fields.Many2One('agronomics.parcel', 'Parcel')
-    weighing = fields.Many2One('agronomics.weighing', 'Weighing')
+    weighting = fields.Many2One('agronomics.weighting', 'Weighting')
