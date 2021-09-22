@@ -5,8 +5,11 @@ from trytond.pool import PoolMeta, Pool
 from trytond.pyson import Eval, Bool, If
 from trytond.exceptions import UserError
 from trytond.i18n import gettext
-from decimal import Decimal
 from trytond.transaction import Transaction
+from trytond.wizard import Wizard, StateView, StateAction, Button
+from trytond.modules.product import round_price
+from trytond.model.exceptions import ValidationError
+from decimal import Decimal
 
 
 class ProductionTemplate(ModelSQL, ModelView):
@@ -27,6 +30,14 @@ class ProductionTemplate(ModelSQL, ModelView):
     enology_products = fields.One2Many('production.template.line',
         'production_template', 'Complementary Products')
     pass_feature = fields.Boolean('Pass on Feature')
+    cost_distribution_template = fields.Many2One(
+        'production.cost_price.distribution.template', "Distribution Template",
+        domain=[
+            ('production_template', '=', Eval('id', 0)),
+        ], depends=['id'])
+    cost_distribution_templates = fields.One2Many(
+        'production.cost_price.distribution.template',
+        'production_template', "Cost Distribution Templates")
 
     @fields.depends('uom')
     def on_change_with_unit_digits(self, name=None):
@@ -35,21 +46,33 @@ class ProductionTemplate(ModelSQL, ModelView):
         return 2
 
     @classmethod
-    def check_input_uoms(cls, records):
-        for record in records:
-            category_uom = record.uom.category
-            uoms = [i.default_uom.category for i in record.inputs]
-            uoms.append(category_uom)
-            if len(list(set(uoms))) > 1:
-                raise UserError(gettext('agronomics.msg_uom_not_fit',
-                    production=record.rec_name,
-                    uom=record.uom.rec_name,
-                    uoms=",".join([x.rec_name for x in set(uoms)])))
-
-    @classmethod
     def validate(cls, records):
         super().validate(records)
-        cls.check_input_uoms(records)
+        for record in records:
+            record.check_input_uoms()
+            record.check_cost_distribution()
+
+    def check_input_uoms(self):
+        category_uom = self.uom.category
+        uoms = [i.default_uom.category for i in self.inputs]
+        uoms.append(category_uom)
+        if len(list(set(uoms))) > 1:
+            raise UserError(gettext('agronomics.msg_uom_not_fit',
+                production=self.rec_name,
+                uom=self.uom.rec_name,
+                uoms=",".join([x.rec_name for x in set(uoms)])))
+
+    def check_cost_distribution(self):
+        if not self.cost_distribution_template:
+            return
+
+        distribution_templates = set([c.template
+            for c in self.cost_distribution_template.cost_distribution_templates])
+        for c in self.outputs:
+            if c not in distribution_templates:
+                raise ValidationError(
+                    gettext('agronomics.msg_check_cost_distribution_template',
+                        production=self.rec_name))
 
 
 class ProductionTemplateInputsProductTemplate(ModelSQL):
@@ -124,10 +147,30 @@ class Production(metaclass=PoolMeta):
         'product.template', None, 'Allowed Output Products', readonly=True),
         'on_change_with_allowed_output_products',
         setter='set_allowed_products')
+    output_templates = fields.Function(fields.Many2Many('product.template',
+        None, None, "Output Templates"), 'on_change_with_output_templates')
+    cost_distributions = fields.Many2Many(
+        'production-production.distribution.cost_price',
+        'production', 'cost_distribution', "Cost Distributions",
+        states={
+            'readonly': Eval('state').in_(['cancelled', 'done']),
+        }, domain=[
+            ('template', 'in', Eval('output_templates')),
+        ], depends=['state', 'output_templates'])
+    cost_distribution_template = fields.Many2One(
+        'production.cost_price.distribution.template', "Cost Distribution Template",
+        states={
+            'readonly': Eval('state').in_(['cancelled', 'done']),
+        }, depends=['state'])
 
     @classmethod
     def set_allowed_products(cls, productions, name, value):
         pass
+
+    @fields.depends('production_template')
+    def on_change_production_template(self):
+        if self.production_template and self.production_template.cost_distribution_template:
+            self.cost_distribution_template = self.production_template.cost_distribution_template
 
     @fields.depends('production_template')
     def on_change_with_allowed_enology_products(self, name=None):
@@ -144,15 +187,56 @@ class Production(metaclass=PoolMeta):
             return []
         return [x.id for x in self.production_template.outputs]
 
+    @fields.depends('outputs')
+    def on_change_with_output_templates(self, name=None):
+        return [s.product.template.id for s in self.outputs if s.product]
+
+    @classmethod
+    def validate(cls, productions):
+        super(Production, cls).validate(productions)
+        for production in productions:
+            production.check_cost_distribution()
+            production.check_percentatge()
+
+    def check_cost_distribution(self):
+        if (self.state in ('cancelled', 'done')
+                or not self.cost_distribution_template
+                or not self.cost_distributions):
+            return
+
+        distribution_templates = set([c.template
+            for c in self.cost_distribution_template.cost_distribution_templates])
+        for c in self.cost_distributions:
+            if c.template not in distribution_templates:
+                raise ValidationError(
+                    gettext('agronomics.msg_check_cost_distribution',
+                        production=self.rec_name))
+
+    def check_percentatge(self):
+        if not self.cost_distributions:
+            return
+
+        percentatge = sum(template.percentatge
+            for template in self.cost_distributions)
+        if percentatge != 1:
+            raise ValidationError(
+                gettext('agronomics.msg_check_production_percentatge',
+                    distribution=self.rec_name,
+                    percentatge=percentatge * 100,
+                    ))
+
     @classmethod
     def wait(cls, productions):
-        Move = Pool().get('stock.move')
-        Uom = Pool().get('product.uom')
-        OutputDistribution = Pool().get('production.output.distribution')
+        pool = Pool()
+        Move = pool.get('stock.move')
+        Uom = pool.get('product.uom')
+        OutputDistribution = pool.get('production.output.distribution')
+
         moves = []
         delete = []
         outputs = []
         delete_outputs = []
+        to_write = []
 
         for production in productions:
             if not production.production_template:
@@ -196,10 +280,21 @@ class Production(metaclass=PoolMeta):
                 od.production = production
                 outputs.append(od)
 
+            if (not production.cost_distribution_template
+                    and production.production_template.cost_distribution_template):
+                to_write.extend(([production], {
+                    'cost_distribution_template':
+                        production.production_template.cost_distribution_template,
+                    }))
+
         OutputDistribution.delete(delete_outputs)
         OutputDistribution.save(outputs)
         Move.save(moves)
         Move.delete(delete)
+
+        if to_write:
+            cls.write(*to_write)
+
         super().wait(productions)
 
     def create_variant(self, template, pass_feature):
@@ -263,6 +358,42 @@ class Production(metaclass=PoolMeta):
                 moves.append(move)
         Move.save(moves)
         super().done(productions)
+
+    @classmethod
+    def set_cost(cls, productions):
+        pool = Pool()
+        Move = pool.get('stock.move')
+
+        not_cost_distribution = []
+        moves = []
+        for production in productions:
+            if not production.cost_distributions:
+                not_cost_distribution.append(production)
+                continue
+
+            production_cost = production.cost
+            for output in production.outputs:
+                has_product = False
+                output_cost = Decimal(0)
+                for cdist in production.cost_distributions:
+                    products = cdist.template.products
+                    if output.product not in products:
+                        continue
+                    has_product = True
+                    cost = production_cost * (1 + cdist.percentatge) - production_cost
+                    quantity = Decimal(str(output.quantity))
+                    output_cost += round_price(cost / quantity)
+
+                output_cost = output_cost if has_product else Decimal(0)
+                if output.unit_price != output_cost:
+                    output.unit_price = output_cost
+                    moves.append(output)
+
+        if moves:
+            Move.save(moves)
+
+        if not_cost_distribution:
+            super(Production, cls).set_cost(not_cost_distribution)
 
 
 class OutputDistribution(ModelSQL, ModelView):
@@ -352,6 +483,7 @@ class OutputDistribution(ModelSQL, ModelView):
         return ((self.final_quantity or 0) -
             (self.initial_quantity or 0))
 
+
 class ProductionEnologyProduct(ModelSQL, ModelView):
     'Production Enology Product'
     __name__ = 'production.enology.product'
@@ -382,3 +514,165 @@ class ProductionEnologyProduct(ModelSQL, ModelView):
         if not self.product:
             return
         self.quantity = self.product.quantity
+
+
+class ProductionProductionCostPriceDistribution(ModelSQL):
+    'Production - Production Cost Price Distribution'
+    __name__ = 'production-production.distribution.cost_price'
+    production = fields.Many2One('production', 'Production', ondelete='CASCADE',
+        required=True, select=True)
+    cost_distribution = fields.Many2One('production.cost_price.distribution',
+        "Cost Distribution",
+        ondelete='CASCADE', required=True, select=True)
+
+
+class ProductionCostPriceDistribution(ModelSQL, ModelView):
+    "Production Distribution Cost Price"
+    __name__ = 'production.cost_price.distribution'
+    template = fields.Many2One('product.template', "Template", required=True,
+        ondelete='RESTRICT')
+    percentatge = fields.Numeric("Percentatge", digits=(16, 4), required=True)
+
+    @classmethod
+    def __setup__(cls):
+        BOMInput = Pool().get('production.bom.input')
+        super(ProductionCostPriceDistribution, cls).__setup__()
+        cls.template.domain = [('type', 'in', BOMInput.get_product_types())]
+
+
+class ProductionCostPriceDistributionTemplateTemplate(ModelSQL, ModelView):
+    "Production Distribution Cost Price Template - Template"
+    __name__ = 'production.cost_price.distribution.template.template'
+    template = fields.Many2One('product.template', "Template", required=True,
+        ondelete='RESTRICT')
+    percentatge = fields.Numeric("Percentatge", digits=(16, 4), required=True)
+
+    @classmethod
+    def __setup__(cls):
+        BOMInput = Pool().get('production.bom.input')
+        super(ProductionCostPriceDistributionTemplateTemplate, cls).__setup__()
+        cls.template.domain = [('type', 'in', BOMInput.get_product_types())]
+
+
+class ProductionCostPriceDistributionTemplate(ModelSQL, ModelView):
+    "Production Cost Price Distribution Template"
+    __name__ = 'production.cost_price.distribution.template'
+    name = fields.Char("Name", required=True)
+    production_template = fields.Many2One('production.template',
+        "Production Template", required=True)
+    cost_distribution_templates = fields.Many2Many(
+        'production-production.distribution.cost_price.template',
+        'cost_distribution_template', 'cost_distribution_template_template',
+        "Cost Distribution Template")
+
+    @classmethod
+    def validate(cls, templates):
+        super(ProductionCostPriceDistributionTemplate, cls).validate(templates)
+        for template in templates:
+            template.check_percentatge()
+
+    def check_percentatge(self):
+        percentatge = sum(template.percentatge
+            for template in self.cost_distribution_templates)
+        if percentatge != 1:
+            raise ValidationError(
+                gettext('agronomics.msg_check_cost_distribution_template_percentatge',
+                    distribution=self.rec_name,
+                    percentatge=percentatge * 100,
+                    ))
+
+
+class ProductionDistributionCostPriceTemplate(ModelSQL):
+    'Production - Production Distribution Cost Price Template'
+    __name__ = 'production-production.distribution.cost_price.template'
+    cost_distribution_template = fields.Many2One(
+        'production.cost_price.distribution.template',
+        "Cost Distribution Template", ondelete='CASCADE',
+        required=True, select=True)
+    cost_distribution_template_template = fields.Many2One(
+        'production.cost_price.distribution.template.template',
+        "Cost Distribution Template - Template",
+        ondelete='CASCADE', required=True, select=True)
+
+
+class ProductionCostPriceDistributionTemplateProductTemplate(ModelSQL, ModelView):
+    "Production Cost Price Distribution Template - Product Template"
+    __name__ = 'production.cost_price.distribution.template-product.template'
+    _table = 'production_cost_price_dist_tpl-product_tpl_rel'
+    distribution_template = fields.Many2One(
+        'production.cost_price.distribution.template',
+        "Distribution Template", ondelete='CASCADE', required=True, select=True)
+    product_template = fields.Many2One('product.template',
+        "Product Template", ondelete='CASCADE', required=True, select=True)
+
+
+class ProductionCostPriceDistributionTemplateProductionTemplateAsk(ModelView):
+    'Production Cost Price Distribution Template from Production Template Ask'
+    __name__ = 'production.cost_price.distribution.template.ask'
+    name = fields.Char("Name", required=True)
+    cost_distribution_templates = fields.One2Many(
+        'production.cost_price.distribution.template.template',
+        None, "Cost Distributions")
+
+
+class ProductionCostPriceDistributionTemplateProductionTemplate(Wizard):
+    "Production Cost Price Distribution Template from Production Template"
+    __name__ = 'production.cost_price.distribution.template.from.production.template'
+    start_state = 'ask'
+    ask = StateView('production.cost_price.distribution.template.ask',
+        'agronomics.create_cost_price_distribution_from_production_start_view_form', [
+            Button('Cancel', 'end', 'tryton-cancel'),
+            Button('Create', 'create_cost_distributions', 'tryton-ok', True),
+            ])
+    create_cost_distributions = StateAction(
+            'agronomics.act_production_cost_distribution_template_tree')
+
+    def do_create_cost_distributions(self, action):
+        pool = Pool()
+        Template = pool.get('production.cost_price.distribution.template')
+        DistributionTemplate = pool.get('production.cost_price.distribution.template.template')
+
+        to_create = []
+        for record in self.records:
+            tpl = Template()
+            tpl.name = self.ask.name
+            tpl.production_template = record
+            cost_distributions = []
+            for cost_distribution in self.ask.cost_distribution_templates:
+                dt = DistributionTemplate()
+                dt.template = cost_distribution.template
+                dt.percentatge = cost_distribution.percentatge
+                cost_distributions.append(dt)
+            if cost_distributions:
+                tpl.cost_distribution_templates = cost_distributions
+            to_create.append(tpl._save_values)
+        tpls = Template.create(to_create)
+
+        data = {'res_id': [tpl.id for tpl in tpls]}
+        if len(tpls) == 1:
+            action['views'].reverse()
+        return action, data
+
+    def default_ask(self, fields):
+        pool = Pool()
+        ProductionTemplate = pool.get('production.template')
+
+        default = {}
+        context = Transaction().context
+
+        active_id = context.get('active_id')
+        if active_id:
+            ptpl = ProductionTemplate(active_id)
+            cost_distributions = []
+            # TODO ptpl.cost_distribution_templates or ptpl.cost_distribution_template
+            for cdt in ptpl.cost_distribution_templates:
+                for c in cdt.cost_distribution_templates:
+                    # dt = DistributionTemplate()
+                    # dt.template = c.template
+                    # dt.percentatge = c.percentatge
+                    cost_distributions.append({
+                        'template': c.template.id,
+                        'percentatge': c.percentatge,
+                        })
+            default['cost_distribution_templates'] = cost_distributions
+        return default
