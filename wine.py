@@ -2,7 +2,7 @@
 # the full copyright notices and license terms.
 from trytond.model import fields, Model
 from trytond.pool import Pool
-from trytond.pyson import Bool, Eval
+from trytond.pyson import Eval
 from trytond.transaction import Transaction
 
 __all__ = ['WineMixin']
