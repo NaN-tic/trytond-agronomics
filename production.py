@@ -8,6 +8,7 @@ from trytond.i18n import gettext
 from decimal import Decimal
 from trytond.transaction import Transaction
 
+
 class ProductionTemplate(ModelSQL, ModelView):
     "Produciton Template"
     __name__ = 'production.template'
@@ -19,13 +20,10 @@ class ProductionTemplate(ModelSQL, ModelView):
     quantity = fields.Float('Quantity',
         digits=(16, Eval('unit_digits', 2)),
         depends=['unit_digits'])
-
     inputs = fields.Many2Many('production.template.inputs-product.template',
         'production_template', 'template', "Inputs")
-
     outputs = fields.Many2Many('production.template.outputs-product.template',
         'production_template', 'template', "Outputs")
-
     enology_products = fields.One2Many('production.template.line',
         'production_template', 'Complementary Products')
     pass_feature = fields.Boolean('Pass on Feature')
@@ -155,6 +153,7 @@ class Production(metaclass=PoolMeta):
         delete = []
         outputs = []
         delete_outputs = []
+
         for production in productions:
             if not production.production_template:
                 continue
@@ -264,6 +263,7 @@ class Production(metaclass=PoolMeta):
                 moves.append(move)
         Move.save(moves)
         super().done(productions)
+
 
 class OutputDistribution(ModelSQL, ModelView):
     'Output Distribution'

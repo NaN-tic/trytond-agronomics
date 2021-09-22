@@ -61,7 +61,6 @@
         <field name="res_model">production.template.line</field>
     </record>
 
-
     <!-- Production Output Distribution -->
     <record model="ir.ui.view" id="production_output_distribution_view_form">
         <field name="model">production.output.distribution</field>

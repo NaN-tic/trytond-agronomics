@@ -13,7 +13,7 @@ this repository contains the full copyright notices and license terms. -->
         <field name="text">Product "%(product)s" cannot have more than one Variety because of its agronomic type.</field>
     </record>
     <record model="ir.message" id="msg_uom_not_fit">
-        <field name="text">Inputs from Production template "%(producttion)s" must be of uom "%(uom)s" and we have "%(uoms)s." .</field>
+        <field name="text">Inputs from Production template "%(producttion)s" must be of uom "%(uom)s" and we have "%(uoms)s".</field>
     </record>
   </data>
 </tryton>
