@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!-- This file is part of Tryton.  The COPYRIGHT file at the top level of
+this repository contains the full copyright notices and license terms. -->
+<tree editable="1">
+    <field name="product"/>
+    <field name="location"/>
+    <field name="uom"/>
+    <field name="initial_quantity_readonly"/>
+    <field name="final_quantity"/>
+    <field name="produced_quantity"/>
+    <field name="production_state"/>
+    <field name="initial_quantity" tree_invisible="1"/>
+</tree>

@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!-- This file is part of Tryton.  The COPYRIGHT file at the top level of
+this repository contains the full copyright notices and license terms. -->
+<form>
+    <label name="product"/>
+    <field name="product"/>
+    <label name="location"/>
+    <field name="location"/>
+    <label name="uom"/>
+    <field name="uom"/>
+    <label name="initial_quantity"/>
+    <field name="initial_quantity_readonly"/>
+    <label name="final_quantity"/>
+    <field name="final_quantity"/>
+    <label name="produced_quantity"/>
+    <field name="produced_quantity"/>
+    <field name="production_state" invisible="1"/>
+    <field name="initial_quantity" invisible="1"/>
+</form>

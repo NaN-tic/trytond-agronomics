@@ -12,6 +12,19 @@
             <field name="inherit" ref="product.template_view_tree"/>
         </record>
 
+        <!-- Product Variety-->
+        <record model="ir.ui.view" id="product_variety_view_form">
+            <field name="model">product.variety</field>
+            <field name="type">form</field>
+            <field name="name">product_variety_form</field>
+        </record>
+        <record model="ir.ui.view" id="product_variety_view_list">
+            <field name="model">product.variety</field>
+            <field name="type">tree</field>
+            <field name="priority">10</field>
+            <field name="name">product_variety_list</field>
+        </record>
+
         <!-- Product Variant-->
         <record model="ir.ui.view" id="product_view_form">
             <field name="model">product.product</field>

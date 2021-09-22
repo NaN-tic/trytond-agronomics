@@ -1,0 +1,6 @@
+<form>
+  <label name="variety"/>
+  <field name="variety"/>
+  <label name="percent"/>
+  <field name="percent"/>
+</form>
