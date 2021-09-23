@@ -20,6 +20,7 @@ this repository contains the full copyright notices and license terms. -->
             <field name="cost_distribution_template"/>
             <newline/>
             <field name="cost_distributions" colspan="4"/>
+            <field name="cost_distribution_templates" invisible="1"/>
         </page>
     </xpath>
 </data>

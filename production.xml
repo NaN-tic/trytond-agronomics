@@ -110,55 +110,6 @@
         <field name="name">production_list</field>
     </record>
 
-    <!-- production cost distribution -->
-    <record model="ir.ui.view" id="production_cost_price_distribution_view_form">
-        <field name="model">production.cost_price.distribution</field>
-        <field name="type">form</field>
-        <field name="name">production_cost_price_distribution_form</field>
-    </record>
-    <record model="ir.ui.view" id="production_cost_price_distribution_view_tree">
-        <field name="model">production.cost_price.distribution</field>
-        <field name="type">tree</field>
-        <field name="name">production_cost_price_distribution_tree</field>
-    </record>
-
-    <record model="ir.action.act_window" id="act_production_cost_price_distribution_tree">
-        <field name="name">Cost Price Distribution</field>
-        <field name="res_model">production.cost_price.distribution</field>
-    </record>
-    <record model="ir.action.act_window.view" id="act_production_cost_price_distribution_tree_view1">
-        <field name="sequence" eval="10"/>
-        <field name="view" ref="production_cost_price_distribution_view_tree"/>
-        <field name="act_window" ref="act_production_cost_price_distribution_tree"/>
-    </record>
-    <record model="ir.action.act_window.view" id="act_production_cost_price_distribution_view2">
-        <field name="sequence" eval="20"/>
-        <field name="view" ref="production_cost_price_distribution_view_form"/>
-        <field name="act_window" ref="act_production_cost_price_distribution_tree"/>
-    </record>
-
-    <menuitem
-        parent="production.menu_configuration"
-        action="act_production_cost_price_distribution_tree"
-        sequence="50"
-        id="menu_act_production_cost_price_distribution"/>
-
-    <record model="ir.model.access" id="access_production_cost_price_distribution">
-        <field name="model" search="[('model', '=', 'production.cost_price.distribution')]"/>
-        <field name="perm_read" eval="True"/>
-        <field name="perm_write" eval="False"/>
-        <field name="perm_create" eval="False"/>
-        <field name="perm_delete" eval="False"/>
-    </record>
-    <record model="ir.model.access" id="access_production_cost_price_distribution_admin">
-        <field name="model" search="[('model', '=', 'production.cost_price.distribution')]"/>
-        <field name="group" ref="production.group_production_admin"/>
-        <field name="perm_read" eval="True"/>
-        <field name="perm_write" eval="True"/>
-        <field name="perm_create" eval="True"/>
-        <field name="perm_delete" eval="True"/>
-    </record>
-
     <!-- production.cost_price.distribution.template -->
     <record model="ir.ui.view" id="production_cost_distribution_template_view_form">
         <field name="model">production.cost_price.distribution.template</field>
@@ -172,7 +123,7 @@
     </record>
 
     <record model="ir.action.act_window" id="act_production_cost_distribution_template_tree">
-        <field name="name">Cost Price Distribution Template</field>
+        <field name="name">Templates Cost Price Distribution</field>
         <field name="res_model">production.cost_price.distribution.template</field>
     </record>
     <record model="ir.action.act_window.view" id="act_production_cost_distribution_template_tree_view1">
@@ -208,48 +159,48 @@
         <field name="perm_delete" eval="True"/>
     </record>
 
-    <!-- production cost distribution template - template -->
-    <record model="ir.ui.view" id="production_cost_price_distribution_template_template_view_form">
-        <field name="model">production.cost_price.distribution.template.template</field>
+    <!-- production cost price distribution -->
+    <record model="ir.ui.view" id="production_cost_price_distribution_view_form">
+        <field name="model">production.cost_price.distribution</field>
         <field name="type">form</field>
-        <field name="name">production_cost_price_distribution_template_template_form</field>
+        <field name="name">production_cost_price_distribution_form</field>
     </record>
-    <record model="ir.ui.view" id="production_cost_price_distribution_template_template_view_tree">
-        <field name="model">production.cost_price.distribution.template.template</field>
+    <record model="ir.ui.view" id="production_cost_price_distribution_view_tree">
+        <field name="model">production.cost_price.distribution</field>
         <field name="type">tree</field>
-        <field name="name">production_cost_price_distribution_template_template_tree</field>
+        <field name="name">production_cost_price_distribution_tree</field>
     </record>
 
-    <record model="ir.action.act_window" id="act_production_cost_price_distribution_template_template_tree">
-        <field name="name">Cost Price Distribution Template - Template</field>
-        <field name="res_model">production.cost_price.distribution.template.template</field>
+    <record model="ir.action.act_window" id="act_production_cost_price_distribution_tree">
+        <field name="name">Cost Price Distribution</field>
+        <field name="res_model">production.cost_price.distribution</field>
     </record>
-    <record model="ir.action.act_window.view" id="act_production_cost_price_distribution_template_template_tree_view1">
+    <record model="ir.action.act_window.view" id="act_production_cost_price_distribution_tree_view1">
         <field name="sequence" eval="10"/>
-        <field name="view" ref="production_cost_price_distribution_template_template_view_tree"/>
-        <field name="act_window" ref="act_production_cost_price_distribution_template_template_tree"/>
+        <field name="view" ref="production_cost_price_distribution_view_tree"/>
+        <field name="act_window" ref="act_production_cost_price_distribution_tree"/>
     </record>
-    <record model="ir.action.act_window.view" id="act_production_cost_price_distribution_template_template_view2">
+    <record model="ir.action.act_window.view" id="act_production_cost_price_distribution_view2">
         <field name="sequence" eval="20"/>
-        <field name="view" ref="production_cost_price_distribution_template_template_view_form"/>
-        <field name="act_window" ref="act_production_cost_price_distribution_template_template_tree"/>
+        <field name="view" ref="production_cost_price_distribution_view_form"/>
+        <field name="act_window" ref="act_production_cost_price_distribution_tree"/>
     </record>
 
     <menuitem
         parent="menu_act_production_cost_distribution_template"
-        action="act_production_cost_price_distribution_template_template_tree"
+        action="act_production_cost_price_distribution_tree"
         sequence="50"
-        id="menu_act_production_cost_distribution_template_template"/>
+        id="menu_act_production_cost_price_distribution"/>
 
-    <record model="ir.model.access" id="access_production_cost_price_distribution_template_template">
-        <field name="model" search="[('model', '=', 'production.cost_price.distribution.template.template')]"/>
+    <record model="ir.model.access" id="access_production_cost_price_distribution">
+        <field name="model" search="[('model', '=', 'production.cost_price.distribution')]"/>
         <field name="perm_read" eval="True"/>
         <field name="perm_write" eval="False"/>
         <field name="perm_create" eval="False"/>
         <field name="perm_delete" eval="False"/>
     </record>
-    <record model="ir.model.access" id="access_production_cost_price_distribution_template_template_admin">
-        <field name="model" search="[('model', '=', 'production.cost_price.distribution.template.template')]"/>
+    <record model="ir.model.access" id="access_production_cost_price_distribution_admin">
+        <field name="model" search="[('model', '=', 'production.cost_price.distribution')]"/>
         <field name="group" ref="production.group_production_admin"/>
         <field name="perm_read" eval="True"/>
         <field name="perm_write" eval="True"/>

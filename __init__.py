@@ -47,7 +47,6 @@ def register():
         production.ProductionCostPriceDistribution,
         production.ProductionProductionCostPriceDistribution,
         production.ProductionCostPriceDistributionTemplate,
-        production.ProductionCostPriceDistributionTemplateTemplate,
         production.ProductionCostPriceDistributionTemplateProductTemplate,
         production.ProductionDistributionCostPriceTemplate,
         production.ProductionCostPriceDistributionTemplateProductionTemplateAsk,
