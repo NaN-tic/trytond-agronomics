@@ -226,7 +226,7 @@ class Production(metaclass=PoolMeta):
         if percentatge != 1:
             raise ValidationError(
                 gettext('agronomics.msg_check_production_percentatge',
-                    distribution=self.rec_name,
+                    production=self.rec_name,
                     percentatge=percentatge * 100,
                     ))
 
