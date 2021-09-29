@@ -147,7 +147,7 @@ class Production(metaclass=PoolMeta):
         # domain=[('product', 'in', Eval('allowed_ouput_products'))],
         states={
             'invisible': ~Bool(Eval('production_template')),
-            'readonly': Eval('state') == 'done',
+            'readonly': Eval('state').in_(['cancelled', 'done']),
         }, depends=['allowed_output_products', 'state'])
     allowed_enology_products = fields.Function(fields.One2Many(
         'product.product', None, 'Allowed Enology Products', readonly=True),
