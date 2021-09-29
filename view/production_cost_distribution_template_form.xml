@@ -7,6 +7,5 @@ this repository contains the full copyright notices and license terms. -->
     <label name="production_template"/>
     <field name="production_template"/>
     <newline/>
-    <separator name="cost_distribution_templates" colspan="4"/>
     <field name="cost_distribution_templates" colspan="4"/>
 </form>
