@@ -6,4 +6,6 @@ this repository contains the full copyright notices and license terms. -->
     <field name="template"/>
     <label name="percentatge"/>
     <field name="percentatge" factor="100"/>
+    <label name="distribution_template"/>
+    <field name="distribution_template"/>
 </form>

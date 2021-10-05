@@ -47,8 +47,6 @@ def register():
         production.ProductionCostPriceDistribution,
         production.ProductionProductionCostPriceDistribution,
         production.ProductionCostPriceDistributionTemplate,
-        production.ProductionCostPriceDistributionTemplateProductTemplate,
-        production.ProductionDistributionCostPriceTemplates,
         production.ProductionCostPriceDistributionTemplateProductionTemplateAsk,
         module='agronomics', type_='model')
     Pool.register(
