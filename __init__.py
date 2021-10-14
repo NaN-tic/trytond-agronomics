@@ -45,7 +45,7 @@ def register():
         production.OutputDistribution,
         production.ProductionEnologyProduct,
         production.ProductionCostPriceDistribution,
-        production.ProductionProductionCostPriceDistribution,
+#        production.ProductionProductionCostPriceDistribution,
         production.ProductionCostPriceDistributionTemplate,
         production.ProductionCostPriceDistributionTemplateProductionTemplateAsk,
         module='agronomics', type_='model')
