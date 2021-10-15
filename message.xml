@@ -27,5 +27,10 @@ this repository contains the full copyright notices and license terms. -->
     <record model="ir.message" id="msg_check_production_percentatge">
         <field name="text">Invalid percentatge "%(percentatge)s" in "%(production)s".</field>
     </record>
+    <record model="ir.message" id="msg_check_cost_templates">
+        <field name="text">Cost "%(cost)s" has template "%(template)s" not present in Production Template Outputs".</field>
+    </record>
+
   </data>
+
 </tryton>

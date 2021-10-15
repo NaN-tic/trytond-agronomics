@@ -140,7 +140,7 @@ class Production(metaclass=PoolMeta):
                     ('product.quantity', '>', 0), ())],
         states={
             'invisible': ~Bool(Eval('production_template')),
-            'readonly': ~Eval('state').in_(['request', 'draft', 'waiting']),
+            'readonly': ~Eval('state').in_(['request', 'draft']),
         }, depends=['allowed_enology_products', 'state'])
     output_distribution = fields.One2Many('production.output.distribution',
         'production', "Output Distribution",
@@ -163,9 +163,7 @@ class Production(metaclass=PoolMeta):
         states={
             'readonly': Eval('state').in_(['cancelled', 'done']),
         }, domain=[
-            If(Bool(Eval('cost_distribution_template')),
-                ('template', 'in', Eval('cost_distribution_templates')),
-                ()),
+            ('template', 'in', Eval('cost_distribution_templates')),
         ], depends=['state', 'cost_distribution_template',
             'cost_distribution_templates'])
     cost_distribution_template = fields.Many2One(
@@ -218,9 +216,8 @@ class Production(metaclass=PoolMeta):
     @fields.depends('cost_distribution_template',
         '_parent_cost_distribution_template.cost_distribution_templates')
     def on_change_with_cost_distribution_templates(self, name=None):
-        if self.cost_distribution_template:
-            return [s.template.id for s in
-                self.cost_distribution_template.cost_distribution_templates]
+        if self.production_template:
+            return [s.id for s in self.production_template.outputs]
 
     @classmethod
     def validate(cls, productions):
@@ -574,6 +571,7 @@ class ProductionCostPriceDistribution(ModelSQL, ModelView):
             ('production.cost_price.distribution.template', 'Templates'),
             ]
 
+
 class ProductionCostPriceDistributionTemplate(ModelSQL, ModelView):
     "Production Cost Price Distribution Template"
     __name__ = 'production.cost_price.distribution.template'
@@ -589,6 +587,17 @@ class ProductionCostPriceDistributionTemplate(ModelSQL, ModelView):
         super(ProductionCostPriceDistributionTemplate, cls).validate(templates)
         for template in templates:
             template.check_percentatge()
+            template.check_product_templates()
+
+    def check_product_templates(self):
+        for cost in self.cost_distribution_templates:
+            if cost.template not in self.production_template.outputs:
+                raise ValidationError(gettext(
+                    'agronomics.msg_check_cost_templates',
+                    cost=cost.rec_name,
+                    template=cost.template.rec_name,
+                    ))
+
 
     def check_percentatge(self):
         percentatge = sum(t.percentatge
@@ -663,6 +672,7 @@ class ProductionCostPriceDistributionTemplateProductionTemplate(Wizard):
             for output in ptpl.outputs:
                 cost_distributions.append({
                         'template': output.id,
+                        'template.rec_name': output.rec_name,
                         })
-                default['cost_distribution_templates'] = cost_distributions
+            default['cost_distribution_templates'] = cost_distributions
         return default
