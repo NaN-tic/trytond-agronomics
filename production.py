@@ -676,7 +676,7 @@ class ProductionCostPriceDistributionTemplateProductionTemplate(Wizard):
             for output in ptpl.outputs:
                 cost_distributions.append({
                         'template': output.id,
-                        'template.rec_name': output.rec_name,
+                        'template.': {'rec_name': output.rec_name},
                         })
             default['cost_distribution_templates'] = cost_distributions
         return default
