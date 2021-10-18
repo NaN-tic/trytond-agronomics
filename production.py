@@ -397,6 +397,7 @@ class Production(metaclass=PoolMeta):
     def set_cost(cls, productions):
         pool = Pool()
         Move = pool.get('stock.move')
+        Uom = pool.get('product.uom')
 
         not_cost_distribution = []
         moves = []
@@ -409,14 +410,17 @@ class Production(metaclass=PoolMeta):
             for output in production.outputs:
                 has_product = False
                 output_cost = Decimal(0)
+                total_output = sum([Uom.compute_qty(x.uom, x.quantity,
+                    x.product.default_uom) for x in production.outputs
+                        if x.product.template == output.product.template])
+
                 for cdist in production.cost_distributions:
                     products = cdist.template.products
                     if output.product not in products:
                         continue
                     has_product = True
                     cost = production_cost * (1 + cdist.percentatge) - production_cost
-                    quantity = Decimal(str(output.quantity))
-                    output_cost += round_price(cost / quantity)
+                    output_cost += round_price(cost / Decimal(total_output))
 
                 output_cost = output_cost if has_product else Decimal(0)
                 if output.unit_price != output_cost:
