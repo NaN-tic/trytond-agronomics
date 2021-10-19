@@ -13,7 +13,24 @@ this repository contains the full copyright notices and license terms. -->
         <field name="text">Product "%(product)s" cannot have more than one Variety because of its agronomic type.</field>
     </record>
     <record model="ir.message" id="msg_uom_not_fit">
-        <field name="text">Inputs from Production template "%(producttion)s" must be of uom "%(uom)s" and we have "%(uoms)s".</field>
+        <field name="text">Inputs from Production template "%(production)s" must be of uom "%(uom)s" and we have "%(uoms)s".</field>
     </record>
+    <record model="ir.message" id="msg_check_cost_distribution">
+        <field name="text">The production "%(production)s" has same products in cost distribution.</field>
+    </record>
+    <record model="ir.message" id="msg_check_cost_distribution_template">
+        <field name="text">There are some products in cost distribution that has not in outputs in the production "%(production)s".</field>
+    </record>
+    <record model="ir.message" id="msg_check_cost_distribution_template_percentatge">
+        <field name="text">Invalid percentatge "%(percentatge)s" in "%(distribution)s".</field>
+    </record>
+    <record model="ir.message" id="msg_check_production_percentatge">
+        <field name="text">Invalid percentatge "%(percentatge)s" in "%(production)s".</field>
+    </record>
+    <record model="ir.message" id="msg_check_cost_templates">
+        <field name="text">Cost "%(cost)s" has template "%(template)s" not present in Production Template Outputs".</field>
+    </record>
+
   </data>
+
 </tryton>

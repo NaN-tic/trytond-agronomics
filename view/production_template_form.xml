@@ -13,4 +13,7 @@ this repository contains the full copyright notices and license terms. -->
   <field name="inputs" colspan="2"/>
   <field name="outputs" colspan="2"/>
   <field name="enology_products" colspan="4"/>
+  <label name="cost_distribution_template"/>
+  <field name="cost_distribution_template"/>
+  <field name="cost_distribution_templates" colspan="4"/>
 </form>

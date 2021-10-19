@@ -1,4 +1,4 @@
-# This file is part carviresa module for Tryton.
+# This file is part agronomics module for Tryton.
 # The COPYRIGHT file at the top level of this repository contains
 # the full copyright notices and license terms.
 from trytond.pool import Pool
@@ -44,8 +44,13 @@ def register():
         production.Production,
         production.OutputDistribution,
         production.ProductionEnologyProduct,
+        production.ProductionCostPriceDistribution,
+#        production.ProductionProductionCostPriceDistribution,
+        production.ProductionCostPriceDistributionTemplate,
+        production.ProductionCostPriceDistributionTemplateProductionTemplateAsk,
         module='agronomics', type_='model')
     Pool.register(
+        production.ProductionCostPriceDistributionTemplateProductionTemplate,
         module='agronomics', type_='wizard')
     Pool.register(
         module='agronomics', type_='report')

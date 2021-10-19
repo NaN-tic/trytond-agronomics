@@ -372,7 +372,7 @@ msgstr "Necesita mostres"
 
 msgctxt "field:product.product,production_quality_template:"
 msgid "Production Quality Template"
-msgstr ""
+msgstr "Plantilla Qualitat de producció"
 
 msgctxt "field:product.product,quality_sample:"
 msgid "Quality Sample"
@@ -838,6 +838,18 @@ msgctxt "field:production,allowed_output_products:"
 msgid "Allowed Output Products"
 msgstr "Productes permesos a la sortida"
 
+msgctxt "field:production,cost_distribution_template:"
+msgid "Cost Distribution Template"
+msgstr "Plantilla distribució de costos"
+
+msgctxt "field:production,cost_distribution_templates:"
+msgid "Cost Product Templates"
+msgstr "Plantilla cost del producte"
+
+msgctxt "field:production,cost_distributions:"
+msgid "Cost Distributions"
+msgstr "Distribució de costos"
+
 msgctxt "field:production,enology_products:"
 msgid "Enology Products"
 msgstr "Productes Vinícules"
@@ -849,6 +861,45 @@ msgstr "Distribució de sortides"
 msgctxt "field:production,production_template:"
 msgid "Production Template"
 msgstr "Plantilla de producció"
+
+msgctxt "field:production,production_template_cost_distribution_templates:"
+msgid "Cost Distribution Templates"
+msgstr "Plantilla distribució costos"
+
+msgctxt "field:production.cost_price.distribution,origin:"
+msgid "Origin"
+msgstr "Origen"
+
+msgctxt "field:production.cost_price.distribution,percentatge:"
+msgid "Percentatge"
+msgstr "Percentatge"
+
+msgctxt "field:production.cost_price.distribution,template:"
+msgid "Template"
+msgstr "Plantilla"
+
+msgctxt ""
+"field:production.cost_price.distribution.template,cost_distribution_templates:"
+msgid "Cost Distribution"
+msgstr "Distribució de costos"
+
+msgctxt "field:production.cost_price.distribution.template,name:"
+msgid "Name"
+msgstr "Nom"
+
+msgctxt ""
+"field:production.cost_price.distribution.template,production_template:"
+msgid "Production Template"
+msgstr "Plantilla de producció"
+
+msgctxt ""
+"field:production.cost_price.distribution.template.ask,cost_distribution_templates:"
+msgid "Cost Distributions"
+msgstr "Distribució de costos"
+
+msgctxt "field:production.cost_price.distribution.template.ask,name:"
+msgid "Name"
+msgstr "Nom"
 
 msgctxt "field:production.enology.product,product:"
 msgid "Product"
@@ -878,6 +929,10 @@ msgctxt "field:production.output.distribution,initial_quantity:"
 msgid "Initial Quantity"
 msgstr "Quantitat inicial"
 
+msgctxt "field:production.output.distribution,initial_quantity_readonly:"
+msgid "Initial Quantity"
+msgstr "Quantitat inicial"
+
 msgctxt "field:production.output.distribution,location:"
 msgid "Location"
 msgstr "Ubicació"
@@ -894,6 +949,10 @@ msgctxt "field:production.output.distribution,production:"
 msgid "Production"
 msgstr "Producció"
 
+msgctxt "field:production.output.distribution,production_state:"
+msgid "State"
+msgstr "Estat"
+
 msgctxt "field:production.output.distribution,unit_digits:"
 msgid "Unit Digits"
 msgstr "Dígits de la unitat"
@@ -902,8 +961,16 @@ msgctxt "field:production.output.distribution,uom:"
 msgid "Uom"
 msgstr "UdM"
 
+msgctxt "field:production.template,cost_distribution_template:"
+msgid "Default cost distribution template"
+msgstr "Plantilla distribució de cost per defecte"
+
+msgctxt "field:production.template,cost_distribution_templates:"
+msgid "Cost Distribution Templates"
+msgstr "Plantilla de distribucció de costos"
+
 msgctxt "field:production.template,enology_products:"
-msgid "Production Template"
+msgid "Complementary Products"
 msgstr "Plantilla de producció"
 
 msgctxt "field:production.template,inputs:"
@@ -1100,13 +1167,21 @@ msgctxt "model:ir.action,name:act_product_quantitative_test_lines"
 msgid "Quantitative Lines"
 msgstr "Línia quantitativa"
 
+msgctxt "model:ir.action,name:act_production_cost_distribution_template_tree"
+msgid "Templates Cost Price Distribution"
+msgstr "Plantilles Distribució de cost"
+
+msgctxt "model:ir.action,name:act_production_cost_price_distribution_tree"
+msgid "Cost Price Distribution"
+msgstr "Preus de la Distribució de costos"
+
 msgctxt "model:ir.action,name:act_production_enology_product_tree"
 msgid "Production Enology Product"
 msgstr "Productes Vinícules"
 
 msgctxt "model:ir.action,name:act_production_output_distribution_tree"
 msgid "Production Output Distribution"
-msgstr ""
+msgstr "Distribució sortida de producció"
 
 msgctxt "model:ir.action,name:act_production_template_line_tree"
 msgid "Production Template Line"
@@ -1123,6 +1198,11 @@ msgstr "Pesada"
 msgctxt "model:ir.action,name:act_weighing_center_action"
 msgid "Weighing Center"
 msgstr "Centre de pesada"
+
+msgctxt ""
+"model:ir.action,name:wizard_create_cost_price_distribution_from_production"
+msgid "Create Cost Price Distribution"
+msgstr "Crear Distribució de costos"
 
 msgctxt "model:ir.action.act_window.domain,name:act_weighing_domain_all"
 msgid "All"
@@ -1149,10 +1229,41 @@ msgstr ""
 "Els Beneficiares de les collites \"%(crop)s\" i la plantació "
 "\"%(plantation)s\" han de sumar 100."
 
+msgctxt "model:ir.message,text:msg_check_cost_distribution"
+msgid "The production \"%(production)s\" has same products in cost distribution."
+msgstr ""
+"La producció \"%(producció)s\" té els mateixos productes en distribució de "
+"costos."
+
+msgctxt "model:ir.message,text:msg_check_cost_distribution_template"
+msgid ""
+"There are some products in cost distribution that has not in outputs in the "
+"production \"%(production)s\"."
+msgstr ""
+"Hi ha alguns productes en distribució de costos que no tenen resultats en la"
+" producció \"% (producció) s\"."
+
+msgctxt ""
+"model:ir.message,text:msg_check_cost_distribution_template_percentatge"
+msgid "Invalid percentatge \"%(percentatge)s\" in \"%(distribution)s\"."
+msgstr "Percentatge \"%(percentatge)s\" no vàlid a \"%(distribució)s\"."
+
+msgctxt "model:ir.message,text:msg_check_cost_templates"
+msgid ""
+"Cost \"%(cost)s\" has template \"%(template)s\" not present in Production "
+"Template Outputs\"."
+msgstr ""
+"Cost \"%(cost)s\" té una \"%(producte)s\" que no està present en les "
+"sortides de la plantilla de producció."
+
+msgctxt "model:ir.message,text:msg_check_production_percentatge"
+msgid "Invalid percentatge \"%(percentatge)s\" in \"%(production)s\"."
+msgstr "Percentatge \"%(percentatge)s\" no vàlid a \"%(producció)s\"."
+
 msgctxt "model:ir.message,text:msg_uom_not_fit"
 msgid ""
-"Inputs from Production template \"%(producttion)s\" must be of uom "
-"\"%(uom)s\" and we have \"%(uoms)s\" ."
+"Inputs from Production template \"%(production)s\" must be of uom "
+"\"%(uom)s\" and we have \"%(uoms)s\"."
 msgstr ""
 "Les entrades de la plantilla de producció \"%(production)s\" ha de tenir la "
 "uom \"%(uom)s\" i ens trobem \"%(uoms)\"."
@@ -1200,6 +1311,10 @@ msgstr "Pesada"
 msgctxt "model:ir.sequence.type,name:sequence_type_weighing"
 msgid "Weighing"
 msgstr "Pesada"
+
+msgctxt "model:ir.ui.menu,name:menu_act_production_cost_distribution_template"
+msgid "Templates Cost Price Distribution"
+msgstr "Plantilla distribució de preus de cost"
 
 msgctxt "model:ir.ui.menu,name:menu_agronomics"
 msgid "Agronomics"
@@ -1280,6 +1395,19 @@ msgstr "Producte - Varietat"
 msgctxt "model:product.variety,name:"
 msgid "Product Variety"
 msgstr "Varietat"
+
+msgctxt "model:production.cost_price.distribution,name:"
+msgid "Production Distribution Cost Price"
+msgstr "Distribució preu de cost producció"
+
+msgctxt "model:production.cost_price.distribution.template,name:"
+msgid "Production Cost Price Distribution Template"
+msgstr "Plantilla de distribució de preus de costos de la producció"
+
+msgctxt "model:production.cost_price.distribution.template.ask,name:"
+msgid ""
+"Production Cost Price Distribution Template from Production Template Ask"
+msgstr ""
 
 msgctxt "model:production.enology.product,name:"
 msgid "Production Enology Product"
@@ -1589,6 +1717,44 @@ msgctxt "selection:product.template,agronomic_type:"
 msgid "Wine"
 msgstr "Vi"
 
+msgctxt "selection:production.output.distribution,production_state:"
+msgid "Assigned"
+msgstr "Reservat"
+
+msgctxt "selection:production.output.distribution,production_state:"
+msgid "Cancelled"
+msgstr "Cancel·lat"
+
+msgctxt "selection:production.output.distribution,production_state:"
+msgid "Done"
+msgstr "Realitzat"
+
+msgctxt "selection:production.output.distribution,production_state:"
+msgid "Draft"
+msgstr "Esborrany"
+
+msgctxt "selection:production.output.distribution,production_state:"
+msgid "Request"
+msgstr "Sol·licitud"
+
+msgctxt "selection:production.output.distribution,production_state:"
+msgid "Running"
+msgstr "En execució"
+
+msgctxt "selection:production.output.distribution,production_state:"
+msgid "Waiting"
+msgstr "En espera"
+
 msgctxt "view:product.product:"
 msgid "Agronomics"
 msgstr "Agronomics"
+
+msgctxt ""
+"wizard_button:production.cost_price.distribution.template.from.production.template,ask,create_cost_distributions:"
+msgid "Create"
+msgstr "Crea"
+
+msgctxt ""
+"wizard_button:production.cost_price.distribution.template.from.production.template,ask,end:"
+msgid "Cancel"
+msgstr "Cancel·lat"
