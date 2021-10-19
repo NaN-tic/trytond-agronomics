@@ -213,8 +213,7 @@ class Production(metaclass=PoolMeta):
             return [s.id for s in
                 self.production_template.cost_distribution_templates]
 
-    @fields.depends('cost_distribution_template',
-        '_parent_cost_distribution_template.cost_distribution_templates')
+    @fields.depends('production_template')
     def on_change_with_cost_distribution_templates(self, name=None):
         if self.production_template:
             return [s.id for s in self.production_template.outputs]
