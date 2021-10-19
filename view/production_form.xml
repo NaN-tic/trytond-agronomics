@@ -15,5 +15,12 @@ this repository contains the full copyright notices and license terms. -->
             <field name="output_distribution" colspan="4"/>
             <field name="allowed_output_products" colspan="4" invisible="1"/>
         </page>
+        <page string="Cost Distribution" id="cost-distribution">
+            <label name="cost_distribution_template"/>
+            <field name="cost_distribution_template"/>
+            <newline/>
+            <field name="cost_distributions" colspan="4"/>
+            <field name="cost_distribution_templates" invisible="1"/>
+        </page>
     </xpath>
 </data>
