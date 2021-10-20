@@ -100,7 +100,7 @@ class Weighing(Workflow, ModelSQL, ModelView):
                 ], "State", readonly=True, required=True)
     state_string = state.translated('state')
     all_do = fields.Function(fields.Char('All DO'), 'get_all_do')
-    quality_test = fields.Many2One('quality.test', 'Test', readonly=True)
+    quality_test = fields.Many2One('quality.test', 'Test')
     product_created = fields.Many2One('product.product', 'Product Created',
         readonly=True)
 
