@@ -832,7 +832,7 @@ msgstr "Varietat"
 
 msgctxt "field:production,allowed_enology_products:"
 msgid "Allowed Enology Products"
-msgstr "Productes vinícules permesos"
+msgstr "Productes vinícoles permesos"
 
 msgctxt "field:production,allowed_output_products:"
 msgid "Allowed Output Products"
@@ -852,7 +852,7 @@ msgstr "Distribució de costos"
 
 msgctxt "field:production,enology_products:"
 msgid "Enology Products"
-msgstr "Productes Vinícules"
+msgstr "Productes Vinícoles"
 
 msgctxt "field:production,output_distribution:"
 msgid "Output Distribution"
@@ -1177,7 +1177,7 @@ msgstr "Preus de la Distribució de costos"
 
 msgctxt "model:ir.action,name:act_production_enology_product_tree"
 msgid "Production Enology Product"
-msgstr "Productes Vinícules"
+msgstr "Productes Vinícoles"
 
 msgctxt "model:ir.action,name:act_production_output_distribution_tree"
 msgid "Production Output Distribution"
@@ -1411,7 +1411,7 @@ msgstr ""
 
 msgctxt "model:production.enology.product,name:"
 msgid "Production Enology Product"
-msgstr "Productes Vinícules"
+msgstr "Productes Vinícoles"
 
 msgctxt "model:production.output.distribution,name:"
 msgid "Output Distribution"

@@ -195,8 +195,8 @@ class Production(metaclass=PoolMeta):
         products = []
         if not self.production_template:
             return []
-        for template in self.production_template.inputs:
-            products += template.products
+        for x in self.production_template.inputs:
+            products += x.products
         return [x.id for x in products]
 
     @fields.depends('production_template')
@@ -286,8 +286,7 @@ class Production(metaclass=PoolMeta):
             enology_products = (production.production_template and
                 production.production_template.enology_products or [])
             for enology in enology_products:
-                quantity = Uom.compute_qty(enology.uom, enology.quantity,
-                    production.production_template.uom, round=True)
+                quantity = enology.quantity
                 qty = quantity * (input_quantity or 1) / template_qty
                 qty = enology.uom.round(qty)
                 move = production._move(production.picking_location,
