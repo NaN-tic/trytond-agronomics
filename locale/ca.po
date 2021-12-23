@@ -226,17 +226,9 @@ msgctxt "field:agronomics.weighing,denomination_origin:"
 msgid "Denomination of Origin"
 msgstr "Denominació d'origen"
 
-msgctxt "field:agronomics.weighing,do:"
-msgid "Denomination Origin"
-msgstr "Denominació d'origen"
-
 msgctxt "field:agronomics.weighing,ecological:"
 msgid "Ecological"
 msgstr "Ecològic"
-
-msgctxt "field:agronomics.weighing,net_weight:"
-msgid "Net Weight"
-msgstr "Pes net"
 
 msgctxt "field:agronomics.weighing,netweight:"
 msgid "Net Weight"
@@ -302,23 +294,11 @@ msgctxt "field:agronomics.weighing-agronomics.do,weighing:"
 msgid "Weighing"
 msgstr "Pesada"
 
-msgctxt "field:agronomics.weighing-agronomics.plantation,Plantation:"
-msgid "Plantation"
-msgstr "Plantacións"
-
 msgctxt "field:agronomics.weighing-agronomics.plantation,plantation:"
 msgid "Plantation"
 msgstr "Plantacións"
 
 msgctxt "field:agronomics.weighing-agronomics.plantation,weighing:"
-msgid "Weighing"
-msgstr "Pesada"
-
-msgctxt "field:agronomics.weighing-agronomics.plantations,Plantation:"
-msgid "Plantation"
-msgstr "Plantacións"
-
-msgctxt "field:agronomics.weighing-agronomics.plantations,weighing:"
 msgid "Weighing"
 msgstr "Pesada"
 
@@ -337,6 +317,10 @@ msgstr "Parceles"
 msgctxt "field:party.party,plantations:"
 msgid "Plantation"
 msgstr "Plantacións"
+
+msgctxt "field:product.configuration,variant_deactivation_time:"
+msgid "Variant Deactivation Time"
+msgstr "Temps per desactivar variants"
 
 msgctxt "field:product.product,agronomic_type:"
 msgid "Agronomic Type"
@@ -389,6 +373,10 @@ msgstr "Plantilla qualitat albarà entrada"
 msgctxt "field:product.product,shipment_out_quality_template:"
 msgid "Shipment Out Quality Template"
 msgstr "Plantilla qualitat albarà sortida"
+
+msgctxt "field:product.product,variant_deactivate_stock_zero:"
+msgid "Variant Deactivate Stock 0"
+msgstr "Desactivar variant amb estoc 0"
 
 msgctxt "field:product.product,varieties:"
 msgid "Varieties"
@@ -794,14 +782,6 @@ msgctxt "field:product.product-agronomics.ecological,product:"
 msgid "Product"
 msgstr "Productes"
 
-msgctxt "field:product.product-product.taxon,product:"
-msgid "Product"
-msgstr "Productes"
-
-msgctxt "field:product.product-product.taxon,variety:"
-msgid "Variety"
-msgstr "Varietat"
-
 msgctxt "field:product.template,agronomic_type:"
 msgid "Agronomic Type"
 msgstr "Tipus Agronòmic"
@@ -817,6 +797,10 @@ msgstr "Envàs"
 msgctxt "field:product.template,quality_weighing:"
 msgid "Quality Weighing"
 msgstr "Qualitat pesada"
+
+msgctxt "field:product.template,variant_deactivate_stock_zero:"
+msgid "Variant Deactivate Stock 0"
+msgstr "Desactivar variant amb estoc 0"
 
 msgctxt "field:product.variety,percent:"
 msgid "Percent"
@@ -1107,10 +1091,6 @@ msgctxt "model:agronomics.weighing-agronomics.plantation,name:"
 msgid "Weighing - Plantations"
 msgstr "Pesada - Plantacions"
 
-msgctxt "model:agronomics.weighing-agronomics.plantations,name:"
-msgid "Weighing - Plantations"
-msgstr "Pesada - Plantacions"
-
 msgctxt "model:agronomics.weighing.center,name:"
 msgid "Weighing Center"
 msgstr "Centre de pesada"
@@ -1388,10 +1368,6 @@ msgctxt "model:product.product-agronomics.ecological,name:"
 msgid "Product - Ecological"
 msgstr "Producte - Ecològic"
 
-msgctxt "model:product.product-product.taxon,name:"
-msgid "Product - Variety"
-msgstr "Producte - Varietat"
-
 msgctxt "model:product.variety,name:"
 msgid "Product Variety"
 msgstr "Varietat"
@@ -1653,6 +1629,10 @@ msgctxt "selection:agronomics.weighing,state:"
 msgid "Processing"
 msgstr "Processos"
 
+msgctxt "selection:ir.cron,method:"
+msgid "Deactivate Variants"
+msgstr "Desactivar Variants"
+
 msgctxt "selection:product.product,agronomic_type:"
 msgid "Bottled Wine"
 msgstr "Vi embotellat"
@@ -1748,6 +1728,25 @@ msgstr "En espera"
 msgctxt "view:product.product:"
 msgid "Agronomics"
 msgstr "Agronomics"
+
+msgctxt "view:product.product:"
+msgid "Quality"
+msgstr ""
+
+#, fuzzy
+msgctxt "view:production.cost_price.distribution:"
+msgid "%"
+msgstr "%"
+
+#, fuzzy
+msgctxt "view:production:"
+msgid "Cost Distribution"
+msgstr "Distribució de costos"
+
+#, fuzzy
+msgctxt "view:production:"
+msgid "Total"
+msgstr "Total"
 
 msgctxt ""
 "wizard_button:production.cost_price.distribution.template.from.production.template,ask,create_cost_distributions:"
