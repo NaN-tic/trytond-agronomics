@@ -1,12 +1,14 @@
 # This file is part of Tryton.  The COPYRIGHT file at the top level of
 # this repository contains the full copyright notices and license terms.
 from decimal import Decimal
+from datetime import datetime
 from trytond.model import ModelSQL, ModelView, fields
-from trytond.pool import PoolMeta
+from trytond.pool import PoolMeta, Pool
 from trytond.pyson import Eval
 from trytond.exceptions import UserError
 from trytond.i18n import gettext
 from trytond.modules.agronomics.wine import WineMixin
+from trytond.transaction import Transaction
 
 
 class Certification(ModelSQL, ModelView):
@@ -27,6 +29,12 @@ class Container(ModelSQL, ModelView):
 
     name = fields.Char('Name')
     capacity = fields.Numeric('Capacity', digits=(16, 2))
+
+
+class ProductConfiguration(metaclass=PoolMeta):
+    __name__ = 'product.configuration'
+
+    variant_deactivation_time = fields.TimeDelta('Variant Deactivation Time')
 
 
 class Template(metaclass=PoolMeta):
@@ -54,6 +62,8 @@ class Template(metaclass=PoolMeta):
         searcher='search_capacity')
 
     quality_weighing = fields.Many2One('quality.template', 'Quality Weighing')
+
+    variant_deactivate_stock_zero = fields.Boolean('Variant Deactivate Stock 0')
 
     def get_capacity(self, name):
         if self.container:
@@ -110,6 +120,26 @@ class Product(WineMixin, metaclass=PoolMeta):
             )}, depends=['agronomic_type']), 'get_alcohol_volume')
 
     @classmethod
+    def deactivate_no_stock_variants_cron(cls):
+        pool = Pool()
+        Location = pool.get('stock.location')
+        ProductConfiguration = pool.get('product.configuration')
+        config = ProductConfiguration(1)
+        locations = Location.search(['type', '=', 'warehouse'])
+        locations = [location.id for location in locations]
+        with Transaction().set_context(locations=locations, with_childs=True):
+            products = cls.search(
+                [
+                    ('quantity', '=', 0),
+                    ('template.variant_deactivate_stock_zero', '=', True),
+                    ('create_date', '<',
+                        (datetime.now() - config.variant_deactivation_time))
+                ])
+            for product in products:
+                product.active = False
+            cls.save(products)
+
+    @classmethod
     def validate(cls, products):
         for product in products:
             if (product.agronomic_type in
@@ -128,6 +158,18 @@ class Product(WineMixin, metaclass=PoolMeta):
                 (float(self.template.capacity) * float(self.wine_alcohol_content))
                     / 100).quantize(
                         Decimal(str(10 ** -self.__class__.alcohol_volume.digits[1])))
+
+
+class Cron(metaclass=PoolMeta):
+    __name__ = 'ir.cron'
+
+    @classmethod
+    def __setup__(cls):
+        super(Cron, cls).__setup__()
+        cls.method.selection.append(
+            ('product.product|deactivate_no_stock_variants_cron',
+                "Deactivate Variants"),
+            )
 
 
 class ProductCrop(ModelSQL):
