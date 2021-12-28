@@ -1,8 +1,11 @@
 # This file is part of Tryton.  The COPYRIGHT file at the top level of
 # this repository contains the full copyright notices and license terms.
 from trytond.pool import PoolMeta, Pool
-from trytond.model import fields, Model
+from trytond.model import fields, Model, DeactivableMixin
 from trytond.modules.agronomics.wine import _WINE_DIGITS
+
+class QualitySample(DeactivableMixin, metaclass=PoolMeta):
+    __name__ = 'quality.sample'
 
 
 class QualityTest(metaclass=PoolMeta):

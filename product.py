@@ -108,6 +108,9 @@ class Product(WineMixin, metaclass=PoolMeta):
                 ['wine', 'unfiltered-wine', 'filtered-wine', 'clarified-wine',
                     'bottled-wine']
             )}, depends=['agronomic_type']), 'get_alcohol_volume')
+    quality_tests = fields.One2Many('quality.test', 'document', 'Quality Tests')
+    quality_samples = fields.One2Many('quality.sample', 'product',
+        'Quality Samples')
 
     @classmethod
     def validate(cls, products):

@@ -100,7 +100,8 @@ class Weighing(Workflow, ModelSQL, ModelView):
                 ], "State", readonly=True, required=True)
     state_string = state.translated('state')
     all_do = fields.Function(fields.Char('All DO'), 'get_all_do')
-    quality_test = fields.Many2One('quality.test', 'Test')
+    quality_test = fields.Function(fields.Many2One('quality.test', 'Test'),
+        'get_quality_test')
     product_created = fields.Many2One('product.product', 'Product Created',
         readonly=True)
 
@@ -156,6 +157,12 @@ class Weighing(Workflow, ModelSQL, ModelView):
 
     def get_all_do(self, name):
         return ",".join([x.name for x in self.denomination_origin])
+
+    def get_quality_test(self, name):
+        if not self.product_created:
+            return
+        tests = self.product_created.quality_tests
+        return tests and tests[0] and tests[0].id
 
     @fields.depends('weighing_date')
     def on_change_with_crop(self):
@@ -252,6 +259,7 @@ class Weighing(Workflow, ModelSQL, ModelView):
     def analysis(cls, weighings):
         pool = Pool()
         Product = pool.get('product.product')
+        Quality = pool.get('quality.test')
         default_product_values = Product.default_get(Product._fields.keys(),
             with_rec_name=False)
         product = Product(**default_product_values)
@@ -262,9 +270,13 @@ class Weighing(Workflow, ModelSQL, ModelView):
             product.varieties = [weighing.variety.id]
             product.vintages = [weighing.crop.id]
             weighing.product_created = product
-            weighing.quality_test = weighing.create_quality_test()
+           # weighing.quality_test = weighing.create_quality_test(product)
 
         cls.save(weighings)
+        tests = []
+        for weighing in weighings:
+            tests.append(weighing.create_quality_test())
+        Quality.save(tests)
 
     def create_quality_test(self):
         pool = Pool()
@@ -277,7 +289,7 @@ class Weighing(Workflow, ModelSQL, ModelView):
             test = QualityTest(
                 test_date=datetime.now(),
                 templates=[template],
-                document=str(self))
+                document=str(self.product_created))
             test.apply_template_values()
 
         return test

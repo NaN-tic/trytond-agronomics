@@ -30,6 +30,9 @@ class ProductionTemplate(ModelSQL, ModelView):
     enology_products = fields.One2Many('production.template.line',
         'production_template', 'Complementary Products')
     pass_feature = fields.Boolean('Pass on Feature')
+    pass_quality = fields.Boolean('Pass Quality')
+    pass_certification = fields.Boolean('Pass Certification')
+    pass_quality_sample = fields.Boolean('Pass Quality Sample')
     cost_distribution_template = fields.Many2One(
         'production.cost_price.distribution.template',
         "Default cost distribution template",
@@ -178,10 +181,29 @@ class Production(metaclass=PoolMeta):
         fields.Many2Many('product.template',
         None, None, "Cost Product Templates"),
         'on_change_with_cost_distribution_templates')
+    pass_quality = fields.Boolean('Pass Quality')
+    pass_certification = fields.Boolean('Pass Certification')
+    pass_quality_sample = fields.Boolean('Pass Quality Sample')
+
 
     @classmethod
     def set_allowed_products(cls, productions, name, value):
         pass
+
+    @fields.depends('production_template')
+    def on_change_with_pass_quality(self):
+        if self.production_template:
+            return self.production_template.pass_quality
+
+    @fields.depends('production_template')
+    def on_change_with_pass_certification(self):
+        if self.production_template:
+            return self.production_template.pass_certification
+
+    @fields.depends('production_template')
+    def on_change_with_pass_quality_sample(self):
+        if self.production_template:
+            return self.production_template.pass_quality_sample
 
     @fields.depends('production_template')
     def on_change_production_template(self):
@@ -335,6 +357,40 @@ class Production(metaclass=PoolMeta):
         product.template = template
         return product
 
+    def copy_certification(self, new_product):
+        products = [x.product for x in self.inputs if x.product.certification]
+        if not self.pass_certification or len(products) != 1:
+            return new_product
+        certification = products[0].certification
+        new_product.certication = certification
+        return new_product
+
+    def copy_quality_samples(self, new_product):
+        QualitySample = Pool().get('quality.sample')
+        products = [x.product for x in self.inputs if x.product.quality_samples]
+        if not self.pass_certification or len(products) != 1:
+            return new_product
+        samples = products[0].quality_samples
+        new_samples = QualitySample.copy(samples, {'product':new_product})
+        QualitySample.done(new_samples)
+        return new_product
+
+    def copy_quality(self, new_product):
+        Quality = Pool().get('quality.test')
+        products = [x.product for x in self.inputs]
+
+        if not self.pass_quality:
+            return
+
+        tests = []
+        for product in products:
+            if tests and product.quality_tests:
+                return
+            tests += product.quality_tests or []
+        new_tests = Quality.copy(tests, {'document': str(new_product)})
+        Quality.confirmed(new_tests)
+        Quality.manager_validate(new_tests)
+
     def pass_feature(self, product):
         Variety = Pool().get('product.variety')
         Uom = Pool().get('product.uom')
@@ -378,6 +434,7 @@ class Production(metaclass=PoolMeta):
                 product = production.create_variant(distrib.product,
                     production.production_template.pass_feature)
                 product = production.pass_feature(product)
+                product = production.copy_certification(product)
                 move = production._move(
                     production.location,
                     distrib.location,
@@ -388,8 +445,13 @@ class Production(metaclass=PoolMeta):
                 move.production_output = production
                 move.unit_price = Decimal(0)
                 moves.append(move)
+
         Move.save(moves)
         super().done(productions)
+        for production in productions:
+            for output in production.outputs:
+                production.copy_quality(output.product)
+                production.copy_quality_samples(output.product)
 
     @classmethod
     def set_cost(cls, productions):

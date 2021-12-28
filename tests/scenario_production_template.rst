@@ -188,6 +188,7 @@ Create Production Template::
     >>> production_template.inputs.append(productA.template)
     >>> production_template.outputs.append(mostflor)
     >>> production_template.outputs.append(mostprimeres)
+    >>> production_template.pass_quality = True
     >>> line = ProductionTemplateLine()
     >>> line.product = product2
     >>> line.quantity = 100
@@ -202,6 +203,10 @@ Create Production Template::
     >>> production_template.enology_products.append(line)
     >>> production_template.save()
 
+Create Test:
+
+    >>> QualityTest = Model.get('quality.test')
+    >>> Test = QualityTest()
 
 Create an Inventory::
 
@@ -315,3 +320,5 @@ Create Production
   [('Parellada', 16.6667), ('Macabeu', 83.3334)]
   >>> [x.name for x in most.product.denominations_of_origin]
   ['Catalunya']
+
+

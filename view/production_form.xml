@@ -6,6 +6,14 @@ this repository contains the full copyright notices and license terms. -->
       <label name="production_template"/>
       <field name="production_template"/>
     </xpath>
+    <xpath expr="/form/notebook/page[@id='other']/field[@name='done_by']" position="after">
+      <label name="pass_quality"/>
+      <field name="pass_quality"/>
+      <label name="pass_quality_sample"/>
+      <field name="pass_quality_sample"/>
+      <label name="pass_certification"/>
+      <field name="pass_certification"/>
+    </xpath>
     <xpath expr="/form/notebook" position="inside">
         <page name="enology_products">
             <field name="enology_products" colspan="4"/>
