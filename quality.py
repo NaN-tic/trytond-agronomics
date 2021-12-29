@@ -1,12 +1,31 @@
 # This file is part of Tryton.  The COPYRIGHT file at the top level of
 # this repository contains the full copyright notices and license terms.
 from trytond.pool import PoolMeta, Pool
-from trytond.model import fields, Model, DeactivableMixin
+from trytond.model import fields, Model
+from trytond.pyson import Eval
 from trytond.modules.agronomics.wine import _WINE_DIGITS
 
-class QualitySample(DeactivableMixin, metaclass=PoolMeta):
+class QualitySample(metaclass=PoolMeta):
     __name__ = 'quality.sample'
 
+    reference = fields.Char('Reference')
+    origin = fields.Reference('Origin', selection='get_origin', select=True,
+        states={
+            'readonly': Eval('state') != 'draft',
+            },
+        depends=['state'])
+
+    @classmethod
+    def _get_origin(cls):
+        'Return list of Model names for origin Reference'
+        return [cls.__name__, 'quality.sample']
+
+    @classmethod
+    def get_origin(cls):
+        IrModel = Pool().get('ir.model')
+        get_name = IrModel.get_name
+        models = cls._get_origin()
+        return [(None, '')] + [(m, get_name(m)) for m in models]
 
 class QualityTest(metaclass=PoolMeta):
     __name__ = 'quality.test'

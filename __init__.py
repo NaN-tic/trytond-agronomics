@@ -34,7 +34,7 @@ def register():
         weighing.Weighing,
         weighing.WeighingPlantation,
         weighing.WeighingDo,
-        # quality.QualitySample,
+        quality.QualitySample,
         quality.QualityTest,
         quality.QuantitativeTestLine,
         quality.QualitativeTestLine,

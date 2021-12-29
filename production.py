@@ -368,10 +368,15 @@ class Production(metaclass=PoolMeta):
     def copy_quality_samples(self, new_product):
         QualitySample = Pool().get('quality.sample')
         products = [x.product for x in self.inputs if x.product.quality_samples]
-        if not self.pass_certification or len(products) != 1:
+        if not self.pass_quality_sample or len(products) != 1:
             return new_product
         samples = products[0].quality_samples
-        new_samples = QualitySample.copy(samples, {'product':new_product})
+        new_samples =[]
+        for sample in samples:
+            new_sample, = QualitySample.copy([sample], {'product':new_product})
+            new_sample.origin = sample
+            new_samples.append(new_sample)
+        QualitySample.save(new_samples)
         QualitySample.done(new_samples)
         return new_product
 
