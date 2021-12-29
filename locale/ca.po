@@ -921,6 +921,10 @@ msgctxt "field:production.enology.product,uom:"
 msgid "Uom"
 msgstr "UdM"
 
+msgctxt "field:production.output.distribution,distribution_state:"
+msgid "Distribution State"
+msgstr "Estat Distribució"
+
 msgctxt "field:production.output.distribution,final_quantity:"
 msgid "Final Quantity"
 msgstr "Quantitat Final"
@@ -939,7 +943,7 @@ msgstr "Ubicació"
 
 msgctxt "field:production.output.distribution,produced_quantity:"
 msgid "Produced Quantity"
-msgstr "Quantitat produia"
+msgstr "Quantitat produïda"
 
 msgctxt "field:production.output.distribution,product:"
 msgid "Template"
@@ -1283,6 +1287,11 @@ msgid ""
 msgstr ""
 "El producte \"%(product)s\" no pot tenir més d'una collita degut al seu "
 "tipus agronòmic"
+
+msgctxt ""
+"model:ir.model.button,string:production_output_distribution_done_button"
+msgid "Done"
+msgstr "Realitzar"
 
 msgctxt "model:ir.model.button,string:weighing_analysis_button"
 msgid "Analysis"
@@ -1716,6 +1725,14 @@ msgstr "Vi en rama"
 msgctxt "selection:product.template,agronomic_type:"
 msgid "Wine"
 msgstr "Vi"
+
+msgctxt "selection:production.output.distribution,distribution_state:"
+msgid "Done"
+msgstr "Realitzat"
+
+msgctxt "selection:production.output.distribution,distribution_state:"
+msgid "Draft"
+msgstr "Esborrany"
 
 msgctxt "selection:production.output.distribution,production_state:"
 msgid "Assigned"

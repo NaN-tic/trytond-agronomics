@@ -375,19 +375,20 @@ class Production(metaclass=PoolMeta):
         moves = []
         for production in productions:
             for distrib in production.output_distribution:
-                product = production.create_variant(distrib.product,
-                    production.production_template.pass_feature)
-                product = production.pass_feature(product)
-                move = production._move(
-                    production.location,
-                    distrib.location,
-                    production.company,
-                    product,
-                    distrib.uom,
-                    distrib.produced_quantity)
-                move.production_output = production
-                move.unit_price = Decimal(0)
-                moves.append(move)
+                if distrib.distribution_state == 'draft':
+                    product = production.create_variant(distrib.product,
+                        production.production_template.pass_feature)
+                    product = production.pass_feature(product)
+                    move = production._move(
+                        production.location,
+                        distrib.location,
+                        production.company,
+                        product,
+                        distrib.uom,
+                        distrib.produced_quantity)
+                    move.production_output = production
+                    move.unit_price = Decimal(0)
+                    moves.append(move)
         Move.save(moves)
         super().done(productions)
 
@@ -463,6 +464,23 @@ class OutputDistribution(ModelSQL, ModelView):
         ('assigned', 'Assigned'), ('running', 'Running'), ('done', 'Done'),
         ('cancelled', 'Cancelled')], 'State'),
         'on_change_with_production_state')
+    distribution_state = fields.Selection([
+        ('draft', 'Draft'), ('done', 'Done')], 'Distribution State',
+        readonly=True)
+
+    @classmethod
+    def __setup__(cls):
+        super().__setup__()
+        cls._buttons.update({
+            'done': {
+                'readonly': Eval('distribution_state') != 'draft',
+                'depends': ['distribution_state']
+                }
+        })
+
+    @classmethod
+    def default_distribution_state(cls):
+        return 'draft'
 
     @fields.depends('production', '_parent_production.state')
     def on_change_with_production_state(self, name=None):
@@ -518,6 +536,34 @@ class OutputDistribution(ModelSQL, ModelView):
     def on_change_with_produced_quantity(self, name=None):
         return ((self.final_quantity or 0) -
             (self.initial_quantity or 0))
+
+    @classmethod
+    @ModelView.button
+    def done(cls, distributions):
+        pool = Pool()
+        Move = pool.get('stock.move')
+
+        moves = []
+        for distribution in distributions:
+            product = distribution.production.create_variant(
+                distribution.product,
+                distribution.production.production_template.pass_feature)
+            product = distribution.production.pass_feature(product)
+
+            move = distribution.production._move(
+                distribution.production.location,
+                distribution.location,
+                distribution.production.company,
+                product,
+                distribution.uom,
+                distribution.produced_quantity)
+            move.production_output = distribution.production
+            move.unit_price = Decimal(0)
+            moves.append(move)
+            distribution.distribution_state = 'done'
+        Move.save(moves)
+        Move.do(moves)
+        cls.save(distributions)
 
 
 class ProductionEnologyProduct(ModelSQL, ModelView):

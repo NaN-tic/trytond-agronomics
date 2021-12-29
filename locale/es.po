@@ -921,6 +921,10 @@ msgctxt "field:production.enology.product,uom:"
 msgid "Uom"
 msgstr "UdM"
 
+msgctxt "field:production.output.distribution,distribution_state:"
+msgid "Distribution State"
+msgstr "Estado Distribución"
+
 msgctxt "field:production.output.distribution,final_quantity:"
 msgid "Final Quantity"
 msgstr "Cantidad Final"
@@ -1283,6 +1287,11 @@ msgid ""
 msgstr ""
 "El producto \"%(product)s\"  no puede tener más de una cosecha debido a su "
 "Tipo Agronómico"
+
+msgctxt ""
+"model:ir.model.button,string:production_output_distribution_done_button"
+msgid "Done"
+msgstr "Realizar"
 
 msgctxt "model:ir.model.button,string:weighing_analysis_button"
 msgid "Analysis"
@@ -1717,6 +1726,14 @@ msgctxt "selection:product.template,agronomic_type:"
 msgid "Wine"
 msgstr "Vino"
 
+msgctxt "selection:production.output.distribution,distribution_state:"
+msgid "Done"
+msgstr "Realizado"
+
+msgctxt "selection:production.output.distribution,distribution_state:"
+msgid "Draft"
+msgstr "Borrador"
+
 msgctxt "selection:production.output.distribution,production_state:"
 msgid "Assigned"
 msgstr "Reservado"
@@ -1731,7 +1748,7 @@ msgstr "Realizado"
 
 msgctxt "selection:production.output.distribution,production_state:"
 msgid "Draft"
-msgstr "Esborany"
+msgstr "Borrador"
 
 msgctxt "selection:production.output.distribution,production_state:"
 msgid "Request"

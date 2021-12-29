@@ -14,6 +14,10 @@ this repository contains the full copyright notices and license terms. -->
     <field name="final_quantity"/>
     <label name="produced_quantity"/>
     <field name="produced_quantity"/>
+    <label name="distribution_state"/>
+    <field name="distribution_state"/>
     <field name="production_state" invisible="1"/>
     <field name="initial_quantity" invisible="1"/>
+    <newline/>
+    <button colspan="2" name="done"/>
 </form>
