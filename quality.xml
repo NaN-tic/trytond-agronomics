@@ -1,0 +1,10 @@
+<tryton>
+    <data>
+        <!-- Quality Sample-->
+        <record model="ir.ui.view" id="quality_sample_view_form">
+            <field name="model">quality.sample</field>
+            <field name="name">quality_sample_form</field>
+            <field name="inherit" ref="quality_control_sample.quality_sample_view_form"/>
+        </record>
+    </data>
+</tryton>

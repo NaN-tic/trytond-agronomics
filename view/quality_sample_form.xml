@@ -1,0 +1,9 @@
+<data>
+    <xpath expr="/form/field[@name='lot']" position="after">
+        <label name="reference"/>
+        <field name="reference"/>
+        <newline/>
+        <label name="origin"/>
+        <field name="origin" colspan="3"/>
+    </xpath>
+</data>
