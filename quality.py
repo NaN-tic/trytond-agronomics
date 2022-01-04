@@ -1,31 +1,149 @@
 # This file is part of Tryton.  The COPYRIGHT file at the top level of
 # this repository contains the full copyright notices and license terms.
+import datetime
 from trytond.pool import PoolMeta, Pool
-from trytond.model import fields, Model
-from trytond.pyson import Eval
+from trytond.model import fields, Model, ModelSQL, ModelView, Workflow
+from trytond.pyson import Eval, Id
 from trytond.modules.agronomics.wine import _WINE_DIGITS
+from trytond.transaction import Transaction
 
-class QualitySample(metaclass=PoolMeta):
+STATES = {
+    'readonly': Eval('state') == 'done',
+}
+DEPENDS = ['state']
+
+class ConfigurationCompany(ModelSQL):
+    'Company Quality configuration'
+    __name__ = 'quality.configuration.company'
+
+    company = fields.Many2One('company.company', 'Company')
+    sample_sequence = fields.Many2One('ir.sequence',
+            'Sample Sequence', domain=[
+                ('company', 'in',
+                    [Eval('context', {}).get('company', -1), None]),
+                ('sequence_type', '=', Id('agronomics',
+                    'sequence_type_sample')),
+                ])
+
+    @staticmethod
+    def default_company():
+        return Transaction().context.get('company')
+
+
+class Configuration(metaclass=PoolMeta):
+    __name__ = 'quality.configuration'
+
+    sample_sequence = fields.Function(fields.Many2One('ir.sequence',
+            'Sample Sequence', domain=[
+                ('company', 'in',
+                    [Eval('context', {}).get('company', -1), None]),
+                ('sequence_type', '=', Id('agronomics',
+                    'sequence_type_sample')),
+                ]),
+        'get_company_config', setter='set_company_config')
+
+    @classmethod
+    def get_company_config(cls, configs, names):
+        pool = Pool()
+        CompanyConfig = pool.get('quality.configuration.company')
+        res = dict.fromkeys(names, {configs[0].id: None})
+        company_configs = CompanyConfig.search([], limit=1)
+        if len(company_configs) == 1:
+            company_config, = company_configs
+            for field_name in set(names):
+                value = getattr(company_config, field_name, None)
+                if value:
+                    res[field_name] = {configs[0].id: value.id}
+        return res
+
+    @classmethod
+    def set_company_config(cls, configs, name, value):
+        pool = Pool()
+        CompanyConfig = pool.get('quality.configuration.company')
+        company_configs = CompanyConfig.search([], limit=1)
+        if len(company_configs) == 1:
+            company_config, = company_configs
+        else:
+            company_config = CompanyConfig()
+        setattr(company_config, name, value)
+        company_config.save()
+
+
+class QualitySample(Workflow, ModelSQL, ModelView):
+    'Quality Sample'
     __name__ = 'quality.sample'
 
+    code = fields.Char('Code', select=True, readonly=True)
+    state = fields.Selection([
+            ('draft', 'Draft'),
+            ('done', 'Done')],
+        'State', required=True, readonly=True)
     reference = fields.Char('Reference')
-    origin = fields.Reference('Origin', selection='get_origin', select=True,
-        states={
-            'readonly': Eval('state') != 'draft',
+    products = fields.Many2Many('product.product-quality.sample', 'sample',
+        'product', 'Products')
+    collection_date = fields.DateTime('Collection Date', required=True,
+        states=STATES, depends=DEPENDS)
+    company = fields.Many2One('company.company', 'Company', required=True,
+        select=True, states=STATES, depends=DEPENDS)
+
+    @classmethod
+    def __setup__(cls):
+        super(QualitySample, cls).__setup__()
+        cls._transitions |= set((('draft', 'done'),))
+        cls._buttons.update({
+            'done': {
+                'invisible': Eval('state') != 'draft',
+                'icon': 'tryton-forward',
             },
-        depends=['state'])
+        })
 
     @classmethod
-    def _get_origin(cls):
-        'Return list of Model names for origin Reference'
-        return [cls.__name__, 'quality.sample']
+    @ModelView.button
+    @Workflow.transition('done')
+    def done(cls, samples):
+        pass
+
+    @staticmethod
+    def default_state():
+        return 'draft'
+
+    @staticmethod
+    def default_company():
+        return Transaction().context.get('company')
+
+    @staticmethod
+    def default_collection_date():
+        return datetime.datetime.now()
 
     @classmethod
-    def get_origin(cls):
-        IrModel = Pool().get('ir.model')
-        get_name = IrModel.get_name
-        models = cls._get_origin()
-        return [(None, '')] + [(m, get_name(m)) for m in models]
+    def create(cls, vlist):
+        pool = Pool()
+        Config = pool.get('quality.configuration')
+
+        sequence = Config(1).sample_sequence
+        for value in vlist:
+            if not value.get('code'):
+                value['code'] = sequence.get()
+        return super(QualitySample, cls).create(vlist)
+
+    @classmethod
+    def copy(cls, samples, default=None):
+        if default is None:
+            default = {}
+        else:
+            default = default.copy()
+        default['code'] = None
+        return super(QualitySample, cls).copy(samples, default=default)
+
+class ProductQualitySample(ModelSQL):
+    'Product - Quality Sample'
+    __name__ = 'product.product-quality.sample'
+
+    product = fields.Many2One('product.product', 'Product', required=True,
+        ondelete='CASCADE', select=True)
+    sample = fields.Many2One('quality.sample', 'Sample', ondelete='CASCADE',
+        required=True, select=True)
+
 
 class QualityTest(metaclass=PoolMeta):
     __name__ = 'quality.test'

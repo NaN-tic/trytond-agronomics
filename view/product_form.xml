@@ -5,8 +5,6 @@
             <field name="varieties" colspan="2"/>
             <field name="denominations_of_origin" colspan="2"/>
             <field name="ecologicals" colspan="2"/>
-            <label name="quality_sample"/>
-            <field name="quality_sample"/>
             <label name="certification"/>
             <field name="certification"/>
             <label name="alcohol_volume"/>
