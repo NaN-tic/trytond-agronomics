@@ -362,7 +362,7 @@ class Production(metaclass=PoolMeta):
         if not self.pass_certification or len(products) != 1:
             return new_product
         certification = products[0].certification
-        new_product.certication = certification
+        new_product.certification = certification
         return new_product
 
     def copy_quality_samples(self, new_product):

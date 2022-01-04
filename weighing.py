@@ -260,17 +260,22 @@ class Weighing(Workflow, ModelSQL, ModelView):
         pool = Pool()
         Product = pool.get('product.product')
         Quality = pool.get('quality.test')
+        Variety = Pool().get('product.variety')
         default_product_values = Product.default_get(Product._fields.keys(),
             with_rec_name=False)
         product = Product(**default_product_values)
         for weighing in weighings:
             product.template = weighing.product
             product.denominations_of_origin = weighing.denomination_origin
-            product.ecologicals = [weighing.ecological]
-            product.varieties = [weighing.variety.id]
+            if weighing.ecological:
+                product.ecologicals = [weighing.ecological]
+            if weighing.variety:
+                new_variety = Variety()
+                new_variety.percent = 100
+                new_variety.variety = weighing.variety
+                product.varieties = [new_variety]
             product.vintages = [weighing.crop.id]
             weighing.product_created = product
-           # weighing.quality_test = weighing.create_quality_test(product)
 
         cls.save(weighings)
         tests = []
