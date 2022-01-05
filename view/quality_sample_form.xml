@@ -6,5 +6,7 @@
     <field name="collection_date"/>
     <label name="code"/>
     <field name="code"/>
+    <label name="company"/>
+    <field name="company"/>
     <field name="products" colspan="4"/>
 </form>
