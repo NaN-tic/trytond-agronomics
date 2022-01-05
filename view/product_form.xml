@@ -178,6 +178,7 @@
             <label name="wine_tasting_phase_success"/>
             <field name="wine_tasting_phase_success"/>
 
+            <field name="quality_samples" colspan="6"/>
             <separator name="wine_quality_comment" colspan="6"/>
             <field name="wine_quality_comment" widget="richtext" toolbar="0" yexpand="1" yfill="1" colspan="6"/>
         </page>

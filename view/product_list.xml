@@ -8,6 +8,7 @@
         <field name="alcohol_volume" tree_invisible="1"/>
         <field name="container" tree_invisible="1"/>
         <field name="capacity" tree_invisible="1"/>
+        <field name="quality_samples" tree_invisible="1"/>
 
         <field name="wine_likely_alcohol_content" tree_invisible="1"/>
         <field name="wine_likely_alcohol_content_comment" tree_invisible="1"/>

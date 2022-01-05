@@ -90,13 +90,6 @@ class Product(WineMixin, metaclass=PoolMeta):
         }, depends=['agronomic_type'])
     ecologicals = fields.Many2Many('product.product-agronomics.ecological',
         'product', 'ecological', 'Ecologicals')
-    # quality_sample = fields.Many2One('quality.sample', 'Quality Sample',
-    #     states={
-    #         'invisible': ~ Eval('agronomic_type').in_(
-    #             ['wine', 'unfiltered-wine', 'filtered-wine', 'clarified-wine',
-    #                 'bottled-wine']
-    #         )
-    #     }, depends=['agronomic_type'])
     certification = fields.Many2One('agronomics.certification',
         'Certification', states={
             'invisible': ~ Eval('agronomic_type').in_(

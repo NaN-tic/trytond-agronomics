@@ -7,9 +7,4 @@
     <label name="code"/>
     <field name="code"/>
     <field name="products" colspan="4"/>
-    <group colspan="4" id="buttons">
-        <label name="state"/>
-        <field name="state"/>
-        <button name="done"/>
-    </group>
 </form>

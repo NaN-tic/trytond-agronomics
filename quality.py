@@ -74,10 +74,6 @@ class QualitySample(Workflow, ModelSQL, ModelView):
     __name__ = 'quality.sample'
 
     code = fields.Char('Code', select=True, readonly=True)
-    state = fields.Selection([
-            ('draft', 'Draft'),
-            ('done', 'Done')],
-        'State', required=True, readonly=True)
     reference = fields.Char('Reference')
     products = fields.Many2Many('product.product-quality.sample', 'sample',
         'product', 'Products')
@@ -85,27 +81,6 @@ class QualitySample(Workflow, ModelSQL, ModelView):
         states=STATES, depends=DEPENDS)
     company = fields.Many2One('company.company', 'Company', required=True,
         select=True, states=STATES, depends=DEPENDS)
-
-    @classmethod
-    def __setup__(cls):
-        super(QualitySample, cls).__setup__()
-        cls._transitions |= set((('draft', 'done'),))
-        cls._buttons.update({
-            'done': {
-                'invisible': Eval('state') != 'draft',
-                'icon': 'tryton-forward',
-            },
-        })
-
-    @classmethod
-    @ModelView.button
-    @Workflow.transition('done')
-    def done(cls, samples):
-        pass
-
-    @staticmethod
-    def default_state():
-        return 'draft'
 
     @staticmethod
     def default_company():

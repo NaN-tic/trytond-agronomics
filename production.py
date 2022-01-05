@@ -1,5 +1,6 @@
 # This file is part of Tryton.  The COPYRIGHT file at the top level of
 # this repository contains the full copyright notices and license terms.
+from decimal import Decimal
 from trytond.model import ModelSQL, ModelView, fields
 from trytond.pool import PoolMeta, Pool
 from trytond.pyson import Eval, Bool, If
@@ -9,7 +10,6 @@ from trytond.transaction import Transaction
 from trytond.wizard import Wizard, StateView, StateAction, Button
 from trytond.modules.product import round_price
 from trytond.model.exceptions import ValidationError
-from decimal import Decimal
 
 
 class ProductionTemplate(ModelSQL, ModelView):
@@ -71,8 +71,8 @@ class ProductionTemplate(ModelSQL, ModelView):
             return
 
         output_templates = set([o for o in self.outputs])
-        for c in self.cost_distribution_template.cost_distribution_templates:
-            if c.template not in output_templates:
+        for cost in self.cost_distribution_template.cost_distribution_templates:
+            if cost.template not in output_templates:
                 raise ValidationError(
                     gettext('agronomics.msg_check_cost_distribution_template',
                         production=self.rec_name))
@@ -322,11 +322,12 @@ class Production(metaclass=PoolMeta):
 
             for output_product in production.production_template.outputs:
                 delete_outputs += [x for x in production.output_distribution]
-                od = OutputDistribution()
-                od.product = output_product
-                od.uom = od.on_change_with_uom()
-                od.production = production
-                outputs.append(od)
+                output_distribution = OutputDistribution()
+                output_distribution.product = output_product
+                output_distribution.uom = (
+                            output_distribution.on_change_with_uom())
+                output_distribution.production = production
+                outputs.append(output_distribution)
 
             if not production.cost_distributions:
                 if production.cost_distribution_template:
@@ -368,6 +369,7 @@ class Production(metaclass=PoolMeta):
     def copy_quality_samples(self, new_product):
         ProductSample = Pool().get('product.product-quality.sample')
         products = [x.product for x in self.inputs if x.product.quality_samples]
+        import pdb; pdb.set_trace()
         if not self.pass_quality_sample or len(products) != 1:
             return new_product
         samples = products[0].quality_samples

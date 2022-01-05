@@ -98,17 +98,6 @@
             <field name="rule_group" ref="rule_group_quality_sample"/>
         </record>
 
-        <!-- ir.model.button -->
-        <record model="ir.model.button" id="sample_done_button">
-            <field name="name">done</field>
-            <field name="string">Done</field>
-            <field name="model" search="[('model', '=', 'quality.sample')]"/>
-        </record>
-        <record model="ir.model.button-res.group" id="sample_done_button_group_sample">
-            <field name="button" ref="sample_done_button"/>
-            <field name="group" ref="group_quality_control_sample"/>
-        </record>
-
         <!-- menus -->
         <menuitem action="act_quality_sample" id="menu_quality_sample"
             parent="quality_control.menu_quality_control" sequence="30"/>
