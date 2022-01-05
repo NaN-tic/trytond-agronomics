@@ -369,7 +369,6 @@ class Production(metaclass=PoolMeta):
     def copy_quality_samples(self, new_product):
         ProductSample = Pool().get('product.product-quality.sample')
         products = [x.product for x in self.inputs if x.product.quality_samples]
-        import pdb; pdb.set_trace()
         if not self.pass_quality_sample or len(products) != 1:
             return new_product
         samples = products[0].quality_samples

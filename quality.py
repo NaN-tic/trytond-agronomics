@@ -7,11 +7,6 @@ from trytond.pyson import Eval, Id
 from trytond.modules.agronomics.wine import _WINE_DIGITS
 from trytond.transaction import Transaction
 
-STATES = {
-    'readonly': Eval('state') == 'done',
-}
-DEPENDS = ['state']
-
 class ConfigurationCompany(ModelSQL):
     'Company Quality configuration'
     __name__ = 'quality.configuration.company'
@@ -69,7 +64,7 @@ class Configuration(metaclass=PoolMeta):
         company_config.save()
 
 
-class QualitySample(Workflow, ModelSQL, ModelView):
+class QualitySample(ModelSQL, ModelView):
     'Quality Sample'
     __name__ = 'quality.sample'
 
@@ -77,10 +72,9 @@ class QualitySample(Workflow, ModelSQL, ModelView):
     reference = fields.Char('Reference')
     products = fields.Many2Many('product.product-quality.sample', 'sample',
         'product', 'Products')
-    collection_date = fields.DateTime('Collection Date', required=True,
-        states=STATES, depends=DEPENDS)
+    collection_date = fields.DateTime('Collection Date', required=True)
     company = fields.Many2One('company.company', 'Company', required=True,
-        select=True, states=STATES, depends=DEPENDS)
+        select=True)
 
     @staticmethod
     def default_company():
