@@ -100,8 +100,11 @@ class Weighing(Workflow, ModelSQL, ModelView):
                 ], "State", readonly=True, required=True)
     state_string = state.translated('state')
     all_do = fields.Function(fields.Char('All DO'), 'get_all_do')
-    quality_test = fields.Function(fields.Many2One('quality.test', 'Test'),
-        'get_quality_test')
+    quality_test = fields.Function(fields.Many2One('quality.test', 'Test',
+        states={
+            'readonly': Eval('state').in_(READONLY),
+        }),
+        'get_quality_test', 'set_quality_test')
     product_created = fields.Many2One('product.product', 'Product Created',
         readonly=True)
 
@@ -163,6 +166,13 @@ class Weighing(Workflow, ModelSQL, ModelView):
             return
         tests = self.product_created.quality_tests
         return tests and tests[0] and tests[0].id
+
+    @classmethod
+    def set_quality_test(cls, weighings, name, value):
+        Test = Pool().get('quality.test')
+        if not value:
+            return
+
 
     @fields.depends('weighing_date')
     def on_change_with_crop(self):
@@ -360,6 +370,7 @@ class Weighing(Workflow, ModelSQL, ModelView):
         else:
             default = default.copy()
         default.setdefault('beneficiaries', None)
+        default.setdefault('product_created', None)
         return super().copy(weighings, default=default)
 
 
