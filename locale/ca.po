@@ -1294,7 +1294,7 @@ msgid ""
 "maximum amount."
 msgstr ""
 "No es pot finalitzar el moviment perquè la quantitat del moviment supera a "
-"la quantitat màxima establerta."
+"la quantitat màxima de la ubicació destí."
 
 msgctxt "model:ir.message,text:msg_move_unit_not_match"
 msgid ""
