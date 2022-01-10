@@ -102,7 +102,7 @@ class Weighing(Workflow, ModelSQL, ModelView):
     all_do = fields.Function(fields.Char('All DO'), 'get_all_do')
     quality_test = fields.Function(fields.Many2One('quality.test', 'Test',
         states={
-            'readonly': Eval('state').in_(READONLY),
+            'readonly': Eval('state').in_(['done', 'cancelled']),
         }),
         'get_quality_test', 'set_quality_test')
     product_created = fields.Many2One('product.product', 'Product Created',
