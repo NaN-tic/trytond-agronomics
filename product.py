@@ -32,6 +32,7 @@ class Container(ModelSQL, ModelView):
 class Template(metaclass=PoolMeta):
     __name__ = 'product.template'
 
+    needs_sample = fields.Boolean('Needs Samples')
     agronomic_type = fields.Selection([
             (None, ''),
             ('grape', "Grape"),
@@ -89,13 +90,6 @@ class Product(WineMixin, metaclass=PoolMeta):
         }, depends=['agronomic_type'])
     ecologicals = fields.Many2Many('product.product-agronomics.ecological',
         'product', 'ecological', 'Ecologicals')
-    quality_sample = fields.Many2One('quality.sample', 'Quality Sample',
-        states={
-            'invisible': ~ Eval('agronomic_type').in_(
-                ['wine', 'unfiltered-wine', 'filtered-wine', 'clarified-wine',
-                    'bottled-wine']
-            )
-        }, depends=['agronomic_type'])
     certification = fields.Many2One('agronomics.certification',
         'Certification', states={
             'invisible': ~ Eval('agronomic_type').in_(
@@ -108,6 +102,9 @@ class Product(WineMixin, metaclass=PoolMeta):
                 ['wine', 'unfiltered-wine', 'filtered-wine', 'clarified-wine',
                     'bottled-wine']
             )}, depends=['agronomic_type']), 'get_alcohol_volume')
+    quality_tests = fields.One2Many('quality.test', 'document', 'Quality Tests')
+    quality_samples = fields.Many2Many('product.product-quality.sample',
+        'product', 'sample', 'Quality Samples')
 
     @classmethod
     def validate(cls, products):
