@@ -25,8 +25,6 @@ class Move(metaclass=PoolMeta):
                 with Transaction().set_context(context):
                     location_quantity = sum(Product.products_by_location(
                             [move.to_location.id]).values())
-                print('loc_quantity: ',location_quantity)
-                print('max_cap', move.to_location.max_capacity)
                 if (location_quantity > move.to_location.max_capacity):
                     raise UserError(gettext(
                             'agronomics.msg_move_amount_exceed'))
