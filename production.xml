@@ -79,6 +79,12 @@
         <field name="res_model">production.output.distribution</field>
     </record>
 
+    <record model="ir.model.button" id="production_output_distribution_done_button">
+        <field name="name">done</field>
+        <field name="string">Done</field>
+        <field name="model" search="[('model', '=', 'production.output.distribution')]"/>
+    </record>
+
     <!-- Production Enology -->
     <record model="ir.ui.view" id="production_enology_product_view_form">
         <field name="model">production.enology.product</field>
