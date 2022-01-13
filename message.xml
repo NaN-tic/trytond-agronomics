@@ -30,7 +30,12 @@ this repository contains the full copyright notices and license terms. -->
     <record model="ir.message" id="msg_check_cost_templates">
         <field name="text">Cost "%(cost)s" has template "%(template)s" not present in Production Template Outputs".</field>
     </record>
-
+    <record model="ir.message" id="msg_move_unit_not_match">
+        <field name="text">The movement cannot be done because the unit of measure of the movement not matches the unit of mesure of the capacity in the destination location.</field>
+    </record>
+    <record model="ir.message" id="msg_move_amount_exceed">
+        <field name="text">The move cannot be done because the amount of the move exceeds the set maximum amount.</field>
+    </record>
   </data>
 
 </tryton>

@@ -8,6 +8,8 @@ from . import product
 from . import weighing
 from . import quality
 from . import production
+from . import location
+from . import move
 
 def register():
     Pool.register(
@@ -52,6 +54,9 @@ def register():
 #        production.ProductionProductionCostPriceDistribution,
         production.ProductionCostPriceDistributionTemplate,
         production.ProductionCostPriceDistributionTemplateProductionTemplateAsk,
+        location.LocationMaterial,
+        location.Location,
+        move.Move,
         module='agronomics', type_='model')
     Pool.register(
         production.ProductionCostPriceDistributionTemplateProductionTemplate,

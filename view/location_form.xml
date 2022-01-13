@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!-- This file is part of Tryton.  The COPYRIGHT file at the top level of
+this repository contains the full copyright notices and license terms. -->
+<data>
+    <xpath expr="/form/field[@name='flat_childs']" position="after">
+        <label name="tank"/>
+        <field name="tank"/>
+    </xpath>
+    <xpath expr="/form/field[@name='childs']" position="before">
+        <label name="material"/>
+        <field name="material"/>
+        <newline/>
+        <label name="max_capacity"/>
+        <field name="max_capacity"/>
+        <label name="uom"/>
+        <field name="uom"/>
+    </xpath>
+</data>
