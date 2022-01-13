@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<!-- This file is part of Tryton.  The COPYRIGHT file at the top level of
+this repository contains the full copyright notices and license terms. -->
+<tryton>
+    <data>
+        <!-- stock.location.material -->
+        <record model="ir.ui.view" id="stock_location_material_view_form">
+            <field name="model">stock.location.material</field>
+            <field name="type">form</field>
+            <field name="name">material_form</field>
+        </record>
+        <record model="ir.ui.view" id="stock_location_material_view_tree">
+            <field name="model">stock.location.material</field>
+            <field name="type">tree</field>
+            <field name="name">material_tree</field>
+        </record>
+
+        <record model="ir.action.act_window" id="act_stock_location_material">
+            <field name="name">Materials</field>
+            <field name="res_model">stock.location.material</field>
+        </record>
+        <record model="ir.action.act_window.view" id="act_stock_location_material_view1">
+            <field name="sequence" eval="10"/>
+            <field name="view" ref="stock_location_material_view_tree"/>
+            <field name="act_window" ref="act_stock_location_material"/>
+        </record>
+        <record model="ir.action.act_window.view" id="act_stock_location_material_view2">
+            <field name="sequence" eval="20"/>
+            <field name="view" ref="stock_location_material_view_form"/>
+            <field name="act_window" ref="act_stock_location_material"/>
+        </record>
+
+        <menuitem parent="stock.menu_configuration" action="act_stock_location_material"
+            id="menuitem_stock_location_material" sequence="10"/>
+
+        <!-- stock.location -->
+        <record model="ir.ui.view" id="location_view_form">
+            <field name="model">stock.location</field>
+            <field name="inherit" ref="stock.location_view_form"/>
+            <field name="name">location_form</field>
+        </record>
+    </data>
+</tryton>
