@@ -1,5 +1,6 @@
 # This file is part of Tryton.  The COPYRIGHT file at the top level of
 # this repository contains the full copyright notices and license terms.
+from decimal import Decimal
 from trytond.model import ModelSQL, ModelView, fields
 from trytond.pool import PoolMeta, Pool
 from trytond.pyson import Eval, Bool, If
@@ -9,7 +10,6 @@ from trytond.transaction import Transaction
 from trytond.wizard import Wizard, StateView, StateAction, Button
 from trytond.modules.product import round_price
 from trytond.model.exceptions import ValidationError
-from decimal import Decimal
 
 
 class ProductionTemplate(ModelSQL, ModelView):
@@ -30,6 +30,9 @@ class ProductionTemplate(ModelSQL, ModelView):
     enology_products = fields.One2Many('production.template.line',
         'production_template', 'Complementary Products')
     pass_feature = fields.Boolean('Pass on Feature')
+    pass_quality = fields.Boolean('Pass Quality')
+    pass_certification = fields.Boolean('Pass Certification')
+    pass_quality_sample = fields.Boolean('Pass Quality Sample')
     cost_distribution_template = fields.Many2One(
         'production.cost_price.distribution.template',
         "Default cost distribution template",
@@ -68,8 +71,8 @@ class ProductionTemplate(ModelSQL, ModelView):
             return
 
         output_templates = set([o for o in self.outputs])
-        for c in self.cost_distribution_template.cost_distribution_templates:
-            if c.template not in output_templates:
+        for cost in self.cost_distribution_template.cost_distribution_templates:
+            if cost.template not in output_templates:
                 raise ValidationError(
                     gettext('agronomics.msg_check_cost_distribution_template',
                         production=self.rec_name))
@@ -170,18 +173,38 @@ class Production(metaclass=PoolMeta):
         'production.cost_price.distribution.template',
         "Cost Distribution Template",
         domain=[
-            ('id', 'in', Eval('production_template_cost_distribution_templates'))
+            ('id', 'in',
+                Eval('production_template_cost_distribution_templates'))
         ], states={
             'readonly': Eval('state').in_(['cancelled', 'done']),
-        }, depends=['state', 'production_template_cost_distribution_templates'])
+        }, depends=['state',
+            'production_template_cost_distribution_templates'])
     cost_distribution_templates = fields.Function(
         fields.Many2Many('product.template',
         None, None, "Cost Product Templates"),
         'on_change_with_cost_distribution_templates')
+    pass_quality = fields.Boolean('Pass Quality')
+    pass_certification = fields.Boolean('Pass Certification')
+    pass_quality_sample = fields.Boolean('Pass Quality Sample')
 
     @classmethod
     def set_allowed_products(cls, productions, name, value):
         pass
+
+    @fields.depends('production_template')
+    def on_change_with_pass_quality(self):
+        if self.production_template:
+            return self.production_template.pass_quality
+
+    @fields.depends('production_template')
+    def on_change_with_pass_certification(self):
+        if self.production_template:
+            return self.production_template.pass_certification
+
+    @fields.depends('production_template')
+    def on_change_with_pass_quality_sample(self):
+        if self.production_template:
+            return self.production_template.pass_quality_sample
 
     @fields.depends('production_template')
     def on_change_production_template(self):
@@ -195,8 +218,8 @@ class Production(metaclass=PoolMeta):
         products = []
         if not self.production_template:
             return []
-        for x in self.production_template.inputs:
-            products += x.products
+        for input_ in self.production_template.inputs:
+            products += input_.products
         return [x.id for x in products]
 
     @fields.depends('production_template')
@@ -249,7 +272,7 @@ class Production(metaclass=PoolMeta):
                 gettext('agronomics.msg_check_production_percentatge',
                     production=self.rec_name,
                     percentatge=percentatge * 100,
-                    ))
+                ))
 
     @classmethod
     def wait(cls, productions):
@@ -300,11 +323,12 @@ class Production(metaclass=PoolMeta):
 
             for output_product in production.production_template.outputs:
                 delete_outputs += [x for x in production.output_distribution]
-                od = OutputDistribution()
-                od.product = output_product
-                od.uom = od.on_change_with_uom()
-                od.production = production
-                outputs.append(od)
+                output_distribution = OutputDistribution()
+                output_distribution.product = output_product
+                output_distribution.uom = (
+                            output_distribution.on_change_with_uom())
+                output_distribution.production = production
+                outputs.append(output_distribution)
 
             if not production.cost_distributions:
                 if production.cost_distribution_template:
@@ -335,6 +359,45 @@ class Production(metaclass=PoolMeta):
         product.template = template
         return product
 
+    def copy_certification(self, new_product):
+        products = [x.product for x in self.inputs if x.product.certification]
+        if not self.pass_certification or len(products) != 1:
+            return new_product
+        certification = products[0].certification
+        new_product.certification = certification
+        return new_product
+
+    def copy_quality_samples(self, new_product):
+        ProductSample = Pool().get('product.product-quality.sample')
+        products = [x.product for x in self.inputs if x.product.quality_samples]
+        if not self.pass_quality_sample or len(products) != 1:
+            return new_product
+        samples = products[0].quality_samples
+        new_samples =[]
+        for sample in samples:
+            product_sample = ProductSample()
+            product_sample.product = new_product
+            product_sample.sample = sample
+            new_samples.append(product_sample)
+        ProductSample.save(new_samples)
+        return new_product
+
+    def copy_quality(self, new_product):
+        Quality = Pool().get('quality.test')
+        products = [x.product for x in self.inputs]
+
+        if not self.pass_quality:
+            return
+
+        tests = []
+        for product in products:
+            if tests and product.quality_tests:
+                return
+            tests += product.quality_tests or []
+        new_tests = Quality.copy(tests, {'document': str(new_product)})
+        Quality.confirmed(new_tests)
+        Quality.manager_validate(new_tests)
+
     def pass_feature(self, product):
         Variety = Pool().get('product.variety')
         Uom = Pool().get('product.uom')
@@ -355,17 +418,17 @@ class Production(metaclass=PoolMeta):
         product.vintages = list(set(vintages))
         varieties = {}
         for input in self.inputs:
-            percent = round(input.quantity/total_output, 6)
+            percent = round(input.quantity / total_output, 6)
             for variety in input.product.varieties:
                 new_variety = varieties.get(variety.variety)
                 if not new_variety:
                     new_variety = Variety()
                     new_variety.percent = 0
                 new_variety.variety = variety.variety
-                new_variety.percent += variety.percent/100.0*percent
+                new_variety.percent += variety.percent / 100.0 * percent
                 varieties[new_variety.variety] = new_variety
         for key, variety in varieties.items():
-            variety.percent = "%.4f" % round(100.0*variety.percent, 4)
+            variety.percent = "%.4f" % round(100.0 * variety.percent, 4)
         product.varieties = varieties.values()
         return product
 
@@ -379,6 +442,7 @@ class Production(metaclass=PoolMeta):
                     product = production.create_variant(distrib.product,
                         production.production_template.pass_feature)
                     product = production.pass_feature(product)
+                    product = production.copy_certification(product)
                     move = production._move(
                         production.location,
                         distrib.location,
@@ -389,8 +453,13 @@ class Production(metaclass=PoolMeta):
                     move.production_output = production
                     move.unit_price = Decimal(0)
                     moves.append(move)
+
         Move.save(moves)
         super().done(productions)
+        for production in productions:
+            for output in production.outputs:
+                production.copy_quality(output.product)
+                production.copy_quality_samples(output.product)
 
     @classmethod
     def set_cost(cls, productions):
@@ -418,7 +487,8 @@ class Production(metaclass=PoolMeta):
                     if output.product not in products:
                         continue
                     has_product = True
-                    cost = production_cost * (1 + cdist.percentatge) - production_cost
+                    cost = (production_cost * (1 + cdist.percentatge) - 
+                        production_cost)
                     output_cost += round_price(cost / Decimal(total_output))
 
                 output_cost = output_cost if has_product else Decimal(0)
@@ -510,7 +580,8 @@ class OutputDistribution(ModelSQL, ModelView):
         context = Transaction().context
         context['locations'] = [self.location.id]
         with Transaction().set_context(context):
-            quantities = Product.get_quantity(self.product.products, 'quantity')
+            quantities = Product.get_quantity(self.product.products,
+                'quantity')
         self.initial_quantity = sum(quantities.values())
 
     @fields.depends('location', methods=['on_change_product'])
@@ -529,7 +600,8 @@ class OutputDistribution(ModelSQL, ModelView):
         context = Transaction().context
         context['locations'] = [self.location.id]
         with Transaction().set_context(context):
-            quantities = Product.get_quantity(self.product.products, 'quantity')
+            quantities = Product.get_quantity(self.product.products,
+                'quantity')
         return sum(quantities.values())
 
     @fields.depends('final_quantity', 'initial_quantity')
@@ -603,7 +675,7 @@ class ProductionCostPriceDistribution(ModelSQL, ModelView):
     __name__ = 'production.cost_price.distribution'
     template = fields.Many2One('product.template', "Template", required=True,
         ondelete='RESTRICT')
-    origin = fields.Reference('Origin', selection='_get_models', required=True,)
+    origin = fields.Reference('Origin', selection='_get_models', required=True)
     percentatge = fields.Numeric("Percentatge", digits=(16, 4), required=True)
 
     @classmethod

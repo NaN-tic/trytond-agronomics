@@ -4,12 +4,26 @@ this repository contains the full copyright notices and license terms. -->
 <form>
   <label name="name"/>
   <field name="name"/>
-  <label name="pass_feature"/>
-  <field name="pass_feature"/>
+  <newline/>
+  <group colspan="2" col="4" id="quantities">
   <label name="quantity"/>
   <field name="quantity"/>
   <label name="uom"/>
   <field name="uom"/>
+  </group>
+  <group colspan="2" col="2" id="pass_features">
+    <label name="pass_feature"/>
+    <field name="pass_feature"/>
+    <newline/>
+    <label name="pass_quality"/>
+    <field name="pass_quality"/>
+    <newline/>
+    <label name="pass_quality_sample"/>
+    <field name="pass_quality_sample"/>
+    <newline/>
+    <label name="pass_certification"/>
+    <field name="pass_certification"/>
+  </group>
   <field name="inputs" colspan="2"/>
   <field name="outputs" colspan="2"/>
   <field name="enology_products" colspan="4"/>
