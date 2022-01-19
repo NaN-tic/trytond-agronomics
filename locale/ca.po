@@ -316,7 +316,7 @@ msgstr "Parceles"
 
 msgctxt "field:party.party,plantations:"
 msgid "Plantation"
-msgstr "Plantacións"
+msgstr "Plantació"
 
 msgctxt "field:product.configuration,variant_deactivation_time:"
 msgid "Variant Deactivation Time"
@@ -376,7 +376,7 @@ msgstr "Plantilla qualitat albarà sortida"
 
 msgctxt "field:product.product,variant_deactivate_stock_zero:"
 msgid "Variant Deactivate Stock 0"
-msgstr "Desactivar variant amb estoc 0"
+msgstr "Desactivar variant amb estoc a 0"
 
 msgctxt "field:product.product,varieties:"
 msgid "Varieties"
@@ -780,7 +780,7 @@ msgstr "Ecològic"
 
 msgctxt "field:product.product-agronomics.ecological,product:"
 msgid "Product"
-msgstr "Productes"
+msgstr "Producte"
 
 msgctxt "field:product.template,agronomic_type:"
 msgid "Agronomic Type"
@@ -1631,7 +1631,7 @@ msgstr "Processos"
 
 msgctxt "selection:ir.cron,method:"
 msgid "Deactivate Variants"
-msgstr "Desactivar Variants"
+msgstr "Desactivar variants"
 
 msgctxt "selection:product.product,agronomic_type:"
 msgid "Bottled Wine"
@@ -1733,17 +1733,14 @@ msgctxt "view:product.product:"
 msgid "Quality"
 msgstr ""
 
-#, fuzzy
 msgctxt "view:production.cost_price.distribution:"
 msgid "%"
 msgstr "%"
 
-#, fuzzy
 msgctxt "view:production:"
 msgid "Cost Distribution"
 msgstr "Distribució de costos"
 
-#, fuzzy
 msgctxt "view:production:"
 msgid "Total"
 msgstr "Total"

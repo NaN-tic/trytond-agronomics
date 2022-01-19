@@ -3,7 +3,7 @@
 from decimal import Decimal
 from datetime import datetime
 from trytond.model import ModelSQL, ModelView, fields
-from trytond.pool import PoolMeta, Pool
+from trytond.pool import Pool, PoolMeta
 from trytond.pyson import Eval
 from trytond.exceptions import UserError
 from trytond.i18n import gettext
@@ -34,7 +34,7 @@ class Container(ModelSQL, ModelView):
 class ProductConfiguration(metaclass=PoolMeta):
     __name__ = 'product.configuration'
 
-    variant_deactivation_time = fields.TimeDelta('Variant Deactivation Time')
+    variant_deactivation_time = fields.TimeDelta("Variant Deactivation Time")
 
 
 class Template(metaclass=PoolMeta):
@@ -63,7 +63,7 @@ class Template(metaclass=PoolMeta):
 
     quality_weighing = fields.Many2One('quality.template', 'Quality Weighing')
 
-    variant_deactivate_stock_zero = fields.Boolean('Variant Deactivate Stock 0')
+    variant_deactivate_stock_zero = fields.Boolean("Variant Deactivate Stock 0")
 
     def get_capacity(self, name):
         if self.container:

@@ -376,7 +376,7 @@ msgstr "Plantilla calidad albarán de salida"
 
 msgctxt "field:product.product,variant_deactivate_stock_zero:"
 msgid "Variant Deactivate Stock 0"
-msgstr "Desactivar variante con estoc 0"
+msgstr "Desactivar variante con stock a 0"
 
 msgctxt "field:product.product,varieties:"
 msgid "Varieties"
@@ -947,7 +947,7 @@ msgstr "UdM"
 
 msgctxt "field:production.template,cost_distribution_template:"
 msgid "Default cost distribution template"
-msgstr ""
+msgstr "Plantilla de distribución de costos predeterminada"
 
 msgctxt "field:production.template,cost_distribution_templates:"
 msgid "Cost Distribution Templates"
@@ -1734,17 +1734,14 @@ msgctxt "view:product.product:"
 msgid "Quality"
 msgstr "Calidad"
 
-#, fuzzy
 msgctxt "view:production.cost_price.distribution:"
 msgid "%"
 msgstr "%"
 
-#, fuzzy
 msgctxt "view:production:"
 msgid "Cost Distribution"
-msgstr "Distribución de costos"
+msgstr "Distribución de costes"
 
-#, fuzzy
 msgctxt "view:production:"
 msgid "Total"
 msgstr "Total"
