@@ -128,16 +128,17 @@ class Product(WineMixin, metaclass=PoolMeta):
         locations = Location.search(['type', '=', 'warehouse'])
         locations = [location.id for location in locations]
         with Transaction().set_context(locations=locations, with_childs=True):
-            products = cls.search(
-                [
-                    ('quantity', '=', 0),
-                    ('template.variant_deactivate_stock_zero', '=', True),
-                    ('create_date', '<',
-                        (datetime.now() - config.variant_deactivation_time))
-                ])
-            for product in products:
-                product.active = False
-            cls.save(products)
+            if config.variant_deactivation_time:
+                products = cls.search(
+                    [
+                        ('quantity', '=', 0),
+                        ('template.variant_deactivate_stock_zero', '=', True),
+                        ('create_date', '<',
+                            (datetime.now() - config.variant_deactivation_time))
+                    ])
+                for product in products:
+                    product.active = False
+                cls.save(products)
 
     @classmethod
     def validate(cls, products):
