@@ -226,17 +226,9 @@ msgctxt "field:agronomics.weighing,denomination_origin:"
 msgid "Denomination of Origin"
 msgstr "Denominación de origen"
 
-msgctxt "field:agronomics.weighing,do:"
-msgid "Denomination Origin"
-msgstr "Denominación de origen"
-
 msgctxt "field:agronomics.weighing,ecological:"
 msgid "Ecological"
 msgstr "Ecológico"
-
-msgctxt "field:agronomics.weighing,net_weight:"
-msgid "Net Weight"
-msgstr "Peso neto"
 
 msgctxt "field:agronomics.weighing,netweight:"
 msgid "Net Weight"
@@ -302,23 +294,11 @@ msgctxt "field:agronomics.weighing-agronomics.do,weighing:"
 msgid "Weighing"
 msgstr "Pesada"
 
-msgctxt "field:agronomics.weighing-agronomics.plantation,Plantation:"
-msgid "Plantation"
-msgstr "Plantaciónes"
-
 msgctxt "field:agronomics.weighing-agronomics.plantation,plantation:"
 msgid "Plantation"
 msgstr "Plantaciónes"
 
 msgctxt "field:agronomics.weighing-agronomics.plantation,weighing:"
-msgid "Weighing"
-msgstr "Pesada"
-
-msgctxt "field:agronomics.weighing-agronomics.plantations,Plantation:"
-msgid "Plantation"
-msgstr "Plantaciónes"
-
-msgctxt "field:agronomics.weighing-agronomics.plantations,weighing:"
 msgid "Weighing"
 msgstr "Pesada"
 
@@ -337,6 +317,10 @@ msgstr "Parcelas"
 msgctxt "field:party.party,plantations:"
 msgid "Plantation"
 msgstr "Plantaciónes"
+
+msgctxt "field:product.configuration,variant_deactivation_time:"
+msgid "Variant Deactivation Time"
+msgstr "Tiempo para desactivar variantes"
 
 msgctxt "field:product.product,agronomic_type:"
 msgid "Agronomic Type"
@@ -389,6 +373,10 @@ msgstr "Plantilla calidad albarán de entrada"
 msgctxt "field:product.product,shipment_out_quality_template:"
 msgid "Shipment Out Quality Template"
 msgstr "Plantilla calidad albarán de salida"
+
+msgctxt "field:product.product,variant_deactivate_stock_zero:"
+msgid "Variant Deactivate Stock 0"
+msgstr "Desactivar variante con stock a 0"
 
 msgctxt "field:product.product,varieties:"
 msgid "Varieties"
@@ -794,14 +782,6 @@ msgctxt "field:product.product-agronomics.ecological,product:"
 msgid "Product"
 msgstr "Productos"
 
-msgctxt "field:product.product-product.taxon,product:"
-msgid "Product"
-msgstr "Productos"
-
-msgctxt "field:product.product-product.taxon,variety:"
-msgid "Variety"
-msgstr "Variedad"
-
 msgctxt "field:product.template,agronomic_type:"
 msgid "Agronomic Type"
 msgstr "Tipo Agronómico"
@@ -817,6 +797,10 @@ msgstr "Envase"
 msgctxt "field:product.template,quality_weighing:"
 msgid "Quality Weighing"
 msgstr "Calidad pesada"
+
+msgctxt "field:product.template,variant_deactivate_stock_zero:"
+msgid "Variant Deactivate Stock 0"
+msgstr "Desactivar variante con estoc 0"
 
 msgctxt "field:product.variety,percent:"
 msgid "Percent"
@@ -966,7 +950,7 @@ msgid "Uom"
 msgstr "UdM"
 
 msgctxt "field:production.template,cost_distribution_template:"
-msgid "Default cost distribution templatea"
+msgid "Default cost distribution template"
 msgstr "Plantilla de distribución de costos predeterminada"
 
 msgctxt "field:production.template,cost_distribution_templates:"
@@ -1135,10 +1119,6 @@ msgctxt "model:agronomics.weighing-agronomics.plantation,name:"
 msgid "Weighing - Plantations"
 msgstr "Pesada - Plantación"
 
-msgctxt "model:agronomics.weighing-agronomics.plantations,name:"
-msgid "Weighing - Plantations"
-msgstr "Pesada - Plantación"
-
 msgctxt "model:agronomics.weighing.center,name:"
 msgid "Weighing Center"
 msgstr "Centro de pesada"
@@ -1195,9 +1175,10 @@ msgctxt "model:ir.action,name:act_product_quantitative_test_lines"
 msgid "Quantitative Lines"
 msgstr "Líneas cuantitativas"
 
+#, fuzzy
 msgctxt "model:ir.action,name:act_production_cost_distribution_template_tree"
 msgid "Templates Cost Price Distribution"
-msgstr ""
+msgstr "Distribución de precios de costes de plantillas"
 
 msgctxt "model:ir.action,name:act_production_cost_price_distribution_tree"
 msgid "Cost Price Distribution"
@@ -1445,10 +1426,6 @@ msgstr "Producto - DO"
 msgctxt "model:product.product-agronomics.ecological,name:"
 msgid "Product - Ecological"
 msgstr "Producto - Ecológico"
-
-msgctxt "model:product.product-product.taxon,name:"
-msgid "Product - Variety"
-msgstr "Producto - Variedad"
 
 msgctxt "model:product.variety,name:"
 msgid "Product Variety"
@@ -1715,6 +1692,10 @@ msgctxt "selection:agronomics.weighing,state:"
 msgid "Processing"
 msgstr "Procesos"
 
+msgctxt "selection:ir.cron,method:"
+msgid "Deactivate Variants"
+msgstr "Desactivar Variantes"
+
 msgctxt "selection:product.product,agronomic_type:"
 msgid "Bottled Wine"
 msgstr "Vino embotellado"
@@ -1822,6 +1803,18 @@ msgstr "Agronomics"
 msgctxt "view:product.product:"
 msgid "Quality"
 msgstr "Calidad"
+
+msgctxt "view:production.cost_price.distribution:"
+msgid "%"
+msgstr "%"
+
+msgctxt "view:production:"
+msgid "Cost Distribution"
+msgstr "Distribución de costes"
+
+msgctxt "view:production:"
+msgid "Total"
+msgstr "Total"
 
 msgctxt ""
 "wizard_button:production.cost_price.distribution.template.from.production.template,ask,create_cost_distributions:"

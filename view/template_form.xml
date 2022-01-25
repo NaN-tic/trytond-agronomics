@@ -11,6 +11,8 @@ this repository contains the full copyright notices and license terms. -->
         <field name="capacity"/>
         <label name="quality_weighing"/>
         <field name="quality_weighing"/>
+        <label name="variant_deactivate_stock_zero"/>
+        <field name="variant_deactivate_stock_zero"/>
     </xpath>
 
 </data>

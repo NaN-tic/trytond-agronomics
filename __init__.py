@@ -27,6 +27,8 @@ def register():
         product.Certification,
         product.Container,
         product.Product,
+        product.ProductConfiguration,
+        product.Cron,
         product.ProductCrop,
         product.ProductDO,
         product.ProductEcological,
