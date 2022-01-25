@@ -79,6 +79,20 @@
             <field name="action" ref="act_product_qualitative_test_lines"/>
         </record>
 
+        <record model="ir.cron" id="cron_variant_deactivation">
+            <field name="active" eval="True" />
+            <field name="interval_number" eval="24" />
+            <field name="interval_type">hours</field>
+            <field name="method">product.product|deactivate_no_stock_variants_cron</field>
+        </record>
+
+        <!-- Product Configuration-->
+        <record model="ir.ui.view" id="product_configuration_view_form">
+            <field name="model">product.configuration</field>
+            <field name="name">product_configuration_form</field>
+            <field name="inherit" ref="product.product_configuration_view_form"/>
+        </record>
+
         <!-- Certification -->
         <record model="ir.ui.view" id="certification_view_form">
             <field name="model">agronomics.certification</field>
