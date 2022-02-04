@@ -487,7 +487,7 @@ class Production(metaclass=PoolMeta):
                     if output.product not in products:
                         continue
                     has_product = True
-                    cost = (production_cost * (1 + cdist.percentatge) - 
+                    cost = (production_cost * (1 + cdist.percentatge) -
                         production_cost)
                     output_cost += round_price(cost / Decimal(total_output))
 
