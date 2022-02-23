@@ -367,10 +367,13 @@ class Weighing(Workflow, ModelSQL, ModelView):
     def force_analysis(cls, weighings):
         to_copy_values = {}
         for weighing in weighings:
-            to_copy_values[weighing.id] = {'netweight': weighing.not_assigned_weight}
+            to_copy_values[weighing.id] = {
+                'netweight': weighing.not_assigned_weight}
         cls.copy(weighings, default={
                             'netweight': lambda d: (
                                 to_copy_values[d['id']]['netweight']),
+                            'weight': None,
+                            'tara': None,
                             })
         for weighing in weighings:
             weighing.forced_analysis = True

@@ -34,10 +34,12 @@
     <page name="plantations">
       <field name="plantations" colspan="4"/>
       <field name="denomination_origin" colspan="4"/>
-      <field name="parcels" colspan="4"/>
     </page>
     <page name="beneficiaries">
       <field name="beneficiaries" colspan="4"/>
+    </page>
+    <page string="Parcel Distribution" id="parcel_distribution" >
+      <field name="parcels" colspan="4"/>
     </page>
   </notebook>
   <label name="state"/>
