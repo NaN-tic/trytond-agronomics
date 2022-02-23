@@ -126,6 +126,10 @@ msgctxt "field:agronomics.parcel,beneficiaries:"
 msgid "Beneficiaries"
 msgstr "Beneficiarios"
 
+msgctxt "field:agronomics.parcel,bought_quantity:"
+msgid "Bought Quantity"
+msgstr "Cantidad comprada"
+
 msgctxt "field:agronomics.parcel,crop:"
 msgid "Crop"
 msgstr "Cosecha"
@@ -166,6 +170,10 @@ msgctxt "field:agronomics.parcel,product:"
 msgid "Product"
 msgstr "Productos"
 
+msgctxt "field:agronomics.parcel,remaining_quantity:"
+msgid "Remainig Quantity"
+msgstr "Cantidad restante"
+
 msgctxt "field:agronomics.parcel,species:"
 msgid "Spices"
 msgstr "Especie"
@@ -185,6 +193,10 @@ msgstr "Regimen tinéncia"
 msgctxt "field:agronomics.parcel,variety:"
 msgid "Variety"
 msgstr "Variedad"
+
+msgctxt "field:agronomics.parcel,weighings:"
+msgid "Weighings"
+msgstr "Pesadas"
 
 msgctxt "field:agronomics.parcel-agronomics.do,do:"
 msgid "Denomination Origin"
@@ -230,13 +242,25 @@ msgctxt "field:agronomics.weighing,ecological:"
 msgid "Ecological"
 msgstr "Ecológico"
 
+msgctxt "field:agronomics.weighing,forced_analysis:"
+msgid "Forced Analysis"
+msgstr "Forzar análisis"
+
 msgctxt "field:agronomics.weighing,netweight:"
 msgid "Net Weight"
 msgstr "Peso neto"
 
+msgctxt "field:agronomics.weighing,not_assigned_weight:"
+msgid "Not Assigned Weight"
+msgstr "Peso no asignado"
+
 msgctxt "field:agronomics.weighing,number:"
 msgid "Number"
 msgstr "Número"
+
+msgctxt "field:agronomics.weighing,parcels:"
+msgid "Parcels"
+msgstr "Parcelas"
 
 msgctxt "field:agronomics.weighing,plantations:"
 msgid "plantations"
@@ -293,6 +317,26 @@ msgstr "Denominación de origen"
 msgctxt "field:agronomics.weighing-agronomics.do,weighing:"
 msgid "Weighing"
 msgstr "Pesada"
+
+msgctxt "field:agronomics.weighing-agronomics.parcel,netweight:"
+msgid "Net Weight"
+msgstr "Peso neto"
+
+msgctxt "field:agronomics.weighing-agronomics.parcel,parcel:"
+msgid "Parcel"
+msgstr "Parcela"
+
+msgctxt "field:agronomics.weighing-agronomics.parcel,table:"
+msgid "Table"
+msgstr "Mesa"
+
+msgctxt "field:agronomics.weighing-agronomics.parcel,weighing:"
+msgid "Weighing"
+msgstr "Pesada"
+
+msgctxt "field:agronomics.weighing-agronomics.plantation,party:"
+msgid "Party"
+msgstr "Tercero"
 
 msgctxt "field:agronomics.weighing-agronomics.plantation,plantation:"
 msgid "Plantation"
@@ -1115,6 +1159,10 @@ msgctxt "model:agronomics.weighing-agronomics.do,name:"
 msgid "Weighing - Denomination Origin"
 msgstr "Pesada - Denominación de origen"
 
+msgctxt "model:agronomics.weighing-agronomics.parcel,name:"
+msgid "Wheighing-Parcel"
+msgstr "Pesada - Parcela"
+
 msgctxt "model:agronomics.weighing-agronomics.plantation,name:"
 msgid "Weighing - Plantations"
 msgstr "Pesada - Plantación"
@@ -1290,6 +1338,12 @@ msgstr ""
 "movimiento no coincide con la unidad de medida de capacidad de la de la "
 "ubicación destino."
 
+msgctxt "model:ir.message,text:msg_not_assigned_weight"
+msgid ""
+"The weighin weight is not distributed and its not being forced to analysis"
+msgstr ""
+"El peso no está totalmente distribuido i no se ha forzado el anàlisis"
+
 msgctxt "model:ir.message,text:msg_uom_not_fit"
 msgid ""
 "Inputs from Production template \"%(production)s\" must be of uom "
@@ -1319,13 +1373,13 @@ msgctxt ""
 msgid "Done"
 msgstr "Realizar"
 
-msgctxt "model:ir.model.button,string:weighing_analysis_button"
-msgid "Analysis"
-msgstr "Análisis"
-
 msgctxt "model:ir.model.button,string:weighing_cancel_button"
 msgid "Cancel"
 msgstr "Cancel·lar"
+
+msgctxt "model:ir.model.button,string:weighing_distribute_button"
+msgid "Analysis"
+msgstr "Análisis"
 
 msgctxt "model:ir.model.button,string:weighing_done_button"
 msgid "Done"
@@ -1334,6 +1388,10 @@ msgstr "Realizado"
 msgctxt "model:ir.model.button,string:weighing_draft_button"
 msgid "Draft"
 msgstr "Esborany"
+
+msgctxt "model:ir.model.button,string:weighing_force_analysis_button"
+msgid "Force Analysis"
+msgstr "Forzar análisis"
 
 msgctxt "model:ir.model.button,string:weighing_process_button"
 msgid "Process"
@@ -1677,6 +1735,10 @@ msgid "Cancelled"
 msgstr "Cancelado"
 
 msgctxt "selection:agronomics.weighing,state:"
+msgid "Distributed"
+msgstr "Distribuido"
+
+msgctxt "selection:agronomics.weighing,state:"
 msgid "Done"
 msgstr "Realizado"
 
@@ -1795,6 +1857,10 @@ msgstr "En ejecución"
 msgctxt "selection:production.output.distribution,production_state:"
 msgid "Waiting"
 msgstr "En espera"
+
+msgctxt "view:agronomics.weighing:"
+msgid "Parcel Distribution"
+msgstr "Distribución por parcelas"
 
 msgctxt "view:product.product:"
 msgid "Agronomics"
