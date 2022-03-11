@@ -25,8 +25,8 @@
   <field name="irrigation"/>
   <label name="surface"/>
   <field name="surface"/>
-  <label name="bought_quantity"/>
-  <field name="bought_quantity"/>
+  <label name="purchased_quantity"/>
+  <field name="purchased_quantity"/>
   <label name="remaining_quantity"/>
   <field name="remaining_quantity"/>
   <newline/>

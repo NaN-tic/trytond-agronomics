@@ -112,8 +112,8 @@ class Parcel(ModelSQL, ModelView):
     all_do = fields.Function(fields.Char('All DO'), 'get_all_do')
     weighings = fields.One2Many('agronomics.weighing-agronomics.parcel',
         'parcel', 'Weighings')
-    bought_quantity = fields.Function(
-        fields.Float("Bought Quantity", digits=(16, 2)), 'get_bought_quantity')
+    purchased_quantity = fields.Function(
+        fields.Float("Bought Quantity", digits=(16, 2)), 'get_purchased_quantity')
     remaining_quantity = fields.Function(
         fields.Float("Remainig Quantity", digits=(16, 2)), 'get_remaining_quantity')
 
@@ -148,11 +148,11 @@ class Parcel(ModelSQL, ModelView):
         return round(float(min([x.max_production for x in max_production])
             )*self.surface, 2)
 
-    def get_bought_quantity(self, name):
+    def get_purchased_quantity(self, name):
         return sum([w.netweight for w in self.weighings if not w.table])
 
     def get_remaining_quantity(self, name):
-        return (self.max_production or 0) - (self.bought_quantity or 0)
+        return (self.max_production or 0) - (self.purchased_quantity or 0)
 
 
 class ParcelDo(ModelSQL):

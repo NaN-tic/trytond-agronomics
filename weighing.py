@@ -114,7 +114,7 @@ class Weighing(Workflow, ModelSQL, ModelView):
         'weighing', 'Parcels', readonly=True)
     not_assigned_weight = fields.Function(
         fields.Float('Not Assigned Weight'), 'get_not_assigned_weight')
-    forced_analysis = fields.Boolean('Forced Analysis')
+    forced_analysis = fields.Boolean('Forced Analysis', readonly=True)
 
     @classmethod
     def __setup__(cls):
@@ -290,7 +290,8 @@ class Weighing(Workflow, ModelSQL, ModelView):
         product = Product(**default_product_values)
         for weighing in weighings:
             if weighing.not_assigned_weight and not weighing.forced_analysis:
-                raise UserError(gettext('agronomics.msg_not_assigned_weight'))
+                raise UserError(gettext('agronomics.msg_not_assigned_weight',
+                    weighing=weighing.rec_name))
             product.template = weighing.product
             product.denominations_of_origin = weighing.denomination_origin
             if weighing.ecological:
@@ -488,7 +489,7 @@ class WeighingPlantation(sequence_ordered(), ModelSQL, ModelView):
 
 
 class WeighingParcel(ModelSQL, ModelView):
-    "Wheighing-Parcel"
+    "Weighing-Parcel"
     __name__ = 'agronomics.weighing-agronomics.parcel'
 
     weighing = fields.Many2One('agronomics.weighing', 'Weighing',

@@ -10,7 +10,7 @@
   <field name="premium"/>
   <field name="producer"/>
   <field name="max_production"/>
-  <field name="bought_quantity"/>
+  <field name="purchased_quantity"/>
   <field name="remaining_quantity"/>
   <field name="denomination_origin" tree_invisible="1"/>
 </tree>

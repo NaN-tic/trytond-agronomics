@@ -37,7 +37,7 @@ this repository contains the full copyright notices and license terms. -->
         <field name="text">The move cannot be done because the amount of the move exceeds the set maximum amount.</field>
     </record>
     <record model="ir.message" id="msg_not_assigned_weight">
-        <field name="text">The weighin weight is not distributed and its not being forced to analysis</field>
+        <field name="text">The weight in "%(weighing)s" is not distributed and its not being forced to analysis</field>
     </record>
   </data>
 

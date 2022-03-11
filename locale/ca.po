@@ -126,7 +126,7 @@ msgctxt "field:agronomics.parcel,beneficiaries:"
 msgid "Beneficiaries"
 msgstr "Beneficiaris"
 
-msgctxt "field:agronomics.parcel,bought_quantity:"
+msgctxt "field:agronomics.parcel,purchased_quantity:"
 msgid "Bought Quantity"
 msgstr "Quantitat comprada"
 
@@ -168,7 +168,7 @@ msgstr "Productor"
 
 msgctxt "field:agronomics.parcel,product:"
 msgid "Product"
-msgstr "Productes"
+msgstr "Producte"
 
 msgctxt "field:agronomics.parcel,remaining_quantity:"
 msgid "Remainig Quantity"
@@ -340,7 +340,7 @@ msgstr "Tercer"
 
 msgctxt "field:agronomics.weighing-agronomics.plantation,plantation:"
 msgid "Plantation"
-msgstr "Plantacións"
+msgstr "Plantacions"
 
 msgctxt "field:agronomics.weighing-agronomics.plantation,weighing:"
 msgid "Weighing"
@@ -1160,7 +1160,7 @@ msgid "Weighing - Denomination Origin"
 msgstr "Pesada - Denominació Origen"
 
 msgctxt "model:agronomics.weighing-agronomics.parcel,name:"
-msgid "Wheighing-Parcel"
+msgid "Weighing-Parcel"
 msgstr "Pesada-Parcel·la"
 
 msgctxt "model:agronomics.weighing-agronomics.plantation,name:"
@@ -1338,9 +1338,9 @@ msgstr ""
 
 msgctxt "model:ir.message,text:msg_not_assigned_weight"
 msgid ""
-"The weighin weight is not distributed and its not being forced to analysis"
+"The weight in \"%(weighing)s\" is not distributed and its not being forced to analysis"
 msgstr ""
-"El pes no està totalment distibuit i no s'ha forçat l'anàlisi"
+"El pes en \"%(weighing)s\" no està totalment distibuit i no s'ha forçat l'anàlisi"
 
 msgctxt "model:ir.message,text:msg_uom_not_fit"
 msgid ""
