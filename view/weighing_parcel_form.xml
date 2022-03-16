@@ -1,0 +1,10 @@
+<form>
+  <label name="weighing"/>
+  <field name="weighing"/>
+  <newline/>
+  <label name="parcel"/>
+  <field name="parcel"/>
+  <newline/>
+  <label name="netweight"/>
+  <field name="netweight"/>
+</form>

@@ -38,6 +38,7 @@ def register():
         weighing.Weighing,
         weighing.WeighingPlantation,
         weighing.WeighingDo,
+        weighing.WeighingParcel,
         quality.Configuration,
         quality.ConfigurationCompany,
         quality.ProductQualitySample,

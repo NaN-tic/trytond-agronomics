@@ -38,6 +38,9 @@
     <page name="beneficiaries">
       <field name="beneficiaries" colspan="4"/>
     </page>
+    <page string="Parcel Distribution" id="parcel_distribution" >
+      <field name="parcels" colspan="4"/>
+    </page>
   </notebook>
   <label name="state"/>
   <field name="state"/>
@@ -45,7 +48,8 @@
       <button name="cancel" icon="tryton-cancel"/>
       <button name="draft"/>
       <button name="process" icon="tryton-forward"/>
-      <button name="analysis" icon="tryton-forward"/>
+      <button name="distribute" icon="tryton-forward"/>
+      <button name="force_analysis" icon="tryton-forward"/>
       <button name="done" icon="tryton-forward"/>
   </group>
 </form>

@@ -25,9 +25,14 @@
   <field name="irrigation"/>
   <label name="surface"/>
   <field name="surface"/>
+  <label name="purchased_quantity"/>
+  <field name="purchased_quantity"/>
+  <label name="remaining_quantity"/>
+  <field name="remaining_quantity"/>
   <newline/>
   <label name="tenure_regime"/>
   <field name="tenure_regime" colspan="3"/>
   <field name="denomination_origin" colspan="4"/>
   <field name="beneficiaries" colspan="4"/>
+  <field name="weighings" colspan="4"/>
 </form>
