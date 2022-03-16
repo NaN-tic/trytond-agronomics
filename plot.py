@@ -110,6 +110,16 @@ class Parcel(ModelSQL, ModelView):
     beneficiaries = fields.One2Many('agronomics.beneficiary', 'parcel',
         'Beneficiaries')
     all_do = fields.Function(fields.Char('All DO'), 'get_all_do')
+    weighings = fields.One2Many('agronomics.weighing-agronomics.parcel',
+        'parcel', 'Weighings')
+    purchased_quantity = fields.Function(
+        fields.Float("Bought Quantity", digits=(16, 2)), 'get_purchased_quantity')
+    remaining_quantity = fields.Function(
+        fields.Float("Remainig Quantity", digits=(16, 2)), 'get_remaining_quantity')
+
+    def get_rec_name(self, name):
+        if self.plantation and self.crop:
+            return self.plantation.code + ' - ' + self.crop.rec_name
 
     @classmethod
     def validate(cls, records):
@@ -137,6 +147,12 @@ class Parcel(ModelSQL, ModelView):
             return None
         return round(float(min([x.max_production for x in max_production])
             )*self.surface, 2)
+
+    def get_purchased_quantity(self, name):
+        return sum([w.netweight for w in self.weighings if not w.table])
+
+    def get_remaining_quantity(self, name):
+        return (self.max_production or 0) - (self.purchased_quantity or 0)
 
 
 class ParcelDo(ModelSQL):

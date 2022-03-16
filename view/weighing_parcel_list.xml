@@ -1,0 +1,6 @@
+<tree>
+  <field name="weighing"/>
+  <field name="parcel"/>
+  <field name="netweight"/>
+  <field name="table"/>
+</tree>
