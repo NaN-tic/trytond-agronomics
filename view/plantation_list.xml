@@ -1,4 +1,6 @@
 <tree>
   <field name="code"/>
   <field name="party"/>
+  <field name="platation_year" tree_invisible="1"/>
+  <field name="platation_owner" tree_invisible="1"/>
 </tree>

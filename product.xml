@@ -224,5 +224,41 @@
             <field name="perm_create" eval="True"/>
             <field name="perm_delete" eval="True"/>
         </record>
+
+        <!-- product.price_list.price -->
+        <record model="ir.ui.view" id="product_price_list_type_view_form">
+            <field name="model">product.price_list.type</field>
+            <field name="type">form</field>
+            <field name="name">product_price_list_type_form</field>
+        </record>
+        <record model="ir.ui.view" id="product_price_list_type_view_tree">
+            <field name="model">product.price_list.type</field>
+            <field name="type">tree</field>
+            <field name="name">product_price_list_type_tree</field>
+        </record>
+
+        <record model="ir.action.act_window" id="act_product_price_list_type_form">
+            <field name="name">Product Price List Type</field>
+            <field name="res_model">product.price_list.type</field>
+        </record>
+        <record model="ir.action.act_window.view" id="act_product_price_list_type_form_view1">
+            <field name="sequence" eval="10"/>
+            <field name="view" ref="product_price_list_type_view_tree"/>
+            <field name="act_window" ref="act_product_price_list_type_form"/>
+        </record>
+        <record model="ir.action.act_window.view" id="act_product_price_list_type_form_view2">
+            <field name="sequence" eval="20"/>
+            <field name="view" ref="product_price_list_type_view_form"/>
+            <field name="act_window" ref="act_product_price_list_type_form"/>
+        </record>
+        <menuitem parent="product_price_list.menu_price_list" action="act_product_price_list_type_form"
+            id="menu_product_price_list_type_form"/>
+
+        <!-- product.price_list -->
+        <record model="ir.ui.view" id="price_list_view_form">
+            <field name="model">product.price_list</field>
+            <field name="inherit" ref="product_price_list.price_list_view_form"/>
+            <field name="name">price_list_form</field>
+        </record>
     </data>
 </tryton>

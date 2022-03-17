@@ -4,6 +4,7 @@ from trytond.model import fields, ModelSQL, ModelView
 from trytond.pool import Pool
 from trytond.i18n import gettext
 from trytond.exceptions import UserError
+from trytond.transaction import Transaction
 
 class Enclosure(ModelSQL, ModelView):
     "Enclosure"
@@ -62,11 +63,13 @@ class Plantation(ModelSQL, ModelView):
     "Plantation"
     __name__ = 'agronomics.plantation'
 
-    code = fields.Char('Code', required=True)
-    party = fields.Many2One('party.party', 'Party', required=True)
+    code = fields.Char("Code", required=True)
+    party = fields.Many2One('party.party', "Party", required=True)
     enclosures = fields.One2Many('agronomics.enclosure', 'plantation',
-        'Enclosure')
-    parcels = fields.One2Many('agronomics.parcel', 'plantation', 'Parcel')
+        "Enclosure")
+    parcels = fields.One2Many('agronomics.parcel', 'plantation', "Parcel")
+    platation_year = fields.Integer("Platation Year")
+    platation_owner = fields.Many2One('party.party', "Platation Owner")
 
     def get_rec_name(self, name):
         if self.code:
@@ -121,20 +124,6 @@ class Parcel(ModelSQL, ModelView):
         if self.plantation and self.crop:
             return self.plantation.code + ' - ' + self.crop.rec_name
 
-    @classmethod
-    def validate(cls, records):
-        super().validate(records)
-        cls.check_percent_beneficiaries(records)
-
-    @classmethod
-    def check_percent_beneficiaries(cls, records):
-        for record in records:
-            percent = sum([x.percent for x in record.beneficiaries])
-            if record.beneficiaries and abs(100 - round(percent, 2)) > 0.0001:
-                raise UserError(gettext('agronomics.msg_beneficiaris_percent',
-                    crop=record.crop.rec_name,
-                    plantation=record.plantation.rec_name))
-
     def get_all_do(self, name):
         return ",".join([x.name for x in self.denomination_origin])
 
@@ -168,7 +157,22 @@ class Beneficiaries(ModelSQL, ModelView):
     "Beneficiaries"
     __name__ = 'agronomics.beneficiary'
 
-    party = fields.Many2One('party.party', 'Beneficiary', required=True)
-    percent = fields.Float('Percent', digits=(16, 2), required=True)
-    parcel = fields.Many2One('agronomics.parcel', 'Parcel')
-    weighing = fields.Many2One('agronomics.weighing', 'Weighing')
+    party = fields.Many2One('party.party', "Beneficiary", required=True)
+    parcel = fields.Many2One('agronomics.parcel', "Parcel")
+    weighing = fields.Many2One('agronomics.weighing', "Weighing")
+    weighing = fields.Many2One('agronomics.weighing', "Weighing")
+    product_price_list_type = fields.Many2One('product.price_list.type',
+        "Product Price List Type")
+
+    @classmethod
+    def __register__(cls, module_name):
+        cursor = Transaction().connection.cursor()
+        table = cls.__table_handler__(module_name)
+        sql_table = cls.__table__()
+
+        # Migration from #047773
+        if table.column_exist('percent'):
+            table.not_null_action('percent', 'remove')
+            table.drop_column('percent')
+
+        super(Beneficiaries, cls).__register__(module_name)

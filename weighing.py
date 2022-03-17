@@ -263,22 +263,6 @@ class Weighing(Workflow, ModelSQL, ModelView):
         return (self.weight or 0) - (self.tara or 0)
 
     @classmethod
-    def validate(cls, records):
-        super().validate(records)
-        cls.check_percent_beneficiaries(records)
-
-    @classmethod
-    def check_percent_beneficiaries(cls, records):
-        for record in records:
-            if record.state == 'draft':
-                continue
-            percent = sum([x.percent for x in record.beneficiaries])
-            if record.beneficiaries and abs(100 - round(percent, 2)) > 0.0001:
-                raise UserError(gettext('agronomics.msg_beneficiaris_percent',
-                    crop=record.crop.rec_name,
-                    plantation=record.plantations[0].plantation.rec_name))
-
-    @classmethod
     @Workflow.transition('in_analysis')
     def analysis(cls, weighings):
         pool = Pool()
