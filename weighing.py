@@ -410,7 +410,6 @@ class Weighing(Workflow, ModelSQL, ModelView):
                 b = Beneficiary()
                 b.party = ben.party
                 b.weighing = weighing
-                b.percent = ben.percent
                 to_save.append(b)
 
         if to_save:
