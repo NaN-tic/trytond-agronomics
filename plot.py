@@ -68,8 +68,8 @@ class Plantation(ModelSQL, ModelView):
     enclosures = fields.One2Many('agronomics.enclosure', 'plantation',
         "Enclosure")
     parcels = fields.One2Many('agronomics.parcel', 'plantation', "Parcel")
-    platation_year = fields.Integer("Platation Year")
-    platation_owner = fields.Many2One('party.party', "Platation Owner")
+    plantation_year = fields.Integer("Plantation Year")
+    plantation_owner = fields.Many2One('party.party', "Plantation Owner")
 
     def get_rec_name(self, name):
         if self.code:
