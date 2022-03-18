@@ -410,6 +410,7 @@ class Weighing(Workflow, ModelSQL, ModelView):
                 b = Beneficiary()
                 b.party = ben.party
                 b.weighing = weighing
+                b.product_price_list_type = ben.product_price_list_type
                 to_save.append(b)
 
         if to_save:
