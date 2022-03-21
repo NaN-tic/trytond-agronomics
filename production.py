@@ -153,35 +153,57 @@ class Production(metaclass=PoolMeta):
             'readonly': Eval('state').in_(['cancelled', 'done']),
         }, depends=['allowed_output_products', 'state'])
     allowed_enology_products = fields.Function(fields.One2Many(
-        'product.product', None, 'Allowed Enology Products', readonly=True),
+        'product.product', None, 'Allowed Enology Products', readonly=True,
+        context={
+            'company': Eval('company'),
+            },
+        depends=['company']),
         'on_change_with_allowed_enology_products',
         setter='set_allowed_products')
     allowed_output_products = fields.Function(fields.One2Many(
-        'product.template', None, 'Allowed Output Products', readonly=True),
+        'product.template', None, 'Allowed Output Products', readonly=True,
+        context={
+            'company': Eval('company'),
+            },
+        depends=['company']),
         'on_change_with_allowed_output_products',
         setter='set_allowed_products')
     cost_distributions = fields.One2Many(
         'production.cost_price.distribution',
         'origin', "Cost Distributions",
+        domain=[
+            ('template', 'in', Eval('cost_distribution_templates')),
+            ],
         states={
             'readonly': Eval('state').in_(['cancelled', 'done']),
-        }, domain=[
-            ('template', 'in', Eval('cost_distribution_templates')),
-        ], depends=['state', 'cost_distribution_template',
-            'cost_distribution_templates'])
+            },
+        context={
+            'company': Eval('company'),
+            },
+        depends=['state', 'cost_distribution_template',
+            'cost_distribution_templates', 'company'])
     cost_distribution_template = fields.Many2One(
         'production.cost_price.distribution.template',
         "Cost Distribution Template",
         domain=[
             ('id', 'in',
                 Eval('production_template_cost_distribution_templates'))
-        ], states={
+                ],
+        states={
             'readonly': Eval('state').in_(['cancelled', 'done']),
-        }, depends=['state',
-            'production_template_cost_distribution_templates'])
+            },
+        context={
+            'company': Eval('company'),
+            },
+        depends=['state',
+            'production_template_cost_distribution_templates', 'company'])
     cost_distribution_templates = fields.Function(
         fields.Many2Many('product.template',
-        None, None, "Cost Product Templates"),
+        None, None, "Cost Product Templates",
+        context={
+            'company': Eval('company'),
+            },
+        depends=['company']),
         'on_change_with_cost_distribution_templates')
     pass_quality = fields.Boolean('Pass Quality')
     pass_certification = fields.Boolean('Pass Certification')
@@ -487,7 +509,7 @@ class Production(metaclass=PoolMeta):
                     if output.product not in products:
                         continue
                     has_product = True
-                    cost = (production_cost * (1 + cdist.percentatge) - 
+                    cost = (production_cost * (1 + cdist.percentatge) -
                         production_cost)
                     output_cost += round_price(cost / Decimal(total_output))
 
