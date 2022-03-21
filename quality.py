@@ -71,7 +71,11 @@ class QualitySample(ModelSQL, ModelView):
     code = fields.Char('Code', select=True, readonly=True)
     reference = fields.Char('Reference')
     products = fields.Many2Many('product.product-quality.sample', 'sample',
-        'product', 'Products')
+        'product', "Products",
+        context={
+            'company': Eval('company'),
+            },
+        depends=['company'])
     collection_date = fields.DateTime('Collection Date', required=True)
     company = fields.Many2One('company.company', 'Company', required=True,
         select=True)
