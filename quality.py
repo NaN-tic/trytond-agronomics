@@ -2,7 +2,7 @@
 # this repository contains the full copyright notices and license terms.
 import datetime
 from trytond.pool import PoolMeta, Pool
-from trytond.model import fields, Model, ModelSQL, ModelView, Workflow
+from trytond.model import fields, Model, ModelSQL, ModelView
 from trytond.pyson import Eval, Id
 from trytond.modules.agronomics.wine import _WINE_DIGITS
 from trytond.transaction import Transaction

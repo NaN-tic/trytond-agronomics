@@ -180,11 +180,12 @@ class Weighing(Workflow, ModelSQL, ModelView):
         if not self.product_created:
             return
         tests = self.product_created.quality_tests
+        if not tests:
+            return
         return tests and tests[0] and tests[0].id
 
     @classmethod
     def set_quality_test(cls, weighings, name, value):
-        Test = Pool().get('quality.test')
         if not value:
             return
 
