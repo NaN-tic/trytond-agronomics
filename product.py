@@ -195,3 +195,15 @@ class ProductEcological(ModelSQL):
         ondelete='CASCADE', select=True, required=True)
     ecological = fields.Many2One('agronomics.ecological', 'Ecological',
         ondelete='CASCADE', select=True, required=True)
+
+
+class ProductPriceListType(ModelSQL, ModelView):
+    "Product Price List Type"
+    __name__ = 'product.price_list.type'
+    name = fields.Char("Name", required=True)
+
+
+class PriceList(metaclass=PoolMeta):
+    __name__ = 'product.price_list'
+    product_price_list_type = fields.Many2One('product.price_list.type',
+        "Product Price List Type")

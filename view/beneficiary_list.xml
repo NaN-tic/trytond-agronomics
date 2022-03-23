@@ -1,4 +1,4 @@
 <tree editable="1">
   <field name="party"/>
-  <field name="percent"/>
+  <field name="product_price_list_type"/>
 </tree>

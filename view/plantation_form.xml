@@ -3,6 +3,10 @@
   <field name="code"/>
   <label name="party"/>
   <field name="party"/>
+  <label name="plantation_year"/>
+  <field name="plantation_year"/>
+  <label name="plantation_owner"/>
+  <field name="plantation_owner"/>
   <notebook>
     <page name="parcels">
       <field name="parcels" widget="many2many"/>
