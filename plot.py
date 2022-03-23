@@ -160,7 +160,6 @@ class Beneficiaries(ModelSQL, ModelView):
     party = fields.Many2One('party.party', "Beneficiary", required=True)
     parcel = fields.Many2One('agronomics.parcel', "Parcel")
     weighing = fields.Many2One('agronomics.weighing', "Weighing")
-    weighing = fields.Many2One('agronomics.weighing', "Weighing")
     product_price_list_type = fields.Many2One('product.price_list.type',
         "Product Price List Type")
 
