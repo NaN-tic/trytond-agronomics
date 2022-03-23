@@ -32,6 +32,8 @@ def register():
         product.ProductCrop,
         product.ProductDO,
         product.ProductEcological,
+        product.ProductPriceListType,
+        product.PriceList,
         product.ProductVariety,
         product.Template,
         weighing.WeighingCenter,
