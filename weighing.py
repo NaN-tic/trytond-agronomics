@@ -6,8 +6,6 @@ from trytond.pool import Pool
 from trytond.i18n import gettext
 from trytond.exceptions import UserError
 from trytond.transaction import Transaction
-from trytond.wizard import (Wizard, StateView, StateTransition, StateAction,
-    Button)
 from datetime import datetime
 
 class WeighingCenter(ModelSQL, ModelView):
