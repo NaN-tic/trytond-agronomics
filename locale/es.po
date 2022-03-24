@@ -1071,6 +1071,38 @@ msgctxt "field:production.template.outputs-product.template,template:"
 msgid "Product"
 msgstr "Productos"
 
+msgctxt "field:purchase.contract,crop:"
+msgid "Crop"
+msgstr "Cosecha"
+
+msgctxt "field:purchase.contract,price_list_base:"
+msgid "Price List Base"
+msgstr "Tarifa base"
+
+msgctxt "field:purchase.contract,price_list_complement:"
+msgid "Price List Complement"
+msgstr "Tarifa complementos"
+
+msgctxt "field:purchase.contract,producer:"
+msgid "Producer"
+msgstr "Productor"
+
+msgctxt "field:purchase.contract.line,parcel:"
+msgid "Parcel"
+msgstr "Parcela"
+
+msgctxt "field:purchase.contract.line,parcel_product:"
+msgid "Parcel Product"
+msgstr "Producto parcela"
+
+msgctxt "field:purchase.contract.line,purchased_quantity:"
+msgid "Purchased Quantity"
+msgstr "Cantidad comprada"
+
+msgctxt "field:purchase.contract.line,remaining_quantity:"
+msgid "Remaining Quantity"
+msgstr "Cantidad restante"
+
 msgctxt "field:quality.qualitative.test.line,product:"
 msgid "Product"
 msgstr "Productos"
@@ -1370,6 +1402,10 @@ msgstr ""
 
 msgctxt ""
 "model:ir.model.button,string:production_output_distribution_done_button"
+msgid "Done"
+msgstr "Realizar"
+
+msgctxt "model:ir.model.button,string:purchase_contract_done_button"
 msgid "Done"
 msgstr "Realizar"
 
@@ -1857,6 +1893,10 @@ msgstr "En ejecución"
 msgctxt "selection:production.output.distribution,production_state:"
 msgid "Waiting"
 msgstr "En espera"
+
+msgctxt "selection:purchase.contract,state:"
+msgid "Done"
+msgstr "Realizado"
 
 msgctxt "view:agronomics.weighing:"
 msgid "Parcel Distribution"

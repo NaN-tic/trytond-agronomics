@@ -244,6 +244,9 @@ class Weighing(Workflow, ModelSQL, ModelView):
 
     @fields.depends('plantations')
     def on_change_with_purchase_contract(self):
+        pool = Pool()
+        ContractLine = pool.get('purchase.contract.line')
+
         parcel = self.get_parcel()
         if not parcel:
             return
@@ -251,12 +254,15 @@ class Weighing(Workflow, ModelSQL, ModelView):
         producer = parcel.producer and parcel.producer.id
         if not producer:
             return
-        Contract = Pool().get('purchase.contract')
-        contracts = Contract.search([('party', '=', producer)], limit=1)
-        if not contracts:
+        contract_lines = ContractLine.search([
+            ('parcel', '=', parcel),
+            ('contract.producer', '=', producer),
+            ('contract.state', '=', 'active'),
+        ], limit=1)
+        if not contract_lines:
             return
 
-        contract, = contracts
+        contract = contract_lines[0].contract
         return contract and contract.id
 
     @fields.depends('weight', 'tara')

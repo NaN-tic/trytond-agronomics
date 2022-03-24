@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!-- This file is part of Tryton.  The COPYRIGHT file at the top level of
+this repository contains the full copyright notices and license terms. -->
+<data>
+    <xpath expr="/form/field[@name='end_date']" position="after">
+        <label name="producer"/>
+        <field name="producer"/>
+        <label name="crop"/>
+        <field name="crop"/>
+        <label name="price_list_base"/>
+        <field name="price_list_base"/>
+        <label name="price_list_complement"/>
+        <field name="price_list_complement"/>
+    </xpath>
+    <xpath expr="/form/group[@id='buttons']" position="replace_attributes">
+        <group col="5" colspan="4" id="buttons"/>
+    </xpath>
+    <xpath expr="/form/group[@id='buttons']/button[@name='cancel']" position="after">
+        <button name="done"/>
+    </xpath>
+</data>

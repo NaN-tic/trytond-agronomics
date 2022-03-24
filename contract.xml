@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!-- This file is part of Tryton.  The COPYRIGHT file at the top level of
+this repository contains the full copyright notices and license terms. -->
+<tryton>
+    <data>
+        <!-- purchase.contract -->
+        <record model="ir.ui.view" id="contract_view_form">
+            <field name="model">purchase.contract</field>
+            <field name="inherit" ref="purchase_contract.contract_view_form"/>
+            <field name="name">contract_form</field>
+        </record>
+        <record model="ir.ui.view" id="contract_view_tree">
+            <field name="model">purchase.contract</field>
+            <field name="inherit" ref="purchase_contract.contract_view_tree"/>
+            <field name="name">contract_tree</field>
+        </record>
+        <!-- purchase.contract.line -->
+        <record model="ir.ui.view" id="contract_line_view_form">
+            <field name="model">purchase.contract.line</field>
+            <field name="inherit" ref="purchase_contract.contract_line_view_form"/>
+            <field name="name">contract_line_form</field>
+        </record>
+        <record model="ir.ui.view" id="contract_line_view_tree">
+            <field name="model">purchase.contract.line</field>
+            <field name="inherit" ref="purchase_contract.contract_line_view_tree"/>
+            <field name="name">contract_line_tree</field>
+        </record>
+        <!-- ir.model.button -->
+        <record model="ir.model.button" id="purchase_contract_done_button">
+            <field name="name">done</field>
+            <field name="string">Done</field>
+            <field name="model" search="[('model', '=', 'purchase.contract')]"/>
+        </record>
+        <record model="ir.model.button-res.group" id="purchase_contract_done_button_group_purchase">
+            <field name="button" ref="purchase_contract_done_button"/>
+            <field name="group" ref="purchase.group_purchase"/>
+        </record>
+    </data>
+</tryton>

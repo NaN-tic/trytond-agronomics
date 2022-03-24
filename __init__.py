@@ -2,6 +2,7 @@
 # The COPYRIGHT file at the top level of this repository contains
 # the full copyright notices and license terms.
 from trytond.pool import Pool
+from . import contract
 from . import party
 from . import plot
 from . import product
@@ -14,6 +15,8 @@ from . import price_list
 
 def register():
     Pool.register(
+        contract.PurchaseContract,
+        contract.PurchaseContractLine,
         party.Party,
         plot.Enclosure,
         plot.Crop,
