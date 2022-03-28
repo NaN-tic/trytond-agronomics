@@ -1071,38 +1071,6 @@ msgctxt "field:production.template.outputs-product.template,template:"
 msgid "Product"
 msgstr "Productes"
 
-msgctxt "field:purchase.contract,crop:"
-msgid "Crop"
-msgstr "Collita"
-
-msgctxt "field:purchase.contract,price_list_base:"
-msgid "Price List Base"
-msgstr "Tarifa base"
-
-msgctxt "field:purchase.contract,price_list_complement:"
-msgid "Price List Complement"
-msgstr "Tarifa complements"
-
-msgctxt "field:purchase.contract,producer:"
-msgid "Producer"
-msgstr "Productor"
-
-msgctxt "field:purchase.contract.line,parcel:"
-msgid "Parcel"
-msgstr "Parcel·la"
-
-msgctxt "field:purchase.contract.line,parcel_product:"
-msgid "Parcel Product"
-msgstr "Producte parcel·la"
-
-msgctxt "field:purchase.contract.line,purchased_quantity:"
-msgid "Purchased Quantity"
-msgstr "Quantitat comprada"
-
-msgctxt "field:purchase.contract.line,remaining_quantity:"
-msgid "Remaining Quantity"
-msgstr "Quantitat restant"
-
 msgctxt "field:quality.qualitative.test.line,product:"
 msgid "Product"
 msgstr "Productes"
@@ -1402,10 +1370,6 @@ msgctxt ""
 "model:ir.model.button,string:production_output_distribution_done_button"
 msgid "Done"
 msgstr "Realitzar"
-
-msgctxt "model:ir.model.button,string:purchase_contract_done_button"
-msgid "Done"
-msgstr "Realitzat"
 
 msgctxt "model:ir.model.button,string:weighing_cancel_button"
 msgid "Cancel"
@@ -1891,10 +1855,6 @@ msgstr "En execució"
 msgctxt "selection:production.output.distribution,production_state:"
 msgid "Waiting"
 msgstr "En espera"
-
-msgctxt "selection:purchase.contract,state:"
-msgid "Done"
-msgstr "Realitzat"
 
 msgctxt "view:agronomics.weighing:"
 msgid "Parcel Distribution"

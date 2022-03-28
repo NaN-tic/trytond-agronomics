@@ -38,7 +38,7 @@ class Weighing(Workflow, ModelSQL, ModelView):
             'required': True
         }, depends=['state'])
 
-    purchase_contract = fields.Many2One('purchase.contract',
+    purchase_contract = fields.Many2One('agronomics.contract',
         'Purchase Contract', states={
             'readonly': Eval('state').in_(READONLY),
             'required': True
@@ -243,7 +243,7 @@ class Weighing(Workflow, ModelSQL, ModelView):
     @fields.depends('plantations')
     def on_change_with_purchase_contract(self):
         pool = Pool()
-        ContractLine = pool.get('purchase.contract.line')
+        ContractLine = pool.get('agronomics.contract.line')
 
         parcel = self.get_parcel()
         if not parcel:

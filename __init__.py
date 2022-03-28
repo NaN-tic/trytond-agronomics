@@ -15,8 +15,9 @@ from . import price_list
 
 def register():
     Pool.register(
-        contract.PurchaseContract,
-        contract.PurchaseContractLine,
+        contract.AgronomicsContractProductPriceListTypePriceList,
+        contract.AgronomicsContract,
+        contract.AgronomicsContractLine,
         party.Party,
         plot.Enclosure,
         plot.Crop,

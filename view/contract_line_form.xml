@@ -1,23 +1,19 @@
 <?xml version="1.0"?>
 <!-- This file is part of Tryton.  The COPYRIGHT file at the top level of
 this repository contains the full copyright notices and license terms. -->
-<data>
-    <xpath expr="/form/notebook/page[@id='product']/label[@name='agreed_quantity']" position="replace">
-    </xpath>
-    <xpath expr="/form/notebook/page[@id='product']/field[@name='agreed_quantity']" position="replace">
-    </xpath>
-    <xpath expr="/form/notebook/page[@id='product']/field[@name='consumed_quantity']" position="after">
-        <newline/>
-        <separator id="agronomics_fields" colspan="4"/>
-        <label name="parcel"/>
-        <field name="parcel"/>
-        <label name="parcel_product"/>
-        <field name="parcel_product"/>
-        <label name="agreed_quantity"/>
-        <field name="agreed_quantity"/>
-        <label name="purchased_quantity"/>
-        <field name="purchased_quantity"/>
-        <label name="remaining_quantity"/>
-        <field name="remaining_quantity"/>
-    </xpath>
-</data>
+<form>
+    <label name="parcel"/>
+    <field name="parcel"/>
+    <label name="contract"/>
+    <field name="contract"/>
+    <label name="product"/>
+    <field name="product"/>
+    <label name="unit"/>
+    <field name="unit"/>
+    <label name="agreed_quantity"/>
+    <field name="agreed_quantity"/>
+    <label name="purchased_quantity"/>
+    <field name="purchased_quantity"/>
+    <label name="remaining_quantity"/>
+    <field name="remaining_quantity"/>
+</form>
