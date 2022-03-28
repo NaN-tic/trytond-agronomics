@@ -1,9 +1,12 @@
 # The COPYRIGHT file at the top level of this repository contains the full
 # copyright notices and license terms.
 from trytond.model import fields, Workflow, ModelView, ModelSQL
-from trytond.pool import PoolMeta
 from trytond.pyson import Eval
 from decimal import Decimal
+from trytond.pyson import If
+from trytond.exceptions import UserError
+from trytond.pool import Pool
+from trytond.i18n import gettext
 
 _STATES = {
     'readonly': Eval('state') != 'draft',
@@ -58,8 +61,15 @@ class AgronomicsContract(Workflow, ModelSQL, ModelView):
                 ('draft', 'active'),
                 ('active', 'cancelled'),
                 ('active', 'done'),
+                ('active', 'draft'),
+                ('cancelled', 'draft'),
                 ))
         cls._buttons.update({
+            'draft': {
+                'invisible': ~Eval('state').in_(['cancelled', 'active']),
+                'icon': If(Eval('state') == 'cancelled', 'tryton-undo',
+                        'tryton-back'),
+            },
             'active': {
                 'invisible': Eval('state') != 'draft',
                 'icon': 'tryton-forward',
@@ -98,8 +108,29 @@ class AgronomicsContract(Workflow, ModelSQL, ModelView):
 
     @classmethod
     @ModelView.button
+    @Workflow.transition('draft')
+    def draft(cls, contracts):
+        pass
+
+    @classmethod
+    @ModelView.button
     @Workflow.transition('active')
     def active(cls, contracts):
+        pool = Pool()
+        ContractLine = pool.get('agronomics.contract.line')
+
+        for contract in contracts:
+            for line in contract.lines:
+                active_lines = ContractLine.search([
+                    ('contract.crop', '=', contract.crop),
+                    ('parcel', '=', line.parcel),
+                    ('contract.state', '=', 'active'),
+                ])
+                if active_lines:
+                    raise UserError(gettext(
+                        'agronomics.msg_cant_active_contract',
+                        contract=contract.rec_name,
+                        parcel=line.parcel.rec_name))
         pass
 
     @classmethod

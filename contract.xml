@@ -98,6 +98,16 @@ this repository contains the full copyright notices and license terms. -->
             <field name="group" ref="group_agronomics"/>
         </record>
 
+        <record model="ir.model.button" id="agronomics_contract_draft_button">
+            <field name="name">draft</field>
+            <field name="string">Draft</field>
+            <field name="model" search="[('model', '=', 'agronomics.contract')]"/>
+        </record>
+        <record model="ir.model.button-res.group" id="agronomics_contract_draft_button_group_agronomics">
+            <field name="button" ref="agronomics_contract_draft_button"/>
+            <field name="group" ref="group_agronomics"/>
+        </record>
+
         <record model="ir.model.button" id="agronomics_contract_done_button">
             <field name="name">done</field>
             <field name="string">Done</field>
