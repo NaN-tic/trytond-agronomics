@@ -131,7 +131,6 @@ class AgronomicsContract(Workflow, ModelSQL, ModelView):
                         'agronomics.msg_cant_active_contract',
                         contract=contract.rec_name,
                         parcel=line.parcel.rec_name))
-        pass
 
     @classmethod
     @ModelView.button
