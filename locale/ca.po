@@ -10,9 +10,9 @@ msgctxt "field:agronomics.beneficiary,party:"
 msgid "Beneficiary"
 msgstr "Beneficiari"
 
-msgctxt "field:agronomics.beneficiary,percent:"
-msgid "Percent"
-msgstr "Percentatge"
+msgctxt "field:agronomics.beneficiary,product_price_list_type:"
+msgid "Product Price List Type"
+msgstr ""
 
 msgctxt "field:agronomics.beneficiary,weighing:"
 msgid "Weighing"
@@ -33,6 +33,92 @@ msgstr "Capacitat"
 msgctxt "field:agronomics.container,name:"
 msgid "Name"
 msgstr "Nom"
+
+msgctxt "field:agronomics.contract,crop:"
+msgid "Crop"
+msgstr "Collita"
+
+msgctxt "field:agronomics.contract,end_date:"
+msgid "End Date"
+msgstr "Data finalització"
+
+msgctxt "field:agronomics.contract,lines:"
+msgid "Lines"
+msgstr "Línies"
+
+msgctxt "field:agronomics.contract,price_list_types:"
+msgid "Price List Types"
+msgstr "Tipus de tarifa"
+
+msgctxt "field:agronomics.contract,producer:"
+msgid "Producer"
+msgstr "Productor"
+
+msgctxt "field:agronomics.contract,reference:"
+msgid "Reference"
+msgstr "Referència"
+
+msgctxt "field:agronomics.contract,start_date:"
+msgid "Start Date"
+msgstr "Data inicial"
+
+msgctxt "field:agronomics.contract,state:"
+msgid "State"
+msgstr "Estat"
+
+msgctxt "field:agronomics.contract,weighings:"
+msgid "Weighings"
+msgstr "Pesades"
+
+msgctxt ""
+"field:agronomics.contract-product.price_list.type-"
+"product.price_list,contract:"
+msgid "Contract"
+msgstr "Contracte"
+
+msgctxt ""
+"field:agronomics.contract-product.price_list.type-"
+"product.price_list,price_list:"
+msgid "Price List"
+msgstr "Tarifa"
+
+msgctxt ""
+"field:agronomics.contract-product.price_list.type-"
+"product.price_list,price_list_type:"
+msgid "Price List Type"
+msgstr "Tipus de tarifa"
+
+msgctxt "field:agronomics.contract.line,agreed_quantity:"
+msgid "Agreed Quantity"
+msgstr "Quantitat pactada"
+
+msgctxt "field:agronomics.contract.line,contract:"
+msgid "Contract"
+msgstr "Contracte"
+
+msgctxt "field:agronomics.contract.line,parcel:"
+msgid "Parcel"
+msgstr "Parcel·la"
+
+msgctxt "field:agronomics.contract.line,product:"
+msgid "Product"
+msgstr "Productes"
+
+msgctxt "field:agronomics.contract.line,purchased_quantity:"
+msgid "Purchased Quantity"
+msgstr "Quantitat comprada"
+
+msgctxt "field:agronomics.contract.line,remaining_quantity:"
+msgid "Remaining Quantity"
+msgstr "Quantitat restant"
+
+msgctxt "field:agronomics.contract.line,unit:"
+msgid "Unit"
+msgstr "Unitat"
+
+msgctxt "field:agronomics.contract.line,unit_digits:"
+msgid "Unit Digits"
+msgstr "Dígits de la unitat"
 
 msgctxt "field:agronomics.crop,code:"
 msgid "Code"
@@ -126,10 +212,6 @@ msgctxt "field:agronomics.parcel,beneficiaries:"
 msgid "Beneficiaries"
 msgstr "Beneficiaris"
 
-msgctxt "field:agronomics.parcel,purchased_quantity:"
-msgid "Bought Quantity"
-msgstr "Quantitat comprada"
-
 msgctxt "field:agronomics.parcel,crop:"
 msgid "Crop"
 msgstr "Collita"
@@ -169,6 +251,10 @@ msgstr "Productor"
 msgctxt "field:agronomics.parcel,product:"
 msgid "Product"
 msgstr "Producte"
+
+msgctxt "field:agronomics.parcel,purchased_quantity:"
+msgid "Bought Quantity"
+msgstr "Quantitat comprada"
 
 msgctxt "field:agronomics.parcel,remaining_quantity:"
 msgid "Remainig Quantity"
@@ -221,6 +307,14 @@ msgstr "Parcel·la"
 msgctxt "field:agronomics.plantation,party:"
 msgid "Party"
 msgstr "Tercers"
+
+msgctxt "field:agronomics.plantation,plantation_owner:"
+msgid "Plantation Owner"
+msgstr ""
+
+msgctxt "field:agronomics.plantation,plantation_year:"
+msgid "Plantation Year"
+msgstr ""
 
 msgctxt "field:agronomics.weighing,all_do:"
 msgid "All DO"
@@ -366,6 +460,15 @@ msgctxt "field:product.configuration,variant_deactivation_time:"
 msgid "Variant Deactivation Time"
 msgstr "Temps per desactivar variants"
 
+msgctxt "field:product.price_list,product_price_list_type:"
+msgid "Product Price List Type"
+msgstr ""
+
+#, fuzzy
+msgctxt "field:product.price_list.type,name:"
+msgid "Name"
+msgstr "Nom"
+
 msgctxt "field:product.product,agronomic_type:"
 msgid "Agronomic Type"
 msgstr "Tipus Agronòmic"
@@ -402,9 +505,13 @@ msgctxt "field:product.product,production_quality_template:"
 msgid "Production Quality Template"
 msgstr "Plantilla Qualitat de producció"
 
-msgctxt "field:product.product,quality_sample:"
-msgid "Quality Sample"
-msgstr "Mostra de qualitat"
+msgctxt "field:product.product,quality_samples:"
+msgid "Quality Samples"
+msgstr ""
+
+msgctxt "field:product.product,quality_tests:"
+msgid "Quality Tests"
+msgstr ""
 
 msgctxt "field:product.product,quality_weighing:"
 msgid "Quality Weighing"
@@ -446,9 +553,10 @@ msgctxt "field:product.product,wine_alcohol_content_success:"
 msgid "Alcohol Content Success"
 msgstr ""
 
+#, fuzzy
 msgctxt "field:product.product,wine_botrytis:"
 msgid "Botrytis"
-msgstr ""
+msgstr "Botrytis"
 
 msgctxt "field:product.product,wine_botrytis_comment:"
 msgid "Botrytis Comment"
@@ -826,6 +934,16 @@ msgctxt "field:product.product-agronomics.ecological,product:"
 msgid "Product"
 msgstr "Producte"
 
+#, fuzzy
+msgctxt "field:product.product-quality.sample,product:"
+msgid "Product"
+msgstr "Productes"
+
+#, fuzzy
+msgctxt "field:product.product-quality.sample,sample:"
+msgid "Sample"
+msgstr "Mostra"
+
 msgctxt "field:product.template,agronomic_type:"
 msgid "Agronomic Type"
 msgstr "Tipus Agronòmic"
@@ -885,6 +1003,18 @@ msgstr "Productes Vinícoles"
 msgctxt "field:production,output_distribution:"
 msgid "Output Distribution"
 msgstr "Distribució de sortides"
+
+msgctxt "field:production,pass_certification:"
+msgid "Pass Certification"
+msgstr ""
+
+msgctxt "field:production,pass_quality:"
+msgid "Pass Quality"
+msgstr ""
+
+msgctxt "field:production,pass_quality_sample:"
+msgid "Pass Quality Sample"
+msgstr ""
 
 msgctxt "field:production,production_template:"
 msgid "Production Template"
@@ -1017,9 +1147,21 @@ msgctxt "field:production.template,outputs:"
 msgid "Outputs"
 msgstr "Sortides"
 
+msgctxt "field:production.template,pass_certification:"
+msgid "Pass Certification"
+msgstr ""
+
 msgctxt "field:production.template,pass_feature:"
 msgid "Pass on Feature"
 msgstr "Passar propietats"
+
+msgctxt "field:production.template,pass_quality:"
+msgid "Pass Quality"
+msgstr ""
+
+msgctxt "field:production.template,pass_quality_sample:"
+msgid "Pass Quality Sample"
+msgstr ""
 
 msgctxt "field:production.template,quantity:"
 msgid "Quantity"
@@ -1079,6 +1221,16 @@ msgctxt "field:quality.quantitative.test.line,product:"
 msgid "Product"
 msgstr "Productes"
 
+#, fuzzy
+msgctxt "field:quality.sample,products:"
+msgid "Products"
+msgstr "Productes"
+
+#, fuzzy
+msgctxt "field:quality.sample,reference:"
+msgid "Reference"
+msgstr "Referència"
+
 msgctxt "field:stock.location,material:"
 msgid "Material"
 msgstr "Material"
@@ -1114,6 +1266,19 @@ msgstr "Certificació"
 msgctxt "model:agronomics.container,name:"
 msgid "Container"
 msgstr "Envàs"
+
+msgctxt "model:agronomics.contract,name:"
+msgid "Agronomics Contract"
+msgstr "Contracte"
+
+msgctxt ""
+"model:agronomics.contract-product.price_list.type-product.price_list,name:"
+msgid "Agronomics Contract Product Price List Type Price List"
+msgstr ""
+
+msgctxt "model:agronomics.contract.line,name:"
+msgid "Agronomics Contract Line"
+msgstr "Línia de contracte"
 
 msgctxt "model:agronomics.crop,name:"
 msgid "Crop"
@@ -1171,6 +1336,10 @@ msgctxt "model:agronomics.weighing.center,name:"
 msgid "Weighing Center"
 msgstr "Centre de pesada"
 
+msgctxt "model:ir.action,name:act_agronomics_contract_action"
+msgid "Agronomics Contract"
+msgstr ""
+
 msgctxt "model:ir.action,name:act_certification_tree"
 msgid "Certification"
 msgstr "Certificació"
@@ -1211,6 +1380,10 @@ msgctxt "model:ir.action,name:act_plantation_tree"
 msgid "Plantation"
 msgstr "Plantació"
 
+msgctxt "model:ir.action,name:act_product_price_list_type_form"
+msgid "Product Price List Type"
+msgstr ""
+
 msgctxt "model:ir.action,name:act_product_qualitative_test_lines"
 msgid "Qualitative Lines"
 msgstr "Línies qualitatives"
@@ -1247,6 +1420,11 @@ msgctxt "model:ir.action,name:act_production_template_tree"
 msgid "Production Template"
 msgstr "Plantilla de producció"
 
+#, fuzzy
+msgctxt "model:ir.action,name:act_quality_sample"
+msgid "Samples"
+msgstr "Mostres"
+
 msgctxt "model:ir.action,name:act_stock_location_material"
 msgid "Materials"
 msgstr ""
@@ -1263,6 +1441,22 @@ msgctxt ""
 "model:ir.action,name:wizard_create_cost_price_distribution_from_production"
 msgid "Create Cost Price Distribution"
 msgstr "Crear Distribució de costos"
+
+#, fuzzy
+msgctxt ""
+"model:ir.action.act_window.domain,name:act_agronomics_contract_active"
+msgid "Active"
+msgstr "Actiu"
+
+#, fuzzy
+msgctxt "model:ir.action.act_window.domain,name:act_agronomics_contract_all"
+msgid "All"
+msgstr "Tots"
+
+#, fuzzy
+msgctxt "model:ir.action.act_window.domain,name:act_agronomics_contract_draft"
+msgid "Draft"
+msgstr "Esborrany"
 
 msgctxt "model:ir.action.act_window.domain,name:act_weighing_domain_all"
 msgid "All"
@@ -1288,6 +1482,12 @@ msgid ""
 msgstr ""
 "Els Beneficiares de les collites \"%(crop)s\" i la plantació "
 "\"%(plantation)s\" han de sumar 100."
+
+msgctxt "model:ir.message,text:msg_cant_active_contract"
+msgid ""
+"The contract \"%(contract)s\" cant be activated because the parcel "
+"\"%(parcel)s\" is in another active contract."
+msgstr ""
 
 msgctxt "model:ir.message,text:msg_check_cost_distribution"
 msgid "The production \"%(production)s\" has same products in cost distribution."
@@ -1338,9 +1538,11 @@ msgstr ""
 
 msgctxt "model:ir.message,text:msg_not_assigned_weight"
 msgid ""
-"The weight in \"%(weighing)s\" is not distributed and its not being forced to analysis"
+"The weight in \"%(weighing)s\" is not distributed and its not being forced "
+"to analysis"
 msgstr ""
-"El pes en \"%(weighing)s\" no està totalment distibuit i no s'ha forçat l'anàlisi"
+"El pes en \"%(weighing)s\" no està totalment distibuit i no s'ha forçat "
+"l'anàlisi"
 
 msgctxt "model:ir.message,text:msg_uom_not_fit"
 msgid ""
@@ -1365,6 +1567,26 @@ msgid ""
 msgstr ""
 "El producte \"%(product)s\" no pot tenir més d'una collita degut al seu "
 "tipus agronòmic"
+
+#, fuzzy
+msgctxt "model:ir.model.button,string:agronomics_contract_active_button"
+msgid "Active"
+msgstr "Actiu"
+
+#, fuzzy
+msgctxt "model:ir.model.button,string:agronomics_contract_cancel_button"
+msgid "Cancel"
+msgstr "Cancel·lat"
+
+#, fuzzy
+msgctxt "model:ir.model.button,string:agronomics_contract_done_button"
+msgid "Done"
+msgstr "Realitzat"
+
+#, fuzzy
+msgctxt "model:ir.model.button,string:agronomics_contract_draft_button"
+msgid "Draft"
+msgstr "Esborrany"
 
 msgctxt ""
 "model:ir.model.button,string:production_output_distribution_done_button"
@@ -1395,9 +1617,28 @@ msgctxt "model:ir.model.button,string:weighing_process_button"
 msgid "Process"
 msgstr "Processa"
 
+msgctxt "model:ir.rule.group,name:rule_group_quality_configuration_company"
+msgid "Quality Configuration Company"
+msgstr ""
+
+#, fuzzy
+msgctxt "model:ir.rule.group,name:rule_group_quality_sample"
+msgid "Quality Sample"
+msgstr "Mostra de qualitat"
+
+#, fuzzy
+msgctxt "model:ir.sequence,name:sequence_sample"
+msgid "Sample"
+msgstr "Mostra"
+
 msgctxt "model:ir.sequence,name:sequence_weighing"
 msgid "Weighing"
 msgstr "Pesada"
+
+#, fuzzy
+msgctxt "model:ir.sequence.type,name:sequence_type_sample"
+msgid "Quality Sample"
+msgstr "Mostra de qualitat"
 
 msgctxt "model:ir.sequence.type,name:sequence_type_weighing"
 msgid "Weighing"
@@ -1410,6 +1651,10 @@ msgstr "Plantilla distribució de preus de cost"
 msgctxt "model:ir.ui.menu,name:menu_agronomics"
 msgid "Agronomics"
 msgstr "Agronomics"
+
+msgctxt "model:ir.ui.menu,name:menu_agronomics_contract_list"
+msgid "Agronomics Contract"
+msgstr ""
 
 msgctxt "model:ir.ui.menu,name:menu_certification_list"
 msgid "Certification"
@@ -1455,9 +1700,18 @@ msgctxt "model:ir.ui.menu,name:menu_plantation_list"
 msgid "Plantation"
 msgstr "Plantació"
 
+msgctxt "model:ir.ui.menu,name:menu_product_price_list_type_form"
+msgid "Product Price List Type"
+msgstr ""
+
 msgctxt "model:ir.ui.menu,name:menu_production_template_list"
 msgid "Production Template"
 msgstr "Plantilla de producció"
+
+#, fuzzy
+msgctxt "model:ir.ui.menu,name:menu_quality_sample"
+msgid "Samples"
+msgstr "Mostres"
 
 msgctxt "model:ir.ui.menu,name:menu_weighing_center_list"
 msgid "Weighing Center"
@@ -1471,6 +1725,10 @@ msgctxt "model:ir.ui.menu,name:menuitem_stock_location_material"
 msgid "Materials"
 msgstr ""
 
+msgctxt "model:product.price_list.type,name:"
+msgid "Product Price List Type"
+msgstr ""
+
 msgctxt "model:product.product-agronomics.crop,name:"
 msgid "Product - Crop"
 msgstr "Producte - Collita"
@@ -1482,6 +1740,10 @@ msgstr "Producte - DO"
 msgctxt "model:product.product-agronomics.ecological,name:"
 msgid "Product - Ecological"
 msgstr "Producte - Ecològic"
+
+msgctxt "model:product.product-quality.sample,name:"
+msgid "Product - Quality Sample"
+msgstr ""
 
 msgctxt "model:product.variety,name:"
 msgid "Product Variety"
@@ -1524,53 +1786,62 @@ msgctxt "model:production.template.outputs-product.template,name:"
 msgid "Production Template Inputs- Product Template"
 msgstr ""
 
+#, fuzzy
 msgctxt "model:quality.proof,name:wine_alcohol_content"
 msgid "Grau alcohol"
-msgstr ""
+msgstr "Grau alcohol"
 
+#, fuzzy
 msgctxt "model:quality.proof,name:wine_botrytis"
 msgid "Botrytis"
-msgstr ""
+msgstr "Botrytis"
 
 msgctxt "model:quality.proof,name:wine_clogging"
 msgid "Colmatacio"
 msgstr ""
 
+#, fuzzy
 msgctxt "model:quality.proof,name:wine_color_intensity"
 msgid "Intensitat colorant"
-msgstr ""
+msgstr "Intensitat colorant"
 
+#, fuzzy
 msgctxt "model:quality.proof,name:wine_density"
 msgid "Densitat"
-msgstr ""
+msgstr "Densitat"
 
+#, fuzzy
 msgctxt "model:quality.proof,name:wine_free_sulphur"
 msgid "Sulfuros lliure"
-msgstr ""
+msgstr "Sulfuros lliure"
 
+#, fuzzy
 msgctxt "model:quality.proof,name:wine_glucose_fructose"
 msgid "Glucosa/fructosa"
-msgstr ""
+msgstr "Glucosa/fructosa"
 
 msgctxt "model:quality.proof,name:wine_lactic_acid"
 msgid "Àcil lactica"
 msgstr ""
 
+#, fuzzy
 msgctxt "model:quality.proof,name:wine_likely_alcohol_content"
 msgid "Grau esperat"
-msgstr ""
+msgstr "Grau esperat"
 
+#, fuzzy
 msgctxt "model:quality.proof,name:wine_malic_acid"
 msgid "Àcid màlic"
-msgstr ""
+msgstr "Àcid màlic"
 
 msgctxt "model:quality.proof,name:wine_notes"
 msgid "Observacions"
 msgstr ""
 
+#, fuzzy
 msgctxt "model:quality.proof,name:wine_observing_phase"
 msgid "Fase visual"
-msgstr ""
+msgstr "Fase visual"
 
 msgctxt "model:quality.proof,name:wine_overall_impression"
 msgid "Impresió general"
@@ -1580,93 +1851,108 @@ msgctxt "model:quality.proof,name:wine_ph"
 msgid "PH"
 msgstr ""
 
+#, fuzzy
 msgctxt "model:quality.proof,name:wine_protein_stability"
 msgid "Estabilitat proteica"
-msgstr ""
+msgstr "Estabilitat proteica"
 
 msgctxt "model:quality.proof,name:wine_smelling_phase"
 msgid "Fase olfactiva"
 msgstr ""
 
+#, fuzzy
 msgctxt "model:quality.proof,name:wine_tartaric_acidity"
 msgid "Acidesa tartàric"
-msgstr ""
+msgstr "Acidesa tartàric"
 
+#, fuzzy
 msgctxt "model:quality.proof,name:wine_tartaric_stability"
 msgid "Estabilitat tartarica"
-msgstr ""
+msgstr "Estabilitat tartarica"
 
 msgctxt "model:quality.proof,name:wine_tasting_phase"
 msgid "Fase gustativa"
 msgstr ""
 
+#, fuzzy
 msgctxt "model:quality.proof,name:wine_temperature"
 msgid "Temperatura"
-msgstr ""
+msgstr "Temperatura"
 
+#, fuzzy
 msgctxt "model:quality.proof,name:wine_tone"
 msgid "Tonalitat"
-msgstr ""
+msgstr "Tonalitat"
 
 msgctxt "model:quality.proof,name:wine_total_sulphur"
 msgid "Sulfurós Total"
 msgstr ""
 
+#, fuzzy
 msgctxt "model:quality.proof,name:wine_turbidity"
 msgid "Terbolesa"
-msgstr ""
+msgstr "Terbolesa"
 
 msgctxt "model:quality.proof,name:wine_volatility"
 msgid "Volatil"
 msgstr ""
 
+#, fuzzy
 msgctxt "model:quality.proof.method,name:wine_alcohol_content_method"
 msgid "Grau alcohol"
-msgstr ""
+msgstr "Grau alcohol"
 
+#, fuzzy
 msgctxt "model:quality.proof.method,name:wine_botrytis_method"
 msgid "Botrytis"
-msgstr ""
+msgstr "Botrytis"
 
 msgctxt "model:quality.proof.method,name:wine_clogging_method"
 msgid "Colmatacio"
 msgstr ""
 
+#, fuzzy
 msgctxt "model:quality.proof.method,name:wine_color_intensity_method"
 msgid "Intensitat colorant"
-msgstr ""
+msgstr "Intensitat colorant"
 
+#, fuzzy
 msgctxt "model:quality.proof.method,name:wine_density_method"
 msgid "Densitat"
-msgstr ""
+msgstr "Densitat"
 
+#, fuzzy
 msgctxt "model:quality.proof.method,name:wine_free_sulphur_method"
 msgid "Sulfuros lliure"
-msgstr ""
+msgstr "Sulfuros lliure"
 
+#, fuzzy
 msgctxt "model:quality.proof.method,name:wine_glucose_fructose_method"
 msgid "Glucosa/fructosa"
-msgstr ""
+msgstr "Glucosa/fructosa"
 
 msgctxt "model:quality.proof.method,name:wine_lactic_acid_method"
 msgid "Àcil lactica"
 msgstr ""
 
+#, fuzzy
 msgctxt "model:quality.proof.method,name:wine_likely_alcohol_content_method"
 msgid "Grau esperat"
-msgstr ""
+msgstr "Grau esperat"
 
+#, fuzzy
 msgctxt "model:quality.proof.method,name:wine_malic_acid_method"
 msgid "Àcid màlic"
-msgstr ""
+msgstr "Àcid màlic"
 
 msgctxt "model:quality.proof.method,name:wine_notes_method"
 msgid "Observacions"
 msgstr ""
 
+#, fuzzy
 msgctxt "model:quality.proof.method,name:wine_observing_phase_method"
 msgid "Fase visual"
-msgstr ""
+msgstr "Fase visual"
 
 msgctxt "model:quality.proof.method,name:wine_overall_impression_method"
 msgid "Impresió general"
@@ -1676,41 +1962,47 @@ msgctxt "model:quality.proof.method,name:wine_ph_method"
 msgid "PH"
 msgstr ""
 
+#, fuzzy
 msgctxt "model:quality.proof.method,name:wine_protein_stability_method"
 msgid "Estabilitat proteica"
-msgstr ""
+msgstr "Estabilitat proteica"
 
 msgctxt "model:quality.proof.method,name:wine_smelling_phase_method"
 msgid "Fase olfactiva"
 msgstr ""
 
+#, fuzzy
 msgctxt "model:quality.proof.method,name:wine_tartaric_acidity_method"
 msgid "Acidesa tartàric"
-msgstr ""
+msgstr "Acidesa tartàric"
 
+#, fuzzy
 msgctxt "model:quality.proof.method,name:wine_tartaric_stability_method"
 msgid "Estabilitat tartarica"
-msgstr ""
+msgstr "Estabilitat tartarica"
 
 msgctxt "model:quality.proof.method,name:wine_tasting_phase_method"
 msgid "Fase gustativa"
 msgstr ""
 
+#, fuzzy
 msgctxt "model:quality.proof.method,name:wine_temperature_method"
 msgid "Temperatura"
-msgstr ""
+msgstr "Temperatura"
 
+#, fuzzy
 msgctxt "model:quality.proof.method,name:wine_tone_method"
 msgid "Tonalitat"
-msgstr ""
+msgstr "Tonalitat"
 
 msgctxt "model:quality.proof.method,name:wine_total_sulphur_method"
 msgid "Sulfurós Total"
 msgstr ""
 
+#, fuzzy
 msgctxt "model:quality.proof.method,name:wine_turbidity_method"
 msgid "Terbolesa"
-msgstr ""
+msgstr "Terbolesa"
 
 msgctxt "model:quality.proof.method,name:wine_volatility_method"
 msgid "Volatil"
@@ -1724,9 +2016,29 @@ msgctxt "model:res.group,name:group_agronomics_admin"
 msgid "Agronomics Administration"
 msgstr "Administració Agronomics"
 
+msgctxt "model:res.group,name:group_quality_control_sample"
+msgid "Quality Samples"
+msgstr ""
+
 msgctxt "model:stock.location.material,name:"
 msgid "Location Material"
 msgstr "Material Ubicació"
+
+msgctxt "selection:agronomics.contract,state:"
+msgid "Active"
+msgstr "Actiu"
+
+msgctxt "selection:agronomics.contract,state:"
+msgid "Cancelled"
+msgstr "Cancel·lat"
+
+msgctxt "selection:agronomics.contract,state:"
+msgid "Done"
+msgstr "Realitzat"
+
+msgctxt "selection:agronomics.contract,state:"
+msgid "Draft"
+msgstr "Esborrany"
 
 msgctxt "selection:agronomics.weighing,state:"
 msgid "Cancelled"

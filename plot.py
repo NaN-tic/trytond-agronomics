@@ -2,9 +2,7 @@
 # this repository contains the full copyright notices and license terms.
 from trytond.model import fields, ModelSQL, ModelView
 from trytond.pool import Pool
-from trytond.i18n import gettext
-from trytond.exceptions import UserError
-from trytond.transaction import Transaction
+
 
 class Enclosure(ModelSQL, ModelView):
     "Enclosure"
@@ -165,9 +163,7 @@ class Beneficiaries(ModelSQL, ModelView):
 
     @classmethod
     def __register__(cls, module_name):
-        cursor = Transaction().connection.cursor()
         table = cls.__table_handler__(module_name)
-        sql_table = cls.__table__()
 
         # Migration from #047773
         if table.column_exist('percent'):

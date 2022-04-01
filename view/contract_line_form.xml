@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!-- This file is part of Tryton.  The COPYRIGHT file at the top level of
+this repository contains the full copyright notices and license terms. -->
+<form>
+    <label name="parcel"/>
+    <field name="parcel"/>
+    <label name="contract"/>
+    <field name="contract"/>
+    <label name="product"/>
+    <field name="product"/>
+    <label name="unit"/>
+    <field name="unit"/>
+    <label name="agreed_quantity"/>
+    <field name="agreed_quantity"/>
+    <label name="purchased_quantity"/>
+    <field name="purchased_quantity"/>
+    <label name="remaining_quantity"/>
+    <field name="remaining_quantity"/>
+</form>

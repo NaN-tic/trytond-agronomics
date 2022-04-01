@@ -39,6 +39,8 @@ this repository contains the full copyright notices and license terms. -->
     <record model="ir.message" id="msg_not_assigned_weight">
         <field name="text">The weight in "%(weighing)s" is not distributed and its not being forced to analysis</field>
     </record>
+    <record model="ir.message" id="msg_cant_active_contract">
+        <field name="text">The contract "%(contract)s" cant be activated because the parcel "%(parcel)s" is in another active contract.</field>
+    </record>
   </data>
-
 </tryton>

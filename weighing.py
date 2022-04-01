@@ -6,8 +6,6 @@ from trytond.pool import Pool
 from trytond.i18n import gettext
 from trytond.exceptions import UserError
 from trytond.transaction import Transaction
-from trytond.wizard import (Wizard, StateView, StateTransition, StateAction,
-    Button)
 from datetime import datetime
 
 class WeighingCenter(ModelSQL, ModelView):
@@ -40,7 +38,7 @@ class Weighing(Workflow, ModelSQL, ModelView):
             'required': True
         }, depends=['state'])
 
-    purchase_contract = fields.Many2One('purchase.contract',
+    purchase_contract = fields.Many2One('agronomics.contract',
         'Purchase Contract', states={
             'readonly': Eval('state').in_(READONLY),
             'required': True
@@ -244,6 +242,9 @@ class Weighing(Workflow, ModelSQL, ModelView):
 
     @fields.depends('plantations')
     def on_change_with_purchase_contract(self):
+        pool = Pool()
+        ContractLine = pool.get('agronomics.contract.line')
+
         parcel = self.get_parcel()
         if not parcel:
             return
@@ -251,12 +252,15 @@ class Weighing(Workflow, ModelSQL, ModelView):
         producer = parcel.producer and parcel.producer.id
         if not producer:
             return
-        Contract = Pool().get('purchase.contract')
-        contracts = Contract.search([('party', '=', producer)], limit=1)
-        if not contracts:
+        contract_lines = ContractLine.search([
+            ('parcel', '=', parcel),
+            ('contract.producer', '=', producer),
+            ('contract.state', '=', 'active'),
+        ], limit=1)
+        if not contract_lines:
             return
 
-        contract, = contracts
+        contract = contract_lines[0].contract
         return contract and contract.id
 
     @fields.depends('weight', 'tara')
