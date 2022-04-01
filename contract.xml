@@ -1,0 +1,121 @@
+<?xml version="1.0"?>
+<!-- This file is part of Tryton.  The COPYRIGHT file at the top level of
+this repository contains the full copyright notices and license terms. -->
+<tryton>
+    <data>
+        <!-- agronomics.contract -->
+        <record model="ir.ui.view" id="agronomics_contract_view_form">
+            <field name="model">agronomics.contract</field>
+            <field name="type">form</field>
+            <field name="name">contract_form</field>
+        </record>
+        <record model="ir.ui.view" id="agronomics_contract_view_tree">
+            <field name="model">agronomics.contract</field>
+            <field name="type">tree</field>
+            <field name="name">contract_tree</field>
+        </record>
+
+        <record model="ir.action.act_window" id="act_agronomics_contract_action">
+            <field name="name">Agronomics Contract</field>
+            <field name="res_model">agronomics.contract</field>
+        </record>
+
+        <record model="ir.action.act_window.view" id="act_agronomics_contract_form_view">
+            <field name="sequence" eval="10"/>
+            <field name="view" ref="agronomics_contract_view_tree"/>
+            <field name="act_window" ref="act_agronomics_contract_action"/>
+        </record>
+        <record model="ir.action.act_window.view" id="act_agronomics_contract_tree_view">
+            <field name="sequence" eval="20"/>
+            <field name="view" ref="agronomics_contract_view_form"/>
+            <field name="act_window" ref="act_agronomics_contract_action"/>
+        </record>
+
+        <menuitem parent="menu_agronomics" sequence="10"
+            action="act_agronomics_contract_action" id="menu_agronomics_contract_list"/>
+
+        <record model="ir.action.act_window.domain" id="act_agronomics_contract_draft">
+          <field name="name">Draft</field>
+          <field name="sequence" eval="10"/>
+          <field name="domain" eval="[('state', '=', 'draft')]" pyson="1"/>
+          <field name="act_window" ref="act_agronomics_contract_action"/>
+        </record>
+        <record model="ir.action.act_window.domain" id="act_agronomics_contract_active">
+          <field name="name">Active</field>
+          <field name="sequence" eval="20"/>
+          <field name="domain" eval="[('state', '=', 'active')]" pyson="1"/>
+          <field name="act_window" ref="act_agronomics_contract_action"/>
+        </record>
+        <record model="ir.action.act_window.domain" id="act_agronomics_contract_all">
+          <field name="name">All</field>
+          <field name="sequence" eval="30"/>
+          <field name="domain"/>
+          <field name="act_window" ref="act_agronomics_contract_action"/>
+        </record>
+
+        <!-- agronomics.contract.line -->
+        <record model="ir.ui.view" id="agronomics_contract_line_view_form">
+            <field name="model">agronomics.contract.line</field>
+            <field name="type">form</field>
+            <field name="name">contract_line_form</field>
+        </record>
+        <record model="ir.ui.view" id="agronomics_contract_line_view_tree">
+            <field name="model">agronomics.contract.line</field>
+            <field name="type">tree</field>
+            <field name="name">contract_line_tree</field>
+        </record>
+
+        <!-- agronomics.contract-product.price_list.type-product.price_list -->
+        <record model="ir.ui.view" id="agronomics_contract_product_price_list_type_product_price_list_view_form">
+            <field name="model">agronomics.contract-product.price_list.type-product.price_list</field>
+            <field name="type">form</field>
+            <field name="name">contract_price_list_price_list_type_form</field>
+        </record>
+        <record model="ir.ui.view" id="agronomics_contract_product_price_list_type_product_price_list_view_tree">
+            <field name="model">agronomics.contract-product.price_list.type-product.price_list</field>
+            <field name="type">tree</field>
+            <field name="name">contract_price_list_price_list_type_tree</field>
+        </record>
+
+        <!-- ir.model.button -->
+        <record model="ir.model.button" id="agronomics_contract_cancel_button">
+            <field name="name">cancel</field>
+            <field name="string">Cancel</field>
+            <field name="model" search="[('model', '=', 'agronomics.contract')]"/>
+        </record>
+        <record model="ir.model.button-res.group" id="agronomics_contract_cancel_button_group_agronomics">
+            <field name="button" ref="agronomics_contract_cancel_button"/>
+            <field name="group" ref="group_agronomics"/>
+        </record>
+
+        <record model="ir.model.button" id="agronomics_contract_active_button">
+            <field name="name">active</field>
+            <field name="string">Active</field>
+            <field name="model" search="[('model', '=', 'agronomics.contract')]"/>
+        </record>
+        <record model="ir.model.button-res.group" id="agronomics_contract_active_button_group_agronomics">
+            <field name="button" ref="agronomics_contract_active_button"/>
+            <field name="group" ref="group_agronomics"/>
+        </record>
+
+        <record model="ir.model.button" id="agronomics_contract_draft_button">
+            <field name="name">draft</field>
+            <field name="string">Draft</field>
+            <field name="model" search="[('model', '=', 'agronomics.contract')]"/>
+        </record>
+        <record model="ir.model.button-res.group" id="agronomics_contract_draft_button_group_agronomics">
+            <field name="button" ref="agronomics_contract_draft_button"/>
+            <field name="group" ref="group_agronomics"/>
+        </record>
+
+        <record model="ir.model.button" id="agronomics_contract_done_button">
+            <field name="name">done</field>
+            <field name="string">Done</field>
+            <field name="model" search="[('model', '=', 'agronomics.contract')]"/>
+        </record>
+        <record model="ir.model.button-res.group" id="purchase_contract_done_button_group_purchase">
+            <field name="button" ref="agronomics_contract_done_button"/>
+            <field name="group" ref="group_agronomics"/>
+        </record>
+    </data>
+</tryton>
