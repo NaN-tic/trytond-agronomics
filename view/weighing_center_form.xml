@@ -3,4 +3,6 @@
   <field name="name"/>
   <label name="weighing_sequence"/>
   <field name="weighing_sequence"/>
+  <label name="warehouse"/>
+  <field name="warehouse"/>
 </form>

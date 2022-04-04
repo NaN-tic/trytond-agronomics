@@ -29,6 +29,8 @@
   <field name="product_created"/>
   <label name="quality_test"/>
   <field name="quality_test"/>
+  <label name="inventory_move"/>
+  <field name="inventory_move"/>
 
   <notebook>
     <page name="plantations">
@@ -37,6 +39,7 @@
     </page>
     <page name="beneficiaries">
       <field name="beneficiaries" colspan="4"/>
+      <field name="beneficiaries_invoices" colspan="4"/>
     </page>
     <page string="Parcel Distribution" id="parcel_distribution" >
       <field name="parcels" colspan="4"/>

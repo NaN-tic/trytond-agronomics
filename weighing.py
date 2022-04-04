@@ -17,7 +17,8 @@ class WeighingCenter(ModelSQL, ModelView):
         domain=[
             ('sequence_type', '=', Id('agronomics', 'sequence_type_weighing'))
         ])
-
+    warehouse = fields.Many2One('stock.location', "Warehouse",
+        domain=[('type', '=', 'warehouse')])
 
 READONLY = ['processing', 'distributed', 'in_analysis', 'done', 'cancelled']
 READONLY2 = ['draft', 'distributed', 'in_analysis', 'done', 'cancelled']
@@ -86,6 +87,9 @@ class Weighing(Workflow, ModelSQL, ModelView):
             'readonly': Eval('state').in_(READONLY2),
             'required': Eval('state') == 'in_analysis',
             })
+    beneficiaries_invoices = fields.Many2Many(
+        'agronomics.weighing-account.invoice', 'weighing', 'invoice',
+        "Beneficiaries Invoices", readonly=True)
     plantations = fields.One2Many('agronomics.weighing-agronomics.plantation',
         'weighing', 'plantations', states={
             'readonly': Eval('state').in_(READONLY),
@@ -113,6 +117,9 @@ class Weighing(Workflow, ModelSQL, ModelView):
     not_assigned_weight = fields.Function(
         fields.Float('Not Assigned Weight'), 'get_not_assigned_weight')
     forced_analysis = fields.Boolean('Forced Analysis', readonly=True)
+    inventory_move = fields.Many2One('stock.move', "Inventory Move",
+        readonly=True)
+
 
     @classmethod
     def __setup__(cls):
@@ -273,10 +280,22 @@ class Weighing(Workflow, ModelSQL, ModelView):
         pool = Pool()
         Product = pool.get('product.product')
         Quality = pool.get('quality.test')
-        Variety = Pool().get('product.variety')
+        Variety = pool.get('product.variety')
+        Move = pool.get('stock.move')
+        Location = pool.get('stock.location')
+
+        supplier_location = Location.search([('code', '=', 'SUP')], limit=1)
+        if not supplier_location:
+            #Supplier location not found
+            raise UserError()
+
         default_product_values = Product.default_get(Product._fields.keys(),
             with_rec_name=False)
         product = Product(**default_product_values)
+        default_move_values = Move.default_get(Move._fields.keys(),
+                with_rec_name=False)
+        move = Move(**default_move_values)
+
         for weighing in weighings:
             if weighing.not_assigned_weight and not weighing.forced_analysis:
                 raise UserError(gettext('agronomics.msg_not_assigned_weight',
@@ -292,6 +311,20 @@ class Weighing(Workflow, ModelSQL, ModelView):
                 product.varieties = [new_variety]
             product.vintages = [weighing.crop.id]
             weighing.product_created = product
+
+            if not weighing.weighing_center:
+                raise UserError()
+
+            # Create Move
+            move.from_location = supplier_location[0]
+            move.to_location = weighing.weighing_center.warehouse.input_location
+            move.product = weighing.product_created
+            move.uom = weighing.product_created.template.default_uom
+            move.unit_price = weighing.product_created.template.list_price
+            # TODO: if we dont have any quantity use 0 or raise an error?
+            move.quantity = weighing.netweight or 0
+
+            weighing.inventory_move = move
 
         cls.save(weighings)
         tests = []
@@ -392,10 +425,114 @@ class Weighing(Workflow, ModelSQL, ModelView):
     def draft(cls, weighings):
         pass
 
+    def get_invoice(self, party):
+        pool = Pool()
+        Journal = pool.get('account.journal')
+        Invoice = pool.get('account.invoice')
+        Company = pool.get('company.company')
+        context = Transaction().context
+
+        invoices = Invoice.search([
+            ('party', '=', party),
+            ('state', '=', 'draft'),
+            ('type', '=', 'in')])
+        if invoices:
+            invoice = invoices[0]
+        if not invoices:
+            journals = Journal.search([
+                ('type', '=', 'expense'),
+                ], limit=1)
+            if journals:
+                journal, = journals
+            else:
+                journal = None
+
+            invoice = Invoice()
+            invoice.company = Company(context['company'])
+            invoice.type = 'in'
+            invoice.journal = journal
+            invoice.party = party
+            invoice.invoice_address = party.address_get(type='invoice')
+            invoice.currency = Company(context['company']).currency
+            invoice.account = party.account_payable_used
+            invoice.payment_term = party.supplier_payment_term
+        return invoice
+
     @classmethod
     @Workflow.transition('done')
     def done(cls, weighings):
-        pass
+        pool = Pool()
+        Invoice = pool.get('account.invoice')
+        InvoiceLine = pool.get('account.invoice.line')
+        Product = pool.get('product.product')
+        Company = pool.get('company.company')
+        context = Transaction().context
+        ContractProductPriceListTypePriceList = pool.get(
+            'agronomics.contract-product.price_list.type-product.price_list')
+        WeighingInvoice = pool.get('agronomics.weighing-account.invoice')
+        Move = pool.get('stock.move')
+
+        default_invoice_line_values = InvoiceLine.default_get(
+            InvoiceLine._fields.keys(), with_rec_name=False)
+        invoice_line = InvoiceLine(**default_invoice_line_values)
+
+        to_save = []
+        for weighing in weighings:
+            if weighing.beneficiaries:
+                for beneficiary in weighing.beneficiaries:
+                    price_list = ContractProductPriceListTypePriceList.search([
+                        ('contract', '=', weighing.purchase_contract),
+                        ('price_list_type', '=',
+                            beneficiary.product_price_list_type),
+                    ])
+
+                    invoice_line = InvoiceLine()
+                    invoice_line.type = 'line'
+                    invoice_line.invoice_type = 'in'
+                    invoice_line.party = beneficiary.party
+                    invoice_line.currency = (
+                        Company(context['company']).currency)
+                    invoice_line.company = Company(context['company'])
+                    invoice_line.description = ''
+                    invoice_line.quantity = weighing.netweight or 0
+                    invoice_line.unit = (
+                        weighing.product_created.template.default_uom)
+                    invoice_line.product = weighing.product_created
+
+                    unit_price = Product.get_purchase_price(
+                        [weighing.product_created],
+                        abs(weighing.netweight or 0))[
+                            weighing.product_created.id]
+                    if price_list:
+                        if price_list[0].price_list:
+                            price_list = price_list[0].price_list
+                        unit_price = price_list.compute(beneficiary.party,
+                            weighing.product_created, unit_price,
+                            weighing.netweight or 0,
+                            weighing.product_created.template.default_uom)
+                        unit_price = unit_price
+                    invoice_line.unit_price = unit_price
+
+                    #invoice_line.taxes =
+                    invoice_line.account = (
+                        weighing.product_created.account_expense_used)
+
+                    invoice = weighing.get_invoice(beneficiary.party)
+                    if not hasattr(invoice, 'lines'):
+                        invoice.lines = []
+                    invoice.lines += (invoice_line,)
+                    Invoice.save([invoice])
+                    weighing_invoice = WeighingInvoice(
+                        weighing=weighing,
+                        invoice=invoice
+                    )
+                    to_save.append(weighing_invoice)
+            # Comple stock moves
+            if weighing.inventory_move:
+                #with Transaction().set_context(_skip_warnings=True):
+                Move.do([weighing.inventory_move])
+
+        WeighingInvoice.save(to_save)
 
     @classmethod
     @Workflow.transition('processing')
@@ -448,9 +585,11 @@ class Weighing(Workflow, ModelSQL, ModelView):
         else:
             default = default.copy()
         default.setdefault('beneficiaries', None)
+        default.setdefault('beneficiaries_invoices', None)
         default.setdefault('product_created', None)
         default.setdefault('number', None)
         default.setdefault('parcels', None)
+        default.setdefault('inventory_move', None)
         return super().copy(weighings, default=default)
 
 
@@ -461,6 +600,14 @@ class WeighingDo(ModelSQL):
     weighing = fields.Many2One('agronomics.weighing', 'Weighing')
     do = fields.Many2One('agronomics.denomination_of_origin',
         'Denomination Origin')
+
+
+class WeighingInvoice(ModelSQL):
+    "Weighing - Invoice"
+    __name__ = 'agronomics.weighing-account.invoice'
+
+    weighing = fields.Many2One('agronomics.weighing', "Weighing")
+    invoice = fields.Many2One('account.invoice', "Invoice")
 
 
 class WeighingPlantation(sequence_ordered(), ModelSQL, ModelView):
