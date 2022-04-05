@@ -155,7 +155,7 @@ class AgronomicsContractLine(ModelSQL, ModelView):
         domain=[
             ('producer', '=', Eval('_parent_contract.producer')),
             ('crop', '=', Eval('_parent_contract.crop'))
-        ])
+        ], depends=['contract'])
     product = fields.Function(
         fields.Many2One('product.template', "Product"),
         'on_change_with_product')
