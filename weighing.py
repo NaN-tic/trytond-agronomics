@@ -7,6 +7,7 @@ from trytond.i18n import gettext
 from trytond.exceptions import UserError
 from trytond.transaction import Transaction
 from datetime import datetime
+from decimal import Decimal
 
 class WeighingCenter(ModelSQL, ModelView):
     """ Weighing Center """
@@ -19,6 +20,7 @@ class WeighingCenter(ModelSQL, ModelView):
         ])
     warehouse = fields.Many2One('stock.location', "Warehouse",
         domain=[('type', '=', 'warehouse')])
+    to_location = fields.Many2One('stock.location', "To Location")
 
 READONLY = ['processing', 'distributed', 'in_analysis', 'done', 'cancelled']
 READONLY2 = ['draft', 'distributed', 'in_analysis', 'done', 'cancelled']
@@ -87,8 +89,8 @@ class Weighing(Workflow, ModelSQL, ModelView):
             'readonly': Eval('state').in_(READONLY2),
             'required': Eval('state') == 'in_analysis',
             })
-    beneficiaries_invoices = fields.Many2Many(
-        'agronomics.weighing-account.invoice', 'weighing', 'invoice',
+    beneficiaries_invoices_line = fields.Many2Many(
+        'agronomics.weighing-account.invoice.line', 'weighing', 'invoice_line',
         "Beneficiaries Invoices", readonly=True)
     plantations = fields.One2Many('agronomics.weighing-agronomics.plantation',
         'weighing', 'plantations', states={
@@ -296,6 +298,7 @@ class Weighing(Workflow, ModelSQL, ModelView):
                 with_rec_name=False)
         move = Move(**default_move_values)
 
+        to_done = []
         for weighing in weighings:
             if weighing.not_assigned_weight and not weighing.forced_analysis:
                 raise UserError(gettext('agronomics.msg_not_assigned_weight',
@@ -317,7 +320,8 @@ class Weighing(Workflow, ModelSQL, ModelView):
 
             # Create Move
             move.from_location = supplier_location[0]
-            move.to_location = weighing.weighing_center.warehouse.input_location
+            #TODO: cehck if we have to_location
+            move.to_location = weighing.weighing_center.to_location
             move.product = weighing.product_created
             move.uom = weighing.product_created.template.default_uom
             move.unit_price = weighing.product_created.template.list_price
@@ -325,8 +329,11 @@ class Weighing(Workflow, ModelSQL, ModelView):
             move.quantity = weighing.netweight or 0
 
             weighing.inventory_move = move
+            to_done.append(move)
 
         cls.save(weighings)
+        with Transaction().set_context(_skip_warnings=True):
+            Move.do(to_done)
         tests = []
         for weighing in weighings:
             tests.append(weighing.create_quality_test())
@@ -462,15 +469,17 @@ class Weighing(Workflow, ModelSQL, ModelView):
     @Workflow.transition('done')
     def done(cls, weighings):
         pool = Pool()
-        Invoice = pool.get('account.invoice')
         InvoiceLine = pool.get('account.invoice.line')
         Product = pool.get('product.product')
         Company = pool.get('company.company')
         context = Transaction().context
         ContractProductPriceListTypePriceList = pool.get(
             'agronomics.contract-product.price_list.type-product.price_list')
-        WeighingInvoice = pool.get('agronomics.weighing-account.invoice')
-        Move = pool.get('stock.move')
+        WeighingInvoiceLine = pool.get(
+            'agronomics.weighing-account.invoice.line')
+        RecomputeCostPrice = pool.get('product.recompute_cost_price',
+            type='wizard')
+
 
         default_invoice_line_values = InvoiceLine.default_get(
             InvoiceLine._fields.keys(), with_rec_name=False)
@@ -478,6 +487,7 @@ class Weighing(Workflow, ModelSQL, ModelView):
 
         to_save = []
         for weighing in weighings:
+            cost_price = Decimal(0)
             if weighing.beneficiaries:
                 for beneficiary in weighing.beneficiaries:
                     price_list = ContractProductPriceListTypePriceList.search([
@@ -512,27 +522,30 @@ class Weighing(Workflow, ModelSQL, ModelView):
                             weighing.product_created.template.default_uom)
                         unit_price = unit_price
                     invoice_line.unit_price = unit_price
-
+                    cost_price += unit_price
                     #invoice_line.taxes =
                     invoice_line.account = (
                         weighing.product_created.account_expense_used)
 
-                    invoice = weighing.get_invoice(beneficiary.party)
-                    if not hasattr(invoice, 'lines'):
-                        invoice.lines = []
-                    invoice.lines += (invoice_line,)
-                    Invoice.save([invoice])
-                    weighing_invoice = WeighingInvoice(
+                    weighing_invoice = WeighingInvoiceLine(
                         weighing=weighing,
-                        invoice=invoice
+                        invoice_line=invoice_line
                     )
                     to_save.append(weighing_invoice)
-            # Comple stock moves
-            if weighing.inventory_move:
-                #with Transaction().set_context(_skip_warnings=True):
-                Move.do([weighing.inventory_move])
 
-        WeighingInvoice.save(to_save)
+            weighing.product_created.cost_price = cost_price
+            Product.save([weighing.product_created])
+
+            session_id, _, _ = RecomputeCostPrice.create()
+            recompute_cost_price = RecomputeCostPrice(session_id)
+            recompute_cost_price.model = Product
+            recompute_cost_price.records = [weighing.product_created]
+            default_values = recompute_cost_price.default_start({})
+            recompute_cost_price.start.from_ = default_values['from_']
+            recompute_cost_price.transition_recompute()
+
+        WeighingInvoiceLine.save(to_save)
+
 
     @classmethod
     @Workflow.transition('processing')
@@ -585,7 +598,7 @@ class Weighing(Workflow, ModelSQL, ModelView):
         else:
             default = default.copy()
         default.setdefault('beneficiaries', None)
-        default.setdefault('beneficiaries_invoices', None)
+        default.setdefault('beneficiaries_invoices_line', None)
         default.setdefault('product_created', None)
         default.setdefault('number', None)
         default.setdefault('parcels', None)
@@ -604,10 +617,10 @@ class WeighingDo(ModelSQL):
 
 class WeighingInvoice(ModelSQL):
     "Weighing - Invoice"
-    __name__ = 'agronomics.weighing-account.invoice'
+    __name__ = 'agronomics.weighing-account.invoice.line'
 
     weighing = fields.Many2One('agronomics.weighing', "Weighing")
-    invoice = fields.Many2One('account.invoice', "Invoice")
+    invoice_line = fields.Many2One('account.invoice.line', "Invoice Line")
 
 
 class WeighingPlantation(sequence_ordered(), ModelSQL, ModelView):
