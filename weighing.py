@@ -479,13 +479,15 @@ class Weighing(Workflow, ModelSQL, ModelView):
             'agronomics.weighing-account.invoice.line')
         RecomputeCostPrice = pool.get('product.recompute_cost_price',
             type='wizard')
-
+        Move = pool.get('stock.move')
 
         default_invoice_line_values = InvoiceLine.default_get(
             InvoiceLine._fields.keys(), with_rec_name=False)
         invoice_line = InvoiceLine(**default_invoice_line_values)
 
         to_save = []
+        to_save_moves = []
+        to_recompute_products = []
         for weighing in weighings:
             cost_price = Decimal(0)
             if weighing.beneficiaries:
@@ -533,7 +535,11 @@ class Weighing(Workflow, ModelSQL, ModelView):
                     )
                     to_save.append(weighing_invoice)
 
+            weighing.inventory_move.unit_price = cost_price
+            weighing.inventory_move.unit_price_updated = True
             weighing.product_created.cost_price = cost_price
+            to_save_moves.append(weighing.inventory_move)
+            to_recompute_products.append(weighing.product_created)
             Product.save([weighing.product_created])
 
             session_id, _, _ = RecomputeCostPrice.create()
@@ -545,7 +551,7 @@ class Weighing(Workflow, ModelSQL, ModelView):
             recompute_cost_price.transition_recompute()
 
         WeighingInvoiceLine.save(to_save)
-
+        Move.save(to_save_moves)
 
     @classmethod
     @Workflow.transition('processing')
