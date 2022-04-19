@@ -320,12 +320,14 @@ class Weighing(Workflow, ModelSQL, ModelView):
 
             # Create Move
             move.from_location = supplier_location[0]
-            #TODO: cehck if we have to_location
+            if not weighing.weighing_center.to_location:
+                raise UserError(
+                    gettext('agronomics.msg_location_no_configured',
+                    center=weighing.weighing_center.name))
             move.to_location = weighing.weighing_center.to_location
             move.product = weighing.product_created
             move.uom = weighing.product_created.template.default_uom
             move.unit_price = weighing.product_created.template.list_price
-            # TODO: if we dont have any quantity use 0 or raise an error?
             move.quantity = weighing.netweight or 0
 
             weighing.inventory_move = move
@@ -432,39 +434,6 @@ class Weighing(Workflow, ModelSQL, ModelView):
     def draft(cls, weighings):
         pass
 
-    def get_invoice(self, party):
-        pool = Pool()
-        Journal = pool.get('account.journal')
-        Invoice = pool.get('account.invoice')
-        Company = pool.get('company.company')
-        context = Transaction().context
-
-        invoices = Invoice.search([
-            ('party', '=', party),
-            ('state', '=', 'draft'),
-            ('type', '=', 'in')])
-        if invoices:
-            invoice = invoices[0]
-        if not invoices:
-            journals = Journal.search([
-                ('type', '=', 'expense'),
-                ], limit=1)
-            if journals:
-                journal, = journals
-            else:
-                journal = None
-
-            invoice = Invoice()
-            invoice.company = Company(context['company'])
-            invoice.type = 'in'
-            invoice.journal = journal
-            invoice.party = party
-            invoice.invoice_address = party.address_get(type='invoice')
-            invoice.currency = Company(context['company']).currency
-            invoice.account = party.account_payable_used
-            invoice.payment_term = party.supplier_payment_term
-        return invoice
-
     @classmethod
     @Workflow.transition('done')
     def done(cls, weighings):
@@ -506,10 +475,9 @@ class Weighing(Workflow, ModelSQL, ModelView):
                         Company(context['company']).currency)
                     invoice_line.company = Company(context['company'])
                     invoice_line.description = ''
-                    invoice_line.quantity = weighing.netweight or 0
-                    invoice_line.unit = (
-                        weighing.product_created.template.default_uom)
                     invoice_line.product = weighing.product_created
+                    invoice_line.on_change_product()
+                    invoice_line.quantity = weighing.netweight or 0
 
                     unit_price = Product.get_purchase_price(
                         [weighing.product_created],
@@ -525,9 +493,6 @@ class Weighing(Workflow, ModelSQL, ModelView):
                         unit_price = unit_price
                     invoice_line.unit_price = unit_price
                     cost_price += unit_price
-                    #invoice_line.taxes =
-                    invoice_line.account = (
-                        weighing.product_created.account_expense_used)
 
                     weighing_invoice = WeighingInvoiceLine(
                         weighing=weighing,
