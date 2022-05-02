@@ -14,16 +14,16 @@ class WineAgingHistory(ModelSQL, ModelView):
     product = fields.Many2One('product.product', "Product", required=True,
         readonly=True)
     material = fields.Many2One('stock.location.material', "Material",
-        required=True, readonly=True)
+        readonly=True)
     date_start = fields.Date("Date Start", required=True, readonly=True)
-    date_end = fields.Date("Date End", required=True, readonly=True,
+    date_end = fields.Date("Date End", readonly=True,
         domain=[
                 ['OR',
-                    ('end', '=', None),
-                    ('end', '>', Eval('start')),
+                    ('date_end', '=', None),
+                    ('date_end', '>=', Eval('date_start')),
                     ],
                 ],
-        depends=['start'])
+        depends=['date_start'])
     duration = fields.Function(fields.Integer("Duration"),
         'get_duration')
 
@@ -31,5 +31,10 @@ class WineAgingHistory(ModelSQL, ModelView):
     def get_duration(cls, records, name):
         res = dict((x.id, None) for x in records)
         for record in records:
-            res[record.id] = record.date_end - record.date_start
+            if record.date_end:
+                res[record.id] = (record.date_end - record.date_start).days
         return res
+
+    @classmethod
+    def delete(cls, records):
+        pass

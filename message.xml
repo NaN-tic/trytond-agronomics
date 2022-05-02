@@ -42,5 +42,8 @@ this repository contains the full copyright notices and license terms. -->
     <record model="ir.message" id="msg_cant_active_contract">
         <field name="text">The contract "%(contract)s" cant be activated because the parcel "%(parcel)s" is in another active contract.</field>
     </record>
+    <record model="ir.message" id="msg_transfer_wine_aging_inputs">
+        <field name="text">Production "%(production)s" has more than input mark transfer wine aging. Production will be done but no history will be created.</field>
+    </record>
   </data>
 </tryton>

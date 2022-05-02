@@ -17,7 +17,7 @@ _DEPENDS = ['state']
 class AgronomicsContractProductPriceListTypePriceList(ModelSQL, ModelView):
     "Agronomics Contract Product Price List Type Price List"
     __name__ = 'agronomics.contract-product.price_list.type-product.price_list'
-
+    _table = 'agronomics_contract_product_price_list_rel'
     contract = fields.Many2One('agronomics.contract', "Contract")
     price_list_type = fields.Many2One(
         'product.price_list.type', "Price List Type")
