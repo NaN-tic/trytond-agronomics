@@ -121,11 +121,15 @@ class Product(WineMixin, metaclass=PoolMeta):
         pool = Pool()
         Location = pool.get('stock.location')
         ProductConfiguration = pool.get('product.configuration')
+        WineAgingHistory = pool.get('wine.wine_aging.history')
+        Date = pool.get('ir.date')
+
+        today = Date.today()
         config = ProductConfiguration(1)
         locations = Location.search(['type', '=', 'warehouse'])
         locations = [location.id for location in locations]
         with Transaction().set_context(locations=locations, with_childs=True):
-            if config.variant_deactivation_time:
+            if config.variant_deactivation_time is not None:
                 products = cls.search(
                     [
                         ('quantity', '=', 0),
@@ -133,9 +137,14 @@ class Product(WineMixin, metaclass=PoolMeta):
                         ('create_date', '<',
                             (datetime.now() - config.variant_deactivation_time))
                     ])
-                for product in products:
-                    product.active = False
-                cls.save(products)
+                if products:
+                    cls.write(products, {'active': False})
+                    histories = WineAgingHistory.search([
+                        ('product', 'in', products),
+                        ('date_end', '=', None),
+                        ])
+                    if histories:
+                        WineAgingHistory.write(histories, {'date_end': today})
 
     @classmethod
     def validate(cls, products):
