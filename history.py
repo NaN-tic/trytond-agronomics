@@ -13,7 +13,7 @@ class WineAgingHistory(ModelSQL, ModelView):
         readonly=True)
     product = fields.Many2One('product.product', "Product", required=True,
         readonly=True)
-    material = fields.Many2One('stock.location.material', "Material",
+    material = fields.Selection('get_materials', "Material",
         readonly=True)
     date_start = fields.Date("Date Start", required=True, readonly=True)
     date_end = fields.Date("Date End", readonly=True,
@@ -26,6 +26,15 @@ class WineAgingHistory(ModelSQL, ModelView):
         depends=['date_start'])
     duration = fields.Function(fields.Integer("Duration"),
         'get_duration')
+
+    @classmethod
+    def get_materials(field_name):
+        pool = Pool()
+        LocationMaterial = pool.get('stock.location.material')
+        materials = [(None, "")]
+        for material in LocationMaterial.search([]):
+            materials.append((material.name, material.name))
+        return materials
 
     @classmethod
     def get_duration(cls, records, name):
