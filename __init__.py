@@ -20,6 +20,7 @@ def register():
         contract.AgronomicsContract,
         contract.AgronomicsContractLine,
         history.WineAgingHistory,
+        history.ProductWineAgingHistory,
         party.Party,
         plot.Enclosure,
         plot.Crop,

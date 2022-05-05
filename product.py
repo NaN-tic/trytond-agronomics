@@ -115,6 +115,11 @@ class Product(WineMixin, metaclass=PoolMeta):
     quality_tests = fields.One2Many('quality.test', 'document', 'Quality Tests')
     quality_samples = fields.Many2Many('product.product-quality.sample',
         'product', 'sample', 'Quality Samples')
+    wine_aging = fields.One2Many('product.wine.wine_aging.history', 'product',
+        "Wine Aging", readonly=True,
+        context={
+            'product': Eval('id'),
+        }, depends=['id'])
 
     @classmethod
     def deactivate_no_stock_variants_cron(cls):

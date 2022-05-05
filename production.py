@@ -459,6 +459,9 @@ class Production(metaclass=PoolMeta):
         pool = Pool()
         Date = pool.get('ir.date')
         WineAgingHistory = pool.get('wine.wine_aging.history')
+        LocationMaterial = pool.get('stock.location.material')
+
+        materials = dict((x.name, x) for x in LocationMaterial.search([]))
 
         today = Date.today()
         histories = WineAgingHistory.search([
@@ -470,9 +473,9 @@ class Production(metaclass=PoolMeta):
             new_histories += WineAgingHistory.create([{
                 'production': output.production_output,
                 'location': output.to_location,
-                'material': output.to_location.material,
+                'material': materials.get(output.to_location.material),
                 'product': output.product,
-                'date_start': today,
+                'date_start': output.production_output.effective_date,
                 'date_end': None
                 }])
             if histories:
