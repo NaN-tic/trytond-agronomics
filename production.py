@@ -457,15 +457,14 @@ class Production(metaclass=PoolMeta):
 
     def create_wine_aged_history(self, input, outputs):
         pool = Pool()
-        Date = pool.get('ir.date')
         WineAgingHistory = pool.get('wine.wine_aging.history')
-        LocationMaterial = pool.get('stock.location.material')
 
-        today = Date.today()
+        effective_date = input.production_input.effective_date
         histories = WineAgingHistory.search([
             ('product', '=', input.product),
+            ('date_end', '=', None),
             ])
-        WineAgingHistory.write(histories, {'date_end': today})
+        WineAgingHistory.write(histories, {'date_end': effective_date})
         new_histories = []
         for output in outputs:
             new_histories += WineAgingHistory.create([{
@@ -473,7 +472,7 @@ class Production(metaclass=PoolMeta):
                 'location': output.to_location,
                 'material': output.to_location.material,
                 'product': output.product,
-                'date_start': output.production_output.effective_date,
+                'date_start': effective_date,
                 'date_end': None
                 }])
             if histories:
