@@ -29,16 +29,7 @@ class WineAgingHistory(ModelSQL, ModelView):
                     ],
                 ],
         depends=['date_start'])
-    duration = fields.Function(fields.Integer("Duration"),
-        'get_duration')
-
-    @classmethod
-    def get_duration(cls, records, name):
-        res = dict((x.id, None) for x in records)
-        for record in records:
-            if record.date_end:
-                res[record.id] = (record.date_end - record.date_start).days
-        return res
+    duration = fields.Integer("Duration")
 
     @classmethod
     def delete(cls, records):

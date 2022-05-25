@@ -464,7 +464,15 @@ class Production(metaclass=PoolMeta):
             ('product', '=', input.product),
             ('date_end', '=', None),
             ])
-        WineAgingHistory.write(histories, {'date_end': effective_date})
+        if histories:
+            to_write = []
+            for history in histories:
+                to_write.extend(([history], {
+                    'date_end': effective_date,
+                    'duration': (effective_date - history.date_start).days,
+                    }))
+            WineAgingHistory.write(*to_write)
+
         new_histories = []
         for output in outputs:
             new_histories += WineAgingHistory.create([{

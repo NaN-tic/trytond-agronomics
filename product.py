@@ -2,6 +2,8 @@
 # this repository contains the full copyright notices and license terms.
 from decimal import Decimal
 from datetime import datetime
+from sql.operators import (Less, Greater, LessEqual,
+    GreaterEqual, Equal, NotEqual)
 from trytond.model import ModelSQL, ModelView, fields
 from trytond.pool import Pool, PoolMeta
 from trytond.pyson import Eval
@@ -120,6 +122,10 @@ class Product(WineMixin, metaclass=PoolMeta):
         context={
             'product': Eval('id'),
         }, depends=['id'])
+    wine_history_material = fields.Function(fields.Text("History Material"),
+        'get_wine_history', searcher='search_wine_history')
+    wine_history_duration = fields.Function(fields.Text("History Duration"),
+        'get_wine_history', searcher='search_wine_history')
 
     @classmethod
     def deactivate_no_stock_variants_cron(cls):
@@ -170,6 +176,50 @@ class Product(WineMixin, metaclass=PoolMeta):
                 (float(self.template.capacity) * float(self.wine_alcohol_content))
                     / 100).quantize(
                         Decimal(str(10 ** -self.__class__.alcohol_volume.digits[1])))
+
+    def get_wine_history(self, name):
+        # not implemented
+        pass
+
+    @classmethod
+    def search_wine_history(cls, name, clause):
+        pool = Pool()
+        WineAgingHistory = pool.get('wine.wine_aging.history')
+        Material = pool.get('stock.location.material')
+
+        wineaginghistory = WineAgingHistory.__table__()
+        material =  Material.__table__()
+
+        Operator = fields.SQL_OPERATORS[clause[1]]
+        value = clause[2]
+
+        join1 = wineaginghistory.join(material,
+            condition=wineaginghistory.material == material.id)
+        query = join1.select(wineaginghistory.product)
+
+        if name == 'wine_history_material':
+            query.where = (Operator(material.name, clause[2]))
+        elif name == 'wine_history_duration':
+            operator = clause[1]
+            try:
+                value = int(value)
+            except ValueError:
+                value = None
+            if value:
+                if operator == '=':
+                    query.where = Equal(wineaginghistory.duration, value)
+                elif operator == '!=':
+                    query.where = NotEqual(wineaginghistory.duration, value)
+                elif operator == '>':
+                    query.where = Greater(wineaginghistory.duration, value)
+                elif operator == '>=':
+                    query.where = GreaterEqual(wineaginghistory.duration, value)
+                elif operator == '<':
+                    query.where = Less(wineaginghistory.duration, value)
+                elif operator == '<=':
+                    query.where = LessEqual(wineaginghistory.duration, value)
+
+        return [('id', 'in', query)]
 
 
 class Cron(metaclass=PoolMeta):
