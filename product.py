@@ -4,6 +4,7 @@ from decimal import Decimal
 from datetime import datetime
 from sql.operators import (Less, Greater, LessEqual,
     GreaterEqual, Equal, NotEqual)
+from sql import Null
 from trytond.model import ModelSQL, ModelView, fields
 from trytond.pool import Pool, PoolMeta
 from trytond.pyson import Eval
@@ -198,7 +199,9 @@ class Product(WineMixin, metaclass=PoolMeta):
         query = join1.select(wineaginghistory.product)
 
         if name == 'wine_history_material':
-            query.where = (Operator(material.name, clause[2]))
+            query.where = (Operator(material.name, clause[2])
+                            & (wineaginghistory.material != Null)
+                            & (wineaginghistory.duration != Null))
         elif name == 'wine_history_duration':
             operator = clause[1]
             try:
