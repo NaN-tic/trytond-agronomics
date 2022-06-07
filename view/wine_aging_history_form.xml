@@ -1,0 +1,16 @@
+<form>
+  <label name="production"/>
+  <field name="production"/>
+  <label name="location"/>
+  <field name="location"/>
+  <label name="product"/>
+  <field name="product"/>
+  <label name="material"/>
+  <field name="material"/>
+  <label name="date_start"/>
+  <field name="date_start"/>
+  <label name="date_end"/>
+  <field name="date_end"/>
+  <label name="duration"/>
+  <field name="duration"/>
+</form>

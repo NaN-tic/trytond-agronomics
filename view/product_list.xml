@@ -124,5 +124,8 @@
         <field name="wine_tasting_phase_comment" tree_invisible="1"/>
         <field name="wine_tasting_phase_confirm" tree_invisible="1"/>
         <field name="wine_tasting_phase_success" tree_invisible="1"/>
+
+        <field name="wine_history_material" tree_invisible="1"/>
+        <field name="wine_history_duration" tree_invisible="1"/>
     </xpath>
 </data>

@@ -1,0 +1,8 @@
+<form>
+  <label name="product"/>
+  <field name="product"/>
+  <label name="material"/>
+  <field name="material"/>
+  <label name="duration"/>
+  <field name="duration"/>
+</form>

@@ -14,5 +14,4 @@ this repository contains the full copyright notices and license terms. -->
         <label name="variant_deactivate_stock_zero"/>
         <field name="variant_deactivate_stock_zero"/>
     </xpath>
-
 </data>

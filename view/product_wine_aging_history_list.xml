@@ -1,0 +1,5 @@
+<tree>
+  <field name="product"/>
+  <field name="material"/>
+  <field name="duration"/>
+</tree>

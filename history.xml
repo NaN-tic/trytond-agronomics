@@ -1,0 +1,100 @@
+<?xml version="1.0"?>
+<!-- This file is part of Tryton.  The COPYRIGHT file at the top level of
+this repository contains the full copyright notices and license terms. -->
+<tryton>
+    <data>
+        <!-- wine aging history -->
+        <record model="ir.ui.view" id="wine_aging_history_form_view">
+            <field name="model">wine.wine_aging.history</field>
+            <field name="type">form</field>
+            <field name="name">wine_aging_history_form</field>
+        </record>
+        <record model="ir.ui.view" id="wine_aging_history_list_view">
+            <field name="model">wine.wine_aging.history</field>
+            <field name="type">tree</field>
+            <field name="name">wine_aging_history_list</field>
+        </record>
+
+        <record model="ir.action.act_window" id="act_wine_aging_history">
+            <field name="name">Wine Aging History</field>
+            <field name="res_model">wine.wine_aging.history</field>
+        </record>
+        <record model="ir.action.act_window.view" id="act_wine_aging_history_view1">
+            <field name="sequence" eval="10"/>
+            <field name="view" ref="wine_aging_history_list_view"/>
+            <field name="act_window" ref="act_wine_aging_history"/>
+        </record>
+        <record model="ir.action.act_window.view" id="act_wine_aging_history_view2">
+            <field name="sequence" eval="20"/>
+            <field name="view" ref="wine_aging_history_form_view"/>
+            <field name="act_window" ref="act_wine_aging_history"/>
+        </record>
+
+        <record model="ir.model.access" id="access_wine_aging_history">
+            <field name="model" search="[('model', '=', 'wine.wine_aging.history')]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_delete" eval="False"/>
+        </record>
+
+        <menuitem name="History" sequence="0" id="menu_wine_aging_history"
+            parent="menu_agronomics" action="act_wine_aging_history"/>
+
+        <record model="ir.ui.menu-res.group" id="menu_wine_aging_history_group_agronomics">
+            <field name="menu" ref="menu_wine_aging_history"/>
+            <field name="group" ref="group_agronomics"/>
+        </record>
+        <record model="ir.ui.menu-res.group" id="menu_wine_aging_history_group_agronomics_admin">
+            <field name="menu" ref="menu_wine_aging_history"/>
+            <field name="group" ref="group_agronomics_admin"/>
+        </record>
+
+        <!-- product wine aging history -->
+        <record model="ir.ui.view" id="product_wine_aging_history_form_view">
+            <field name="model">product.wine.wine_aging.history</field>
+            <field name="type">form</field>
+            <field name="name">product_wine_aging_history_form</field>
+        </record>
+        <record model="ir.ui.view" id="product_wine_aging_history_list_view">
+            <field name="model">product.wine.wine_aging.history</field>
+            <field name="type">tree</field>
+            <field name="name">product_wine_aging_history_list</field>
+        </record>
+
+        <record model="ir.action.act_window" id="act_product_wine_aging_history">
+            <field name="name">Wine Aging History</field>
+            <field name="res_model">product.wine.wine_aging.history</field>
+        </record>
+        <record model="ir.action.act_window.view" id="act_product_wine_aging_history_view1">
+            <field name="sequence" eval="10"/>
+            <field name="view" ref="product_wine_aging_history_list_view"/>
+            <field name="act_window" ref="act_product_wine_aging_history"/>
+        </record>
+        <record model="ir.action.act_window.view" id="act_product_wine_aging_history_view2">
+            <field name="sequence" eval="20"/>
+            <field name="view" ref="product_wine_aging_history_form_view"/>
+            <field name="act_window" ref="act_product_wine_aging_history"/>
+        </record>
+
+        <record model="ir.model.access" id="access_product_wine_aging_history">
+            <field name="model" search="[('model', '=', 'product.wine.wine_aging.history')]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_delete" eval="False"/>
+        </record>
+
+        <menuitem name="Product History" sequence="0" id="menu_product_wine_aging_history"
+            parent="menu_wine_aging_history" action="act_product_wine_aging_history"/>
+
+        <record model="ir.ui.menu-res.group" id="menu_product_wine_aging_history_group_agronomics">
+            <field name="menu" ref="menu_product_wine_aging_history"/>
+            <field name="group" ref="group_agronomics"/>
+        </record>
+        <record model="ir.ui.menu-res.group" id="menu_product_wine_aging_history_group_agronomics_admin">
+            <field name="menu" ref="menu_product_wine_aging_history"/>
+            <field name="group" ref="group_agronomics_admin"/>
+        </record>
+    </data>
+</tryton>
