@@ -17,7 +17,7 @@ _DEPENDS = ['state']
 class AgronomicsContractProductPriceListTypePriceList(ModelSQL, ModelView):
     "Agronomics Contract Product Price List Type Price List"
     __name__ = 'agronomics.contract-product.price_list.type-product.price_list'
-    _table = 'agronomics_contract_product_price_list_rel'
+    _table = 'agronomics_contract_price_list_rel'
     contract = fields.Many2One('agronomics.contract', "Contract")
     price_list_type = fields.Many2One(
         'product.price_list.type', "Price List Type")
@@ -41,7 +41,7 @@ class AgronomicsContract(Workflow, ModelSQL, ModelView):
     start_date = fields.Function(
         fields.Date('Start Date'), 'on_change_with_start_date')
     end_date = fields.Function(
-        fields.Date('End Date'), 'on_change_with_start_date')
+        fields.Date('End Date'), 'on_change_with_end_date')
     producer = fields.Many2One(
         'party.party', "Producer", states=_STATES, depends=_DEPENDS,
         required=True)
