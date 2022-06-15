@@ -115,6 +115,8 @@ class Product(WineMixin, metaclass=PoolMeta):
     quality_tests = fields.One2Many('quality.test', 'document', 'Quality Tests')
     quality_samples = fields.Many2Many('product.product-quality.sample',
         'product', 'sample', 'Quality Samples')
+    vintages_str = fields.Function(fields.Char('Vintages'),
+        'get_vintages_str')
 
     @classmethod
     def deactivate_no_stock_variants_cron(cls):
@@ -156,6 +158,16 @@ class Product(WineMixin, metaclass=PoolMeta):
                 (float(self.template.capacity) * float(self.wine_alcohol_content))
                     / 100).quantize(
                         Decimal(str(10 ** -self.__class__.alcohol_volume.digits[1])))
+
+    def get_vintages_str(self, str):
+        return "%s" % ",".join([x.name for x in self.vintages])
+
+    def get_rec_name(self, name):
+        rec_name = super().get_rec_name(name)
+        if not self.vintages:
+            return rec_name
+        rec_name += " (%s)" % ",".join([x.name for x in self.vintages])
+        return rec_name
 
 
 class Cron(metaclass=PoolMeta):
