@@ -45,5 +45,8 @@ this repository contains the full copyright notices and license terms. -->
     <record model="ir.message" id="msg_location_no_configured">
         <field name="text">The weighing center "%(center)s" dont have a to location configured.</field>
     </record>
+    <record model="ir.message" id="msg_parcel_without_current_crop">
+        <field name="text">The plantation "%(plantation)s" in the weighing "%(weighing)s" has no parcel of the weighing's crop.</field>
+    </record>
   </data>
 </tryton>
