@@ -206,12 +206,18 @@ class Weighing(Workflow, ModelSQL, ModelView):
         return crop[0].id
 
     def get_parcel(self):
+        crop = self.on_change_with_crop()
         if not self.plantations:
             return
         plantation = self.plantations[0].plantation
         if not plantation or not plantation.parcels:
             return
-        return plantation.parcels[0]
+        res = None
+        for parcel in plantation.parcels:
+            if parcel.crop.id == crop:
+                res = parcel
+                break
+        return res
 
     @fields.depends('plantations')
     def on_change_with_variety(self):
@@ -529,6 +535,17 @@ class Weighing(Workflow, ModelSQL, ModelView):
                 Beneficiary.delete([x for x in weighing.beneficiaries])
 
             parcel = weighing.get_parcel()
+
+            # Check if all plantations has a parcel in the weighing's crop
+            for plantation in weighing.plantations:
+                plantation = plantation.plantation
+                for parcel in plantation.parcels:
+                    if parcel.crop == weighing.crop:
+                        break
+                else:
+                    raise UserError(gettext('agronomics.msg_parcel_without_current_crop',
+                        weighing=weighing.rec_name, plantation=plantation.code))
+
             if not parcel:
                 continue
 
