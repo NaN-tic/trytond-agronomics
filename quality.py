@@ -162,7 +162,8 @@ class QualityTest(metaclass=PoolMeta):
                 if not key:
                     continue
 
-                values[key] = round(line.value, _WINE_DIGITS)
+                if line.value:
+                    values[key] = round(line.value, _WINE_DIGITS)
                 values[key + '_comment'] = line.internal_description
                 values[key + '_confirm'] = today
                 values[key + '_success'] = line.success
