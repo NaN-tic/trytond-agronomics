@@ -12,6 +12,7 @@ from . import production
 from . import location
 from . import move
 from . import price_list
+from . import importer
 
 def register():
     Pool.register(
@@ -69,6 +70,8 @@ def register():
         location.Location,
         move.Move,
         price_list.PriceList,
+        importer.Importer,
+        importer.ImporterProductAgronomics,
         module='agronomics', type_='model')
     Pool.register(
         production.ProductionCostPriceDistributionTemplateProductionTemplate,
