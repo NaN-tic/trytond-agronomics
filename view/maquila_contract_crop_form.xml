@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<form>
+  <label name="contract"/>
+  <field name="contract" colspan="3"/>
+  <label name="crop"/>
+  <field name="crop"/>
+  <label name="quantity"/>
+  <field name="quantity"/>
+  <label name="penality"/>
+  <field name="penality"/>
+</form>

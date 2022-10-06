@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<form>
+  <label name="contract"/>
+  <field name="contract"/>
+  <label name="crop"/>
+  <field name="crop"/>
+  <label name="party"/>
+  <field name="party"/>
+  <label name="product"/>
+  <field name="product"/>
+  <label name="unit"/>
+  <field name="unit"/>
+  <label name="quantity"/>
+  <field name="quantity"/>
+  <label name="company"/>
+  <field name="company"/>
+</form>

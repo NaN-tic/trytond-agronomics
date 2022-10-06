@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<form>
+  <label name="party"/>
+  <field name="party"/>
+  <label name="product"/>
+  <field name="product"/>
+  <label name="number"/>
+  <field name="number"/>
+  <label name="company"/>
+  <field name="company"/>
+  <label name="quantity"/>
+  <field name="quantity"/>
+  <label name="unit"/>
+  <field name="unit"/>
+  <label name="table"/>
+  <field name="table"/>
+  <label name="company"/>
+  <field name="company"/>
+  <notebook colspan="4">
+      <page name="product_crops">
+          <field name="product_crops"/>
+      </page>
+      <page name="product_percentages">
+          <field name="product_percentages"/>
+      </page>
+      <page name="product_years">
+          <field name="product_years"/>
+      </page>
+  </notebook>
+  <group col="6" colspan="6" id="server_buttons">
+      <label name="state"/>
+      <field name="state"/>
+      <button name="draft"/>
+      <button name="active"/>
+      <button name="cancel"/>
+      <button name="done"/>
+  </group>
+</form>

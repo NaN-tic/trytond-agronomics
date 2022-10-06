@@ -3,6 +3,7 @@
 # the full copyright notices and license terms.
 from trytond.pool import Pool
 from . import contract
+from . import maquila
 from . import party
 from . import plot
 from . import product
@@ -12,12 +13,20 @@ from . import production
 from . import location
 from . import move
 from . import price_list
+from . import sale
 
 def register():
     Pool.register(
         contract.AgronomicsContractProductPriceListTypePriceList,
         contract.AgronomicsContract,
         contract.AgronomicsContractLine,
+        maquila.Configuration,
+        maquila.ConfigurationSequence,
+        maquila.Maquila,
+        maquila.Contract,
+        maquila.ContractCrop,
+        maquila.ContractProductPercentage,
+        maquila.ContractProductYear,
         party.Party,
         plot.Enclosure,
         plot.Crop,
@@ -75,3 +84,10 @@ def register():
         module='agronomics', type_='wizard')
     Pool.register(
         module='agronomics', type_='report')
+    Pool.register(
+        sale.Configuration,
+        sale.ConfigurationSequence,
+        sale.Sale,
+        sale.SaleLine,
+        module='agronomics', type_='model',
+        depends=['sale'])

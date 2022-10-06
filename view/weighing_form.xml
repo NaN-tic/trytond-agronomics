@@ -31,7 +31,10 @@
   <field name="quality_test"/>
   <label name="inventory_move"/>
   <field name="inventory_move"/>
-
+  <label name="is_maquila"/>
+  <field name="is_maquila"/>
+  <label name="maquila"/>
+  <field name="maquila"/>
   <notebook>
     <page name="plantations">
       <field name="plantations" colspan="4"/>
