@@ -64,24 +64,25 @@ class Maquila(ModelSQL, ModelView):
     "Maquila"
     __name__ = 'agronomics.maquila'
     company = fields.Many2One(
-        'company.company', "Company", required=True, select=True)
+        'company.company', "Company", required=True, select=True, readonly=True)
     contract = fields.Many2One('agronomics.maquila.contract', "Contract",
-        ondelete='CASCADE', select=True, required=True)
-    crop = fields.Many2One('agronomics.crop', "Crop", required=True)
-    party = fields.Many2One('party.party', "Party", required=True,
+        ondelete='CASCADE', select=True, required=True, readonly=True)
+    crop = fields.Many2One('agronomics.crop', "Crop", required=True, readonly=True)
+    party = fields.Many2One('party.party', "Party", required=True, readonly=True,
         context={
             'company': Eval('company', -1),
             },
         depends=['company'])
-    quantity = fields.Float("Quantity", digits=(16, Eval('unit_digits', 2)), required=True,
-        depends=['unit_digits'])
+    quantity = fields.Float("Quantity", digits=(16, Eval('unit_digits', 2)),
+        required=True, readonly=True, depends=['unit_digits'])
     product = fields.Many2One('product.product', "Product", required=True,
+        readonly=True,
         context={
             'company': Eval('company', -1),
             },
         depends=['company'])
-    unit = fields.Many2One('product.uom', "Unit", required=True, ondelete='RESTRICT',
-        domain=[
+    unit = fields.Many2One('product.uom', "Unit", required=True, readonly=True,
+        ondelete='RESTRICT', domain=[
             If(Bool(Eval('product_uom_category')),
                 ('category', '=', Eval('product_uom_category')),
                 ('category', '!=', -1)),
@@ -133,7 +134,9 @@ class Contract(sequence_ordered(), Workflow, ModelSQL, ModelView):
             },
         depends=['state', 'company'])
     product = fields.Many2One('product.product', "Product", required=True,
-        states={
+        domain=[
+            ('agronomic_type', '=', 'grape'),
+        ], states={
             'readonly': Eval('state') != 'draft',
             },
         context={
@@ -174,7 +177,7 @@ class Contract(sequence_ordered(), Workflow, ModelSQL, ModelView):
             },
         depends=['state'])
     product_years = fields.One2Many('agronomics.maquila.contract.product_year',
-        'contract', "Product Years",
+        'contract', "Product Years", readonly=True,
         states={
             'readonly': Eval('state') != 'draft',
             },
@@ -270,7 +273,9 @@ class Contract(sequence_ordered(), Workflow, ModelSQL, ModelView):
     @ModelView.button
     @Workflow.transition('draft')
     def draft(cls, contracts):
-        pass
+        for contract in contracts:
+            contract.delete_contract_product_year()
+            contract.delete_maquila()
 
     @classmethod
     @ModelView.button
@@ -278,6 +283,10 @@ class Contract(sequence_ordered(), Workflow, ModelSQL, ModelView):
     def active(cls, contracts):
         for contract in contracts:
             contract.check_quantity()
+            contract.create_contract_product_year()
+            # TDOO si active -> create_contract_product_year
+            # also create_maquila from product_years that create_contract_product_year ?
+            contract.create_maquila()
         cls.set_number(contracts)
 
     @classmethod
@@ -306,6 +315,56 @@ class Contract(sequence_ordered(), Workflow, ModelSQL, ModelView):
         if sum(x.quantity for x in self.product_crops) != self.quantity:
             raise UserError(gettext('agronomics.msg_maquila_contract_quantity',
                 contract=self.rec_name))
+
+    def create_contract_product_year(self):
+        ContractProductYear = Poo().get('agronomics.maquila.contract.product_year')
+
+        product_years = []
+        for crop in self.product_crops:
+            product_year = ContractProductYear()
+            product_year.contract = self
+            product_year.crop = crop.crop
+            product_year.product = contract.product
+            product_year.quantity = contract.quantity # TODO quantity from crop or contract
+            product_year.unit = contract.unit
+            product_year.save()
+            product_years.append(product_year)
+        return product_years
+
+    def delete_contract_product_year(self):
+        ContractProductYear = Poo().get('agronomics.maquila.contract.product_year')
+
+        product_years = ContractProductYear.search([
+            ('contract', '=', self),
+            ])
+        ContractProductYear.delete(product_years)
+
+    def create_maquila(self):
+        Maquila = Poo().get('agronomics.maquila')
+
+        default_values = Maquila.default_get(Maquila._fields.keys(),
+                with_rec_name=False)
+
+        maquilas = []
+        for crop in self.product_years:
+            maquila = Maquila(**default_values)
+            maquila.contract = self
+            maquila.crop = crop # TODO
+            maquila.party = self.party
+            maquila.product = contract.product
+            maquila.quantity = contract.quantity # TODO quantity from ?
+            maquila.unit = contract.unit
+            maquila.save()
+            maquilas.append(maquila)
+        return maquilas
+
+    def delete_maquila(self):
+        Maquila = Poo().get('agronomics.maquila')
+
+        maquilas = Maquila.search([
+            ('contract', '=', self),
+            ])
+        Maquila.delete(maquilas)
 
 
 class ContractCrop(ModelSQL, ModelView):
@@ -342,13 +401,15 @@ class ContractProductYear(ModelSQL, ModelView):
     "Maquila Contract Product Year"
     __name__ = 'agronomics.maquila.contract.product_year'
     contract = fields.Many2One('agronomics.maquila.contract', "Contract",
-        ondelete='CASCADE', select=True, required=True)
-    crop = fields.Many2One('agronomics.crop', "Crop", required=True)
-    product = fields.Many2One('product.product', "Product", required=True)
-    quantity = fields.Float('Quantity', required=True,
+        ondelete='CASCADE', select=True, required=True, readonly=True)
+    crop = fields.Many2One('agronomics.crop', "Crop", required=True,
+        readonly=True)
+    product = fields.Many2One('product.product', "Product", required=True,
+        readonly=True)
+    quantity = fields.Float('Quantity', required=True, readonly=True,
         digits=(16, Eval('unit_digits', 2)),
         depends=['unit_digits'])
-    unit = fields.Many2One('product.uom', "Unit", required=True,
+    unit = fields.Many2One('product.uom', "Unit", required=True, readonly=True,
         ondelete='RESTRICT', domain=[
             If(Bool(Eval('product_uom_category')),
                 ('category', '=', Eval('product_uom_category')),

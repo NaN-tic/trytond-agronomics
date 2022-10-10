@@ -123,6 +123,7 @@ class SaleLine(metaclass=PoolMeta):
         ondelete='RESTRICT',
         states={
             'invisible': ~Bool(Eval('_parent_sale', {}).get('is_maquila')),
+            'required': Bool(Eval('_parent_sale', {}).get('is_maquila')),
             'readonly': Eval('sale_state') != 'draft',
         }, depends=['sale_state'])
     maquila = fields.Many2One('agronomics.maquila', "Maquila", readonly=True,
