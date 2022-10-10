@@ -3,7 +3,7 @@
 this repository contains the full copyright notices and license terms. -->
 <tree>
     <field name="reference"/>
-    <field name="producer"/>
+    <field name="party"/>
     <field name="crop"/>
     <field name="start_date"/>
     <field name="end_date"/>
