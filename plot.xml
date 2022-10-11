@@ -543,5 +543,23 @@
       <field name="perm_create" eval="True"/>
       <field name="perm_delete" eval="True"/>
   </record>
+
+    <record model="ir.action.wizard" id="wizard_create_new_parcels">
+        <field name="name">Create new Parcels</field>
+        <field name="wiz_name">agronomics.create_new_parcels</field>
+    </record>
+
+    <record model="ir.ui.view" id="create_new_parcels_start_form">
+        <field name="model">agronomics.create_new_parcels.start</field>
+        <field name="type">form</field>
+        <field name="name">create_new_parcels_start_form</field>
+    </record>
+
+    <menuitem
+        parent="agronomics.menu_crop_list"
+        action="wizard_create_new_parcels"
+        sequence="90"
+        id="menu_create_new_parcels"/>
+
 </data>
 </tryton>

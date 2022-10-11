@@ -2,7 +2,7 @@
 # this repository contains the full copyright notices and license terms.
 from trytond.model import fields, ModelSQL, ModelView
 from trytond.pool import Pool
-
+from trytond.wizard import (Wizard, StateView, Button, StateTransition)
 
 class Enclosure(ModelSQL, ModelView):
     "Enclosure"
@@ -27,6 +27,13 @@ class Crop(ModelSQL, ModelView):
     name = fields.Char('Name', required=True)
     start_date = fields.Date('Start Date', required=True)
     end_date = fields.Date('End Date', required=True)
+
+    def copy_parcels(self, next_crop):
+        pool = Pool()
+        Parcel = pool.get('agronomics.parcel')
+        parcels = Parcel.search([('crop' ,'=', self.id)])
+        Parcel.copy(parcels, {'crop': next_crop})
+
 
 
 class DenominationOrigin(ModelSQL, ModelView):
@@ -171,3 +178,29 @@ class Beneficiaries(ModelSQL, ModelView):
             table.drop_column('percent')
 
         super(Beneficiaries, cls).__register__(module_name)
+
+class CreateNewParcel(Wizard):
+    'New Version'
+    __name__ = 'agronomics.create_new_parcels'
+
+    start = StateView('agronomics.create_new_parcels.start',
+        'agronomics.create_new_parcels_start_form', [
+            Button('Cancel', 'end', 'tryton-cancel'),
+            Button('Create', 'copy_parcels', 'tryton-accept', default=True),
+            ])
+    copy_parcels = StateTransition()
+
+    def transition_copy_parcels(self):
+        crop = self.start.previous_crop
+        crop.copy_parcels(self.start.next_crop)
+        return 'end'
+
+
+class CreateNewParcelStart(ModelView):
+    "Create New Parcel - Start"
+    __name__ = 'agronomics.create_new_parcels.start'
+
+    previous_crop = fields.Many2One('agronomics.crop', "Previous Crop",
+        required=True)
+    next_crop = fields.Many2One('agronomics.crop', "Next Crop",
+        required=True)
