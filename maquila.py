@@ -284,7 +284,7 @@ class Contract(sequence_ordered(), Workflow, ModelSQL, ModelView):
         for contract in contracts:
             contract.check_quantity()
             contract.create_contract_product_year()
-            # TDOO si active -> create_contract_product_year
+            # TODO si active -> create_contract_product_year
             # also create_maquila from product_years that create_contract_product_year ?
             contract.create_maquila()
         cls.set_number(contracts)
@@ -317,22 +317,23 @@ class Contract(sequence_ordered(), Workflow, ModelSQL, ModelView):
                 contract=self.rec_name))
 
     def create_contract_product_year(self):
-        ContractProductYear = Poo().get('agronomics.maquila.contract.product_year')
+        ContractProductYear = Pool().get('agronomics.maquila.contract.product_year')
 
         product_years = []
         for crop in self.product_crops:
-            product_year = ContractProductYear()
-            product_year.contract = self
-            product_year.crop = crop.crop
-            product_year.product = contract.product
-            product_year.quantity = contract.quantity # TODO quantity from crop or contract
-            product_year.unit = contract.unit
-            product_year.save()
-            product_years.append(product_year)
+            for ppercentatge in self.product_percentages:
+                product_year = ContractProductYear()
+                product_year.contract = self
+                product_year.crop = crop.crop
+                product_year.product = contract.product
+                product_year.quantity = crop.quantity * ppercentatge.percentatge
+                product_year.unit = contract.unit
+                product_year.save()
+                product_years.append(product_year)
         return product_years
 
     def delete_contract_product_year(self):
-        ContractProductYear = Poo().get('agronomics.maquila.contract.product_year')
+        ContractProductYear = Pool().get('agronomics.maquila.contract.product_year')
 
         product_years = ContractProductYear.search([
             ('contract', '=', self),
@@ -340,26 +341,27 @@ class Contract(sequence_ordered(), Workflow, ModelSQL, ModelView):
         ContractProductYear.delete(product_years)
 
     def create_maquila(self):
-        Maquila = Poo().get('agronomics.maquila')
+        Maquila = Pool().get('agronomics.maquila')
 
         default_values = Maquila.default_get(Maquila._fields.keys(),
                 with_rec_name=False)
 
         maquilas = []
         for crop in self.product_years:
-            maquila = Maquila(**default_values)
-            maquila.contract = self
-            maquila.crop = crop # TODO
-            maquila.party = self.party
-            maquila.product = contract.product
-            maquila.quantity = contract.quantity # TODO quantity from ?
-            maquila.unit = contract.unit
-            maquila.save()
-            maquilas.append(maquila)
+            for ppercentatge in self.product_percentages:
+                maquila = Maquila(**default_values)
+                maquila.contract = self
+                maquila.crop = crop
+                maquila.party = self.party
+                maquila.product = contract.product
+                maquila.quantity = crop.quantity * ppercentatge.percentatge
+                maquila.unit = contract.unit
+                maquila.save()
+                maquilas.append(maquila)
         return maquilas
 
     def delete_maquila(self):
-        Maquila = Poo().get('agronomics.maquila')
+        Maquila = Pool().get('agronomics.maquila')
 
         maquilas = Maquila.search([
             ('contract', '=', self),
