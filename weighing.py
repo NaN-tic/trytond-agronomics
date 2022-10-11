@@ -1,7 +1,7 @@
 # This file is part of Tryton.  The COPYRIGHT file at the top level of
 # this repository contains the full copyright notices and license terms.
 from trytond.model import fields, ModelSQL, ModelView, Workflow, sequence_ordered
-from trytond.pyson import Id, Eval, If
+from trytond.pyson import Id, Eval, If, Bool
 from trytond.pool import Pool
 from trytond.i18n import gettext
 from trytond.exceptions import UserError
@@ -86,7 +86,7 @@ class Weighing(Workflow, ModelSQL, ModelView):
                 })
     denomination_origin = fields.Many2Many('agronomics.weighing-agronomics.do',
         'weighing', 'do', 'Denomination of Origin', states={
-            'readonly': Eval('state').in_(READONLY2),
+            'readonly': Eval('state').in_(READONLY2) | Bool(Eval('table')),
             'required': Eval('state') == 'in_analysis',
             })
     beneficiaries_invoices_line = fields.Many2Many(
@@ -269,7 +269,7 @@ class Weighing(Workflow, ModelSQL, ModelView):
             return
         contract_lines = ContractLine.search([
             ('parcel', '=', parcel),
-            ('contract.producer', '=', producer),
+            ('contract.party', '=', producer),
             ('contract.state', '=', 'active'),
         ], limit=1)
         if not contract_lines:
