@@ -26,6 +26,9 @@
       <page name="product_years">
           <field name="product_years"/>
       </page>
+      <page name="maquilas">
+          <field name="maquilas"/>
+      </page>
   </notebook>
   <group col="6" colspan="6" id="server_buttons">
       <label name="state"/>

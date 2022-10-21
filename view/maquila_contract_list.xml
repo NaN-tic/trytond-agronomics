@@ -7,4 +7,6 @@
   <field name="table"/>
   <field name="state"/>
   <field name="company"/>
+  <field name="product_years" tree_invisible="1"/>
+  <field name="maquilas" tree_invisible="1"/>
 </tree>

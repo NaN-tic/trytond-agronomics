@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <form>
-  <label name="contract"/>
-  <field name="contract" colspan="3"/>
+  <label name="party"/>
+  <field name="party"/>
   <label name="crop"/>
   <field name="crop"/>
   <label name="product"/>
@@ -10,4 +10,6 @@
   <field name="quantity"/>
   <label name="unit"/>
   <field name="unit"/>
+  <newline/>
+  <field name="contracts" colspan="4"/>
 </form>

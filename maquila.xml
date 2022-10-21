@@ -65,73 +65,6 @@ this repository contains the full copyright notices and license terms. -->
             <field name="perm_delete" eval="True"/>
         </record>
 
-        <!-- agronomics.maquila -->
-        <record model="ir.ui.view" id="maquila_view_form">
-            <field name="model">agronomics.maquila</field>
-            <field name="type">form</field>
-            <field name="name">maquila_form</field>
-        </record>
-        <record model="ir.ui.view" id="maquila_view_tree">
-            <field name="model">agronomics.maquila</field>
-            <field name="type">tree</field>
-            <field name="priority" eval="20"/>
-            <field name="name">maquila_list</field>
-        </record>
-
-        <record model="ir.action.act_window" id="act_maquila_form">
-            <field name="name">Maquila</field>
-            <field name="res_model">agronomics.maquila</field>
-        </record>
-        <record model="ir.action.act_window.view" id="act_maquila_tree_view1">
-            <field name="sequence" eval="10"/>
-            <field name="view" ref="maquila_view_tree"/>
-            <field name="act_window" ref="act_maquila_form"/>
-        </record>
-        <record model="ir.action.act_window.view" id="act_maquila_tree_view2">
-            <field name="sequence" eval="20"/>
-            <field name="view" ref="maquila_view_form"/>
-            <field name="act_window" ref="act_maquila_form"/>
-        </record>
-
-        <menuitem parent="menu_maquila" sequence="1"
-            action="act_maquila_form" id="menu_maquila_list"/>
-
-        <record model="ir.model.access" id="access_maquila">
-            <field name="model" search="[('model', '=', 'agronomics.maquila')]"/>
-            <field name="perm_read" eval="True"/>
-            <field name="perm_write" eval="False"/>
-            <field name="perm_create" eval="False"/>
-            <field name="perm_delete" eval="False"/>
-        </record>
-        <record model="ir.model.access" id="access_maquila_agronomics">
-            <field name="model" search="[('model', '=', 'agronomics.maquila')]"/>
-            <field name="group" ref="agronomics.group_agronomics"/>
-            <field name="perm_read" eval="True"/>
-            <field name="perm_write" eval="True"/>
-            <field name="perm_create" eval="True"/>
-            <field name="perm_delete" eval="True"/>
-        </record>
-        <record model="ir.model.access" id="access_maquila_admin">
-            <field name="model" search="[('model', '=', 'agronomics.maquila')]"/>
-            <field name="group" ref="agronomics.group_agronomics_admin"/>
-            <field name="perm_read" eval="True"/>
-            <field name="perm_write" eval="True"/>
-            <field name="perm_create" eval="True"/>
-            <field name="perm_delete" eval="True"/>
-        </record>
-
-        <record model="ir.rule.group" id="rule_group_maquila_companies">
-            <field name="name">User in companies</field>
-            <field name="model" search="[('model', '=', 'agronomics.maquila')]"/>
-            <field name="global_p" eval="True"/>
-        </record>
-        <record model="ir.rule" id="rule_maquila_companies">
-            <field name="domain"
-                eval="[('company', 'in', Eval('companies', []))]"
-                pyson="1"/>
-            <field name="rule_group" ref="rule_group_maquila_companies"/>
-        </record>
-
         <!-- agronomics.maquila.contract -->
         <record model="ir.ui.view" id="maquila_contract_view_form">
             <field name="model">agronomics.maquila.contract</field>
@@ -314,32 +247,155 @@ this repository contains the full copyright notices and license terms. -->
             <field name="act_window" ref="act_maquila_contract_product_percentage_form"/>
         </record>
 
-        <!-- agronomics.maquila.contract.product_year -->
-        <record model="ir.ui.view" id="maquila_contract_product_year_view_form">
-            <field name="model">agronomics.maquila.contract.product_year</field>
+        <!-- agronomics.maquila.product_year -->
+        <record model="ir.ui.view" id="maquila_product_year_view_form">
+            <field name="model">agronomics.maquila.product_year</field>
             <field name="type">form</field>
-            <field name="name">maquila_contract_product_year_form</field>
+            <field name="name">maquila_product_year_form</field>
         </record>
-        <record model="ir.ui.view" id="maquila_contract_product_year_view_tree">
-            <field name="model">agronomics.maquila.contract.product_year</field>
+        <record model="ir.ui.view" id="maquila_product_year_view_tree">
+            <field name="model">agronomics.maquila.product_year</field>
             <field name="type">tree</field>
             <field name="priority" eval="20"/>
-            <field name="name">maquila_contract_product_year_list</field>
+            <field name="name">maquila_product_year_list</field>
         </record>
 
-        <record model="ir.action.act_window" id="act_maquila_contract_product_year_form">
-            <field name="name">Maquila Contract Product Year</field>
-            <field name="res_model">agronomics.maquila.contract.product_year</field>
+        <record model="ir.action.act_window" id="act_maquila_product_year_form">
+            <field name="name">Maquila Product Year</field>
+            <field name="res_model">agronomics.maquila.product_year</field>
         </record>
-        <record model="ir.action.act_window.view" id="act_maquila_contract_product_year_tree_view1">
+        <record model="ir.action.act_window.view" id="act_maquila_product_year_tree_view1">
             <field name="sequence" eval="10"/>
-            <field name="view" ref="maquila_contract_product_year_view_tree"/>
-            <field name="act_window" ref="act_maquila_contract_product_year_form"/>
+            <field name="view" ref="maquila_product_year_view_tree"/>
+            <field name="act_window" ref="act_maquila_product_year_form"/>
         </record>
-        <record model="ir.action.act_window.view" id="act_maquila_contract_product_year_tree_view2">
+        <record model="ir.action.act_window.view" id="act_maquila_product_year_tree_view2">
             <field name="sequence" eval="20"/>
-            <field name="view" ref="maquila_contract_product_year_view_form"/>
-            <field name="act_window" ref="act_maquila_contract_product_year_form"/>
+            <field name="view" ref="maquila_product_year_view_form"/>
+            <field name="act_window" ref="act_maquila_product_year_form"/>
+        </record>
+
+        <menuitem parent="menu_maquila" sequence="20"
+            action="act_maquila_product_year_form" id="menu_maquila_product_year_list"/>
+
+        <record model="ir.model.access" id="access_maquila_product_year">
+            <field name="model" search="[('model', '=', 'agronomics.maquila.product_year')]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_delete" eval="False"/>
+        </record>
+        <record model="ir.model.access" id="access_maquila_product_year_agronomics">
+            <field name="model" search="[('model', '=', 'agronomics.maquila.product_year')]"/>
+            <field name="group" ref="agronomics.group_agronomics"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_delete" eval="False"/>
+        </record>
+        <record model="ir.model.access" id="access_maquila_product_year_admin">
+            <field name="model" search="[('model', '=', 'agronomics.maquila.product_year')]"/>
+            <field name="group" ref="agronomics.group_agronomics_admin"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_delete" eval="True"/>
+        </record>
+
+        <record model="ir.rule.group" id="rule_group_maquila_product_year_companies">
+            <field name="name">User in companies</field>
+            <field name="model" search="[('model', '=', 'agronomics.maquila.product_year')]"/>
+            <field name="global_p" eval="True"/>
+        </record>
+        <record model="ir.rule" id="rule_maquila_product_year_companies">
+            <field name="domain"
+                eval="[('company', 'in', Eval('companies', []))]"
+                pyson="1"/>
+            <field name="rule_group" ref="rule_group_maquila_product_year_companies"/>
+        </record>
+
+        <!-- agronomics.maquila -->
+        <record model="ir.ui.view" id="maquila_view_form">
+            <field name="model">agronomics.maquila</field>
+            <field name="type">form</field>
+            <field name="name">maquila_form</field>
+        </record>
+        <record model="ir.ui.view" id="maquila_view_tree">
+            <field name="model">agronomics.maquila</field>
+            <field name="type">tree</field>
+            <field name="priority" eval="20"/>
+            <field name="name">maquila_list</field>
+        </record>
+
+        <record model="ir.action.act_window" id="act_maquila_form">
+            <field name="name">Maquila</field>
+            <field name="res_model">agronomics.maquila</field>
+        </record>
+        <record model="ir.action.act_window.view" id="act_maquila_tree_view1">
+            <field name="sequence" eval="10"/>
+            <field name="view" ref="maquila_view_tree"/>
+            <field name="act_window" ref="act_maquila_form"/>
+        </record>
+        <record model="ir.action.act_window.view" id="act_maquila_tree_view2">
+            <field name="sequence" eval="20"/>
+            <field name="view" ref="maquila_view_form"/>
+            <field name="act_window" ref="act_maquila_form"/>
+        </record>
+
+        <menuitem parent="menu_maquila" sequence="30"
+            action="act_maquila_form" id="menu_maquila_list"/>
+
+        <record model="ir.model.access" id="access_maquila">
+            <field name="model" search="[('model', '=', 'agronomics.maquila')]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_delete" eval="False"/>
+        </record>
+        <record model="ir.model.access" id="access_maquila_agronomics">
+            <field name="model" search="[('model', '=', 'agronomics.maquila')]"/>
+            <field name="group" ref="agronomics.group_agronomics"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_delete" eval="True"/>
+        </record>
+        <record model="ir.model.access" id="access_maquila_admin">
+            <field name="model" search="[('model', '=', 'agronomics.maquila')]"/>
+            <field name="group" ref="agronomics.group_agronomics_admin"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_delete" eval="True"/>
+        </record>
+
+        <record model="ir.rule.group" id="rule_group_maquila_companies">
+            <field name="name">User in companies</field>
+            <field name="model" search="[('model', '=', 'agronomics.maquila')]"/>
+            <field name="global_p" eval="True"/>
+        </record>
+        <record model="ir.rule" id="rule_maquila_companies">
+            <field name="domain"
+                eval="[('company', 'in', Eval('companies', []))]"
+                pyson="1"/>
+            <field name="rule_group" ref="rule_group_maquila_companies"/>
+        </record>
+
+        <record model="ir.action.act_window" id="act_maquila_weighing_form2">
+            <field name="name">Weighings</field>
+            <field name="res_model">agronomics.weighing</field>
+            <field name="domain"
+                eval="[If(Eval('active_ids', []) == [Eval('active_id')], ('maquila', '=', Eval('active_id')), ('maquila', 'in', Eval('active_ids')))]"
+                pyson="1"/>
+        </record>
+        <record model="ir.action.keyword" id="act_open_maquila_weighing_keyword1">
+            <field name="keyword">form_relate</field>
+            <field name="model">agronomics.maquila,-1</field>
+            <field name="action" ref="act_maquila_weighing_form2"/>
+        </record>
+        <record model="ir.action-res.group" id="act_maquila_weighing_form2-group_agronomics">
+            <field name="action" ref="act_maquila_weighing_form2"/>
+            <field name="group" ref="group_agronomics"/>
         </record>
     </data>
 </tryton>

@@ -86,36 +86,6 @@ class Sale(metaclass=PoolMeta):
                 'maquila_sale_sequence', company=sale.company.id).get()
         super().set_number(sales)
 
-    @classmethod
-    def process(cls, sales):
-        pool = Pool()
-        Maquila = pool.get('agronomics.maquila')
-        Line = pool.get('sale.line')
-
-        super().process(sales)
-
-        to_save = []
-        for sale in sales:
-            if not sale.is_maquila:
-                continue
-
-            for line in sale.lines:
-                if line.maquila or not line.maquila_product:
-                    continue
-
-                maquila = Maquila()
-                maquila.contract = contract # TODO
-                maquila.crop = weighing.crop # TODO
-                maquila.party = sale.party # TODO
-                maquila.quantity = -1 # TODO negatiu
-                maquila.product = line.maquila_product
-                maquila.unit = line.maquila_product.default_uom
-                maquila.save()
-                line.maquila = maquila
-                to_save.append(line)
-
-        Line.save(to_save)
-
 
 class SaleLine(metaclass=PoolMeta):
     __name__ = 'sale.line'
@@ -126,7 +96,9 @@ class SaleLine(metaclass=PoolMeta):
             'required': Bool(Eval('_parent_sale', {}).get('is_maquila')),
             'readonly': Eval('sale_state') != 'draft',
         }, depends=['sale_state'])
-    maquila = fields.Many2One('agronomics.maquila', "Maquila", readonly=True,
+    maquila = fields.Many2One('agronomics.maquila', "Maquila",
         states={
             'invisible': ~Bool(Eval('_parent_sale', {}).get('is_maquila')),
+            'required': Bool(Eval('_parent_sale', {}).get('is_maquila')),
+            'readonly': Eval('sale_state') != 'draft',
         })

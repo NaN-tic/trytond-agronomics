@@ -1,7 +1,7 @@
 # This file is part of Tryton.  The COPYRIGHT file at the top level of
 # this repository contains the full copyright notices and license terms.
 from trytond.model import fields, ModelSQL, ModelView, Workflow, sequence_ordered
-from trytond.pyson import Id, Eval, If
+from trytond.pyson import Bool, Id, Eval, If
 from trytond.pool import Pool
 from trytond.i18n import gettext
 from trytond.exceptions import UserError
@@ -125,11 +125,19 @@ class Weighing(Workflow, ModelSQL, ModelView):
     forced_analysis = fields.Boolean('Forced Analysis', readonly=True)
     inventory_move = fields.Many2One('stock.move', "Inventory Move",
         readonly=True)
-    is_maquila = fields.Boolean("Is Maquila")
-    maquila = fields.Many2One('agronomics.maquila', "Maquila", readonly=True,
+    is_maquila = fields.Boolean("Is Maquila", states={
+            'readonly': Eval('state').in_(READONLY2),
+        }, depends=['state'])
+    # TODO weighing table is readonly when is draft
+    maquila = fields.Many2One('agronomics.maquila', "Maquila",
+        domain=[
+            ('table', '=', Bool(Eval('table', False))),
+        ],
         states={
+            'readonly': Eval('state').in_(READONLY2),
             'invisible': ~Eval('is_maquila', False),
-        }, depends=['is_maquila'])
+            'required': Eval('is_maquila', False),
+        }, depends=['is_maquila', 'table', 'state'])
 
     @classmethod
     def __setup__(cls):
@@ -478,17 +486,7 @@ class Weighing(Workflow, ModelSQL, ModelView):
         for weighing in weighings:
             cost_price = Decimal(0)
 
-            if weighing.is_maquila:
-                maquila = Maquila()
-                maquila.contract = contract # TODO
-                maquila.crop = weighing.crop
-                maquila.party = party # TODO
-                maquila.quantity = -1 # TODO negatiu
-                maquila.product = weighing.product
-                maquila.unit = product.default_uom
-                maquila.save()
-                weighing.maquila = maquila
-            elif not weighing.is_maquila and weighing.beneficiaries:
+            if not weighing.is_maquila and weighing.beneficiaries:
                 for beneficiary in weighing.beneficiaries:
                     price_list = ContractProductPriceListTypePriceList.search([
                         ('contract', '=', weighing.purchase_contract),

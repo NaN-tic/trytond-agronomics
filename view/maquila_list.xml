@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <tree>
-  <field name="contract"/>
-  <field name="crop"/>
   <field name="party"/>
+  <field name="crop"/>
+  <field name="table"/>
   <field name="product"/>
   <field name="unit"/>
   <field name="quantity"/>

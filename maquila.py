@@ -65,8 +65,9 @@ class Maquila(ModelSQL, ModelView):
     __name__ = 'agronomics.maquila'
     company = fields.Many2One(
         'company.company', "Company", required=True, select=True, readonly=True)
-    contract = fields.Many2One('agronomics.maquila.contract', "Contract",
-        ondelete='CASCADE', select=True, required=True, readonly=True)
+    contracts = fields.Many2Many(
+        'agronomics.maquila-agronomics.maquila.contract',
+        'maquila', 'contract', "Contracts", required=True, readonly=True)
     crop = fields.Many2One('agronomics.crop', "Crop", required=True, readonly=True)
     party = fields.Many2One('party.party', "Party", required=True, readonly=True,
         context={
@@ -93,10 +94,22 @@ class Maquila(ModelSQL, ModelView):
     product_uom_category = fields.Function(
         fields.Many2One('product.uom.category', "Product Uom Category"),
         'on_change_with_product_uom_category')
+    weighings = fields.One2Many('agronomics.weighing', 'maquila',
+        "Weighings", readonly=True)
+    product_year = fields.Many2One('agronomics.maquila.product_year',
+        "Product Year", readonly=True)
+    table = fields.Boolean("Table", readonly=True)
 
     @staticmethod
     def default_company():
         return Transaction().context.get('company')
+
+    @classmethod
+    def __setup__(cls):
+        super(Maquila, cls).__setup__()
+        cls._order = [
+            ('id', 'DESC'),
+            ]
 
     @fields.depends('product')
     def on_change_with_product_uom_category(self, name=None):
@@ -168,20 +181,22 @@ class Contract(sequence_ordered(), Workflow, ModelSQL, ModelView):
         'contract', "Product Crops",
         states={
             'readonly': Eval('state') != 'draft',
+            'required': Eval('state') == 'active',
             },
         depends=['state'])
     product_percentages = fields.One2Many('agronomics.maquila.contract.product_percentage',
         'contract', "Product Percentatges",
         states={
             'readonly': Eval('state') != 'draft',
+            'required': Eval('state') == 'active',
             },
         depends=['state'])
-    product_years = fields.One2Many('agronomics.maquila.contract.product_year',
-        'contract', "Product Years", readonly=True,
-        states={
-            'readonly': Eval('state') != 'draft',
-            },
-        depends=['state'])
+    product_years = fields.Many2Many(
+        'agronomics.maquila.product_year-agronomics.maquila.contract',
+        'contract', 'product_year', "Product Years", readonly=True)
+    maquilas = fields.Many2Many(
+        'agronomics.maquila-agronomics.maquila.contract',
+        'contract', 'maquila', "Maquilas", readonly=True)
     table = fields.Boolean("Table",
         states={
             'readonly': Eval('state') != 'draft',
@@ -197,17 +212,19 @@ class Contract(sequence_ordered(), Workflow, ModelSQL, ModelView):
     @classmethod
     def __setup__(cls):
         super(Contract, cls).__setup__()
+        cls._order = [
+            ('number', 'DESC NULLS FIRST'),
+            ('id', 'DESC'),
+            ]
         cls._transitions |= set((
                 ('draft', 'active'),
-                ('active', 'cancelled'),
+                ('draft', 'cancelled'),
                 ('active', 'done'),
-                ('active', 'draft'),
                 ('cancelled', 'draft'),
-
                 ))
         cls._buttons.update({
             'draft': {
-                'invisible': ~Eval('state').in_(['cancelled', 'active']),
+                'invisible': Eval('state') != 'cancelled',
                 'icon': If(Eval('state') == 'cancelled', 'tryton-undo',
                         'tryton-back'),
             },
@@ -216,7 +233,7 @@ class Contract(sequence_ordered(), Workflow, ModelSQL, ModelView):
                 'icon': 'tryton-forward',
                 },
             'cancel': {
-                'invisible': Eval('state') != 'active',
+                'invisible': Eval('state') != 'draft',
                 'icon': 'tryton-cancel',
                 },
             'done': {
@@ -240,6 +257,8 @@ class Contract(sequence_ordered(), Workflow, ModelSQL, ModelView):
         else:
             default = default.copy()
         default.setdefault('number', None)
+        default.setdefault('product_years', None)
+        default.setdefault('maquilas', None)
         return super(Contract, cls).copy(contracts, default=default)
 
     @fields.depends('product')
@@ -273,9 +292,7 @@ class Contract(sequence_ordered(), Workflow, ModelSQL, ModelView):
     @ModelView.button
     @Workflow.transition('draft')
     def draft(cls, contracts):
-        for contract in contracts:
-            contract.delete_contract_product_year()
-            contract.delete_maquila()
+        pass
 
     @classmethod
     @ModelView.button
@@ -284,8 +301,6 @@ class Contract(sequence_ordered(), Workflow, ModelSQL, ModelView):
         for contract in contracts:
             contract.check_quantity()
             contract.create_contract_product_year()
-            # TODO si active -> create_contract_product_year
-            # also create_maquila from product_years that create_contract_product_year ?
             contract.create_maquila()
         cls.set_number(contracts)
 
@@ -317,28 +332,39 @@ class Contract(sequence_ordered(), Workflow, ModelSQL, ModelView):
                 contract=self.rec_name))
 
     def create_contract_product_year(self):
-        ContractProductYear = Pool().get('agronomics.maquila.contract.product_year')
+        MaquilaProductYear = Pool().get('agronomics.maquila.product_year')
 
-        product_years = []
-        for crop in self.product_crops:
-            for ppercentatge in self.product_percentages:
-                product_year = ContractProductYear()
-                product_year.contract = self
-                product_year.crop = crop.crop
-                product_year.product = contract.product
-                product_year.quantity = crop.quantity * ppercentatge.percentatge
-                product_year.unit = contract.unit
-                product_year.save()
-                product_years.append(product_year)
-        return product_years
-
-    def delete_contract_product_year(self):
-        ContractProductYear = Pool().get('agronomics.maquila.contract.product_year')
-
-        product_years = ContractProductYear.search([
-            ('contract', '=', self),
+        crops = [product_crop.crop for product_crop in self.product_crops]
+        records = MaquilaProductYear.search([
+            ('party', '=', self.party),
+            ('crop', 'in', crops),
+            ('product', '=', self.product),
+            # TODO quantity ? quantity = crop.quantity * ppercentatge.percentatge
             ])
-        ContractProductYear.delete(product_years)
+        product_years = dict(((x.party, x.crop, x.product), x) for x in records)
+
+        new_product_years = []
+        for crop in self.product_crops:
+            key = (self.party, crop.crop, self.product)
+            if key in product_years:
+                product_year = product_years.get(key)
+                product_year.contracts += (self,)
+                product_year.save()
+                new_product_years.append(product_year)
+            else:
+                for ppercentatge in self.product_percentages:
+                    product_year = MaquilaProductYear()
+                    product_year.company = self.company
+                    product_year.contracts = [self]
+                    product_year.party = self.party
+                    product_year.crop = crop.crop
+                    product_year.product = self.product
+                    product_year.quantity = crop.quantity * ppercentatge.percentatge
+                    product_year.unit = self.unit
+                    product_year.contracts = [self]
+                    product_year.save()
+                    new_product_years.append(product_year)
+        return new_product_years
 
     def create_maquila(self):
         Maquila = Pool().get('agronomics.maquila')
@@ -346,27 +372,39 @@ class Contract(sequence_ordered(), Workflow, ModelSQL, ModelView):
         default_values = Maquila.default_get(Maquila._fields.keys(),
                 with_rec_name=False)
 
-        maquilas = []
-        for crop in self.product_years:
-            for ppercentatge in self.product_percentages:
-                maquila = Maquila(**default_values)
-                maquila.contract = self
-                maquila.crop = crop
-                maquila.party = self.party
-                maquila.product = contract.product
-                maquila.quantity = crop.quantity * ppercentatge.percentatge
-                maquila.unit = contract.unit
-                maquila.save()
-                maquilas.append(maquila)
-        return maquilas
-
-    def delete_maquila(self):
-        Maquila = Pool().get('agronomics.maquila')
-
-        maquilas = Maquila.search([
-            ('contract', '=', self),
+        crops = [product_crop.crop for product_crop in self.product_crops]
+        records = Maquila.search([
+            ('party', '=', self.party),
+            ('crop', 'in', crops),
+            ('product', '=', self.product),
+            # TODO quantity ? quantity = crop.quantity * ppercentatge.percentatge
             ])
-        Maquila.delete(maquilas)
+        maquilas = dict(((x.party, x.crop, x.table), x) for x in records)
+
+        new_maquilas = []
+        for product_year in self.product_years:
+            key = (self.party, product_year.crop, self.table)
+            if key in maquilas:
+                maquila = maquilas.get(key)
+                maquila.contracts += (self,)
+                maquila.save()
+                new_maquilas.append(maquila)
+            else:
+                for ppercentatge in self.product_percentages:
+                    maquila = Maquila(**default_values)
+                    maquila.company = self.company
+                    maquila.contracts = [self]
+                    maquila.party = self.party
+                    maquila.crop = product_year.crop
+                    maquila.party = self.party
+                    maquila.product = self.product
+                    maquila.quantity = self.quantity * ppercentatge.percentatge
+                    maquila.unit = self.unit
+                    maquila.product_year = product_year
+                    maquila.table = self.table
+                    maquila.save()
+                    new_maquilas.append(maquila)
+        return new_maquilas
 
 
 class ContractCrop(ModelSQL, ModelView):
@@ -399,11 +437,19 @@ class ContractProductPercentage(ModelSQL, ModelView):
     percentatge = fields.Float("Percentatge", digits=(16, 4), required=True)
 
 
-class ContractProductYear(ModelSQL, ModelView):
-    "Maquila Contract Product Year"
-    __name__ = 'agronomics.maquila.contract.product_year'
-    contract = fields.Many2One('agronomics.maquila.contract', "Contract",
-        ondelete='CASCADE', select=True, required=True, readonly=True)
+class ProductYear(ModelSQL, ModelView):
+    "Maquila Product Year"
+    __name__ = 'agronomics.maquila.product_year'
+    company = fields.Many2One(
+        'company.company', "Company", required=True, select=True, readonly=True)
+    contracts = fields.Many2Many(
+        'agronomics.maquila.product_year-agronomics.maquila.contract',
+        'product_year', 'contract', "Contracts", required=True, readonly=True)
+    party = fields.Many2One('party.party', "Party", required=True, readonly=True,
+        context={
+            'company': Eval('company', -1),
+            },
+        depends=['company'])
     crop = fields.Many2One('agronomics.crop', "Crop", required=True,
         readonly=True)
     product = fields.Many2One('product.product', "Product", required=True,
@@ -423,6 +469,13 @@ class ContractProductYear(ModelSQL, ModelView):
     product_uom_category = fields.Function(
         fields.Many2One('product.uom.category', "Product Uom Category"),
         'on_change_with_product_uom_category')
+
+    @classmethod
+    def __setup__(cls):
+        super(ProductYear, cls).__setup__()
+        cls._order = [
+            ('id', 'DESC'),
+            ]
 
     @fields.depends('product')
     def on_change_with_product_uom_category(self, name=None):
@@ -444,3 +497,23 @@ class ContractProductYear(ModelSQL, ModelView):
         if not self.unit or self.unit.category != category:
             self.unit = self.product.default_uom
             self.unit_digits = self.product.default_uom.digits
+
+
+class MaquilaProductYearContract(ModelSQL):
+    'Maquila Product Year - Maquila Contract'
+    __name__ = 'agronomics.maquila.product_year-agronomics.maquila.contract'
+    _table = 'agronomics_maquila_product_year_contract_rel'
+    product_year = fields.Many2One('agronomics.maquila.product_year',
+        "Product Year", ondelete='CASCADE', required=True, select=True)
+    contract = fields.Many2One('agronomics.maquila.contract', "Contract",
+        ondelete='CASCADE', required=True, select=True)
+
+
+class MaquilaMaquilaContract(ModelSQL):
+    'Maquila - Maquila Contract'
+    __name__ = 'agronomics.maquila-agronomics.maquila.contract'
+    _table = 'agronomics_maquila_contract_rel'
+    maquila = fields.Many2One('agronomics.maquila',
+        "Maquila", ondelete='CASCADE', required=True, select=True)
+    contract = fields.Many2One('agronomics.maquila.contract', "Contract",
+        ondelete='CASCADE', required=True, select=True)
