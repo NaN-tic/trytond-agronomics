@@ -138,6 +138,7 @@ class Contract(sequence_ordered(), Workflow, ModelSQL, ModelView):
             },
         depends=['state'])
     number = fields.Char('Number', readonly=True, select=True)
+    reference = fields.Char('Reference')
     party = fields.Many2One('party.party', "Party", required=True,
         states={
             'readonly': Eval('state') != 'draft',

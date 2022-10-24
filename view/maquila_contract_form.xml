@@ -1,11 +1,13 @@
 <?xml version="1.0"?>
 <form>
+  <label name="number"/>
+  <field name="number"/>
+  <label name="reference"/>
+  <field name="reference"/>
   <label name="party"/>
   <field name="party"/>
   <label name="product"/>
   <field name="product"/>
-  <label name="number"/>
-  <field name="number"/>
   <label name="company"/>
   <field name="company"/>
   <label name="quantity"/>
