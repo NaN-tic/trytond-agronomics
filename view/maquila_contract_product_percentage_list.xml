@@ -2,5 +2,5 @@
 <tree>
   <field name="contract"/>
   <field name="product"/>
-  <field name="percentatge"/>
+  <field name="percentatge" factor="100"/>
 </tree>
