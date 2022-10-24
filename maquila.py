@@ -138,7 +138,7 @@ class Contract(sequence_ordered(), Workflow, ModelSQL, ModelView):
             },
         depends=['state'])
     number = fields.Char('Number', readonly=True, select=True)
-    reference = fields.Char('Reference')
+
     party = fields.Many2One('party.party', "Party", required=True,
         states={
             'readonly': Eval('state') != 'draft',
@@ -359,9 +359,9 @@ class Contract(sequence_ordered(), Workflow, ModelSQL, ModelView):
                     product_year.contracts = [self]
                     product_year.party = self.party
                     product_year.crop = crop.crop
-                    product_year.product = self.product
+                    product_year.product = ppercentatge.product
                     product_year.quantity = crop.quantity * ppercentatge.percentatge
-                    product_year.unit = self.unit
+                    product_year.unit = ppercentatge.product.default_uom
                     product_year.contracts = [self]
                     product_year.save()
                     new_product_years.append(product_year)
@@ -391,20 +391,19 @@ class Contract(sequence_ordered(), Workflow, ModelSQL, ModelView):
                 maquila.save()
                 new_maquilas.append(maquila)
             else:
-                for ppercentatge in self.product_percentages:
-                    maquila = Maquila(**default_values)
-                    maquila.company = self.company
-                    maquila.contracts = [self]
-                    maquila.party = self.party
-                    maquila.crop = product_year.crop
-                    maquila.party = self.party
-                    maquila.product = self.product
-                    maquila.quantity = self.quantity * ppercentatge.percentatge
-                    maquila.unit = self.unit
-                    maquila.product_year = product_year
-                    maquila.table = self.table
-                    maquila.save()
-                    new_maquilas.append(maquila)
+                maquila = Maquila(**default_values)
+                maquila.company = self.company
+                maquila.contracts = [self]
+                maquila.party = self.party
+                maquila.crop = product_year.crop
+                maquila.party = self.party
+                maquila.product = product_year.product
+                maquila.quantity = product_year.quantity
+                maquila.unit = product_year.product.default_uom
+                maquila.product_year = product_year
+                maquila.table = self.table
+                maquila.save()
+                new_maquilas.append(maquila)
         return new_maquilas
 
 
