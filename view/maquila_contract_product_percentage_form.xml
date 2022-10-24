@@ -5,5 +5,5 @@
   <label name="product"/>
   <field name="product"/>
   <label name="percentatge"/>
-  <field name="percentatge"/>
+  <field name="percentatge" factor="100"/>
 </form>
