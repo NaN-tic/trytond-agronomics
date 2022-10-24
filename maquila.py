@@ -434,7 +434,7 @@ class ContractProductPercentage(ModelSQL, ModelView):
     contract = fields.Many2One('agronomics.maquila.contract', "Contract",
         ondelete='CASCADE', select=True, required=True)
     product = fields.Many2One('product.product', "Product", required=True)
-    percentatge = fields.Float("Percentatge", digits=(16, 4), required=True)
+    percentatge = fields.Float("Percentatge", digits=(16, 2), required=True)
 
 
 class ProductYear(ModelSQL, ModelView):
