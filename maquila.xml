@@ -191,6 +191,32 @@ this repository contains the full copyright notices and license terms. -->
             <field name="rule_group" ref="rule_group_maquila_contract_companies"/>
         </record>
 
+        <record model="ir.action.act_window" id="act_maquila_contract_maquila_product_year_form">
+            <field name="name">Product Years</field>
+            <field name="res_model">agronomics.maquila.product_year</field>
+            <field name="domain"
+                eval="[If(Eval('active_ids', []) == [Eval('active_id')], ('contract_crops.contract', '=', Eval('active_id')), ('contract_crops.contract', 'in', Eval('active_ids')))]"
+                pyson="1"/>
+        </record>
+        <record model="ir.action.keyword" id="act_open_maquila_contract_maquila_product_year_keyword1">
+            <field name="keyword">form_relate</field>
+            <field name="model">agronomics.maquila.contract,-1</field>
+            <field name="action" ref="act_maquila_contract_maquila_product_year_form"/>
+        </record>
+
+        <record model="ir.action.act_window" id="act_maquila_contract_maquila_form">
+            <field name="name">Maquilas</field>
+            <field name="res_model">agronomics.maquila</field>
+            <field name="domain"
+                eval="[If(Eval('active_ids', []) == [Eval('active_id')], ('contract_crops.contract', '=', Eval('active_id')), ('contract_crops.contract', 'in', Eval('active_ids')))]"
+                pyson="1"/>
+        </record>
+        <record model="ir.action.keyword" id="act_open_maquila_contract_maquila_keyword1">
+            <field name="keyword">form_relate</field>
+            <field name="model">agronomics.maquila.contract,-1</field>
+            <field name="action" ref="act_maquila_contract_maquila_form"/>
+        </record>
+
         <!-- agronomics.maquila.contract.crop -->
         <record model="ir.ui.view" id="maquila_contract_crop_view_form">
             <field name="model">agronomics.maquila.contract.crop</field>

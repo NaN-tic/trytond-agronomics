@@ -5,6 +5,6 @@
   <field name="table"/>
   <field name="product"/>
   <field name="unit"/>
-  <field name="quantity"/>
   <field name="company"/>
+  <field name="contracts" tree_invisible="1"/>
 </tree>

@@ -8,4 +8,6 @@
   <field name="quantity"/>
   <label name="penality"/>
   <field name="penality"/>
+  <label name="maquila"/>
+  <field name="maquila"/>
 </form>

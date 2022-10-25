@@ -15,5 +15,6 @@
   <label name="company"/>
   <field name="company"/>
   <newline/>
-  <field name="contracts" colspan="4"/>
+  <field name="contract_crops" colspan="6"/>
+  <field name="contracts" colspan="6"/>
 </form>
