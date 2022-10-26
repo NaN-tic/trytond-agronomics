@@ -8,6 +8,7 @@
   <field name="quantity"/>
   <label name="penality"/>
   <field name="penality"/>
-  <label name="maquila"/>
-  <field name="maquila"/>
+  <newline/>
+  <field name="product_years" colspan="6"/>
+  <field name="maquilas" colspan="6"/>
 </form>

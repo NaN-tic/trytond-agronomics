@@ -2,12 +2,16 @@
 <form>
   <label name="party"/>
   <field name="party"/>
+  <label name="company"/>
+  <field name="company"/>
   <label name="crop"/>
   <field name="crop"/>
   <label name="product"/>
   <field name="product"/>
   <label name="quantity"/>
   <field name="quantity"/>
+  <label name="delivered_quantity"/>
+  <field name="delivered_quantity"/>
   <label name="unit"/>
   <field name="unit"/>
   <newline/>

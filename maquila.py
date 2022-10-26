@@ -217,6 +217,17 @@ class Contract(sequence_ordered(), Workflow, ModelSQL, ModelView):
         default.setdefault('maquilas', None)
         return super(Contract, cls).copy(contracts, default=default)
 
+    @classmethod
+    def delete(cls, contracts):
+        # Cancel before delete
+        cls.cancel(contracts)
+        for contract in contracts:
+            if contract.state != 'cancelled':
+                raise AccessError(
+                    gettext('agronomics.msg_contract_delete_cancel',
+                        contract=contract.rec_name))
+        super(Contract, cls).delete(contracts)
+
     @fields.depends('product')
     def on_change_with_product_uom_category(self, name=None):
         if self.product:
@@ -310,8 +321,8 @@ class Contract(sequence_ordered(), Workflow, ModelSQL, ModelView):
                 key = (self.party, crop.crop, ppercentatge.product)
                 if key in product_years:
                     product_year = product_years.get(key)
-                    crop.product_year = product_year
-                    crop.save()
+                    product_year.contract_crops += (crop,)
+                    product_year.save()
                     new_product_years.append(product_year)
                 else:
                     product_year = MaquilaProductYear()
@@ -320,9 +331,8 @@ class Contract(sequence_ordered(), Workflow, ModelSQL, ModelView):
                     product_year.crop = crop.crop
                     product_year.product = ppercentatge.product
                     product_year.unit = ppercentatge.product.default_uom
+                    product_year.contract_crops = (crop,)
                     product_year.save()
-                    crop.product_year = product_year
-                    crop.save()
                     new_product_years.append(product_year)
         return new_product_years
 
@@ -336,8 +346,7 @@ class Contract(sequence_ordered(), Workflow, ModelSQL, ModelView):
         products = set()
         for crop in self.product_crops:
             crops.add(crop.crop)
-            for ppercentatge in self.product_percentages:
-                products.add(ppercentatge.product)
+            products.add(self.product)
 
         records = Maquila.search([
             ('party', '=', self.party),
@@ -348,26 +357,24 @@ class Contract(sequence_ordered(), Workflow, ModelSQL, ModelView):
 
         new_maquilas = []
         for crop in self.product_crops:
-            for ppercentatge in self.product_percentages:
-                key = (self.party, ppercentatge.product, crop.crop, self.table)
-                if key in maquilas:
-                    maquila = maquilas.get(key)
-                    crop.maquila = maquila
-                    crop.save()
-                    new_maquilas.append(maquila)
-                else:
-                    maquila = Maquila(**default_values)
-                    maquila.company = self.company
-                    maquila.party = self.party
-                    maquila.crop = crop.crop
-                    maquila.party = self.party
-                    maquila.product = ppercentatge.product
-                    maquila.unit = ppercentatge.product.default_uom
-                    maquila.table = self.table
-                    maquila.save()
-                    crop.maquila = maquila
-                    crop.save()
-                    new_maquilas.append(maquila)
+            key = (self.party, self.product, crop.crop, self.table)
+            if key in maquilas:
+                maquila = maquilas.get(key)
+                maquila.contract_crops += (crop,)
+                maquila.save()
+                new_maquilas.append(maquila)
+            else:
+                maquila = Maquila(**default_values)
+                maquila.company = self.company
+                maquila.party = self.party
+                maquila.crop = crop.crop
+                maquila.party = self.party
+                maquila.product = self.product
+                maquila.unit = self.product.default_uom
+                maquila.table = self.table
+                maquila.contract_crops = (crop,)
+                maquila.save()
+                new_maquilas.append(maquila)
         return new_maquilas
 
 
@@ -382,9 +389,11 @@ class ContractCrop(ModelSQL, ModelView):
         depends=['currency_digits'], required=True)
     currency_digits = fields.Function(fields.Integer('Currency Digits'),
         'on_change_with_currency_digits')
-    product_year = fields.Many2One('agronomics.maquila.product_year',
-        "Product Year", readonly=True)
-    maquila = fields.Many2One('agronomics.maquila', "Maquila", readonly=True)
+    product_years = fields.Many2Many(
+        'agronomics.maquila.product_year-agronomics.maquila.contract.crop', 'contract_crop', 'product_year', "Product Years")
+    maquilas = fields.Many2Many(
+        'agronomics.maquila-agronomics.maquila.contract.crop',
+        'contract_crop', 'maquila', "Maquila", readonly=True)
 
     def on_change_with_currency_digits(self, name=None):
         Company = Pool().get('company.company')
@@ -421,6 +430,9 @@ class ProductYear(ModelSQL, ModelView):
     quantity = fields.Function(fields.Float("Quantity",
         digits=(16, Eval('unit_digits', 2)),
         depends=['unit_digits']), 'get_quantity')
+    delivered_quantity = fields.Function(fields.Float("Delivered Quantity",
+        digits=(16, Eval('unit_digits', 2)),
+        depends=['unit_digits']), 'get_delivered_quantity')
     unit = fields.Many2One('product.uom', "Unit", required=True, readonly=True,
         ondelete='RESTRICT', domain=[
             If(Bool(Eval('product_uom_category')),
@@ -433,8 +445,9 @@ class ProductYear(ModelSQL, ModelView):
     product_uom_category = fields.Function(
         fields.Many2One('product.uom.category', "Product Uom Category"),
         'on_change_with_product_uom_category')
-    contract_crops = fields.One2Many('agronomics.maquila.contract.crop',
-        'product_year', "Crops", readonly=True)
+    contract_crops = fields.Many2Many(
+        'agronomics.maquila.product_year-agronomics.maquila.contract.crop',
+        'product_year', 'contract_crop', "Contract Crops", readonly=True)
     contracts = fields.Function(fields.One2Many('agronomics.maquila.contract',
         None, "Contracts"), 'get_contracts', searcher='search_contracts')
 
@@ -444,6 +457,25 @@ class ProductYear(ModelSQL, ModelView):
         cls._order = [
             ('id', 'DESC'),
             ]
+
+    def get_rec_name(self, name):
+        items = []
+        items.append(self.party.rec_name)
+        items.append('[%s]' % self.crop.rec_name)
+        return ' '.join(items)
+
+    @classmethod
+    def search_rec_name(cls, name, clause):
+        _, operator, value = clause
+        if operator.startswith('!') or operator.startswith('not '):
+            bool_op = 'AND'
+        else:
+            bool_op = 'OR'
+        domain = [bool_op,
+            ('party', operator, value),
+            ('crop', operator, value),
+            ]
+        return domain
 
     @fields.depends('product')
     def on_change_with_product_uom_category(self, name=None):
@@ -479,6 +511,29 @@ class ProductYear(ModelSQL, ModelView):
         return res
 
     @classmethod
+    def get_delivered_quantity(cls, product_years, name):
+        pool = Pool()
+        SaleLine = pool.get('sale.line')
+        Uom = pool.get('product.uom')
+
+        res = dict((x.id, 0) for x in product_years)
+        for product_year in product_years:
+            lines = SaleLine.search([
+                ('maquila', '=', product_year),
+                ('product', '=', product_year.product),
+                ('sale.state', 'not in', ['cancelled', 'draft', 'quotation']),
+                ])
+
+            _sum = 0
+            for line in lines:
+                for move in line.moves:
+                    if not move.state == 'done':
+                        continue
+                    _sum += Uom.compute_qty(move.uom, move.quantity, product_year.unit, False)
+            res[product_year.id] = _sum
+        return res
+
+    @classmethod
     def get_contracts(cls, product_years, name):
         res = dict((x.id, None) for x in product_years)
         for product_year in product_years:
@@ -505,6 +560,9 @@ class Maquila(ModelSQL, ModelView):
     quantity = fields.Function(fields.Float("Quantity",
         digits=(16, Eval('unit_digits', 2)),
         depends=['unit_digits']), 'get_quantity')
+    pending_quantity = fields.Function(fields.Float("Pending Quantity",
+        digits=(16, Eval('unit_digits', 2)),
+        depends=['unit_digits']), 'get_pending_quantity')
     product = fields.Many2One('product.product', "Product", required=True,
         readonly=True,
         context={
@@ -528,8 +586,9 @@ class Maquila(ModelSQL, ModelView):
     product_year = fields.Many2One('agronomics.maquila.product_year',
         "Product Year", readonly=True)
     table = fields.Boolean("Table", readonly=True)
-    contract_crops = fields.One2Many('agronomics.maquila.contract.crop', 'maquila',
-        "Crops", readonly=True)
+    contract_crops = fields.Many2Many(
+        'agronomics.maquila-agronomics.maquila.contract.crop',
+        'maquila', 'contract_crop', "Contract Crops", readonly=True)
     contracts = fields.Function(fields.One2Many('agronomics.maquila.contract',
         None, "Contracts"), 'get_contracts', searcher='search_contracts')
 
@@ -544,6 +603,25 @@ class Maquila(ModelSQL, ModelView):
             ('id', 'DESC'),
             ]
 
+    def get_rec_name(self, name):
+        items = []
+        items.append(self.party.rec_name)
+        items.append('[%s]' % self.crop.rec_name)
+        return ' '.join(items)
+
+    @classmethod
+    def search_rec_name(cls, name, clause):
+        _, operator, value = clause
+        if operator.startswith('!') or operator.startswith('not '):
+            bool_op = 'AND'
+        else:
+            bool_op = 'OR'
+        domain = [bool_op,
+            ('party', operator, value),
+            ('crop', operator, value),
+            ]
+        return domain
+
     @fields.depends('product')
     def on_change_with_product_uom_category(self, name=None):
         if self.product:
@@ -556,25 +634,66 @@ class Maquila(ModelSQL, ModelView):
         return 2
 
     @classmethod
-    def get_quantity(cls, product_years, name):
-        res = dict((x.id, 0) for x in product_years)
-        for product_year in product_years:
+    def get_quantity(cls, maquilas, name):
+        res = dict((x.id, 0) for x in maquilas)
+        for maquila in maquilas:
             _sum = 0
-            for crop in product_year.contract_crops:
-                for ppercentatge in crop.contract.product_percentages:
-                    if ppercentatge.product == product_year.product:
-                        _sum += crop.quantity * ppercentatge.percentatge
-            res[product_year.id] = _sum
+            for crop in maquila.contract_crops:
+                if crop.contract.product == maquila.product:
+                    _sum += crop.quantity
+            res[maquila.id] = _sum
         return res
 
     @classmethod
-    def get_contracts(cls, product_years, name):
-        res = dict((x.id, None) for x in product_years)
-        for product_year in product_years:
-            contracts = [crop.contract.id for crop in product_year.contract_crops]
-            res[product_year.id] = contracts
+    def get_pending_quantity(cls, maquilas, name):
+        pool = Pool()
+        Weighing = pool.get('agronomics.weighing')
+        Uom = pool.get('product.uom')
+
+        res = dict((x.id, 0) for x in maquilas)
+        for maquila in maquilas:
+            weighings = Weighing.search([
+                ('maquila', '=', maquila),
+                ('product', '=', maquila.product),
+                ('state', '=', 'done'),
+                ])
+
+            _sum = 0
+            for weighing in weighings:
+                move = weighing.inventory_move
+                if move:
+                    _sum += Uom.compute_qty(move.uom, move.quantity, maquila.unit, False)
+            res[maquila.id] = maquila.quantity - _sum
+        return res
+
+    @classmethod
+    def get_contracts(cls, maquilas, name):
+        res = dict((x.id, None) for x in maquilas)
+        for maquila in maquilas:
+            contracts = [crop.contract.id for crop in maquila.contract_crops]
+            res[maquila.id] = contracts
         return res
 
     @classmethod
     def search_contracts(cls, name, clause):
         return [('contract_crops.contract',) + tuple(clause[1:])]
+
+
+class MaquilaProductYearContractCrop(ModelSQL):
+    'Party - Category'
+    __name__ = 'agronomics.maquila.product_year-agronomics.maquila.contract.crop'
+    _table = 'agronomics_maquila_product_year_contract_crop_rel'
+    product_year = fields.Many2One('agronomics.maquila.product_year', "Product Year", ondelete='CASCADE',
+            required=True, select=True)
+    contract_crop = fields.Many2One('agronomics.maquila.contract.crop', "Contract Crop",
+        ondelete='CASCADE', required=True, select=True)
+
+
+class MaquilaContractCrop(ModelSQL):
+    'Party - Category'
+    __name__ = 'agronomics.maquila-agronomics.maquila.contract.crop'
+    _table = 'agronomics_maquila_contract_crop_rel'
+    maquila = fields.Many2One('agronomics.maquila', "Maquila", ondelete='CASCADE',
+            required=True, select=True)
+    contract_crop = fields.Many2One('agronomics.maquila.contract.crop', "Contract Crop",
+        ondelete='CASCADE', required=True, select=True)

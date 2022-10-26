@@ -3,8 +3,6 @@
 this repository contains the full copyright notices and license terms. -->
 <data>
     <xpath expr="/form/notebook/page[@id='general']/field[@name='amount']" position="after">
-        <label name="maquila_product"/>
-        <field name="maquila_product"/>
         <label name="maquila"/>
         <field name="maquila"/>
     </xpath>

@@ -4,6 +4,7 @@
   <field name="crop"/>
   <field name="table"/>
   <field name="product"/>
+  <field name="quantity"/>
   <field name="unit"/>
   <field name="company"/>
   <field name="contracts" tree_invisible="1"/>

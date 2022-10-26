@@ -7,4 +7,5 @@
   <field name="table"/>
   <field name="state"/>
   <field name="company"/>
+  <field name="reference"/>
 </tree>

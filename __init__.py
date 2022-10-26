@@ -27,6 +27,8 @@ def register():
         maquila.ContractProductPercentage,
         maquila.ProductYear,
         maquila.Maquila,
+        maquila.MaquilaProductYearContractCrop,
+        maquila.MaquilaContractCrop,
         party.Party,
         plot.Enclosure,
         plot.Crop,

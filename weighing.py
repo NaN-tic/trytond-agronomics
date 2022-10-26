@@ -126,18 +126,19 @@ class Weighing(Workflow, ModelSQL, ModelView):
     inventory_move = fields.Many2One('stock.move', "Inventory Move",
         readonly=True)
     is_maquila = fields.Boolean("Is Maquila", states={
-            'readonly': Eval('state').in_(READONLY2),
+            'readonly': Eval('state').in_(READONLY),
         }, depends=['state'])
     # TODO weighing table is readonly when is draft
     maquila = fields.Many2One('agronomics.maquila', "Maquila",
         domain=[
             ('table', '=', Bool(Eval('table', False))),
+            ('product', '=', Eval('product')),
         ],
         states={
-            'readonly': Eval('state').in_(READONLY2),
+            'readonly': Eval('state').in_(['in_analysis', 'done', 'cancelled']),
             'invisible': ~Eval('is_maquila', False),
-            'required': Eval('is_maquila', False),
-        }, depends=['is_maquila', 'table', 'state'])
+            'required': (Bool(Eval('is_maquila', False)) & (Eval('state') == 'in_analysis')),
+        }, depends=['is_maquila', 'table', 'product', 'state'])
 
     @classmethod
     def __setup__(cls):
@@ -463,7 +464,7 @@ class Weighing(Workflow, ModelSQL, ModelView):
         InvoiceLine = pool.get('account.invoice.line')
         Product = pool.get('product.product')
         Company = pool.get('company.company')
-        Maquila = pool.get('agronomics.maquila')
+
         ContractProductPriceListTypePriceList = pool.get(
             'agronomics.contract-product.price_list.type-product.price_list')
         WeighingInvoiceLine = pool.get(

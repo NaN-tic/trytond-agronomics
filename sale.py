@@ -89,14 +89,11 @@ class Sale(metaclass=PoolMeta):
 
 class SaleLine(metaclass=PoolMeta):
     __name__ = 'sale.line'
-    maquila_product = fields.Many2One('product.product', "Maquila Product",
-        ondelete='RESTRICT',
-        states={
-            'invisible': ~Bool(Eval('_parent_sale', {}).get('is_maquila')),
-            'required': Bool(Eval('_parent_sale', {}).get('is_maquila')),
-            'readonly': Eval('sale_state') != 'draft',
-        }, depends=['sale_state'])
-    maquila = fields.Many2One('agronomics.maquila', "Maquila",
+    maquila = fields.Many2One('agronomics.maquila.product_year', "Maquila",
+        domain=[
+            ('product', '=', Eval('product')),
+            ('party', '=', Eval('_parent_sale', {}).get('party')),
+        ],
         states={
             'invisible': ~Bool(Eval('_parent_sale', {}).get('is_maquila')),
             'required': Bool(Eval('_parent_sale', {}).get('is_maquila')),
