@@ -426,7 +426,9 @@ class ProductYear(ModelSQL, ModelView):
     crop = fields.Many2One('agronomics.crop', "Crop", required=True,
         readonly=True)
     product = fields.Many2One('product.product', "Product", required=True,
-        readonly=True)
+        readonly=True, context={
+            'company': Eval('company', None),
+        }, depends=['company'])
     quantity = fields.Function(fields.Float("Quantity",
         digits=(16, Eval('unit_digits', 2)),
         depends=['unit_digits']), 'get_quantity')

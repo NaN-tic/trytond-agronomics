@@ -2,7 +2,7 @@
 # this repository contains the full copyright notices and license terms.
 from trytond.model import fields
 from trytond.pool import Pool, PoolMeta
-from trytond.pyson import Bool, Eval, Id
+from trytond.pyson import Bool, Eval, Id, If
 
 
 def default_func(field_name):
@@ -58,7 +58,7 @@ class Sale(metaclass=PoolMeta):
     __name__ = 'sale.sale'
     is_maquila = fields.Boolean("Is Maquila",
         states={
-            'readonly': Eval('state') != 'draft',
+            'readonly': ((Eval('state') != 'draft') | (Eval('lines', [0]))),
             },
         depends=['state'])
 
@@ -99,3 +99,26 @@ class SaleLine(metaclass=PoolMeta):
             'required': Bool(Eval('_parent_sale', {}).get('is_maquila')),
             'readonly': Eval('sale_state') != 'draft',
         })
+    liter_uom = fields.Function(fields.Many2One('product.uom', "Liter Uom"),
+        'get_liter_uom')
+
+    @classmethod
+    def __setup__(cls):
+        super(SaleLine, cls).__setup__()
+        cls.product.domain += [If( Bool(Eval('_parent_sale', {}).get('is_maquila')),
+            ('sale_uom', '=', Eval('liter_uom')),
+            ())]
+        cls.product.depends += ['liter_uom']
+
+    @classmethod
+    def default_liter_uom(cls):
+        pool = Pool()
+        ModelData = pool.get('ir.model.data')
+
+        uom_liter_id = ModelData.get_id('product', 'uom_liter')
+        return uom_liter_id
+
+    @classmethod
+    def get_liter_uom(cls, lines, name):
+        uom_liter_id = cls.default_liter_uom()
+        return dict((x.id, uom_liter_id) for x in lines)
