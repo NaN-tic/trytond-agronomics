@@ -51,7 +51,7 @@ class Template(metaclass=PoolMeta):
             ('clarified-wine', 'Clarified Wine'),
             ('wine', "Wine"),
             ('bottled-wine', "Bottled Wine"),
-            ], "Agronomic Type", select=True)
+            ], "Agronomic Type")
     container = fields.Many2One('agronomics.container', 'Container',
         states={
             'invisible': Eval('agronomic_type') != 'bottled-wine',
@@ -174,27 +174,27 @@ class ProductCrop(ModelSQL):
     "Product - Crop"
     __name__ = 'product.product-agronomics.crop'
     product = fields.Many2One('product.product', 'Product',
-        ondelete='CASCADE', select=True, required=True)
+        ondelete='CASCADE', required=True)
     crop = fields.Many2One('agronomics.crop', 'Crop',
-        ondelete='CASCADE', select=True, required=True)
+        ondelete='CASCADE', required=True)
 
 
 class ProductDO(ModelSQL):
     "Product - DO"
     __name__ = 'product.product-agronomics.denomination_of_origin'
     product = fields.Many2One('product.product', 'Product',
-        ondelete='CASCADE', select=True, required=True)
+        ondelete='CASCADE', required=True)
     do = fields.Many2One('agronomics.denomination_of_origin', 'DO',
-        ondelete='CASCADE', select=True, required=True)
+        ondelete='CASCADE', required=True)
 
 
 class ProductEcological(ModelSQL):
     "Product - Ecological"
     __name__ = 'product.product-agronomics.ecological'
     product = fields.Many2One('product.product', 'Product',
-        ondelete='CASCADE', select=True, required=True)
+        ondelete='CASCADE', required=True)
     ecological = fields.Many2One('agronomics.ecological', 'Ecological',
-        ondelete='CASCADE', select=True, required=True)
+        ondelete='CASCADE', required=True)
 
 
 class ProductPriceListType(ModelSQL, ModelView):

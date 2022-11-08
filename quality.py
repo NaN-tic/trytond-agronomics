@@ -68,7 +68,7 @@ class QualitySample(ModelSQL, ModelView):
     'Quality Sample'
     __name__ = 'quality.sample'
 
-    code = fields.Char('Code', select=True, readonly=True)
+    code = fields.Char('Code', readonly=True)
     reference = fields.Char('Reference')
     products = fields.Many2Many('product.product-quality.sample', 'sample',
         'product', "Products",
@@ -77,8 +77,7 @@ class QualitySample(ModelSQL, ModelView):
             },
         depends=['company'])
     collection_date = fields.DateTime('Collection Date', required=True)
-    company = fields.Many2One('company.company', 'Company', required=True,
-        select=True)
+    company = fields.Many2One('company.company', 'Company', required=True)
 
     @staticmethod
     def default_company():
@@ -113,9 +112,9 @@ class ProductQualitySample(ModelSQL):
     __name__ = 'product.product-quality.sample'
 
     product = fields.Many2One('product.product', 'Product', required=True,
-        ondelete='CASCADE', select=True)
+        ondelete='CASCADE')
     sample = fields.Many2One('quality.sample', 'Sample', ondelete='CASCADE',
-        required=True, select=True)
+        required=True)
 
 
 class QualityTest(metaclass=PoolMeta):
@@ -177,7 +176,7 @@ class QualityTest(metaclass=PoolMeta):
 
 class TestLineMixin(Model):
     __slots__ = ()
-    product = fields.Function(fields.Many2One('product.product', 'Product', select=True),
+    product = fields.Function(fields.Many2One('product.product', 'Product'),
         'get_product', searcher='search_product')
 
     def get_product(self, name):

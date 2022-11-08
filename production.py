@@ -102,18 +102,18 @@ class ProductionTemplateInputsProductTemplate(ModelSQL):
     'Production Template Inputs- Product Template'
     __name__ = 'production.template.inputs-product.template'
     production_template = fields.Many2One('production.template',
-        'Production Template', ondelete='CASCADE', required=True, select=True)
+        'Production Template', ondelete='CASCADE', required=True)
     template = fields.Many2One('product.template', 'Template',
-        ondelete='CASCADE', required=True, select=True)
+        ondelete='CASCADE', required=True)
 
 
 class ProductionTemplateOutputsProductTemplate(ModelSQL):
     'Production Template Inputs- Product Template'
     __name__ = 'production.template.outputs-product.template'
     production_template = fields.Many2One('production.template',
-        'Production Template', ondelete='CASCADE', required=True, select=True)
+        'Production Template', ondelete='CASCADE', required=True)
     template = fields.Many2One('product.template', 'Product',
-        ondelete='CASCADE', required=True, select=True)
+        ondelete='CASCADE', required=True)
 
 
 class ProductionTemplateLine(ModelSQL, ModelView):
@@ -683,8 +683,7 @@ class OutputDistribution(ModelSQL, ModelView):
 class ProductionEnologyProduct(ModelSQL, ModelView):
     'Production Enology Product'
     __name__ = 'production.enology.product'
-    production = fields.Many2One('production', 'Production',
-        select=True)
+    production = fields.Many2One('production', 'Production')
     product = fields.Many2One('product.product', 'Product', required=True)
     uom = fields.Many2One('product.uom', 'Uom')
     unit_digits = fields.Function(fields.Integer('Unit Digits'),

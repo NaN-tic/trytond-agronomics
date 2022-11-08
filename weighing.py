@@ -30,7 +30,7 @@ class Weighing(Workflow, ModelSQL, ModelView):
     __name__ = 'agronomics.weighing'
     _rec_name = 'number'
 
-    number = fields.Char('Number', readonly=True, select=True)
+    number = fields.Char('Number', readonly=True)
     weighing_date = fields.Date('Date', states={
             'readonly': Eval('state').in_(READONLY),
             'required': True
