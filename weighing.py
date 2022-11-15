@@ -355,6 +355,7 @@ class Weighing(Workflow, ModelSQL, ModelView):
         WeighingParcel = pool.get('agronomics.weighing-agronomics.parcel')
         weighing_parcel_to_save = []
         to_analysis = []
+
         for weighing in weighings:
             if not weighing.table:
                 if weighing.parcels:
@@ -380,8 +381,10 @@ class Weighing(Workflow, ModelSQL, ModelView):
                     else:
                         remaining_weight -= parcel.remaining_quantity
                         weighing_parcel.netweight = parcel.remaining_quantity
+
                     if weighing_parcel.netweight:
                         weighing_parcel_to_save.append(weighing_parcel)
+
                 if remaining_weight == 0:
                     to_analysis.append(weighing)
             else:

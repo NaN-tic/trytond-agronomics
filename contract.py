@@ -89,7 +89,7 @@ class AgronomicsContract(Workflow, ModelSQL, ModelView):
         return 'draft'
 
     def get_rec_name(self, name):
-        ret = self.producer.rec_name
+        ret = self.producer and self.producer.rec_name or ''
         if self.start_date:
             ret += ' - %s' % (self.start_date)
         return ret
