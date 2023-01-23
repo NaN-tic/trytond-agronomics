@@ -338,11 +338,9 @@ class Production(metaclass=PoolMeta):
             input_quantity = 0
             template_qty = production.production_template.quantity
             for enology in production.enology_products:
-                move = production._move(production.picking_location,
-                    production.location,
-                    production.company,
+                move = production._move('input',
                     enology.product,
-                    enology.uom.id,
+                    enology.uom,
                     enology.quantity)
                 move.production_input = production
                 moves.append(move)
@@ -354,11 +352,9 @@ class Production(metaclass=PoolMeta):
                 quantity = enology.quantity
                 qty = quantity * (input_quantity or 1) / template_qty
                 qty = enology.uom.round(qty)
-                move = production._move(production.picking_location,
-                    production.location,
-                    production.company,
+                move = production._move('input',
                     enology.product,
-                    enology.uom.id,
+                    enology.uom,
                     float(qty))
                 move.production_input = production
                 moves.append(move)
@@ -486,9 +482,7 @@ class Production(metaclass=PoolMeta):
                     product = production.pass_feature(product)
                     product = production.copy_certification(product)
                     move = production._move(
-                        production.location,
-                        distrib.location,
-                        production.company,
+                        'output',
                         product,
                         distrib.uom,
                         distrib.produced_quantity)
@@ -665,9 +659,7 @@ class OutputDistribution(ModelSQL, ModelView):
             product = distribution.production.pass_feature(product)
 
             move = distribution.production._move(
-                distribution.production.location,
-                distribution.location,
-                distribution.production.company,
+                'input',
                 product,
                 distribution.uom,
                 distribution.produced_quantity)
