@@ -398,7 +398,8 @@ class Weighing(Workflow, ModelSQL, ModelView):
         cls.analysis(to_analysis)
 
     def get_not_assigned_weight(self, name):
-        return self.netweight - sum([p.netweight for p in self.parcels])
+        return (self.netweight or 0) - sum([(p.netweight or 0)
+            for p in self.parcels])
 
     @classmethod
     @ModelView.button

@@ -135,13 +135,13 @@ class Plantation(ModelSQL, ModelView):
         return [('id', 'in', query)]
 
     @classmethod
-    def search_remaining_quanity(cls, name, clause):
+    def search_remaining_quantity(cls, name, clause):
         pool = Pool()
         DO = pool.get('agronomics.denomination_of_origin')
         PARCEL_DO = pool.get('agronomics.parcel-agronomics.do')
         Parcel = pool.get('agronomics.parcel')
-        Weighing = pool.get('agronomics_weighing-agronomics_parcel')
-        MaxProductionAllowed = pool.get('agronomics_max_production_allowed')
+        Weighing = pool.get('agronomics.weighing-agronomics.parcel')
+        MaxProductionAllowed = pool.get('agronomics.max.production.allowed')
 
         do = DO.__table__()
         parcel = Parcel.__table__()
@@ -151,27 +151,22 @@ class Plantation(ModelSQL, ModelView):
 
         _, operator, value = clause
         Operator = fields.SQL_OPERATORS[operator]
-        query = weighing.join(parcel, condition=weighing.parcel==parcel.id)
-        query = query.where(weighing.table != True)
-        query = query.select(parcel.id, Sum(weighing.netweight).as_('weight'),
-            group_by=parcel.id)
 
-        query2 = max_production.join(parcel,
-            condition = ((max_production.crop == p.crop) &
-                (max_production.variety == p.variety)))
-        query2 = query2.join(parcel_do,
-            condition=m.denomination_origin == parcel_do.do)
-        query2 = query2.select((Min(max_production.max_production
-                )*parcel.surface).as_('max_production'),
-            group_by=parcel.id)
-
-        query3 = query.join(query2, condition=query.parcel==query2.parcel)
-        query3.select(query2.max_production-query.weight,
-            having=Operator(query2.max_production-query.weight, value))
-
-        return [('id', 'in', query)]
-
-
+        join1 = weighing.join(parcel, type_='RIGHT',
+            condition=((weighing.parcel==parcel.id) &
+                (weighing.table != True)))
+        join2 = join1.join(parcel_do, type_= 'LEFT',
+            condition=parcel.id==parcel_do.parcel)
+        join3 = join2.join(max_production, type_='LEFT',
+                condition=((max_production.crop == parcel.crop) &
+                    (max_production.variety == parcel.variety)))
+        query2 = join3.select(parcel.plantation,
+            Sum(max_production.max_production*parcel.surface -
+                weighing.netweight).as_('remaining_quantity'),
+            group_by=parcel.plantation)
+        query = query2.select(query2.plantation)
+        query.where = Operator(query2.remaining_quantity, value)
+        return [('id' , 'in', query)]
 
 class Ecological(ModelSQL, ModelView):
     "Ecological"
@@ -234,7 +229,7 @@ class Parcel(ModelSQL, ModelView):
             )*self.surface, 2)
 
     def get_purchased_quantity(self, name):
-        return sum([w.netweight for w in self.weighings if not w.table])
+        return sum([(w.netweight or 0) for w in self.weighings if not w.table])
 
     def get_remaining_quantity(self, name):
         return (self.max_production or 0) - (self.purchased_quantity or 0)
