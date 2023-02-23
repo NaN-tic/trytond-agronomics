@@ -307,7 +307,6 @@ Create Production
   >>> [x.name for x in production.production_template.inputs]
   ['Raim Blanc']
   >>> production.click('assign_try')
-  True
   >>> production.click('run')
   >>> production.click('done')
   >>> len(production.outputs)
