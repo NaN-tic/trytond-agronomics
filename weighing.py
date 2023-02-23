@@ -484,6 +484,8 @@ class Weighing(Workflow, ModelSQL, ModelView):
                     invoice_line.product = weighing.product_created
                     invoice_line.on_change_product()
                     invoice_line.quantity = weighing.netweight or 0
+                    invoice_line.product_price_list_type = (
+                        beneficiary.product_price_list_type)
 
                     unit_price = Product.get_purchase_price(
                         [weighing.product_created],

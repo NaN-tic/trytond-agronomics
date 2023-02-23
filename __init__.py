@@ -3,6 +3,7 @@
 # the full copyright notices and license terms.
 from trytond.pool import Pool
 from . import contract
+from . import invoice
 from . import party
 from . import plot
 from . import product
@@ -18,6 +19,7 @@ def register():
         contract.AgronomicsContractProductPriceListTypePriceList,
         contract.AgronomicsContract,
         contract.AgronomicsContractLine,
+        invoice.InvoiceLine,
         party.Party,
         plot.Enclosure,
         plot.Crop,
