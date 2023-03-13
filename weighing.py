@@ -535,8 +535,11 @@ class Weighing(Workflow, ModelSQL, ModelView):
             if weighing.beneficiaries:
                 Beneficiary.delete([x for x in weighing.beneficiaries])
 
-            parcel = weighing.get_parcel()
+            if weighing.table and weighing.denomination_origin:
+                raise UserError(gettext('agronomics.msg_weighing_with_table_do',
+                    weighing= weighing.rec_name))
 
+            parcel = weighing.get_parcel()
             # Check if all plantations has a parcel in the weighing's crop
             for plantation in weighing.plantations:
                 plantation = plantation.plantation
