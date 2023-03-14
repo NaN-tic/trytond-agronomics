@@ -537,7 +537,7 @@ class Weighing(Workflow, ModelSQL, ModelView):
 
             if weighing.table and weighing.denomination_origin:
                 raise UserError(gettext('agronomics.msg_weighing_with_table_do',
-                    weighing= weighing.rec_name))
+                    weighing=weighing.rec_name))
 
             parcel = weighing.get_parcel()
             # Check if all plantations has a parcel in the weighing's crop

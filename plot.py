@@ -71,7 +71,7 @@ class Plantation(ModelSQL, ModelView):
     plantation_owner = fields.Many2One('party.party', "Plantation Owner")
     varieties = fields.Function(fields.Char('Varieties'), 'get_varieties',
         searcher='search_varieties')
-    do = fields.Function(fields.Char('DO'), 'get_all_do', searcher='search_do')
+    do = fields.Function(fields.Char('DO'), 'get_do', searcher='search_do')
     remaining_quantity = fields.Function(
         fields.Float("Remainig Quantity", digits=(16, 2)),
         'get_remaining_quantity', searcher='search_remaining_quantity')
@@ -81,24 +81,20 @@ class Plantation(ModelSQL, ModelView):
             return self.code
         return self.name
 
-    def get_all_do(self, name):
+    def get_do(self, name):
         do = []
         for y in self.parcels:
             do += [x.name for x in y.denomination_origin]
         return ",".join(list(set(do)))
 
     def get_varieties(self, name):
-        varieties = []
-        for y in self.parcels:
-            if y.variety:
-                varieties += [y.variety and y.variety.name ]
+        if not self.parcels:
+            return []
+        varieties = [y.variety.name for y in self.parcerls if y.variety]
         return ",".join(list(set(varieties)))
 
     def get_remaining_quantity(self, name):
-        quantity = 0
-        for y in self.parcels:
-            quantity += y.remaining_quantity
-        return quantity
+        return sum([y.remaining_quantity or 0 for y in self.parcels])
 
     @classmethod
     def search_varieties(cls, name, clause):
