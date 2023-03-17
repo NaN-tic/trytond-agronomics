@@ -13,6 +13,7 @@ _WINE_DIGITS = 4
 
 
 class WineMixin(Model):
+    __slots__ = ()
     wine_quality_comment = fields.Function(fields.Text('Wine Quality Comments'),
         'get_wine_quality_comment')
 

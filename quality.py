@@ -176,6 +176,7 @@ class QualityTest(metaclass=PoolMeta):
 
 
 class TestLineMixin(Model):
+    __slots__ = ()
     product = fields.Function(fields.Many2One('product.product', 'Product', select=True),
         'get_product', searcher='search_product')
 

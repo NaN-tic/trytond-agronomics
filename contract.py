@@ -42,8 +42,8 @@ class AgronomicsContract(Workflow, ModelSQL, ModelView):
         fields.Date('Start Date'), 'on_change_with_start_date')
     end_date = fields.Function(
         fields.Date('End Date'), 'on_change_with_end_date')
-    producer = fields.Many2One(
-        'party.party', "Producer", states=_STATES, depends=_DEPENDS,
+    party = fields.Many2One(
+        'party.party', "Party", states=_STATES, depends=_DEPENDS,
         required=True)
     price_list_types = fields.One2Many(
         'agronomics.contract-product.price_list.type-product.price_list',
@@ -89,7 +89,7 @@ class AgronomicsContract(Workflow, ModelSQL, ModelView):
         return 'draft'
 
     def get_rec_name(self, name):
-        ret = self.producer and self.producer.rec_name or ''
+        ret = self.party and self.party.rec_name or ''
         if self.start_date:
             ret += ' - %s' % (self.start_date)
         return ret
@@ -153,7 +153,7 @@ class AgronomicsContractLine(ModelSQL, ModelView):
         ondelete='CASCADE')
     parcel = fields.Many2One('agronomics.parcel', "Parcel",
         domain=[
-            ('producer', '=', Eval('_parent_contract.producer')),
+            ('producer', '=', Eval('_parent_contract.party')),
             ('crop', '=', Eval('_parent_contract.crop'))
         ])
     product = fields.Function(

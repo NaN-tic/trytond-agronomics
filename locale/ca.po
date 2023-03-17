@@ -2,6 +2,10 @@
 msgid ""
 msgstr "Content-Type: text/plain; charset=utf-8\n"
 
+msgctxt "field:account.invoice.line,product_price_list_type:"
+msgid "Product Price List Type"
+msgstr "Tipus de tarifa"
+
 msgctxt "field:agronomics.beneficiary,parcel:"
 msgid "Parcel"
 msgstr "Parcel·la"
@@ -12,7 +16,7 @@ msgstr "Beneficiari"
 
 msgctxt "field:agronomics.beneficiary,product_price_list_type:"
 msgid "Product Price List Type"
-msgstr ""
+msgstr "Tipus de tarifa"
 
 msgctxt "field:agronomics.beneficiary,weighing:"
 msgid "Weighing"
@@ -45,6 +49,10 @@ msgstr "Data finalització"
 msgctxt "field:agronomics.contract,lines:"
 msgid "Lines"
 msgstr "Línies"
+
+msgctxt "field:agronomics.contract,party:"
+msgid "Party"
+msgstr "Tercers"
 
 msgctxt "field:agronomics.contract,price_list_types:"
 msgid "Price List Types"
@@ -296,6 +304,10 @@ msgctxt "field:agronomics.plantation,code:"
 msgid "Code"
 msgstr "Codi"
 
+msgctxt "field:agronomics.plantation,do:"
+msgid "DO"
+msgstr "DO"
+
 msgctxt "field:agronomics.plantation,enclosures:"
 msgid "Enclosure"
 msgstr "Recinte"
@@ -310,11 +322,19 @@ msgstr "Tercers"
 
 msgctxt "field:agronomics.plantation,plantation_owner:"
 msgid "Plantation Owner"
-msgstr ""
+msgstr "Propietari de la plantació"
 
 msgctxt "field:agronomics.plantation,plantation_year:"
 msgid "Plantation Year"
-msgstr ""
+msgstr "Any de la plantació"
+
+msgctxt "field:agronomics.plantation,remaining_quantity:"
+msgid "Remainig Quantity"
+msgstr "Quantitat restant"
+
+msgctxt "field:agronomics.plantation,varieties:"
+msgid "Varieties"
+msgstr "Varietats"
 
 msgctxt "field:agronomics.weighing,all_do:"
 msgid "All DO"
@@ -323,6 +343,10 @@ msgstr "Totes les DO"
 msgctxt "field:agronomics.weighing,beneficiaries:"
 msgid "Beneficiaries"
 msgstr "Beneficiaris"
+
+msgctxt "field:agronomics.weighing,beneficiaries_invoices_line:"
+msgid "Beneficiaries Invoices"
+msgstr "Factures dels beneficiaris"
 
 msgctxt "field:agronomics.weighing,crop:"
 msgid "Crop"
@@ -339,6 +363,10 @@ msgstr "Ecològic"
 msgctxt "field:agronomics.weighing,forced_analysis:"
 msgid "Forced Analysis"
 msgstr "Anàlisi forçat"
+
+msgctxt "field:agronomics.weighing,inventory_move:"
+msgid "Inventory Move"
+msgstr "Moviment d'inventari"
 
 msgctxt "field:agronomics.weighing,netweight:"
 msgid "Net Weight"
@@ -404,6 +432,14 @@ msgctxt "field:agronomics.weighing,weight:"
 msgid "Weight"
 msgstr "Pes"
 
+msgctxt "field:agronomics.weighing-account.invoice.line,invoice_line:"
+msgid "Invoice Line"
+msgstr "Línia de factura"
+
+msgctxt "field:agronomics.weighing-account.invoice.line,weighing:"
+msgid "Weighing"
+msgstr "Pesada"
+
 msgctxt "field:agronomics.weighing-agronomics.do,do:"
 msgid "Denomination Origin"
 msgstr "Denominació d'origen"
@@ -444,6 +480,14 @@ msgctxt "field:agronomics.weighing.center,name:"
 msgid "Name"
 msgstr "Nom"
 
+msgctxt "field:agronomics.weighing.center,to_location:"
+msgid "To Location"
+msgstr "A la ubicació"
+
+msgctxt "field:agronomics.weighing.center,warehouse:"
+msgid "Warehouse"
+msgstr "Magatzem"
+
 msgctxt "field:agronomics.weighing.center,weighing_sequence:"
 msgid "Weighing Sequence"
 msgstr "Seqüència de pesada"
@@ -462,9 +506,8 @@ msgstr "Temps per desactivar variants"
 
 msgctxt "field:product.price_list,product_price_list_type:"
 msgid "Product Price List Type"
-msgstr ""
+msgstr "Tipus de tarifa"
 
-#, fuzzy
 msgctxt "field:product.price_list.type,name:"
 msgid "Name"
 msgstr "Nom"
@@ -507,11 +550,11 @@ msgstr "Plantilla Qualitat de producció"
 
 msgctxt "field:product.product,quality_samples:"
 msgid "Quality Samples"
-msgstr ""
+msgstr "Mostres de qualitat"
 
 msgctxt "field:product.product,quality_tests:"
 msgid "Quality Tests"
-msgstr ""
+msgstr "Tests de qualitat"
 
 msgctxt "field:product.product,quality_weighing:"
 msgid "Quality Weighing"
@@ -539,376 +582,375 @@ msgstr "Collites"
 
 msgctxt "field:product.product,wine_alcohol_content:"
 msgid "Alcohol Content"
-msgstr ""
+msgstr "Contingut d'alcohol"
 
 msgctxt "field:product.product,wine_alcohol_content_comment:"
 msgid "Alcohol Content Comment"
-msgstr ""
+msgstr "Comentari del contingut d'alcohol"
 
 msgctxt "field:product.product,wine_alcohol_content_confirm:"
 msgid "Alcohol Content Confirm"
-msgstr ""
+msgstr "Confirmació del contingut d'alcohol"
 
 msgctxt "field:product.product,wine_alcohol_content_success:"
 msgid "Alcohol Content Success"
-msgstr ""
+msgstr "Èxit del contingut d'alcohol"
 
-#, fuzzy
 msgctxt "field:product.product,wine_botrytis:"
 msgid "Botrytis"
 msgstr "Botrytis"
 
 msgctxt "field:product.product,wine_botrytis_comment:"
 msgid "Botrytis Comment"
-msgstr ""
+msgstr "Comentari del Botrytis"
 
 msgctxt "field:product.product,wine_botrytis_confirm:"
 msgid "Botrytis Confirm"
-msgstr ""
+msgstr "Confirmació del Botrytis"
 
 msgctxt "field:product.product,wine_botrytis_success:"
 msgid "Botrytis Success"
-msgstr ""
+msgstr "Èxit del Botrytis"
 
 msgctxt "field:product.product,wine_clogging:"
 msgid "Clogging"
-msgstr ""
+msgstr "Embassament"
 
 msgctxt "field:product.product,wine_clogging_comment:"
 msgid "Clogging Comment"
-msgstr ""
+msgstr "Comentari embassament"
 
 msgctxt "field:product.product,wine_clogging_confirm:"
 msgid "Clogging Confirm"
-msgstr ""
+msgstr "Confirmació embassament"
 
 msgctxt "field:product.product,wine_clogging_success:"
 msgid "Clogging Success"
-msgstr ""
+msgstr "Èxit embassament"
 
 msgctxt "field:product.product,wine_color_intensity:"
 msgid "Color Intensity"
-msgstr ""
+msgstr "Intensitat de color"
 
 msgctxt "field:product.product,wine_color_intensity_comment:"
 msgid "Color Intensity Comment"
-msgstr ""
+msgstr "Comentari de l'intensitat de color"
 
 msgctxt "field:product.product,wine_color_intensity_confirm:"
 msgid "Color Intensity Confirm"
-msgstr ""
+msgstr "Confirmació de l'intensitat de color"
 
 msgctxt "field:product.product,wine_color_intensity_success:"
 msgid "Color Intensity Success"
-msgstr ""
+msgstr "Éxit de l'intensitat de color"
 
 msgctxt "field:product.product,wine_density:"
 msgid "Density"
-msgstr ""
+msgstr "Densitat"
 
 msgctxt "field:product.product,wine_density_comment:"
 msgid "Density Comment"
-msgstr ""
+msgstr "Comentari de la densitat"
 
 msgctxt "field:product.product,wine_density_confirm:"
 msgid "Density Comment Confirm"
-msgstr ""
+msgstr "Confirmació de la densitat"
 
 msgctxt "field:product.product,wine_density_success:"
 msgid "Density Comment Success"
-msgstr ""
+msgstr "Èxit de la densitat"
 
 msgctxt "field:product.product,wine_free_sulphur:"
 msgid "Free Sulphur"
-msgstr ""
+msgstr "Sofre lliure"
 
 msgctxt "field:product.product,wine_free_sulphur_comment:"
 msgid "Free Sulphur Comment"
-msgstr ""
+msgstr "Comentari del sofre lliure"
 
 msgctxt "field:product.product,wine_free_sulphur_confirm:"
 msgid "Free Sulphur Confirm"
-msgstr ""
+msgstr "Confirmació del sofre lliure"
 
 msgctxt "field:product.product,wine_free_sulphur_success:"
 msgid "Free Sulphur Success"
-msgstr ""
+msgstr "Èxit del sofre lliure"
 
 msgctxt "field:product.product,wine_glucose_fructose:"
 msgid "Glucose/Fructose"
-msgstr ""
+msgstr "Glucosa/Fructosa"
 
 msgctxt "field:product.product,wine_glucose_fructose_comment:"
 msgid "Glucose/Fructose Comment"
-msgstr ""
+msgstr "Comentari de la Glucosa/Fructosa"
 
 msgctxt "field:product.product,wine_glucose_fructose_confirm:"
 msgid "Glucose/Fructose Confirm"
-msgstr ""
+msgstr "Confirmació de la Glucosa/Fructosa"
 
 msgctxt "field:product.product,wine_glucose_fructose_success:"
 msgid "Glucose/Fructose Success"
-msgstr ""
+msgstr "Èxit de la Glucosa/Fructosa"
 
 msgctxt "field:product.product,wine_lactic_acid:"
 msgid "Lactic Acid"
-msgstr ""
+msgstr "Àcid làctic"
 
 msgctxt "field:product.product,wine_lactic_acid_comment:"
 msgid "Lactic Acid Comment"
-msgstr ""
+msgstr "Comentari de l'àcid làctic"
 
 msgctxt "field:product.product,wine_lactic_acid_confirm:"
 msgid "Lactic Acid Confirm"
-msgstr ""
+msgstr "Confirmació de l'àcid làctic"
 
 msgctxt "field:product.product,wine_lactic_acid_success:"
 msgid "Lactic Acid Success"
-msgstr ""
+msgstr "Èxit de l'àcid làctic"
 
 msgctxt "field:product.product,wine_likely_alcohol_content:"
 msgid "Likely Alcohol Content"
-msgstr ""
+msgstr "Contingut d'alcohol probable"
 
 msgctxt "field:product.product,wine_likely_alcohol_content_comment:"
 msgid "Likely Alcohol Content Comment"
-msgstr ""
+msgstr "Comentari del contingut d'alcohol probable"
 
 msgctxt "field:product.product,wine_likely_alcohol_content_confirm:"
 msgid "Likely Alcohol Content Confirm"
-msgstr ""
+msgstr "Confirmació del contingut d'alcohol probable"
 
 msgctxt "field:product.product,wine_likely_alcohol_content_success:"
 msgid "Likely Alcohol Content Success"
-msgstr ""
+msgstr "Èxit del contingut d'alcohol probable"
 
 msgctxt "field:product.product,wine_malic_acid:"
 msgid "Malic Acid"
-msgstr ""
+msgstr "Àcid màlic"
 
 msgctxt "field:product.product,wine_malic_acid_comment:"
 msgid "Malic Acid Comment"
-msgstr ""
+msgstr "Comentari del àcid màlic"
 
 msgctxt "field:product.product,wine_malic_acid_confirm:"
 msgid "Malic Acid Confirm"
-msgstr ""
+msgstr "Confirmació del àcid màlic"
 
 msgctxt "field:product.product,wine_malic_acid_success:"
 msgid "Malic Acid Success"
-msgstr ""
+msgstr "Èxit del àcid màlic"
 
 msgctxt "field:product.product,wine_observing_phase:"
 msgid "Observing Phase"
-msgstr ""
+msgstr "Fase d'observació"
 
 msgctxt "field:product.product,wine_observing_phase_comment:"
 msgid "Observing Phase Comment"
-msgstr ""
+msgstr "Comentari sobre la fase d'observació"
 
 msgctxt "field:product.product,wine_observing_phase_confirm:"
 msgid "Observing Phase Confirm"
-msgstr ""
+msgstr "Confirmació de la fase d'observació"
 
 msgctxt "field:product.product,wine_observing_phase_success:"
 msgid "Observing Phase Success"
-msgstr ""
+msgstr "Éxit de la fase d'observació"
 
 msgctxt "field:product.product,wine_overall_impression:"
 msgid "Overall Impression"
-msgstr ""
+msgstr "Impressió general"
 
 msgctxt "field:product.product,wine_overall_impression_comment:"
 msgid "Overall Impression Comment"
-msgstr ""
+msgstr "Comentari sobre la impressió general"
 
 msgctxt "field:product.product,wine_overall_impression_confirm:"
 msgid "Overall Impression Confirm"
-msgstr ""
+msgstr "Confirmació de la impressió general"
 
 msgctxt "field:product.product,wine_overall_impression_success:"
 msgid "Overall Impression Success"
-msgstr ""
+msgstr "Èxit de la impressió general"
 
 msgctxt "field:product.product,wine_ph:"
 msgid "PH"
-msgstr ""
+msgstr "PH"
 
 msgctxt "field:product.product,wine_ph_comment:"
 msgid "PH Comment"
-msgstr ""
+msgstr "Comentari del PH"
 
 msgctxt "field:product.product,wine_ph_confirm:"
 msgid "PH Confirm"
-msgstr ""
+msgstr "Confirmació del PH"
 
 msgctxt "field:product.product,wine_ph_success:"
 msgid "PH Success"
-msgstr ""
+msgstr "Èxit del PH"
 
 msgctxt "field:product.product,wine_protein_stability:"
 msgid "Protein Stability"
-msgstr ""
+msgstr "Estabilitat de proteïnes"
 
 msgctxt "field:product.product,wine_protein_stability_comment:"
 msgid "Protein Stability Comment"
-msgstr ""
+msgstr "Comentari de la estabilitat de proteïnes"
 
 msgctxt "field:product.product,wine_protein_stability_confirm:"
 msgid "Protein Stability Confirm"
-msgstr ""
+msgstr "Confirmació de la estabilitat de proteïnes"
 
 msgctxt "field:product.product,wine_protein_stability_success:"
 msgid "Protein Stability Success"
-msgstr ""
+msgstr "Èxit de la estabilitat de proteïnes"
 
 msgctxt "field:product.product,wine_quality_comment:"
 msgid "Wine Quality Comments"
-msgstr ""
+msgstr "Comentari de qualitat del vi"
 
 msgctxt "field:product.product,wine_smelling_phase:"
 msgid "Smelling Phase"
-msgstr ""
+msgstr "Fase d'olor"
 
 msgctxt "field:product.product,wine_smelling_phase_comment:"
 msgid "Smelling Phase Comment"
-msgstr ""
+msgstr "Comentari de la fase d'olor"
 
 msgctxt "field:product.product,wine_smelling_phase_confirm:"
 msgid "Smelling Phase Confirm"
-msgstr ""
+msgstr "Confirmació de la fase d'olor"
 
 msgctxt "field:product.product,wine_smelling_phase_success:"
 msgid "Smelling Phase Success"
-msgstr ""
+msgstr "Èxit de la fase d'olor"
 
 msgctxt "field:product.product,wine_tartaric_acidity:"
 msgid "Tartaric Acidity"
-msgstr ""
+msgstr "Acidesa tartàrica"
 
 msgctxt "field:product.product,wine_tartaric_acidity_comment:"
 msgid "Tartaric Acidity Comment"
-msgstr ""
+msgstr "Comentari de la acidesa tartàrica"
 
 msgctxt "field:product.product,wine_tartaric_acidity_confirm:"
 msgid "Tartaric Acidity Confirm"
-msgstr ""
+msgstr "Confirmació de la acidesa tartàrica"
 
 msgctxt "field:product.product,wine_tartaric_acidity_success:"
 msgid "Tartaric Acidity Success"
-msgstr ""
+msgstr "Èxit de la acidesa tartàrica"
 
 msgctxt "field:product.product,wine_tartaric_stability:"
 msgid "Tartaric Stability"
-msgstr ""
+msgstr "Estabilitat tartàrica"
 
 msgctxt "field:product.product,wine_tartaric_stability_comment:"
 msgid "Tartaric Stability Comment"
-msgstr ""
+msgstr "Comentari de la estabilitat tartàrica"
 
 msgctxt "field:product.product,wine_tartaric_stability_confirm:"
 msgid "Tartaric Stability Confirm"
-msgstr ""
+msgstr "Confirmació de la estabilitat tartàrica"
 
 msgctxt "field:product.product,wine_tartaric_stability_success:"
 msgid "Tartaric Stability Success"
-msgstr ""
+msgstr "Èxit de la estabilitat tartàrica"
 
 msgctxt "field:product.product,wine_tasting_phase:"
 msgid "Tasting Phase"
-msgstr ""
+msgstr "Fase de tast"
 
 msgctxt "field:product.product,wine_tasting_phase_comment:"
 msgid "Tasting Phase Comment"
-msgstr ""
+msgstr "Comentari de la fase de tast"
 
 msgctxt "field:product.product,wine_tasting_phase_confirm:"
 msgid "Tasting Phase Confirm"
-msgstr ""
+msgstr "Confirmació de la fase de tast"
 
 msgctxt "field:product.product,wine_tasting_phase_success:"
 msgid "Tasting Phase Success"
-msgstr ""
+msgstr "Èxit de la fase de tast"
 
 msgctxt "field:product.product,wine_temperature:"
 msgid "Temperature"
-msgstr ""
+msgstr "Temperatura"
 
 msgctxt "field:product.product,wine_temperature_comment:"
 msgid "Temperature Comment"
-msgstr ""
+msgstr "Comentari de la temperatura"
 
 msgctxt "field:product.product,wine_temperature_confirm:"
 msgid "Temperature Confirm"
-msgstr ""
+msgstr "Confirmació de la temperatura"
 
 msgctxt "field:product.product,wine_temperature_success:"
 msgid "Temperature Success"
-msgstr ""
+msgstr "Èxit de la temperatura"
 
 msgctxt "field:product.product,wine_tone:"
 msgid "Tone"
-msgstr ""
+msgstr "To"
 
 msgctxt "field:product.product,wine_tone_comment:"
 msgid "Tone Comment"
-msgstr ""
+msgstr "Comentari del to"
 
 msgctxt "field:product.product,wine_tone_confirm:"
 msgid "Tone Confirm"
-msgstr ""
+msgstr "Confirmació del to"
 
 msgctxt "field:product.product,wine_tone_success:"
 msgid "Tone Success"
-msgstr ""
+msgstr "Èxit del to"
 
 msgctxt "field:product.product,wine_total_sulphur:"
 msgid "Total Sulphur"
-msgstr ""
+msgstr "Sofre total"
 
 msgctxt "field:product.product,wine_total_sulphur_comment:"
 msgid "Total Sulphur Comment"
-msgstr ""
+msgstr "Comentari del sofre total"
 
 msgctxt "field:product.product,wine_total_sulphur_confirm:"
 msgid "Total Sulphur Confirm"
-msgstr ""
+msgstr "Confirmació del sofre total"
 
 msgctxt "field:product.product,wine_total_sulphur_success:"
 msgid "Total Sulphur Success"
-msgstr ""
+msgstr "Èxit del sofre total"
 
 msgctxt "field:product.product,wine_turbidity:"
 msgid "Turbidity"
-msgstr ""
+msgstr "Terbolesa"
 
 msgctxt "field:product.product,wine_turbidity_comment:"
 msgid "Turbidity Comment"
-msgstr ""
+msgstr "Comentari de la terbolesa"
 
 msgctxt "field:product.product,wine_turbidity_confirm:"
 msgid "Turbidity Confirm"
-msgstr ""
+msgstr "Confirmació de la terbolesa"
 
 msgctxt "field:product.product,wine_turbidity_success:"
 msgid "Turbidity Success"
-msgstr ""
+msgstr "Èxit de la terbolesa"
 
 msgctxt "field:product.product,wine_volatility:"
 msgid "Volatility"
-msgstr ""
+msgstr "Volatilitat"
 
 msgctxt "field:product.product,wine_volatility_comment:"
 msgid "Volatility Comment"
-msgstr ""
+msgstr "Comentari de la volatilitat"
 
 msgctxt "field:product.product,wine_volatility_confirm:"
 msgid "Volatility Confirm"
-msgstr ""
+msgstr "Confirmació de la volatilitat"
 
 msgctxt "field:product.product,wine_volatility_success:"
 msgid "Volatility Success"
-msgstr ""
+msgstr "Èxit de la volatilitat"
 
 msgctxt "field:product.product-agronomics.crop,crop:"
 msgid "Crop"
@@ -934,12 +976,10 @@ msgctxt "field:product.product-agronomics.ecological,product:"
 msgid "Product"
 msgstr "Producte"
 
-#, fuzzy
 msgctxt "field:product.product-quality.sample,product:"
 msgid "Product"
 msgstr "Productes"
 
-#, fuzzy
 msgctxt "field:product.product-quality.sample,sample:"
 msgid "Sample"
 msgstr "Mostra"
@@ -955,6 +995,10 @@ msgstr "Capacitat"
 msgctxt "field:product.template,container:"
 msgid "Container"
 msgstr "Envàs"
+
+msgctxt "field:product.template,needs_sample:"
+msgid "Needs Samples"
+msgstr "Necesita mostres"
 
 msgctxt "field:product.template,quality_weighing:"
 msgid "Quality Weighing"
@@ -1006,15 +1050,15 @@ msgstr "Distribució de sortides"
 
 msgctxt "field:production,pass_certification:"
 msgid "Pass Certification"
-msgstr ""
+msgstr "Passar la Certificació"
 
 msgctxt "field:production,pass_quality:"
 msgid "Pass Quality"
-msgstr ""
+msgstr "Qualitat aprovada"
 
 msgctxt "field:production,pass_quality_sample:"
 msgid "Pass Quality Sample"
-msgstr ""
+msgstr "Passa la mostra de qualitat"
 
 msgctxt "field:production,production_template:"
 msgid "Production Template"
@@ -1139,6 +1183,10 @@ msgctxt "field:production.template,inputs:"
 msgid "Inputs"
 msgstr "Entrades"
 
+msgctxt "field:production.template,inputs_products:"
+msgid "Products"
+msgstr "Productes"
+
 msgctxt "field:production.template,name:"
 msgid "Name"
 msgstr "Nom"
@@ -1149,7 +1197,7 @@ msgstr "Sortides"
 
 msgctxt "field:production.template,pass_certification:"
 msgid "Pass Certification"
-msgstr ""
+msgstr "Passar la Certificació"
 
 msgctxt "field:production.template,pass_feature:"
 msgid "Pass on Feature"
@@ -1157,11 +1205,11 @@ msgstr "Passar propietats"
 
 msgctxt "field:production.template,pass_quality:"
 msgid "Pass Quality"
-msgstr ""
+msgstr "Qualitat aprovada"
 
 msgctxt "field:production.template,pass_quality_sample:"
 msgid "Pass Quality Sample"
-msgstr ""
+msgstr "Passa la mostra de qualitat"
 
 msgctxt "field:production.template,quantity:"
 msgid "Quantity"
@@ -1213,6 +1261,18 @@ msgctxt "field:production.template.outputs-product.template,template:"
 msgid "Product"
 msgstr "Productes"
 
+msgctxt "field:quality.configuration,sample_sequence:"
+msgid "Sample Sequence"
+msgstr "Seqüència de mostra"
+
+msgctxt "field:quality.configuration.company,company:"
+msgid "Company"
+msgstr "Empresa"
+
+msgctxt "field:quality.configuration.company,sample_sequence:"
+msgid "Sample Sequence"
+msgstr "Seqüència de mostra"
+
 msgctxt "field:quality.qualitative.test.line,product:"
 msgid "Product"
 msgstr "Productes"
@@ -1221,12 +1281,22 @@ msgctxt "field:quality.quantitative.test.line,product:"
 msgid "Product"
 msgstr "Productes"
 
-#, fuzzy
+msgctxt "field:quality.sample,code:"
+msgid "Code"
+msgstr "Codi"
+
+msgctxt "field:quality.sample,collection_date:"
+msgid "Collection Date"
+msgstr "Data de recollida"
+
+msgctxt "field:quality.sample,company:"
+msgid "Company"
+msgstr "Empresa"
+
 msgctxt "field:quality.sample,products:"
 msgid "Products"
 msgstr "Productes"
 
-#, fuzzy
 msgctxt "field:quality.sample,reference:"
 msgid "Reference"
 msgstr "Referència"
@@ -1274,7 +1344,7 @@ msgstr "Contracte"
 msgctxt ""
 "model:agronomics.contract-product.price_list.type-product.price_list,name:"
 msgid "Agronomics Contract Product Price List Type Price List"
-msgstr ""
+msgstr "Agronomics contracte de producte tipus de tarifa"
 
 msgctxt "model:agronomics.contract.line,name:"
 msgid "Agronomics Contract Line"
@@ -1320,6 +1390,10 @@ msgctxt "model:agronomics.weighing,name:"
 msgid "Weighing"
 msgstr "Pesada"
 
+msgctxt "model:agronomics.weighing-account.invoice.line,name:"
+msgid "Weighing - Invoice"
+msgstr "Pesada - Factura"
+
 msgctxt "model:agronomics.weighing-agronomics.do,name:"
 msgid "Weighing - Denomination Origin"
 msgstr "Pesada - Denominació Origen"
@@ -1338,7 +1412,7 @@ msgstr "Centre de pesada"
 
 msgctxt "model:ir.action,name:act_agronomics_contract_action"
 msgid "Agronomics Contract"
-msgstr ""
+msgstr "Contracte"
 
 msgctxt "model:ir.action,name:act_certification_tree"
 msgid "Certification"
@@ -1382,7 +1456,7 @@ msgstr "Plantació"
 
 msgctxt "model:ir.action,name:act_product_price_list_type_form"
 msgid "Product Price List Type"
-msgstr ""
+msgstr "Tipus de tarifa"
 
 msgctxt "model:ir.action,name:act_product_qualitative_test_lines"
 msgid "Qualitative Lines"
@@ -1420,14 +1494,13 @@ msgctxt "model:ir.action,name:act_production_template_tree"
 msgid "Production Template"
 msgstr "Plantilla de producció"
 
-#, fuzzy
 msgctxt "model:ir.action,name:act_quality_sample"
 msgid "Samples"
 msgstr "Mostres"
 
 msgctxt "model:ir.action,name:act_stock_location_material"
 msgid "Materials"
-msgstr ""
+msgstr "Materials"
 
 msgctxt "model:ir.action,name:act_weighing_action"
 msgid "Weighing"
@@ -1442,18 +1515,15 @@ msgctxt ""
 msgid "Create Cost Price Distribution"
 msgstr "Crear Distribució de costos"
 
-#, fuzzy
 msgctxt ""
 "model:ir.action.act_window.domain,name:act_agronomics_contract_active"
 msgid "Active"
 msgstr "Actiu"
 
-#, fuzzy
 msgctxt "model:ir.action.act_window.domain,name:act_agronomics_contract_all"
 msgid "All"
 msgstr "Tots"
 
-#, fuzzy
 msgctxt "model:ir.action.act_window.domain,name:act_agronomics_contract_draft"
 msgid "Draft"
 msgstr "Esborrany"
@@ -1488,6 +1558,8 @@ msgid ""
 "The contract \"%(contract)s\" cant be activated because the parcel "
 "\"%(parcel)s\" is in another active contract."
 msgstr ""
+"El contracte \"%(contract)s\" no es pot activar perquè la parcel·la "
+"\"%(parcel)s\" està en un altre contracte."
 
 msgctxt "model:ir.message,text:msg_check_cost_distribution"
 msgid "The production \"%(production)s\" has same products in cost distribution."
@@ -1519,6 +1591,10 @@ msgstr ""
 msgctxt "model:ir.message,text:msg_check_production_percentatge"
 msgid "Invalid percentatge \"%(percentatge)s\" in \"%(production)s\"."
 msgstr "Percentatge \"%(percentatge)s\" no vàlid a \"%(producció)s\"."
+
+msgctxt "model:ir.message,text:msg_location_no_configured"
+msgid "The weighing center \"%(center)s\" dont have a to location configured."
+msgstr "El centre de pesada \"%(center)s\" no té una ubicació destí configurada."
 
 msgctxt "model:ir.message,text:msg_move_amount_exceed"
 msgid ""
@@ -1576,22 +1652,26 @@ msgstr ""
 "El producte \"%(product)s\" no pot tenir més d'una collita degut al seu "
 "tipus agronòmic"
 
-#, fuzzy
+msgctxt "model:ir.message,text:msg_weighing_with_table_do"
+msgid ""
+"The weighing \"%(weighing)s\" has the mark \"Table\" but has selected "
+"denomination of origin."
+msgstr ""
+"La pesada \"%(weighing)s\" té la marca \"Taula\" però té denominacións "
+"d'origen."
+
 msgctxt "model:ir.model.button,string:agronomics_contract_active_button"
 msgid "Active"
 msgstr "Actiu"
 
-#, fuzzy
 msgctxt "model:ir.model.button,string:agronomics_contract_cancel_button"
 msgid "Cancel"
 msgstr "Cancel·lat"
 
-#, fuzzy
 msgctxt "model:ir.model.button,string:agronomics_contract_done_button"
 msgid "Done"
 msgstr "Realitzat"
 
-#, fuzzy
 msgctxt "model:ir.model.button,string:agronomics_contract_draft_button"
 msgid "Draft"
 msgstr "Esborrany"
@@ -1627,14 +1707,12 @@ msgstr "Processa"
 
 msgctxt "model:ir.rule.group,name:rule_group_quality_configuration_company"
 msgid "Quality Configuration Company"
-msgstr ""
+msgstr "Configuració de companyia de qualitat"
 
-#, fuzzy
 msgctxt "model:ir.rule.group,name:rule_group_quality_sample"
 msgid "Quality Sample"
 msgstr "Mostra de qualitat"
 
-#, fuzzy
 msgctxt "model:ir.sequence,name:sequence_sample"
 msgid "Sample"
 msgstr "Mostra"
@@ -1643,7 +1721,6 @@ msgctxt "model:ir.sequence,name:sequence_weighing"
 msgid "Weighing"
 msgstr "Pesada"
 
-#, fuzzy
 msgctxt "model:ir.sequence.type,name:sequence_type_sample"
 msgid "Quality Sample"
 msgstr "Mostra de qualitat"
@@ -1662,7 +1739,7 @@ msgstr "Agronomics"
 
 msgctxt "model:ir.ui.menu,name:menu_agronomics_contract_list"
 msgid "Agronomics Contract"
-msgstr ""
+msgstr "Contracte"
 
 msgctxt "model:ir.ui.menu,name:menu_certification_list"
 msgid "Certification"
@@ -1710,13 +1787,12 @@ msgstr "Plantació"
 
 msgctxt "model:ir.ui.menu,name:menu_product_price_list_type_form"
 msgid "Product Price List Type"
-msgstr ""
+msgstr "Tipus de tarifa"
 
 msgctxt "model:ir.ui.menu,name:menu_production_template_list"
 msgid "Production Template"
 msgstr "Plantilla de producció"
 
-#, fuzzy
 msgctxt "model:ir.ui.menu,name:menu_quality_sample"
 msgid "Samples"
 msgstr "Mostres"
@@ -1731,11 +1807,11 @@ msgstr "Pesada"
 
 msgctxt "model:ir.ui.menu,name:menuitem_stock_location_material"
 msgid "Materials"
-msgstr ""
+msgstr "Materials"
 
 msgctxt "model:product.price_list.type,name:"
 msgid "Product Price List Type"
-msgstr ""
+msgstr "Tipus de tarifa"
 
 msgctxt "model:product.product-agronomics.crop,name:"
 msgid "Product - Crop"
@@ -1751,7 +1827,7 @@ msgstr "Producte - Ecològic"
 
 msgctxt "model:product.product-quality.sample,name:"
 msgid "Product - Quality Sample"
-msgstr ""
+msgstr "Producte - Mostre de qualitat"
 
 msgctxt "model:product.variety,name:"
 msgid "Product Variety"
@@ -1769,6 +1845,8 @@ msgctxt "model:production.cost_price.distribution.template.ask,name:"
 msgid ""
 "Production Cost Price Distribution Template from Production Template Ask"
 msgstr ""
+"Plantilla de cost de distribució de la producció de la plantilla de "
+"producció"
 
 msgctxt "model:production.enology.product,name:"
 msgid "Production Enology Product"
@@ -1784,7 +1862,7 @@ msgstr "Plantilla de producció"
 
 msgctxt "model:production.template.inputs-product.template,name:"
 msgid "Production Template Inputs- Product Template"
-msgstr ""
+msgstr "Plantilla producció"
 
 msgctxt "model:production.template.line,name:"
 msgid "Production Template Line"
@@ -1792,229 +1870,207 @@ msgstr "Línia Plantilla de producció"
 
 msgctxt "model:production.template.outputs-product.template,name:"
 msgid "Production Template Inputs- Product Template"
-msgstr ""
+msgstr "Plantilla producció"
 
-#, fuzzy
+msgctxt "model:quality.configuration.company,name:"
+msgid "Company Quality configuration"
+msgstr "Configuració de qualitat de la companyia"
+
 msgctxt "model:quality.proof,name:wine_alcohol_content"
 msgid "Grau alcohol"
 msgstr "Grau alcohol"
 
-#, fuzzy
 msgctxt "model:quality.proof,name:wine_botrytis"
 msgid "Botrytis"
 msgstr "Botrytis"
 
 msgctxt "model:quality.proof,name:wine_clogging"
 msgid "Colmatacio"
-msgstr ""
+msgstr "Colmatacio"
 
-#, fuzzy
 msgctxt "model:quality.proof,name:wine_color_intensity"
 msgid "Intensitat colorant"
 msgstr "Intensitat colorant"
 
-#, fuzzy
 msgctxt "model:quality.proof,name:wine_density"
 msgid "Densitat"
 msgstr "Densitat"
 
-#, fuzzy
 msgctxt "model:quality.proof,name:wine_free_sulphur"
 msgid "Sulfuros lliure"
 msgstr "Sulfuros lliure"
 
-#, fuzzy
 msgctxt "model:quality.proof,name:wine_glucose_fructose"
 msgid "Glucosa/fructosa"
 msgstr "Glucosa/fructosa"
 
 msgctxt "model:quality.proof,name:wine_lactic_acid"
 msgid "Àcil lactica"
-msgstr ""
+msgstr "Àcil lactica"
 
-#, fuzzy
 msgctxt "model:quality.proof,name:wine_likely_alcohol_content"
 msgid "Grau esperat"
 msgstr "Grau esperat"
 
-#, fuzzy
 msgctxt "model:quality.proof,name:wine_malic_acid"
 msgid "Àcid màlic"
 msgstr "Àcid màlic"
 
 msgctxt "model:quality.proof,name:wine_notes"
 msgid "Observacions"
-msgstr ""
+msgstr "Observacions"
 
-#, fuzzy
 msgctxt "model:quality.proof,name:wine_observing_phase"
 msgid "Fase visual"
 msgstr "Fase visual"
 
 msgctxt "model:quality.proof,name:wine_overall_impression"
 msgid "Impresió general"
-msgstr ""
+msgstr "Impresió general"
 
 msgctxt "model:quality.proof,name:wine_ph"
 msgid "PH"
-msgstr ""
+msgstr "PH"
 
-#, fuzzy
 msgctxt "model:quality.proof,name:wine_protein_stability"
 msgid "Estabilitat proteica"
 msgstr "Estabilitat proteica"
 
 msgctxt "model:quality.proof,name:wine_smelling_phase"
 msgid "Fase olfactiva"
-msgstr ""
+msgstr "Fase olfactiva"
 
-#, fuzzy
 msgctxt "model:quality.proof,name:wine_tartaric_acidity"
 msgid "Acidesa tartàric"
 msgstr "Acidesa tartàric"
 
-#, fuzzy
 msgctxt "model:quality.proof,name:wine_tartaric_stability"
 msgid "Estabilitat tartarica"
 msgstr "Estabilitat tartarica"
 
 msgctxt "model:quality.proof,name:wine_tasting_phase"
 msgid "Fase gustativa"
-msgstr ""
+msgstr "Fase gustativa"
 
-#, fuzzy
 msgctxt "model:quality.proof,name:wine_temperature"
 msgid "Temperatura"
 msgstr "Temperatura"
 
-#, fuzzy
 msgctxt "model:quality.proof,name:wine_tone"
 msgid "Tonalitat"
 msgstr "Tonalitat"
 
 msgctxt "model:quality.proof,name:wine_total_sulphur"
 msgid "Sulfurós Total"
-msgstr ""
+msgstr "Sulfurós Total"
 
-#, fuzzy
 msgctxt "model:quality.proof,name:wine_turbidity"
 msgid "Terbolesa"
 msgstr "Terbolesa"
 
 msgctxt "model:quality.proof,name:wine_volatility"
 msgid "Volatil"
-msgstr ""
+msgstr "Volatil"
 
-#, fuzzy
 msgctxt "model:quality.proof.method,name:wine_alcohol_content_method"
 msgid "Grau alcohol"
 msgstr "Grau alcohol"
 
-#, fuzzy
 msgctxt "model:quality.proof.method,name:wine_botrytis_method"
 msgid "Botrytis"
 msgstr "Botrytis"
 
 msgctxt "model:quality.proof.method,name:wine_clogging_method"
 msgid "Colmatacio"
-msgstr ""
+msgstr "Colmatacio"
 
-#, fuzzy
 msgctxt "model:quality.proof.method,name:wine_color_intensity_method"
 msgid "Intensitat colorant"
 msgstr "Intensitat colorant"
 
-#, fuzzy
 msgctxt "model:quality.proof.method,name:wine_density_method"
 msgid "Densitat"
 msgstr "Densitat"
 
-#, fuzzy
 msgctxt "model:quality.proof.method,name:wine_free_sulphur_method"
 msgid "Sulfuros lliure"
 msgstr "Sulfuros lliure"
 
-#, fuzzy
 msgctxt "model:quality.proof.method,name:wine_glucose_fructose_method"
 msgid "Glucosa/fructosa"
 msgstr "Glucosa/fructosa"
 
 msgctxt "model:quality.proof.method,name:wine_lactic_acid_method"
 msgid "Àcil lactica"
-msgstr ""
+msgstr "Àcil lactica"
 
-#, fuzzy
 msgctxt "model:quality.proof.method,name:wine_likely_alcohol_content_method"
 msgid "Grau esperat"
 msgstr "Grau esperat"
 
-#, fuzzy
 msgctxt "model:quality.proof.method,name:wine_malic_acid_method"
 msgid "Àcid màlic"
 msgstr "Àcid màlic"
 
 msgctxt "model:quality.proof.method,name:wine_notes_method"
 msgid "Observacions"
-msgstr ""
+msgstr "Observacions"
 
-#, fuzzy
 msgctxt "model:quality.proof.method,name:wine_observing_phase_method"
 msgid "Fase visual"
 msgstr "Fase visual"
 
 msgctxt "model:quality.proof.method,name:wine_overall_impression_method"
 msgid "Impresió general"
-msgstr ""
+msgstr "Impresió general"
 
 msgctxt "model:quality.proof.method,name:wine_ph_method"
 msgid "PH"
-msgstr ""
+msgstr "PH"
 
-#, fuzzy
 msgctxt "model:quality.proof.method,name:wine_protein_stability_method"
 msgid "Estabilitat proteica"
 msgstr "Estabilitat proteica"
 
 msgctxt "model:quality.proof.method,name:wine_smelling_phase_method"
 msgid "Fase olfactiva"
-msgstr ""
+msgstr "Fase olfactiva"
 
-#, fuzzy
 msgctxt "model:quality.proof.method,name:wine_tartaric_acidity_method"
 msgid "Acidesa tartàric"
 msgstr "Acidesa tartàric"
 
-#, fuzzy
 msgctxt "model:quality.proof.method,name:wine_tartaric_stability_method"
 msgid "Estabilitat tartarica"
 msgstr "Estabilitat tartarica"
 
 msgctxt "model:quality.proof.method,name:wine_tasting_phase_method"
 msgid "Fase gustativa"
-msgstr ""
+msgstr "Fase gustativa"
 
-#, fuzzy
 msgctxt "model:quality.proof.method,name:wine_temperature_method"
 msgid "Temperatura"
 msgstr "Temperatura"
 
-#, fuzzy
 msgctxt "model:quality.proof.method,name:wine_tone_method"
 msgid "Tonalitat"
 msgstr "Tonalitat"
 
 msgctxt "model:quality.proof.method,name:wine_total_sulphur_method"
 msgid "Sulfurós Total"
-msgstr ""
+msgstr "Sulfurós Total"
 
-#, fuzzy
 msgctxt "model:quality.proof.method,name:wine_turbidity_method"
 msgid "Terbolesa"
 msgstr "Terbolesa"
 
 msgctxt "model:quality.proof.method,name:wine_volatility_method"
 msgid "Volatil"
-msgstr ""
+msgstr "Volatil"
+
+msgctxt "model:quality.sample,name:"
+msgid "Quality Sample"
+msgstr "Mostra de qualitat"
 
 msgctxt "model:res.group,name:group_agronomics"
 msgid "Agronomics"
@@ -2026,7 +2082,7 @@ msgstr "Administració Agronomics"
 
 msgctxt "model:res.group,name:group_quality_control_sample"
 msgid "Quality Samples"
-msgstr ""
+msgstr "Mostres de qualitat"
 
 msgctxt "model:stock.location.material,name:"
 msgid "Location Material"
@@ -2186,7 +2242,7 @@ msgstr "Agronomics"
 
 msgctxt "view:product.product:"
 msgid "Quality"
-msgstr ""
+msgstr "Qualitat"
 
 msgctxt "view:production.cost_price.distribution:"
 msgid "%"

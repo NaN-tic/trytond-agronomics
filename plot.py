@@ -1,5 +1,6 @@
 # This file is part of Tryton.  The COPYRIGHT file at the top level of
 # this repository contains the full copyright notices and license terms.
+from sql.aggregate import Min, Sum
 from trytond.model import fields, ModelSQL, ModelView
 from trytond.pool import Pool
 from trytond.wizard import (Wizard, StateView, Button, StateTransition)
@@ -80,7 +81,100 @@ class Plantation(ModelSQL, ModelView):
         if self.code:
             return self.code
         return self.name
+    varieties = fields.Function(fields.Char('Varieties'), 'get_varieties',
+        searcher='search_varieties')
+    do = fields.Function(fields.Char('DO'), 'get_do', searcher='search_do')
+    remaining_quantity = fields.Function(
+        fields.Float("Remainig Quantity", digits=(16, 2)),
+        'get_remaining_quantity', searcher='search_remaining_quantity')
 
+    def get_rec_name(self, name):
+        if self.code:
+            return self.code
+        return self.name
+
+    def get_do(self, name):
+        do = []
+        for y in self.parcels:
+            do += [x.name for x in y.denomination_origin]
+        return ",".join(list(set(do)))
+
+    def get_varieties(self, name):
+        if not self.parcels:
+            return []
+        varieties = [y.variety.name for y in self.parcerls if y.variety]
+        return ",".join(list(set(varieties)))
+
+    def get_remaining_quantity(self, name):
+        return sum([y.remaining_quantity or 0 for y in self.parcels])
+
+    @classmethod
+    def search_varieties(cls, name, clause):
+        pool = Pool()
+        Variety = pool.get('product.taxon')
+        Parcel = pool.get('agronomics.parcel')
+
+        variety = Variety.__table__()
+        parcel = Parcel.__table__()
+        Operator = fields.SQL_OPERATORS[clause[1]]
+        query = parcel.join(variety, condition=parcel.variety == variety.id)
+        _, operator, value = clause
+        query = query.select(parcel.plantation)
+        query.where = Operator(variety.name, value)
+        return [('id', 'in', query)]
+
+    @classmethod
+    def search_do(cls, name, clause):
+        pool = Pool()
+        DO = pool.get('agronomics.denomination_of_origin')
+        PARCEL_DO = pool.get('agronomics.parcel-agronomics.do')
+        Parcel = pool.get('agronomics.parcel')
+
+        do = DO.__table__()
+        parcel = Parcel.__table__()
+        parcel_do = PARCEL_DO.__table__()
+        Operator = fields.SQL_OPERATORS[clause[1]]
+        query = parcel.join(parcel_do, condition=parcel.id == parcel_do.parcel)
+        query = query.join(do, condition=parcel_do.do==parcel_do.do)
+        print(query)
+        _, operator, value = clause
+        query = query.select(parcel.plantation)
+        query.where = Operator(do.name, value)
+        return [('id', 'in', query)]
+
+    @classmethod
+    def search_remaining_quantity(cls, name, clause):
+        pool = Pool()
+        DO = pool.get('agronomics.denomination_of_origin')
+        PARCEL_DO = pool.get('agronomics.parcel-agronomics.do')
+        Parcel = pool.get('agronomics.parcel')
+        Weighing = pool.get('agronomics.weighing-agronomics.parcel')
+        MaxProductionAllowed = pool.get('agronomics.max.production.allowed')
+
+        do = DO.__table__()
+        parcel = Parcel.__table__()
+        parcel_do = PARCEL_DO.__table__()
+        weighing = Weighing.__table__()
+        max_production = MaxProductionAllowed.__table__()
+
+        _, operator, value = clause
+        Operator = fields.SQL_OPERATORS[operator]
+
+        join1 = weighing.join(parcel, type_='RIGHT',
+            condition=((weighing.parcel==parcel.id) &
+                (weighing.table != True)))
+        join2 = join1.join(parcel_do, type_= 'LEFT',
+            condition=parcel.id==parcel_do.parcel)
+        join3 = join2.join(max_production, type_='LEFT',
+                condition=((max_production.crop == parcel.crop) &
+                    (max_production.variety == parcel.variety)))
+        query2 = join3.select(parcel.plantation,
+            Sum(max_production.max_production*parcel.surface -
+                weighing.netweight).as_('remaining_quantity'),
+            group_by=parcel.plantation)
+        query = query2.select(query2.plantation)
+        query.where = Operator(query2.remaining_quantity, value)
+        return [('id' , 'in', query)]
 
 class Ecological(ModelSQL, ModelView):
     "Ecological"
@@ -143,7 +237,7 @@ class Parcel(ModelSQL, ModelView):
             )*self.surface, 2)
 
     def get_purchased_quantity(self, name):
-        return sum([w.netweight for w in self.weighings if not w.table and w.netweight])
+        return sum([(w.netweight or 0) for w in self.weighings if not w.table])
 
     def get_remaining_quantity(self, name):
         return (self.max_production or 0) - (self.purchased_quantity or 0)

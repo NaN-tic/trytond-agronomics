@@ -1,7 +1,7 @@
 # This file is part of Tryton.  The COPYRIGHT file at the top level of
 # this repository contains the full copyright notices and license terms.
 from trytond.model import fields, ModelSQL, ModelView, Workflow, sequence_ordered
-from trytond.pyson import Id, Eval, If
+from trytond.pyson import Id, Eval, If, Bool
 from trytond.pool import Pool
 from trytond.i18n import gettext
 from trytond.exceptions import UserError
@@ -86,7 +86,7 @@ class Weighing(Workflow, ModelSQL, ModelView):
                 })
     denomination_origin = fields.Many2Many('agronomics.weighing-agronomics.do',
         'weighing', 'do', 'Denomination of Origin', states={
-            'readonly': Eval('state').in_(READONLY2),
+            'readonly': Eval('state').in_(READONLY2) | Bool(Eval('table')),
             'required': Eval('state') == 'in_analysis',
             })
     beneficiaries_invoices_line = fields.Many2Many(
@@ -269,7 +269,7 @@ class Weighing(Workflow, ModelSQL, ModelView):
             return
         contract_lines = ContractLine.search([
             ('parcel', '=', parcel),
-            ('contract.producer', '=', producer),
+            ('contract.party', '=', producer),
             ('contract.state', '=', 'active'),
         ], limit=1)
         if not contract_lines:
@@ -355,7 +355,6 @@ class Weighing(Workflow, ModelSQL, ModelView):
         WeighingParcel = pool.get('agronomics.weighing-agronomics.parcel')
         weighing_parcel_to_save = []
         to_analysis = []
-
         for weighing in weighings:
             if not weighing.table:
                 if weighing.parcels:
@@ -381,10 +380,8 @@ class Weighing(Workflow, ModelSQL, ModelView):
                     else:
                         remaining_weight -= parcel.remaining_quantity
                         weighing_parcel.netweight = parcel.remaining_quantity
-
                     if weighing_parcel.netweight:
                         weighing_parcel_to_save.append(weighing_parcel)
-
                 if remaining_weight == 0:
                     to_analysis.append(weighing)
             else:
@@ -401,7 +398,8 @@ class Weighing(Workflow, ModelSQL, ModelView):
         cls.analysis(to_analysis)
 
     def get_not_assigned_weight(self, name):
-        return self.netweight - sum([p.netweight for p in self.parcels])
+        return (self.netweight or 0) - sum([(p.netweight or 0)
+            for p in self.parcels])
 
     @classmethod
     @ModelView.button
@@ -487,6 +485,8 @@ class Weighing(Workflow, ModelSQL, ModelView):
                     invoice_line.product = weighing.product_created
                     invoice_line.on_change_product()
                     invoice_line.quantity = weighing.netweight or 0
+                    invoice_line.product_price_list_type = (
+                        beneficiary.product_price_list_type)
 
                     unit_price = Product.get_purchase_price(
                         [weighing.product_created],
@@ -537,8 +537,11 @@ class Weighing(Workflow, ModelSQL, ModelView):
             if weighing.beneficiaries:
                 Beneficiary.delete([x for x in weighing.beneficiaries])
 
-            parcel = weighing.get_parcel()
+            if weighing.table and weighing.denomination_origin:
+                raise UserError(gettext('agronomics.msg_weighing_with_table_do',
+                    weighing=weighing.rec_name))
 
+            parcel = weighing.get_parcel()
             # Check if all plantations has a parcel in the weighing's crop
             for plantation in weighing.plantations:
                 plantation = plantation.plantation

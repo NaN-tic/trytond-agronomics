@@ -1,6 +1,9 @@
 <tree>
   <field name="code"/>
   <field name="party"/>
+  <field name="varieties"/>
+  <field name="do"/>
+  <field name="remaining_quantity"/>
   <field name="plantation_year" tree_invisible="1"/>
   <field name="plantation_owner" tree_invisible="1"/>
 </tree>
