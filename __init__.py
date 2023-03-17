@@ -56,7 +56,7 @@ def register():
         quality.QualityTest,
         quality.QuantitativeTestLine,
         quality.QualitativeTestLine,
-        plot.CreateNewParcelStart,
+        plot.CreateNewParcelsStart,
         production.ProductionTemplate,
         production.ProductionTemplateLine,
         production.ProductionTemplateInputsProductTemplate,
@@ -75,7 +75,7 @@ def register():
         module='agronomics', type_='model')
     Pool.register(
         production.ProductionCostPriceDistributionTemplateProductionTemplate,
-        plot.CreateNewParcel,
+        plot.CreateNewParcels,
         module='agronomics', type_='wizard')
     Pool.register(
         module='agronomics', type_='report')

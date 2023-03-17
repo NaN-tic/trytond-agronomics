@@ -5,6 +5,7 @@ from trytond.model import fields, ModelSQL, ModelView
 from trytond.pool import Pool
 from trytond.wizard import (Wizard, StateView, Button, StateTransition)
 
+
 class Enclosure(ModelSQL, ModelView):
     "Enclosure"
     __name__ = 'agronomics.enclosure'
@@ -34,7 +35,6 @@ class Crop(ModelSQL, ModelView):
         Parcel = pool.get('agronomics.parcel')
         parcels = Parcel.search([('crop' ,'=', self.id)])
         Parcel.copy(parcels, {'crop': next_crop})
-
 
 
 class DenominationOrigin(ModelSQL, ModelView):
@@ -176,6 +176,7 @@ class Plantation(ModelSQL, ModelView):
         query.where = Operator(query2.remaining_quantity, value)
         return [('id' , 'in', query)]
 
+
 class Ecological(ModelSQL, ModelView):
     "Ecological"
     __name__ = 'agronomics.ecological'
@@ -273,7 +274,8 @@ class Beneficiaries(ModelSQL, ModelView):
 
         super(Beneficiaries, cls).__register__(module_name)
 
-class CreateNewParcel(Wizard):
+
+class CreateNewParcels(Wizard):
     'New Version'
     __name__ = 'agronomics.create_new_parcels'
 
@@ -290,8 +292,8 @@ class CreateNewParcel(Wizard):
         return 'end'
 
 
-class CreateNewParcelStart(ModelView):
-    "Create New Parcel - Start"
+class CreateNewParcelsStart(ModelView):
+    "Create New Parcels - Start"
     __name__ = 'agronomics.create_new_parcels.start'
 
     previous_crop = fields.Many2One('agronomics.crop', "Previous Crop",
