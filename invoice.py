@@ -1,9 +1,5 @@
-from trytond.report import Report
-from trytond.pool import PoolMeta, Pool
-from trytond.transaction import Transaction
+from trytond.pool import PoolMeta
 from trytond.model import fields
-from trytond.pyson import Eval, Bool
-from decimal import Decimal
 
 
 class InvoiceLine(metaclass=PoolMeta):

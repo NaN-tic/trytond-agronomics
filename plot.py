@@ -1,6 +1,6 @@
 # This file is part of Tryton.  The COPYRIGHT file at the top level of
 # this repository contains the full copyright notices and license terms.
-from sql.aggregate import Min, Sum
+from sql.aggregate import Sum
 from trytond.model import fields, ModelSQL, ModelView
 from trytond.pool import Pool
 from trytond.wizard import (Wizard, StateView, Button, StateTransition)
@@ -76,11 +76,6 @@ class Plantation(ModelSQL, ModelView):
     parcels = fields.One2Many('agronomics.parcel', 'plantation', "Parcel")
     plantation_year = fields.Integer("Plantation Year")
     plantation_owner = fields.Many2One('party.party', "Plantation Owner")
-
-    def get_rec_name(self, name):
-        if self.code:
-            return self.code
-        return self.name
     varieties = fields.Function(fields.Char('Varieties'), 'get_varieties',
         searcher='search_varieties')
     do = fields.Function(fields.Char('DO'), 'get_do', searcher='search_do')
@@ -145,13 +140,10 @@ class Plantation(ModelSQL, ModelView):
     @classmethod
     def search_remaining_quantity(cls, name, clause):
         pool = Pool()
-        DO = pool.get('agronomics.denomination_of_origin')
         PARCEL_DO = pool.get('agronomics.parcel-agronomics.do')
         Parcel = pool.get('agronomics.parcel')
         Weighing = pool.get('agronomics.weighing-agronomics.parcel')
         MaxProductionAllowed = pool.get('agronomics.max.production.allowed')
-
-        do = DO.__table__()
         parcel = Parcel.__table__()
         parcel_do = PARCEL_DO.__table__()
         weighing = Weighing.__table__()
@@ -216,9 +208,11 @@ class Parcel(ModelSQL, ModelView):
     weighings = fields.One2Many('agronomics.weighing-agronomics.parcel',
         'parcel', 'Weighings')
     purchased_quantity = fields.Function(
-        fields.Float("Bought Quantity", digits=(16, 2)), 'get_purchased_quantity')
+        fields.Float("Bought Quantity", digits=(16, 2)),
+        'get_purchased_quantity')
     remaining_quantity = fields.Function(
-        fields.Float("Remainig Quantity", digits=(16, 2)), 'get_remaining_quantity')
+        fields.Float("Remainig Quantity", digits=(16, 2)),
+        'get_remaining_quantity')
 
     def get_rec_name(self, name):
         if self.plantation and self.crop:
