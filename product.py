@@ -107,7 +107,8 @@ class Product(WineMixin, metaclass=PoolMeta):
                     'bottled-wine']
             )
         }, depends=['agronomic_type'])
-    alcohol_volume = fields.Function(fields.Numeric('Alcohol Volume', digits=(16, 2), states={
+    alcohol_volume = fields.Function(fields.Numeric('Alcohol Volume',
+            digits=(16, 2), states={
             'invisible': ~ Eval('agronomic_type').in_(
                 ['wine', 'unfiltered-wine', 'filtered-wine', 'clarified-wine',
                     'bottled-wine']
@@ -155,7 +156,7 @@ class Product(WineMixin, metaclass=PoolMeta):
             return Decimal(
                 (float(self.template.capacity) * float(self.wine_alcohol_content))
                     / 100).quantize(
-                        Decimal(str(10 ** -self.__class__.alcohol_volume.digits[1])))
+                Decimal(str(10 ** -self.__class__.alcohol_volume.digits[1])))
 
 
 class Cron(metaclass=PoolMeta):

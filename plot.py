@@ -1,8 +1,9 @@
 # This file is part of Tryton.  The COPYRIGHT file at the top level of
 # this repository contains the full copyright notices and license terms.
-from sql.aggregate import Min, Sum
+from sql.aggregate import Sum
 from trytond.model import fields, ModelSQL, ModelView
 from trytond.pool import Pool
+from trytond.wizard import (Wizard, StateView, Button, StateTransition)
 
 
 class Enclosure(ModelSQL, ModelView):
@@ -28,6 +29,12 @@ class Crop(ModelSQL, ModelView):
     name = fields.Char('Name', required=True)
     start_date = fields.Date('Start Date', required=True)
     end_date = fields.Date('End Date', required=True)
+
+    def copy_parcels(self, next_crop):
+        pool = Pool()
+        Parcel = pool.get('agronomics.parcel')
+        parcels = Parcel.search([('crop' ,'=', self.id)])
+        Parcel.copy(parcels, {'crop': next_crop})
 
 
 class DenominationOrigin(ModelSQL, ModelView):
@@ -133,13 +140,10 @@ class Plantation(ModelSQL, ModelView):
     @classmethod
     def search_remaining_quantity(cls, name, clause):
         pool = Pool()
-        DO = pool.get('agronomics.denomination_of_origin')
         PARCEL_DO = pool.get('agronomics.parcel-agronomics.do')
         Parcel = pool.get('agronomics.parcel')
         Weighing = pool.get('agronomics.weighing-agronomics.parcel')
         MaxProductionAllowed = pool.get('agronomics.max.production.allowed')
-
-        do = DO.__table__()
         parcel = Parcel.__table__()
         parcel_do = PARCEL_DO.__table__()
         weighing = Weighing.__table__()
@@ -163,6 +167,7 @@ class Plantation(ModelSQL, ModelView):
         query = query2.select(query2.plantation)
         query.where = Operator(query2.remaining_quantity, value)
         return [('id' , 'in', query)]
+
 
 class Ecological(ModelSQL, ModelView):
     "Ecological"
@@ -203,9 +208,11 @@ class Parcel(ModelSQL, ModelView):
     weighings = fields.One2Many('agronomics.weighing-agronomics.parcel',
         'parcel', 'Weighings')
     purchased_quantity = fields.Function(
-        fields.Float("Bought Quantity", digits=(16, 2)), 'get_purchased_quantity')
+        fields.Float("Bought Quantity", digits=(16, 2)),
+        'get_purchased_quantity')
     remaining_quantity = fields.Function(
-        fields.Float("Remainig Quantity", digits=(16, 2)), 'get_remaining_quantity')
+        fields.Float("Remainig Quantity", digits=(16, 2)),
+        'get_remaining_quantity')
 
     def get_rec_name(self, name):
         if self.plantation and self.crop:
@@ -260,3 +267,30 @@ class Beneficiaries(ModelSQL, ModelView):
             table.drop_column('percent')
 
         super(Beneficiaries, cls).__register__(module_name)
+
+
+class CreateNewParcels(Wizard):
+    'New Version'
+    __name__ = 'agronomics.create_new_parcels'
+
+    start = StateView('agronomics.create_new_parcels.start',
+        'agronomics.create_new_parcels_start_form', [
+            Button('Cancel', 'end', 'tryton-cancel'),
+            Button('Create', 'copy_parcels', 'tryton-accept', default=True),
+            ])
+    copy_parcels = StateTransition()
+
+    def transition_copy_parcels(self):
+        crop = self.start.previous_crop
+        crop.copy_parcels(self.start.next_crop)
+        return 'end'
+
+
+class CreateNewParcelsStart(ModelView):
+    "Create New Parcels - Start"
+    __name__ = 'agronomics.create_new_parcels.start'
+
+    previous_crop = fields.Many2One('agronomics.crop', "Previous Crop",
+        required=True)
+    next_crop = fields.Many2One('agronomics.crop', "Next Crop",
+        required=True)

@@ -544,6 +544,10 @@ msgctxt "field:product.product,needs_sample:"
 msgid "Needs Samples"
 msgstr "Necesita mostres"
 
+msgctxt "field:product.product,production_quality_template:"
+msgid "Production Quality Template"
+msgstr "Plantilla Qualitat de producció"
+
 msgctxt "field:product.product,quality_samples:"
 msgid "Quality Samples"
 msgstr "Mostres de qualitat"
@@ -555,6 +559,14 @@ msgstr "Tests de qualitat"
 msgctxt "field:product.product,quality_weighing:"
 msgid "Quality Weighing"
 msgstr "Qualitat Pesada"
+
+msgctxt "field:product.product,shipment_in_quality_template:"
+msgid "Shipment In Quality Template"
+msgstr "Plantilla qualitat albarà entrada"
+
+msgctxt "field:product.product,shipment_out_quality_template:"
+msgid "Shipment Out Quality Template"
+msgstr "Plantilla qualitat albarà sortida"
 
 msgctxt "field:product.product,variant_deactivate_stock_zero:"
 msgid "Variant Deactivate Stock 0"

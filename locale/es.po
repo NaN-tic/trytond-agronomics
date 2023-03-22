@@ -544,6 +544,10 @@ msgctxt "field:product.product,needs_sample:"
 msgid "Needs Samples"
 msgstr "Requiere muestras"
 
+msgctxt "field:product.product,production_quality_template:"
+msgid "Production Quality Template"
+msgstr "Plantilla calidad producción"
+
 msgctxt "field:product.product,quality_samples:"
 msgid "Quality Samples"
 msgstr "Muestras de calidad"
