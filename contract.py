@@ -149,8 +149,8 @@ class AgronomicsContractLine(ModelSQL, ModelView):
     "Agronomics Contract Line"
     __name__ = 'agronomics.contract.line'
 
-    contract = fields.Many2One('agronomics.contract', 'Contract', required=True,
-        ondelete='CASCADE')
+    contract = fields.Many2One('agronomics.contract', 'Contract',
+        required=True, ondelete='CASCADE')
     parcel = fields.Many2One('agronomics.parcel', "Parcel",
         domain=[
             ('producer', '=', Eval('_parent_contract.party')),

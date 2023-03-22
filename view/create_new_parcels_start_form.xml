@@ -1,0 +1,6 @@
+<form>
+  <label name="previous_crop"/>
+  <field name="previous_crop"/>
+  <label name="next_crop"/>
+  <field name="next_crop"/>
+</form>
