@@ -131,7 +131,6 @@ class Plantation(ModelSQL, ModelView):
         Operator = fields.SQL_OPERATORS[clause[1]]
         query = parcel.join(parcel_do, condition=parcel.id == parcel_do.parcel)
         query = query.join(do, condition=parcel_do.do==parcel_do.do)
-        print(query)
         _, operator, value = clause
         query = query.select(parcel.plantation)
         query.where = Operator(do.name, value)
