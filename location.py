@@ -23,7 +23,7 @@ class Location(metaclass=PoolMeta):
             'invisible': Eval('type') != 'storage',
             },
         depends=['type'])
-    material = fields.Selection('get_materials', "Material",
+    material = fields.Many2One('stock.location.material', "Material",
         states=tank_states, depends=tank_depends)
     uom = fields.Many2One('product.uom', 'Uom',
         states=tank_states, depends=tank_depends)
@@ -33,15 +33,6 @@ class Location(metaclass=PoolMeta):
     max_capacity = fields.Float("Maximum capacity",
         digits=(16, Eval('unit_digits', 2)),
         states=tank_states, depends=['unit_digits', 'tank'])
-
-    @classmethod
-    def get_materials(field_name):
-        pool = Pool()
-        LocationMaterial = pool.get('stock.location.material')
-        materials = [(None, "")]
-        for material in LocationMaterial.search([]):
-            materials.append((material.name, material.name))
-        return materials
 
     @fields.depends('uom')
     def on_change_with_unit_digits(self, name=None):

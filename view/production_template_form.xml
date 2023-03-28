@@ -23,6 +23,9 @@ this repository contains the full copyright notices and license terms. -->
     <newline/>
     <label name="pass_certification"/>
     <field name="pass_certification"/>
+    <newline/>
+    <label name="transfer_wine_aging"/>
+    <field name="transfer_wine_aging"/>
   </group>
   <field name="inputs" colspan="2"/>
   <field name="outputs" colspan="2"/>
