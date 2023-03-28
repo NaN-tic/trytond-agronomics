@@ -17,7 +17,10 @@ class ProductionTemplate(ModelSQL, ModelView):
     __name__ = 'production.template'
 
     name = fields.Char('Name', required=True)
-    uom = fields.Many2One('product.uom', 'Uom', required=True)
+    uom = fields.Many2One('product.uom', 'Uom',
+        states = {
+            'required': True
+        })
     unit_digits = fields.Function(fields.Integer('Unit Digits'),
         'on_change_with_unit_digits')
     quantity = fields.Float('Quantity',
@@ -43,6 +46,21 @@ class ProductionTemplate(ModelSQL, ModelView):
         'production.cost_price.distribution.template',
         'production_template', "Cost Distribution Templates")
     transfer_wine_aging = fields.Boolean("Transfer Wine Aging")
+    inputs_products = fields.Function(fields.One2Many('product.product', None,
+         'Products'), 'get_products', searcher='search_input_products')
+
+    def get_products(self, name=None):
+        products = []
+        for template in self.inputs:
+            products += template.products
+        return [x.id for x in products]
+
+    @classmethod
+    def search_input_products(cls, name, clause):
+        Inputs = Pool().get('production.template.inputs-product.template')
+        product = clause[-1]
+        inputs = Inputs.search([('template.products', '=', product)])
+        return [('id', 'in', [x.production_template.id for x in inputs])]
 
     @fields.depends('uom')
     def on_change_with_unit_digits(self, name=None):
@@ -58,6 +76,8 @@ class ProductionTemplate(ModelSQL, ModelView):
             record.check_cost_distribution()
 
     def check_input_uoms(self):
+        if not self.uom:
+            return
         category_uom = self.uom.category
         uoms = [i.default_uom.category for i in self.inputs]
         uoms.append(category_uom)
