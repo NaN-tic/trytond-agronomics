@@ -4,6 +4,7 @@
 from trytond.pool import Pool
 from . import contract
 from . import invoice
+from . import history
 from . import party
 from . import plot
 from . import product
@@ -20,6 +21,8 @@ def register():
         contract.AgronomicsContract,
         contract.AgronomicsContractLine,
         invoice.InvoiceLine,
+        history.WineAgingHistory,
+        history.ProductWineAgingHistory,
         party.Party,
         plot.Enclosure,
         plot.Crop,

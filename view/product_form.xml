@@ -182,5 +182,8 @@
             <separator name="wine_quality_comment" colspan="6"/>
             <field name="wine_quality_comment" widget="richtext" toolbar="0" yexpand="1" yfill="1" colspan="6"/>
         </page>
+        <page string="Wine Aging" id="wine-aging" col="6">
+            <field name="wine_aging" colspan="6"/>
+        </page>
     </xpath>
 </data>
