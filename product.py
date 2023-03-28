@@ -207,7 +207,7 @@ class Product(WineMixin, metaclass=PoolMeta):
             operator = clause[1]
             try:
                 value = int(value)
-            except ValueError:
+            except (ValueError, TypeError):
                 value = None
             if value:
                 if operator == '=':
