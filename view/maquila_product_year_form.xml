@@ -10,10 +10,12 @@
   <field name="product"/>
   <label name="quantity"/>
   <field name="quantity"/>
-  <label name="delivered_quantity"/>
-  <field name="delivered_quantity"/>
   <label name="unit"/>
   <field name="unit"/>
+  <label name="delivered_quantity"/>
+  <field name="delivered_quantity"/>
+  <label name="pending_delivered_quantity"/>
+  <field name="pending_delivered_quantity"/>
   <newline/>
   <field name="contract_crops" colspan="6"/>
   <field name="contracts" colspan="6"/>

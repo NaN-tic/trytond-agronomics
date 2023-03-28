@@ -64,7 +64,8 @@ class Sale(metaclass=PoolMeta):
 
     @fields.depends('is_maquila')
     def on_change_is_maquila(self):
-        self.invoice_method = 'order' if self.is_maquila else self.default_invoice_method()
+        self.invoice_method = ('manual' if self.is_maquila
+            else self.default_invoice_method())
 
     @fields.depends('is_maquila')
     def on_change_party(self):

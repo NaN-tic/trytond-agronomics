@@ -7,6 +7,7 @@ from trytond.modules.company.model import (
     CompanyMultiValueMixin, CompanyValueMixin)
 from trytond.i18n import gettext
 from trytond.exceptions import UserError
+from trytond.model.modelstorage import AccessError
 
 
 def default_func(field_name):
@@ -390,7 +391,8 @@ class ContractCrop(ModelSQL, ModelView):
     currency_digits = fields.Function(fields.Integer('Currency Digits'),
         'on_change_with_currency_digits')
     product_years = fields.Many2Many(
-        'agronomics.maquila.product_year-agronomics.maquila.contract.crop', 'contract_crop', 'product_year', "Product Years")
+        'agronomics.maquila.product_year-agronomics.maquila.contract.crop',
+        'contract_crop', 'product_year', "Product Years")
     maquilas = fields.Many2Many(
         'agronomics.maquila-agronomics.maquila.contract.crop',
         'contract_crop', 'maquila', "Maquila", readonly=True)
@@ -433,6 +435,10 @@ class ProductYear(ModelSQL, ModelView):
         digits=(16, Eval('unit_digits', 2)),
         depends=['unit_digits']), 'get_quantity')
     delivered_quantity = fields.Function(fields.Float("Delivered Quantity",
+        digits=(16, Eval('unit_digits', 2)),
+        depends=['unit_digits']), 'get_delivered_quantity')
+    pending_delivered_quantity = fields.Function(fields.Float(
+        "Pending Delivered Quantity",
         digits=(16, Eval('unit_digits', 2)),
         depends=['unit_digits']), 'get_delivered_quantity')
     unit = fields.Many2One('product.uom', "Unit", required=True, readonly=True,
@@ -513,12 +519,15 @@ class ProductYear(ModelSQL, ModelView):
         return res
 
     @classmethod
-    def get_delivered_quantity(cls, product_years, name):
+    def get_delivered_quantity(cls, product_years, names):
         pool = Pool()
         SaleLine = pool.get('sale.line')
         Uom = pool.get('product.uom')
 
-        res = dict((x.id, 0) for x in product_years)
+        res = {n: {r.id: 0 for r in product_years} for n in names}
+
+        # get qty delivered from sales (moves)
+        product_years_delivered = {}
         for product_year in product_years:
             lines = SaleLine.search([
                 ('maquila', '=', product_year),
@@ -532,7 +541,16 @@ class ProductYear(ModelSQL, ModelView):
                     if not move.state == 'done':
                         continue
                     _sum += Uom.compute_qty(move.uom, move.quantity, product_year.unit, False)
-            res[product_year.id] = _sum
+            product_years_delivered[product_year.id] = _sum
+
+        for name in names:
+            for product_year in product_years:
+                delivered_quantity = product_years_delivered.get(product_year.id, 0)
+                if name == 'delivered_quantity':
+                    res[name][product_year.id] = delivered_quantity
+                elif name == 'pending_delivered_quantity':
+                    # TODO total qty from?
+                    res[name][product_year.id] = product_year.quantity - delivered_quantity
         return res
 
     @classmethod
