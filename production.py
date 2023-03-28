@@ -4,7 +4,7 @@ from decimal import Decimal
 from trytond.model import ModelSQL, ModelView, fields
 from trytond.pool import PoolMeta, Pool
 from trytond.pyson import Eval, Bool, If
-from trytond.exceptions import UserError
+from trytond.exceptions import UserWarning, UserError
 from trytond.i18n import gettext
 from trytond.transaction import Transaction
 from trytond.wizard import Wizard, StateView, StateAction, Button
@@ -45,6 +45,7 @@ class ProductionTemplate(ModelSQL, ModelView):
     cost_distribution_templates = fields.One2Many(
         'production.cost_price.distribution.template',
         'production_template', "Cost Distribution Templates")
+    transfer_wine_aging = fields.Boolean("Transfer Wine Aging")
     inputs_products = fields.Function(fields.One2Many('product.product', None,
          'Products'), 'get_products', searcher='search_input_products')
 
@@ -474,13 +475,60 @@ class Production(metaclass=PoolMeta):
         product.varieties = varieties.values()
         return product
 
+    def create_wine_aged_history(self, input, outputs):
+        pool = Pool()
+        WineAgingHistory = pool.get('wine.wine_aging.history')
+
+        effective_date = input.production_input.effective_date
+        histories = WineAgingHistory.search([
+            ('product', '=', input.product),
+            ('date_end', '=', None),
+            ])
+        if histories:
+            to_write = []
+            for history in histories:
+                to_write.extend(([history], {
+                    'date_end': effective_date,
+                    'duration': (effective_date - history.date_start).days,
+                    }))
+            WineAgingHistory.write(*to_write)
+
+        new_histories = []
+        for output in outputs:
+            new_histories += WineAgingHistory.create([{
+                'production': output.production_output,
+                'location': output.to_location,
+                'material': output.to_location.material,
+                'product': output.product,
+                'date_start': effective_date,
+                'date_end': None
+                }])
+            if histories:
+                new_histories += WineAgingHistory.copy(histories, {
+                    'production': output.production_output,
+                    'product': output.product,
+                    })
+        return new_histories
+
     @classmethod
     def done(cls, productions):
-        Move = Pool().get('stock.move')
+        pool = Pool()
+        Move = pool.get('stock.move')
+        Warning = pool.get('res.user.warning')
+
+        for production in productions:
+            if production.production_template.transfer_wine_aging:
+                if len(production.inputs) > 1:
+                    warning_name = 'transfer_wine_aging_input_%s' % production.id
+                    if Warning.check(warning_name):
+                        raise UserWarning(warning_name,
+                            gettext('agronomics.msg_transfer_wine_aging_inputs',
+                                production=production.rec_name))
+
         moves = []
         for production in productions:
             for distrib in production.output_distribution:
-                if distrib.distribution_state == 'draft':
+                if distrib.distribution_state == 'draft' and distrib.location:
                     product = production.create_variant(distrib.product,
                         production.production_template.pass_feature)
                     product = production.pass_feature(product)
@@ -498,10 +546,17 @@ class Production(metaclass=PoolMeta):
 
         Move.save(moves)
         super().done(productions)
+
         for production in productions:
             for output in production.outputs:
                 production.copy_quality(output.product)
                 production.copy_quality_samples(output.product)
+            if production.production_template.transfer_wine_aging:
+                inputs = production.inputs
+                if len(inputs) == 1:
+                    input, = inputs
+                    outputs = production.outputs
+                    production.create_wine_aged_history(input, outputs)
 
     @classmethod
     def set_cost(cls, productions):
