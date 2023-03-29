@@ -14,6 +14,8 @@ from . import production
 from . import location
 from . import move
 from . import price_list
+from . import sale
+from . import account
 
 def register():
     Pool.register(
@@ -75,10 +77,12 @@ def register():
         location.Location,
         move.Move,
         price_list.PriceList,
+        account.Statement,
         module='agronomics', type_='model')
     Pool.register(
         production.ProductionCostPriceDistributionTemplateProductionTemplate,
         plot.CreateNewParcels,
+        sale.WizardAddProduct,
         module='agronomics', type_='wizard')
     Pool.register(
         module='agronomics', type_='report')
