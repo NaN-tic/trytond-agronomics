@@ -269,7 +269,7 @@ class Weighing(Workflow, ModelSQL, ModelView):
             return
         contract_lines = ContractLine.search([
             ('parcel', '=', parcel),
-            ('contract.producer', '=', producer),
+            ('contract.party', '=', producer),
             ('contract.state', '=', 'active'),
         ], limit=1)
         if not contract_lines:

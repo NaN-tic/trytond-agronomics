@@ -5,8 +5,8 @@ this repository contains the full copyright notices and license terms. -->
     <label name="reference"/>
     <field name="reference"/>
     <newline/>
-    <label name="producer"/>
-    <field name="producer"/>
+    <label name="party"/>
+    <field name="party"/>
     <label name="crop"/>
     <field name="crop"/>
     <label name="start_date"/>
