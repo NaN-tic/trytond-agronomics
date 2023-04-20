@@ -128,6 +128,11 @@ class Product(WineMixin, metaclass=PoolMeta):
         'get_wine_history', searcher='search_wine_history')
     wine_history_duration = fields.Function(fields.Text("History Duration"),
         'get_wine_history', searcher='search_wine_history')
+    vintages_str = fields.Function(fields.Char("Vintage"), 'get_vintages_str')
+
+    def get_vintages_str(self, name):
+        return ', '.join([v.name for v in self.vintages])
+
 
     @classmethod
     def deactivate_no_stock_variants_cron(cls):
@@ -225,6 +230,15 @@ class Product(WineMixin, metaclass=PoolMeta):
 
         return [('id', 'in', query)]
 
+
+    def get_rec_name(self, name):
+        rec_name = super().get_rec_name(name)
+        if not self.vintages:
+            return rec_name
+
+        aging = ",".join(x.name for x in self.vintages)
+        rec_name = rec_name + "-" + aging
+        return rec_name
 
 class Cron(metaclass=PoolMeta):
     __name__ = 'ir.cron'
