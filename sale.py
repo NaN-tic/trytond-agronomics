@@ -23,9 +23,13 @@ class WizardAddProduct(metaclass=PoolMeta):
             quantity = None
 
         if not quantity:
-            domain = ['OR', ('code','=', value),
+            domain = [('salable', '=', True),
+            ['OR', ('code','=', value),
                 ('identifiers.code', '=', value),
-                ('name', 'like', '%'+value+'%')]
+                ('name', 'like', '%'+value+'%'),
+                ('name', 'like', '%'+value.upper()+'%'),
+                ('name', 'like', '%'+value.capitalize()+'%'),
+                ('name', 'like', '%'+value.lower()+'%'),]]
             products = Product.search(domain)
             if not products:
                 return 'start'
