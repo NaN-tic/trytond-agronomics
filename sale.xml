@@ -8,5 +8,10 @@ The COPYRIGHT file at the top level of this repository contains the full copyrig
             <field name="inherit" ref="sale_pos.sale_pos_view_form"/>
             <field name="name">sale_pos_form</field>
         </record>
+        <record model="ir.ui.view" id="sale_line_view_tree_no_editable">
+            <field name="model">sale.line</field>
+            <field name="inherit" ref="sale_pos.sale_line_view_tree_no_editable"/>
+            <field name="name">sale_line_tree_no_editable</field>
+        </record>
     </data>
 </tryton>
