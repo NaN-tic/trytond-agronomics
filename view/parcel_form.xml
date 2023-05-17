@@ -29,6 +29,14 @@
   <field name="purchased_quantity"/>
   <label name="remaining_quantity"/>
   <field name="remaining_quantity"/>
+  <label name="purchased_quantity_do"/>
+  <field name="purchased_quantity_do"/>
+  <label name="purchased_quantity_table"/>
+  <field name="purchased_quantity_table"/>
+  <label name="remaining_quantity_do"/>
+  <field name="remaining_quantity_do"/>
+  <label name="exceeded_quantity"/>
+  <field name="exceeded_quantity"/>
   <newline/>
   <label name="tenure_regime"/>
   <field name="tenure_regime" colspan="3"/>
