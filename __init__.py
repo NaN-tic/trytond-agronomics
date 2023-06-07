@@ -4,6 +4,7 @@
 from trytond.pool import Pool
 from . import contract
 from . import maquila
+from . import history
 from . import party
 from . import plot
 from . import product
@@ -29,6 +30,8 @@ def register():
         maquila.Maquila,
         maquila.MaquilaProductYearContractCrop,
         maquila.MaquilaContractCrop,
+        history.WineAgingHistory,
+        history.ProductWineAgingHistory,
         party.Party,
         plot.Enclosure,
         plot.Crop,
