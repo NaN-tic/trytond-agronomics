@@ -136,7 +136,8 @@ class Parcel(ModelSQL, ModelView):
             )*self.surface, 2)
 
     def get_purchased_quantity(self, name):
-        return sum([w.netweight for w in self.weighings if not w.table])
+        return sum([w.netweight for w in self.weighings
+            if w.netweight and not w.table])
 
     def get_remaining_quantity(self, name):
         return (self.max_production or 0) - (self.purchased_quantity or 0)
