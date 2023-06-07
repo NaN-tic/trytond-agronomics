@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<form>
+  <label name="party"/>
+  <field name="party"/>
+  <label name="company"/>
+  <field name="company"/>
+  <label name="crop"/>
+  <field name="crop"/>
+  <label name="product"/>
+  <field name="product"/>
+  <label name="quantity"/>
+  <field name="quantity"/>
+  <label name="unit"/>
+  <field name="unit"/>
+  <label name="delivered_quantity"/>
+  <field name="delivered_quantity"/>
+  <label name="pending_delivered_quantity"/>
+  <field name="pending_delivered_quantity"/>
+  <newline/>
+  <field name="contract_crops" colspan="6"/>
+  <field name="contracts" colspan="6"/>
+</form>

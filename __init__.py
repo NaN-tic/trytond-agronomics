@@ -4,6 +4,7 @@
 from trytond.pool import Pool
 from . import contract
 from . import invoice
+from . import maquila
 from . import history
 from . import party
 from . import plot
@@ -14,6 +15,7 @@ from . import production
 from . import location
 from . import move
 from . import price_list
+from . import sale
 
 def register():
     Pool.register(
@@ -21,6 +23,15 @@ def register():
         contract.AgronomicsContract,
         contract.AgronomicsContractLine,
         invoice.InvoiceLine,
+        maquila.Configuration,
+        maquila.ConfigurationSequence,
+        maquila.Contract,
+        maquila.ContractCrop,
+        maquila.ContractProductPercentage,
+        maquila.ProductYear,
+        maquila.Maquila,
+        maquila.MaquilaProductYearContractCrop,
+        maquila.MaquilaContractCrop,
         history.WineAgingHistory,
         history.ProductWineAgingHistory,
         party.Party,
@@ -82,3 +93,10 @@ def register():
         module='agronomics', type_='wizard')
     Pool.register(
         module='agronomics', type_='report')
+    Pool.register(
+        sale.Configuration,
+        sale.ConfigurationSequence,
+        sale.Sale,
+        sale.SaleLine,
+        module='agronomics', type_='model',
+        depends=['sale'])

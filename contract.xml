@@ -113,7 +113,7 @@ this repository contains the full copyright notices and license terms. -->
             <field name="string">Done</field>
             <field name="model" search="[('model', '=', 'agronomics.contract')]"/>
         </record>
-        <record model="ir.model.button-res.group" id="purchase_contract_done_button_group_purchase">
+        <record model="ir.model.button-res.group" id="agronomics_contract_done_button_group_agronomics">
             <field name="button" ref="agronomics_contract_done_button"/>
             <field name="group" ref="group_agronomics"/>
         </record>
