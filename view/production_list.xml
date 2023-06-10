@@ -3,6 +3,6 @@
      copyright notices and license terms. -->
 <data>
     <xpath expr="/tree/field[@name='state']" position="before">
-        <field name="cost" sum="Total"/>
+        <field name="cost" sum="1"/>
     </xpath>
 </data>
