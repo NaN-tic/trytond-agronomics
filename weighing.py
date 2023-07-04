@@ -309,6 +309,11 @@ class Weighing(Workflow, ModelSQL, ModelView):
             if weighing.not_assigned_weight and not weighing.forced_analysis:
                 raise UserError(gettext('agronomics.msg_not_assigned_weight',
                     weighing=weighing.rec_name))
+
+            if weighing.table and weighing.denomination_origin:
+                raise UserError(gettext('agronomics.msg_weighing_with_table_do',
+                    weighing=weighing.rec_name))
+
             product.template = weighing.product
             product.denominations_of_origin = weighing.denomination_origin
             if weighing.ecological:
@@ -536,10 +541,6 @@ class Weighing(Workflow, ModelSQL, ModelView):
         for weighing in weighings:
             if weighing.beneficiaries:
                 Beneficiary.delete([x for x in weighing.beneficiaries])
-
-            if weighing.table and weighing.denomination_origin:
-                raise UserError(gettext('agronomics.msg_weighing_with_table_do',
-                    weighing=weighing.rec_name))
 
             parcel = weighing.get_parcel()
             # Check if all plantations has a parcel in the weighing's crop
