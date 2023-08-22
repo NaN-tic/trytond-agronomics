@@ -6,12 +6,11 @@ from trytond.pool import PoolMeta, Pool
 class PriceList(metaclass=PoolMeta):
     __name__ = 'product.price_list'
 
-    def get_context_formula(self, party, product, unit_price, quantity, uom,
-            pattern=None):
+    def get_context_formula(self, product, quantity, uom, pattern=None):
         pool = Pool()
         Product = pool.get('product.product')
-        res = super().get_context_formula(party, product, unit_price, quantity,
-            uom, pattern)
+
+        res = super().get_context_formula(product, quantity, uom, pattern)
 
         if not product:
             product, = Product.search([], limit=1)
