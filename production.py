@@ -440,7 +440,7 @@ class Production(metaclass=PoolMeta):
     def pass_feature(self, product):
         Variety = Pool().get('product.variety')
         Uom = Pool().get('product.uom')
-        total_output = sum([Uom.compute_qty(x.uom, x.quantity,
+        total_output = sum([Uom.compute_qty(x.unit, x.quantity,
             x.product.default_uom)
             for x in self.inputs if x.product.template in
                 self.production_template.inputs])
@@ -569,7 +569,7 @@ class Production(metaclass=PoolMeta):
             for output in production.outputs:
                 has_product = False
                 output_cost = Decimal(0)
-                total_output = sum([Uom.compute_qty(x.uom, x.quantity,
+                total_output = sum([Uom.compute_qty(x.unit, x.quantity,
                     x.product.default_uom) for x in production.outputs
                         if x.product.template == output.product.template])
 
