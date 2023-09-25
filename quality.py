@@ -92,6 +92,7 @@ class QualitySample(ModelSQL, ModelView):
         pool = Pool()
         Config = pool.get('quality.configuration')
 
+        vlist = [x.copy() for x in vlist]
         sequence = Config(1).sample_sequence
         for value in vlist:
             if not value.get('code'):
