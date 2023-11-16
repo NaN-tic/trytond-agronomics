@@ -176,7 +176,7 @@ class Production(metaclass=PoolMeta):
     allowed_enology_products = fields.Function(fields.One2Many(
         'product.product', None, 'Allowed Enology Products', readonly=True,
         context={
-            'company': Eval('company'),
+            'company': Eval('company', -1),
             },
         depends=['company']),
         'on_change_with_allowed_enology_products',
@@ -184,7 +184,7 @@ class Production(metaclass=PoolMeta):
     allowed_output_products = fields.Function(fields.One2Many(
         'product.template', None, 'Allowed Output Products', readonly=True,
         context={
-            'company': Eval('company'),
+            'company': Eval('company', -1),
             },
         depends=['company']),
         'on_change_with_allowed_output_products',
@@ -199,7 +199,7 @@ class Production(metaclass=PoolMeta):
             'readonly': Eval('state').in_(['cancelled', 'done']),
             },
         context={
-            'company': Eval('company'),
+            'company': Eval('company', -1),
             },
         depends=['state', 'cost_distribution_template',
             'cost_distribution_templates', 'company'])
@@ -214,7 +214,7 @@ class Production(metaclass=PoolMeta):
             'readonly': Eval('state').in_(['cancelled', 'done']),
             },
         context={
-            'company': Eval('company'),
+            'company': Eval('company', -1),
             },
         depends=['state',
             'production_template_cost_distribution_templates', 'company'])
@@ -222,7 +222,7 @@ class Production(metaclass=PoolMeta):
         fields.Many2Many('product.template',
         None, None, "Cost Product Templates",
         context={
-            'company': Eval('company'),
+            'company': Eval('company', -1),
             },
         depends=['company']),
         'on_change_with_cost_distribution_templates')
