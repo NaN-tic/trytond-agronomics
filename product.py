@@ -86,6 +86,9 @@ class ProductVariety(ModelSQL, ModelView):
     percent = fields.Float('Percent', digits=(16, 4), required=True)
     product = fields.Many2One('product.product', 'Product', required=True)
 
+    def get_rec_name(self, name):
+        return f'{self.variety.rec_name} ({self.percent:.0f}%)'
+
 
 class Product(WineMixin, metaclass=PoolMeta):
     __name__ = 'product.product'
