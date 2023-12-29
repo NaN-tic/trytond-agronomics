@@ -209,9 +209,21 @@ class Parcel(ModelSQL, ModelView):
     purchased_quantity = fields.Function(
         fields.Float("Bought Quantity", digits=(16, 2)),
         'get_purchased_quantity')
+    purchased_quantity_do = fields.Function(
+        fields.Float("Bought Quantity Do", digits=(16, 2)),
+        'get_purchased_quantity_do')
+    purchased_quantity_table = fields.Function(
+        fields.Float("Bought Quantity Table", digits=(16, 2)),
+        'get_purchased_quantity_table')
     remaining_quantity = fields.Function(
         fields.Float("Remainig Quantity", digits=(16, 2)),
         'get_remaining_quantity')
+    remaining_quantity_do = fields.Function(
+        fields.Float("Remainig Quantity Do", digits=(16, 2)),
+        'get_remaining_quantity_do')
+    exceeded_quantity = fields.Function(
+        fields.Float("Exceeded Quantity", digits=(16, 2)),
+        'get_exceeded_quantity')
 
     def get_rec_name(self, name):
         if self.plantation and self.crop:
@@ -231,10 +243,26 @@ class Parcel(ModelSQL, ModelView):
             )*self.surface, 2)
 
     def get_purchased_quantity(self, name):
-        return sum([(w.netweight or 0) for w in self.weighings if not w.table])
+        return sum([(w.weighing.netweight or 0) for w in self.weighings if w.weighing])
+
+    def get_purchased_quantity_do(self, name):
+        return sum([(w.weighing.netweight or 0) for w in self.weighings if w.weighing and not w.table])
+
+    def get_purchased_quantity_table(self, name):
+        return sum([(w.weighing.netweight or 0) for w in self.weighings if w.weighing and w.table])
 
     def get_remaining_quantity(self, name):
+        if (self.purchased_quantity or 0) > (self.max_production or 0):
+            return 0
         return (self.max_production or 0) - (self.purchased_quantity or 0)
+
+    def get_remaining_quantity_do(self, name):
+        return (self.max_production or 0) - (self.purchased_quantity_do or 0)
+
+    def get_exceeded_quantity(self, name):
+        if (self.purchased_quantity or 0) < (self.max_production or 0):
+            return 0
+        return (self.purchased_quantity or 0) - (self.max_production or 0)
 
 
 class ParcelDo(ModelSQL):
