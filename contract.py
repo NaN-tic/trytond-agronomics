@@ -11,7 +11,7 @@ from trytond.i18n import gettext
 _STATES = {
     'readonly': Eval('state') != 'draft',
     }
-_DEPENDS = ['state']
+
 
 
 class AgronomicsContractProductPriceListTypePriceList(ModelSQL, ModelView):
@@ -36,21 +36,18 @@ class AgronomicsContract(Workflow, ModelSQL, ModelView):
             ('done', 'Done'),
             ], 'State', readonly=True, required=True)
     crop = fields.Many2One(
-        'agronomics.crop', "Crop", states=_STATES, depends=_DEPENDS,
-        required=True)
+        'agronomics.crop', "Crop", states=_STATES, required=True)
     start_date = fields.Function(
         fields.Date('Start Date'), 'on_change_with_start_date')
     end_date = fields.Function(
         fields.Date('End Date'), 'on_change_with_end_date')
     party = fields.Many2One(
-        'party.party', "Party", states=_STATES, depends=_DEPENDS,
-        required=True)
+        'party.party', "Party", states=_STATES, required=True)
     price_list_types = fields.One2Many(
         'agronomics.contract-product.price_list.type-product.price_list',
-        'contract', "Price List Types", states=_STATES, depends=_DEPENDS)
+        'contract', "Price List Types", states=_STATES)
     lines = fields.One2Many(
-        'agronomics.contract.line', 'contract', "Lines", states=_STATES,
-        depends=_DEPENDS)
+        'agronomics.contract.line', 'contract', "Lines", states=_STATES)
     weighings = fields.One2Many('agronomics.weighing', 'purchase_contract',
         "Weighings", readonly=True)
 
@@ -164,7 +161,7 @@ class AgronomicsContractLine(ModelSQL, ModelView):
     unit_digits = fields.Function(fields.Integer("Unit Digits"),
         'on_change_with_unit_digits')
     agreed_quantity = fields.Float("Agreed Quantity",
-        digits=(16, Eval('unit_digits', 2)), depends=['unit_digits'])
+        digits=(16, Eval('unit_digits', 2)))
     purchased_quantity = fields.Function(
         fields.Float("Purchased Quantity", digits=(16, Eval('unit_digits', 2)),
         depends=['unit_digits']),'on_change_with_purchased_quantity')

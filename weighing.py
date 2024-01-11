@@ -34,39 +34,39 @@ class Weighing(Workflow, ModelSQL, ModelView):
     weighing_date = fields.Date('Date', states={
             'readonly': Eval('state').in_(READONLY),
             'required': True
-            }, depends=['state'])
+            })
     weighing_center = fields.Many2One('agronomics.weighing.center',
         'Weighing Center', states={
             'readonly': Eval('state').in_(READONLY),
             'required': True
-        }, depends=['state'])
+        })
 
     purchase_contract = fields.Many2One('agronomics.contract',
         'Purchase Contract', states={
             'readonly': Eval('state').in_(READONLY),
             'required': True
-        }, depends=['state'])
+        })
 
     crop = fields.Many2One('agronomics.crop', 'Crop', states={
             'readonly': Eval('state').in_(READONLY),
             'required': Eval('state') == 'in_analysis',
-            }, depends=['state'])
+            })
     product = fields.Many2One('product.template', 'Product', states={
             'readonly': Eval('state').in_(READONLY),
             'required': Eval('state') == 'in_analysis',
-            }, depends=['state'])
+            })
     variety = fields.Many2One('product.taxon', 'Variety', states={
             'readonly': Eval('state').in_(READONLY2),
             'required': Eval('state') == 'in_analysis',
-            }, depends=['state'])
+            })
     table = fields.Boolean('Table', states={
             'readonly': Eval('state').in_(READONLY2),
-            }, depends=['state'])
+            })
     ecological = fields.Many2One('agronomics.ecological', 'Ecological',
         states={
             'readonly': Eval('state').in_(READONLY2),
             'required': Eval('state') == 'in_analysis',
-            }, depends=['state'])
+            })
     weight = fields.Float('Weight', states={
             'readonly': Eval('state').in_(READONLY2),
             'required': Eval('state') == 'in_analysis',

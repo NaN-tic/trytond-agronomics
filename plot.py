@@ -53,8 +53,7 @@ class MaxProductionAllowed(ModelSQL, ModelView):
     denomination_origin = fields.Many2One('agronomics.denomination_of_origin',
         'Denomination of Origin', required=True)
     variety = fields.Many2One('product.taxon', 'Variety',
-        domain=[('rank', '=', 'variety')], required=True,
-        depends=['variety'])
+        domain=[('rank', '=', 'variety')], required=True)
     max_production = fields.Numeric('Max Production (kg/ha)', required=True)
 
 
@@ -184,11 +183,9 @@ class Parcel(ModelSQL, ModelView):
     crop = fields.Many2One('agronomics.crop', 'Crop', required=True)
     product = fields.Many2One('product.template', 'Product') #, required=True)
     species = fields.Many2One('product.taxon', 'Spices',
-        domain=[('rank', '=', 'species')], required=True,
-        depends=['species'])
+        domain=[('rank', '=', 'species')], required=True)
     variety = fields.Many2One('product.taxon', 'Variety',
-        domain=[('rank', '=', 'variety')], required=True,
-        depends=['variety'])
+        domain=[('rank', '=', 'variety')], required=True)
     ecological = fields.Many2One('agronomics.ecological', 'Ecological')
     denomination_origin = fields.Many2Many('agronomics.parcel-agronomics.do',
         'parcel', 'do', 'Denomination of Origin')

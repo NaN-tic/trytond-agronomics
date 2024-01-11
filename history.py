@@ -27,8 +27,7 @@ class WineAgingHistory(ModelSQL, ModelView):
                     ('date_end', '=', None),
                     ('date_end', '>=', Eval('date_start')),
                     ],
-                ],
-        depends=['date_start'])
+                ])
     duration = fields.Integer("Duration")
 
     @classmethod

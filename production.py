@@ -41,7 +41,7 @@ class ProductionTemplate(ModelSQL, ModelView):
         "Default cost distribution template",
         domain=[
             ('production_template', '=', Eval('id', 0)),
-        ], depends=['id'])
+        ])
     cost_distribution_templates = fields.One2Many(
         'production.cost_price.distribution.template',
         'production_template', "Cost Distribution Templates")
@@ -151,8 +151,7 @@ class Production(metaclass=PoolMeta):
         "Production Template",
         states={
             'readonly': ~Eval('state').in_(['request', 'draft']),
-            },
-        depends=['state'])
+            })
     production_template_cost_distribution_templates = fields.Function(
         fields.Many2Many('production.cost_price.distribution.template',
         None, None, "Cost Distribution Templates"),
@@ -165,14 +164,14 @@ class Production(metaclass=PoolMeta):
         states={
             'invisible': ~Bool(Eval('production_template')),
             'readonly': ~Eval('state').in_(['request', 'draft']),
-        }, depends=['allowed_enology_products', 'state'])
+        })
     output_distribution = fields.One2Many('production.output.distribution',
         'production', "Output Distribution",
         # domain=[('product', 'in', Eval('allowed_ouput_products'))],
         states={
             'invisible': ~Bool(Eval('production_template')),
             'readonly': Eval('state').in_(['cancelled', 'done']),
-        }, depends=['allowed_output_products', 'state'])
+        })
     allowed_enology_products = fields.Function(fields.One2Many(
         'product.product', None, 'Allowed Enology Products', readonly=True,
         context={
@@ -201,8 +200,7 @@ class Production(metaclass=PoolMeta):
         context={
             'company': Eval('company', -1),
             },
-        depends=['state', 'cost_distribution_template',
-            'cost_distribution_templates', 'company'])
+        depends=['company'])
     cost_distribution_template = fields.Many2One(
         'production.cost_price.distribution.template',
         "Cost Distribution Template",
@@ -216,8 +214,7 @@ class Production(metaclass=PoolMeta):
         context={
             'company': Eval('company', -1),
             },
-        depends=['state',
-            'production_template_cost_distribution_templates', 'company'])
+        depends=['company'])
     cost_distribution_templates = fields.Function(
         fields.Many2Many('product.template',
         None, None, "Cost Product Templates",
@@ -604,7 +601,7 @@ class OutputDistribution(ModelSQL, ModelView):
     location = fields.Many2One('stock.location', 'Location',
         states={
             'required': Eval('production_state').in_(['done'])
-        }, depends=['production_state'])
+        })
     uom = fields.Many2One('product.uom', 'Uom')
     unit_digits = fields.Function(fields.Integer('Unit Digits'),
         'on_change_with_unit_digits')

@@ -58,11 +58,11 @@ class Template(metaclass=PoolMeta):
     container = fields.Many2One('agronomics.container', 'Container',
         states={
             'invisible': Eval('agronomic_type') != 'bottled-wine',
-        }, depends=['agronomic_type'])
+        })
     capacity = fields.Function(fields.Numeric('Capacity', digits=(16, 2),
         states={
             'invisible': Eval('agronomic_type') != 'bottled-wine',
-        }, depends=['agronomic_type']), 'get_capacity',
+        }), 'get_capacity',
         searcher='search_capacity')
 
     quality_weighing = fields.Many2One('quality.template', 'Quality Weighing')
@@ -103,7 +103,7 @@ class Product(WineMixin, metaclass=PoolMeta):
             'invisible': Eval('agronomic_type').in_(
                 ['not-do-wort']
             )
-        }, depends=['agronomic_type'])
+        })
     ecologicals = fields.Many2Many('product.product-agronomics.ecological',
         'product', 'ecological', 'Ecologicals')
     certification = fields.Many2One('agronomics.certification',
@@ -112,13 +112,13 @@ class Product(WineMixin, metaclass=PoolMeta):
                 ['wine', 'unfiltered-wine', 'filtered-wine', 'clarified-wine',
                     'bottled-wine']
             )
-        }, depends=['agronomic_type'])
+        })
     alcohol_volume = fields.Function(fields.Numeric('Alcohol Volume',
             digits=(16, 2), states={
             'invisible': ~ Eval('agronomic_type').in_(
                 ['wine', 'unfiltered-wine', 'filtered-wine', 'clarified-wine',
                     'bottled-wine']
-            )}, depends=['agronomic_type']), 'get_alcohol_volume')
+            )}), 'get_alcohol_volume')
     quality_tests = fields.One2Many('quality.test', 'document', 'Quality Tests')
     quality_samples = fields.Many2Many('product.product-quality.sample',
         'product', 'sample', 'Quality Samples')
