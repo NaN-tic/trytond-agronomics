@@ -308,7 +308,7 @@ Create Production
   ['Raim Blanc']
   >>> production.click('assign_try')
   >>> production.click('run')
-  >>> production.click('done')
+  >>> production.click('do')
   >>> len(production.outputs)
   2
   >>> most = production.outputs[0]
