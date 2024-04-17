@@ -82,7 +82,7 @@
     <record model="ir.model.button" id="production_output_distribution_done_button">
         <field name="name">done</field>
         <field name="string">Done</field>
-        <field name="model" search="[('model', '=', 'production.output.distribution')]"/>
+        <field name="model">production.output.distribution</field>
     </record>
 
     <!-- Production Enology -->
@@ -150,14 +150,14 @@
         id="menu_act_production_cost_distribution_template"/>
 
     <record model="ir.model.access" id="access_production_cost_distribution_template">
-        <field name="model" search="[('model', '=', 'production.cost_price.distribution.template')]"/>
+        <field name="model">production.cost_price.distribution.template</field>
         <field name="perm_read" eval="True"/>
         <field name="perm_write" eval="False"/>
         <field name="perm_create" eval="False"/>
         <field name="perm_delete" eval="False"/>
     </record>
     <record model="ir.model.access" id="access_production_cost_distribution_template_admin">
-        <field name="model" search="[('model', '=', 'production.cost_price.distribution.template')]"/>
+        <field name="model">production.cost_price.distribution.template</field>
         <field name="group" ref="production.group_production_admin"/>
         <field name="perm_read" eval="True"/>
         <field name="perm_write" eval="True"/>
@@ -193,14 +193,14 @@
     </record>
 
     <record model="ir.model.access" id="access_production_cost_price_distribution">
-        <field name="model" search="[('model', '=', 'production.cost_price.distribution')]"/>
+        <field name="model">production.cost_price.distribution</field>
         <field name="perm_read" eval="True"/>
         <field name="perm_write" eval="False"/>
         <field name="perm_create" eval="False"/>
         <field name="perm_delete" eval="False"/>
     </record>
     <record model="ir.model.access" id="access_production_cost_price_distribution_admin">
-        <field name="model" search="[('model', '=', 'production.cost_price.distribution')]"/>
+        <field name="model">production.cost_price.distribution</field>
         <field name="group" ref="production.group_production_admin"/>
         <field name="perm_read" eval="True"/>
         <field name="perm_write" eval="True"/>

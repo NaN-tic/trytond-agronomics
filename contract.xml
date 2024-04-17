@@ -81,7 +81,7 @@ this repository contains the full copyright notices and license terms. -->
         <record model="ir.model.button" id="agronomics_contract_cancel_button">
             <field name="name">cancel</field>
             <field name="string">Cancel</field>
-            <field name="model" search="[('model', '=', 'agronomics.contract')]"/>
+            <field name="model">agronomics.contract</field>
         </record>
         <record model="ir.model.button-res.group" id="agronomics_contract_cancel_button_group_agronomics">
             <field name="button" ref="agronomics_contract_cancel_button"/>
@@ -91,7 +91,7 @@ this repository contains the full copyright notices and license terms. -->
         <record model="ir.model.button" id="agronomics_contract_active_button">
             <field name="name">active</field>
             <field name="string">Active</field>
-            <field name="model" search="[('model', '=', 'agronomics.contract')]"/>
+            <field name="model">agronomics.contract</field>
         </record>
         <record model="ir.model.button-res.group" id="agronomics_contract_active_button_group_agronomics">
             <field name="button" ref="agronomics_contract_active_button"/>
@@ -101,7 +101,7 @@ this repository contains the full copyright notices and license terms. -->
         <record model="ir.model.button" id="agronomics_contract_draft_button">
             <field name="name">draft</field>
             <field name="string">Draft</field>
-            <field name="model" search="[('model', '=', 'agronomics.contract')]"/>
+            <field name="model">agronomics.contract</field>
         </record>
         <record model="ir.model.button-res.group" id="agronomics_contract_draft_button_group_agronomics">
             <field name="button" ref="agronomics_contract_draft_button"/>
@@ -111,7 +111,7 @@ this repository contains the full copyright notices and license terms. -->
         <record model="ir.model.button" id="agronomics_contract_done_button">
             <field name="name">done</field>
             <field name="string">Done</field>
-            <field name="model" search="[('model', '=', 'agronomics.contract')]"/>
+            <field name="model">agronomics.contract</field>
         </record>
         <record model="ir.model.button-res.group" id="purchase_contract_done_button_group_purchase">
             <field name="button" ref="agronomics_contract_done_button"/>

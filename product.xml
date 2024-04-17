@@ -178,14 +178,14 @@
         </record>
 
         <record model="ir.model.access" id="access_certification">
-            <field name="model" search="[('model', '=', 'agronomics.certification')]"/>
+            <field name="model">agronomics.certification</field>
             <field name="perm_read" eval="True"/>
             <field name="perm_write" eval="False"/>
             <field name="perm_create" eval="False"/>
             <field name="perm_delete" eval="False"/>
         </record>
          <record model="ir.model.access" id="access_certification_agronomics_admin">
-            <field name="model" search="[('model', '=', 'agronomics.certification')]"/>
+            <field name="model">agronomics.certification</field>
             <field name="group" ref="agronomics.group_agronomics_admin"/>
             <field name="perm_read" eval="True"/>
             <field name="perm_write" eval="True"/>
@@ -193,7 +193,7 @@
             <field name="perm_delete" eval="True"/>
         </record>
          <record model="ir.model.access" id="access_certification_product_admin">
-            <field name="model" search="[('model', '=', 'agronomics.certification')]"/>
+            <field name="model">agronomics.certification</field>
             <field name="group" ref="product.group_product_admin"/>
             <field name="perm_read" eval="True"/>
             <field name="perm_write" eval="True"/>
@@ -202,14 +202,14 @@
         </record>
 
         <record model="ir.model.access" id="access_container">
-            <field name="model" search="[('model', '=', 'agronomics.container')]"/>
+            <field name="model">agronomics.container</field>
             <field name="perm_read" eval="True"/>
             <field name="perm_write" eval="False"/>
             <field name="perm_create" eval="False"/>
             <field name="perm_delete" eval="False"/>
         </record>
         <record model="ir.model.access" id="access_container_agronomics_admin">
-            <field name="model" search="[('model', '=', 'agronomics.container')]"/>
+            <field name="model">agronomics.container</field>
             <field name="group" ref="agronomics.group_agronomics_admin"/>
             <field name="perm_read" eval="True"/>
             <field name="perm_write" eval="True"/>
@@ -217,7 +217,7 @@
             <field name="perm_delete" eval="True"/>
         </record>
         <record model="ir.model.access" id="access_container_product_admin">
-            <field name="model" search="[('model', '=', 'agronomics.container')]"/>
+            <field name="model">agronomics.container</field>
             <field name="group" ref="product.group_product_admin"/>
             <field name="perm_read" eval="True"/>
             <field name="perm_write" eval="True"/>
