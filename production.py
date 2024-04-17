@@ -504,7 +504,7 @@ class Production(metaclass=PoolMeta):
         return new_histories
 
     @classmethod
-    def done(cls, productions):
+    def do(cls, productions):
         pool = Pool()
         Move = pool.get('stock.move')
         Warning = pool.get('res.user.warning')
@@ -536,7 +536,7 @@ class Production(metaclass=PoolMeta):
                     moves.append(move)
 
         Move.save(moves)
-        super().done(productions)
+        super().do(productions)
 
         for production in productions:
             for output in production.outputs:
