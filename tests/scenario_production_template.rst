@@ -314,7 +314,7 @@ Create Production
   >>> most = production.outputs[0]
   >>> len(most.product.varieties)
   2
-  >>> [(x.variety.name, x.percent) for x in most.product.varieties]
+  >>> sorted([(x.variety.name, x.percent) for x in most.product.varieties], key=lambda x: x[1])
   [('Parellada', 16.6667), ('Macabeu', 83.3334)]
   >>> [x.name for x in most.product.denominations_of_origin]
   ['Catalunya']
