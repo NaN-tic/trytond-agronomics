@@ -125,7 +125,7 @@ class Product(WineMixin, metaclass=PoolMeta):
     wine_aging = fields.One2Many('product.wine.wine_aging.history', 'product',
         "Wine Aging", readonly=True,
         context={
-            'product': Eval('id'),
+            'product': Eval('id', -1),
         }, depends=['id'])
     wine_history_material = fields.Function(fields.Text("History Material"),
         'get_wine_history', searcher='search_wine_history')

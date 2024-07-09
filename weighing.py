@@ -199,8 +199,10 @@ class Weighing(Workflow, ModelSQL, ModelView):
     @fields.depends('weighing_date')
     def on_change_with_crop(self):
         Crop = Pool().get('agronomics.crop')
-        crop = Crop.search([('start_date', '<=', self.weighing_date),
-            ('end_date', '>=', self.weighing_date)], limit=1)
+        crop = Crop.search([
+                ('start_date', '>=', self.weighing_date),
+                ('end_date', '<=', self.weighing_date),
+                ], limit=1)
         if not crop:
             return
         return crop[0].id
