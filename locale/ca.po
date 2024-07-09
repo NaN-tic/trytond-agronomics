@@ -106,7 +106,7 @@ msgstr "Parcel·la"
 
 msgctxt "field:agronomics.contract.line,product:"
 msgid "Product"
-msgstr "Productes"
+msgstr "Producte"
 
 msgctxt "field:agronomics.contract.line,purchased_quantity:"
 msgid "Purchased Quantity"
@@ -394,7 +394,7 @@ msgstr "Plantacions"
 
 msgctxt "field:agronomics.weighing,product:"
 msgid "Product"
-msgstr "Productes"
+msgstr "Producte"
 
 msgctxt "field:agronomics.weighing,product_created:"
 msgid "Product Created"
@@ -962,7 +962,7 @@ msgstr "Collita"
 
 msgctxt "field:product.product-agronomics.crop,product:"
 msgid "Product"
-msgstr "Productes"
+msgstr "Producte"
 
 msgctxt "field:product.product-agronomics.denomination_of_origin,do:"
 msgid "DO"
@@ -970,7 +970,7 @@ msgstr "DO"
 
 msgctxt "field:product.product-agronomics.denomination_of_origin,product:"
 msgid "Product"
-msgstr "Productes"
+msgstr "Producte"
 
 msgctxt "field:product.product-agronomics.ecological,ecological:"
 msgid "Ecological"
@@ -982,7 +982,7 @@ msgstr "Producte"
 
 msgctxt "field:product.product-quality.sample,product:"
 msgid "Product"
-msgstr "Productes"
+msgstr "Producte"
 
 msgctxt "field:product.product-quality.sample,sample:"
 msgid "Sample"
@@ -1018,7 +1018,7 @@ msgstr "Percentatge"
 
 msgctxt "field:product.variety,product:"
 msgid "Product"
-msgstr "Productes"
+msgstr "Producte"
 
 msgctxt "field:product.variety,variety:"
 msgid "Variety"
@@ -1121,7 +1121,7 @@ msgstr "Nom"
 
 msgctxt "field:production.enology.product,product:"
 msgid "Product"
-msgstr "Productes"
+msgstr "Producte"
 
 msgctxt "field:production.enology.product,production:"
 msgid "Production"
@@ -1279,7 +1279,7 @@ msgstr "Plantilla de producció"
 
 msgctxt "field:production.template.outputs-product.template,template:"
 msgid "Product"
-msgstr "Productes"
+msgstr "Producte"
 
 msgctxt "field:quality.configuration,sample_sequence:"
 msgid "Sample Sequence"
@@ -1295,11 +1295,11 @@ msgstr "Seqüència de mostra"
 
 msgctxt "field:quality.qualitative.test.line,product:"
 msgid "Product"
-msgstr "Productes"
+msgstr "Producte"
 
 msgctxt "field:quality.quantitative.test.line,product:"
 msgid "Product"
-msgstr "Productes"
+msgstr "Producte"
 
 msgctxt "field:quality.sample,code:"
 msgid "Code"
