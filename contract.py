@@ -175,8 +175,7 @@ class AgronomicsContractLine(ModelSQL, ModelView):
     @fields.depends('parcel')
     def on_change_with_product(self, name=None):
         if self.parcel:
-            return self.parcel.product.id
-        return None
+            return self.parcel.product
 
     @fields.depends('product', methods=['on_change_with_product'])
     def on_change_with_unit(self, name=None):

@@ -196,7 +196,8 @@ class Parcel(ModelSQL, ModelView):
     premium = fields.Boolean('Premium')
     plant_number = fields.Integer('Plant number')
     surface = fields.Float('Surface', digits=(16, 2), required=True)
-    producer = fields.Many2One('party.party', 'Party')
+    producer = fields.Function(fields.Many2One('party.party', 'Party'),
+        'get_producer', searcher='search_producer')
     irrigation = fields.Many2One('agronomics.irrigation', 'Irrigation')
     max_production = fields.Function(fields.Float("Max Production",
         digits=(16, 2)), 'get_max_production')
@@ -235,6 +236,13 @@ class Parcel(ModelSQL, ModelView):
 
     def get_remaining_quantity(self, name):
         return (self.max_production or 0) - (self.purchased_quantity or 0)
+
+    def get_producer(self, name):
+        return self.plantation.party
+
+    @classmethod
+    def search_producer(cls, name, clause):
+        return [('plantation.party',) + tuple(clause[1:])]
 
 
 class ParcelDo(ModelSQL):
