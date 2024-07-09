@@ -106,7 +106,7 @@ msgstr "Parcela"
 
 msgctxt "field:agronomics.contract.line,product:"
 msgid "Product"
-msgstr "Productos"
+msgstr "Producto"
 
 msgctxt "field:agronomics.contract.line,purchased_quantity:"
 msgid "Purchased Quantity"
@@ -394,7 +394,7 @@ msgstr "Plantación"
 
 msgctxt "field:agronomics.weighing,product:"
 msgid "Product"
-msgstr "Productos"
+msgstr "Producto"
 
 msgctxt "field:agronomics.weighing,product_created:"
 msgid "Product Created"
@@ -970,7 +970,7 @@ msgstr "DO"
 
 msgctxt "field:product.product-agronomics.denomination_of_origin,product:"
 msgid "Product"
-msgstr "Productos"
+msgstr "Producto"
 
 msgctxt "field:product.product-agronomics.ecological,ecological:"
 msgid "Ecological"
@@ -978,11 +978,11 @@ msgstr "Ecológico"
 
 msgctxt "field:product.product-agronomics.ecological,product:"
 msgid "Product"
-msgstr "Productos"
+msgstr "Producto"
 
 msgctxt "field:product.product-quality.sample,product:"
 msgid "Product"
-msgstr "Productos"
+msgstr "Producto"
 
 msgctxt "field:product.product-quality.sample,sample:"
 msgid "Sample"
@@ -1018,7 +1018,7 @@ msgstr "Porcentaje"
 
 msgctxt "field:product.variety,product:"
 msgid "Product"
-msgstr "Productos"
+msgstr "Producto"
 
 msgctxt "field:product.variety,variety:"
 msgid "Variety"
@@ -1038,7 +1038,7 @@ msgstr "Producto"
 
 msgctxt "field:production,allowed_enology_products:"
 msgid "Allowed Enology Products"
-msgstr "Productos Vinícolas permitidos"
+msgstr "Productos vinícolas permitidos"
 
 msgctxt "field:production,allowed_output_products:"
 msgid "Allowed Output Products"
@@ -1121,7 +1121,7 @@ msgstr "Nombre"
 
 msgctxt "field:production.enology.product,product:"
 msgid "Product"
-msgstr "Productos"
+msgstr "Producto"
 
 msgctxt "field:production.enology.product,production:"
 msgid "Production"
@@ -1279,7 +1279,7 @@ msgstr "Plantilla producción"
 
 msgctxt "field:production.template.outputs-product.template,template:"
 msgid "Product"
-msgstr "Productos"
+msgstr "Producto"
 
 msgctxt "field:quality.configuration,sample_sequence:"
 msgid "Sample Sequence"
@@ -1295,11 +1295,11 @@ msgstr "Secuencia de muestra"
 
 msgctxt "field:quality.qualitative.test.line,product:"
 msgid "Product"
-msgstr "Productos"
+msgstr "Producto"
 
 msgctxt "field:quality.quantitative.test.line,product:"
 msgid "Product"
-msgstr "Productos"
+msgstr "Producto"
 
 msgctxt "field:quality.sample,code:"
 msgid "Code"
