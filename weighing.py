@@ -25,6 +25,7 @@ class WeighingCenter(ModelSQL, ModelView):
 READONLY = ['processing', 'distributed', 'in_analysis', 'done', 'cancelled']
 READONLY2 = ['draft', 'distributed', 'in_analysis', 'done', 'cancelled']
 
+
 class Weighing(Workflow, ModelSQL, ModelView):
     """ Weighing """
     __name__ = 'agronomics.weighing'
@@ -83,7 +84,8 @@ class Weighing(Workflow, ModelSQL, ModelView):
         'Beneficiaries', states={
                 'readonly': Eval('state').in_(READONLY2),
                 'required': Eval('state') == 'in_analysis',
-                })
+                'invisible': Eval('is_maquila', True),
+            }, depends=['is_maquila', 'state'])
     denomination_origin = fields.Many2Many('agronomics.weighing-agronomics.do',
         'weighing', 'do', 'Denomination of Origin', states={
             'readonly': Eval('state').in_(READONLY2) | Bool(Eval('table')),
@@ -91,7 +93,9 @@ class Weighing(Workflow, ModelSQL, ModelView):
             })
     beneficiaries_invoices_line = fields.Many2Many(
         'agronomics.weighing-account.invoice.line', 'weighing', 'invoice_line',
-        "Beneficiaries Invoices", readonly=True)
+        "Beneficiaries Invoices", readonly=True, states={
+                'invisible': Eval('is_maquila', True),
+        }, depends=['is_maquila'])
     plantations = fields.One2Many('agronomics.weighing-agronomics.plantation',
         'weighing', 'plantations', states={
             'readonly': Eval('state').in_(READONLY),
@@ -121,7 +125,20 @@ class Weighing(Workflow, ModelSQL, ModelView):
     forced_analysis = fields.Boolean('Forced Analysis', readonly=True)
     inventory_move = fields.Many2One('stock.move', "Inventory Move",
         readonly=True)
-
+    is_maquila = fields.Boolean("Is Maquila", states={
+            'readonly': Eval('state').in_(READONLY),
+        }, depends=['state'])
+    # TODO weighing table is readonly when is draft
+    maquila = fields.Many2One('agronomics.maquila', "Maquila",
+        domain=[
+            ('table', '=', Bool(Eval('table', False))),
+            ('product', '=', Eval('product')),
+        ],
+        states={
+            'readonly': Eval('state').in_(['in_analysis', 'done', 'cancelled']),
+            'invisible': ~Eval('is_maquila', False),
+            'required': (Bool(Eval('is_maquila', False)) & (Eval('state') == 'in_analysis')),
+        }, depends=['is_maquila', 'table', 'product', 'state'])
 
     @classmethod
     def __setup__(cls):
@@ -403,8 +420,8 @@ class Weighing(Workflow, ModelSQL, ModelView):
         cls.analysis(to_analysis)
 
     def get_not_assigned_weight(self, name):
-        return (self.netweight or 0) - sum([(p.netweight or 0)
-            for p in self.parcels])
+        if self.netweight:
+            return self.netweight - sum([p.netweight or 0 for p in self.parcels])
 
     @classmethod
     @ModelView.button
@@ -453,7 +470,7 @@ class Weighing(Workflow, ModelSQL, ModelView):
         InvoiceLine = pool.get('account.invoice.line')
         Product = pool.get('product.product')
         Company = pool.get('company.company')
-        context = Transaction().context
+
         ContractProductPriceListTypePriceList = pool.get(
             'agronomics.contract-product.price_list.type-product.price_list')
         WeighingInvoiceLine = pool.get(
@@ -461,6 +478,10 @@ class Weighing(Workflow, ModelSQL, ModelView):
         RecomputeCostPrice = pool.get('product.recompute_cost_price',
             type='wizard')
         Move = pool.get('stock.move')
+
+        context = Transaction().context
+
+        company = Company(context['company'])
 
         default_invoice_line_values = InvoiceLine.default_get(
             InvoiceLine._fields.keys(), with_rec_name=False)
@@ -471,7 +492,8 @@ class Weighing(Workflow, ModelSQL, ModelView):
         to_recompute_products = []
         for weighing in weighings:
             cost_price = Decimal(0)
-            if weighing.beneficiaries:
+
+            if not weighing.is_maquila and weighing.beneficiaries:
                 for beneficiary in weighing.beneficiaries:
                     price_list = ContractProductPriceListTypePriceList.search([
                         ('contract', '=', weighing.purchase_contract),
@@ -483,9 +505,8 @@ class Weighing(Workflow, ModelSQL, ModelView):
                     invoice_line.type = 'line'
                     invoice_line.invoice_type = 'in'
                     invoice_line.party = beneficiary.party
-                    invoice_line.currency = (
-                        Company(context['company']).currency)
-                    invoice_line.company = Company(context['company'])
+                    invoice_line.currency = company.currency
+                    invoice_line.company = company
                     invoice_line.description = ''
                     invoice_line.product = weighing.product_created
                     invoice_line.on_change_product()
@@ -528,6 +549,8 @@ class Weighing(Workflow, ModelSQL, ModelView):
             default_values = recompute_cost_price.default_start({})
             recompute_cost_price.start.from_ = default_values['from_']
             recompute_cost_price.transition_recompute()
+
+        cls.save(weighings)
 
         WeighingInvoiceLine.save(to_save)
         Move.save(to_save_moves)

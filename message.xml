@@ -54,7 +54,12 @@ this repository contains the full copyright notices and license terms. -->
     <record model="ir.message" id="msg_weighing_with_table_do">
         <field name="text">The weighing "%(weighing)s" has the mark "Table" but has selected denomination of origin.</field>
     </record>
-
+    <record model="ir.message" id="msg_maquila_contract_quantity">
+        <field name="text">Total quantity is different from the quantity from the contract "%(contract)s".</field>
+    </record>
+    <record model="ir.message" id="msg_contract_delete_cancel">
+        <field name="text">To delete contract "%(contract)s" you must cancel it.</field>
+    </record>
   </data>
 
 </tryton>
