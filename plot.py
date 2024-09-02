@@ -95,7 +95,7 @@ class Plantation(ModelSQL, ModelView):
 
     def get_varieties(self, name):
         if not self.parcels:
-            return []
+            return
         varieties = [y.variety.name for y in self.parcels if y.variety]
         return ",".join(list(set(varieties)))
 
