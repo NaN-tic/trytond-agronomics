@@ -97,8 +97,7 @@ class Plantation(ModelSQL, ModelView):
     def get_varieties(self, name):
         if not self.parcels:
             return
-        varieties = [y.variety.name for y in self.parcels if y.variety]
-        return ",".join(list(set(varieties)))
+        return ', '.join({y.variety.name for y in self.parcels if y.variety})
 
     def get_remaining_quantity(self, name):
         return sum([y.remaining_quantity or 0 for y in self.parcels])
