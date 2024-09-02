@@ -52,7 +52,7 @@ msgstr "Línies"
 
 msgctxt "field:agronomics.contract,party:"
 msgid "Party"
-msgstr "Tercers"
+msgstr "Tercer"
 
 msgctxt "field:agronomics.contract,price_list_types:"
 msgid "Price List Types"
@@ -322,7 +322,7 @@ msgstr "Parcel·la"
 
 msgctxt "field:agronomics.plantation,party:"
 msgid "Party"
-msgstr "Tercers"
+msgstr "Tercer"
 
 msgctxt "field:agronomics.plantation,plantation_owner:"
 msgid "Plantation Owner"
