@@ -473,48 +473,47 @@ class Weighing(Workflow, ModelSQL, ModelView):
         to_recompute_products = []
         for weighing in weighings:
             cost_price = Decimal(0)
-            if weighing.beneficiaries:
-                for beneficiary in weighing.beneficiaries:
-                    price_list = ContractProductPriceListTypePriceList.search([
+            for beneficiary in weighing.beneficiaries:
+                price_list = ContractProductPriceListTypePriceList.search([
                         ('contract', '=', weighing.purchase_contract),
                         ('price_list_type', '=',
                             beneficiary.product_price_list_type),
-                    ])
+                        ])
 
-                    invoice_line = InvoiceLine()
-                    invoice_line.type = 'line'
-                    invoice_line.invoice_type = 'in'
-                    invoice_line.party = beneficiary.party
-                    invoice_line.currency = (
-                        Company(context['company']).currency)
-                    invoice_line.company = Company(context['company'])
-                    invoice_line.description = ''
-                    invoice_line.product = weighing.product_created
-                    invoice_line.on_change_product()
-                    invoice_line.quantity = weighing.netweight or 0
-                    invoice_line.product_price_list_type = (
-                        beneficiary.product_price_list_type)
+                invoice_line = InvoiceLine()
+                invoice_line.type = 'line'
+                invoice_line.invoice_type = 'in'
+                invoice_line.party = beneficiary.party
+                invoice_line.currency = (
+                    Company(context['company']).currency)
+                invoice_line.company = Company(context['company'])
+                invoice_line.description = ''
+                invoice_line.product = weighing.product_created
+                invoice_line.on_change_product()
+                invoice_line.quantity = weighing.netweight or 0
+                invoice_line.product_price_list_type = (
+                    beneficiary.product_price_list_type)
 
-                    unit_price = Product.get_purchase_price(
-                        [weighing.product_created],
-                        abs(weighing.netweight or 0))[
-                            weighing.product_created.id]
-                    if price_list:
-                        if price_list[0].price_list:
-                            price_list = price_list[0].price_list
-                        unit_price = price_list.compute(beneficiary.party,
-                            weighing.product_created, unit_price,
-                            weighing.netweight or 0,
-                            weighing.product_created.template.default_uom)
-                        unit_price = unit_price
-                    invoice_line.unit_price = unit_price
-                    cost_price += unit_price
+                unit_price = Product.get_purchase_price(
+                    [weighing.product_created],
+                    abs(weighing.netweight or 0))[
+                        weighing.product_created.id]
+                if price_list:
+                    if price_list[0].price_list:
+                        price_list = price_list[0].price_list
+                    unit_price = price_list.compute(beneficiary.party,
+                        weighing.product_created, unit_price,
+                        weighing.netweight or 0,
+                        weighing.product_created.template.default_uom)
+                    unit_price = unit_price
+                invoice_line.unit_price = unit_price
+                cost_price += unit_price
 
-                    weighing_invoice = WeighingInvoiceLine(
-                        weighing=weighing,
-                        invoice_line=invoice_line
-                    )
-                    to_save.append(weighing_invoice)
+                weighing_invoice = WeighingInvoiceLine(
+                    weighing=weighing,
+                    invoice_line=invoice_line
+                )
+                to_save.append(weighing_invoice)
 
             weighing.inventory_move.unit_price = cost_price
             weighing.inventory_move.unit_price_updated = True
