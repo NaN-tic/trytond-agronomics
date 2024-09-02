@@ -10,6 +10,7 @@ class Enclosure(ModelSQL, ModelView):
     "Enclosure"
     __name__ = 'agronomics.enclosure'
 
+    plantation = fields.Many2One('agronomics.plantation', 'Plantation')
     aggregate_sigpac = fields.Numeric('Aggragate Sigpac')
     municipality_sigpac = fields.Numeric('Municipality Sigpac')
     parcel_sigpac = fields.Numeric('Parcel Sigpac')
@@ -18,7 +19,6 @@ class Enclosure(ModelSQL, ModelView):
     polygon_sigpac = fields.Numeric('Polygon Sigpac')
     zone_sigpac = fields.Numeric('Zone Sigpac')
     surface_sigpac = fields.Numeric('Surface Sigpac')
-    plantation = fields.Many2One('agronomics.plantation', 'Plantation')
 
 
 class Crop(ModelSQL, ModelView):

@@ -9,7 +9,7 @@
   <field name="plantation_owner"/>
   <notebook colspan="4">
     <page name="parcels">
-      <field name="parcels" widget="many2many" colspan="4"/>
+      <field name="parcels" colspan="4"/>
     </page>
     <page name="enclosures">
       <field name="enclosures" widget="many2many" colspan="4"/>
