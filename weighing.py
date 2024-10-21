@@ -339,7 +339,7 @@ class Weighing(Workflow, ModelSQL, ModelView):
                     center=weighing.weighing_center.name))
             move.to_location = weighing.weighing_center.to_location
             move.product = weighing.product_created
-            move.uom = weighing.product_created.template.default_uom
+            move.unit = weighing.product_created.template.default_uom
             move.unit_price = weighing.product_created.template.list_price
             move.quantity = weighing.netweight or 0
 
