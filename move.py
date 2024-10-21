@@ -17,7 +17,7 @@ class Move(metaclass=PoolMeta):
         for move in moves:
             if move.to_location.tank:
                 #Same unit move and to location
-                if move.uom != move.to_location.uom:
+                if move.unit != move.to_location.uom:
                     raise UserError(gettext(
                         'agronomics.msg_move_unit_not_match'))
                 #Do not exceed the amount
