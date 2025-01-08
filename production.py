@@ -685,7 +685,7 @@ class OutputDistribution(ModelSQL, ModelView):
             return
         if self.initial_quantity:
             return self.initial_quantity
-        context = Transaction().context
+        context = Transaction().context.copy()
         context['locations'] = [self.location.id]
         with Transaction().set_context(context):
             quantities = Product.get_quantity(self.product.products,
@@ -855,7 +855,7 @@ class ProductionCostPriceDistributionTemplateProductionTemplate(Wizard):
                 cost_distributions.append(dt)
             if cost_distributions:
                 tpl.cost_distribution_templates = cost_distributions
-            to_create.append(tpl._save_values)
+            to_create.append(tpl._save_values())
         tpls = Template.create(to_create)
 
         data = {'res_id': [tpl.id for tpl in tpls]}
