@@ -1742,7 +1742,7 @@ msgstr "Activo"
 
 msgctxt "model:ir.model.button,string:agronomics_contract_cancel_button"
 msgid "Cancel"
-msgstr "Cancel·lar"
+msgstr "Cancelar"
 
 msgctxt "model:ir.model.button,string:agronomics_contract_done_button"
 msgid "Done"
@@ -1759,7 +1759,7 @@ msgstr "Realizar"
 
 msgctxt "model:ir.model.button,string:weighing_cancel_button"
 msgid "Cancel"
-msgstr "Cancel·lar"
+msgstr "Cancelar"
 
 msgctxt "model:ir.model.button,string:weighing_distribute_button"
 msgid "Analysis"
@@ -2372,4 +2372,4 @@ msgstr "Crear"
 msgctxt ""
 "wizard_button:production.cost_price.distribution.template.from.production.template,ask,end:"
 msgid "Cancel"
-msgstr "Cancel·lar"
+msgstr "Cancelar"
