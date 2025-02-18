@@ -95,7 +95,7 @@ class QualitySample(ModelSQL, ModelView):
         vlist = [x.copy() for x in vlist]
         sequence = Config(1).sample_sequence
         for value in vlist:
-            if not value.get('code'):
+            if sequence and not value.get('code'):
                 value['code'] = sequence.get()
         return super(QualitySample, cls).create(vlist)
 
