@@ -501,8 +501,8 @@ class Weighing(Workflow, ModelSQL, ModelView):
                 if price_list:
                     if price_list[0].price_list:
                         price_list = price_list[0].price_list
-                    unit_price = price_list.compute(beneficiary.party,
-                        weighing.product_created, unit_price,
+                    unit_price = price_list.compute(
+                        weighing.product_created,
                         weighing.netweight or 0,
                         weighing.product_created.template.default_uom)
                     unit_price = unit_price
