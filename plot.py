@@ -191,7 +191,7 @@ class Parcel(ModelSQL, ModelView):
     table = fields.Boolean('Table')
     premium = fields.Boolean('Premium')
     plant_number = fields.Integer('Plant number')
-    surface = fields.Float('Surface', digits=(16, 2), required=True)
+    surface = fields.Float('Surface', digits=(16, 4), required=True)
     producer = fields.Function(fields.Many2One('party.party', 'Party'),
         'get_producer', searcher='search_producer')
     irrigation = fields.Many2One('agronomics.irrigation', 'Irrigation')
