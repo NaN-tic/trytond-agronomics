@@ -1607,7 +1607,7 @@ msgstr "Esborany"
 msgctxt ""
 "model:ir.action.act_window.domain,name:act_weighing_domain_processing"
 msgid "Processing"
-msgstr "Procesos"
+msgstr "En proceso"
 
 msgctxt "model:ir.message,text:msg_beneficiaris_percent"
 msgid ""
@@ -2222,7 +2222,7 @@ msgstr "En Análisis"
 
 msgctxt "selection:agronomics.weighing,state:"
 msgid "Processing"
-msgstr "Procesos"
+msgstr "En proceso"
 
 msgctxt "selection:ir.cron,method:"
 msgid "Deactivate Variants"
