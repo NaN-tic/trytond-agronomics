@@ -367,7 +367,6 @@ class Weighing(Workflow, ModelSQL, ModelView):
                 if weighing.parcels:
                     WeighingParcel.delete(weighing.parcels)
                 allowed_parcels = []
-                remaining_weight = weighing.netweight
                 for wp in weighing.plantations:
                     plantation = wp.plantation
                     if plantation:
@@ -375,6 +374,7 @@ class Weighing(Workflow, ModelSQL, ModelView):
                             if parcel.crop == weighing.crop:
                                 allowed_parcels.append(parcel)
                                 break
+                remaining_weight = weighing.netweight
                 for parcel in allowed_parcels:
                     if not remaining_weight:
                         break
