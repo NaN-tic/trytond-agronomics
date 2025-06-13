@@ -79,32 +79,23 @@
       <record model="ir.action.act_window.domain" id="act_weighing_domain_draft">
           <field name="name">Draft</field>
           <field name="sequence" eval="10"/>
-          <field name="domain"
-              eval="[('state', '=', 'draft')]"
-              pyson="1"/>
+          <field name="domain" eval="[('state', '=', 'draft')]" pyson="1"/>
+          <field name="count" eval="True"/>
           <field name="act_window" ref="act_weighing_action"/>
       </record>
-
       <record model="ir.action.act_window.domain" id="act_weighing_domain_processing">
           <field name="name">Processing</field>
           <field name="sequence" eval="10"/>
-          <field name="domain"
-              eval="[('state', '=', 'processing')]"
-              pyson="1"/>
+          <field name="domain" eval="[('state', '=', 'processing')]" pyson="1"/>
           <field name="act_window" ref="act_weighing_action"/>
       </record>
-
-
       <record model="ir.action.act_window.domain" id="act_weighing_domain_analysis">
           <field name="name">In Analysis</field>
           <field name="sequence" eval="10"/>
-          <field name="domain"
-              eval="[('state', '=', 'in_analysis')]"
-              pyson="1"/>
+          <field name="domain" eval="[('state', '=', 'in_analysis')]" pyson="1"/>
+          <field name="count" eval="True"/>
           <field name="act_window" ref="act_weighing_action"/>
       </record>
-
-
       <record model="ir.action.act_window.domain" id="act_weighing_domain_all">
           <field name="name">All</field>
           <field name="sequence" eval="10"/>
