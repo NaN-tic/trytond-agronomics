@@ -180,7 +180,7 @@
 
       <record model="ir.model.button" id="weighing_distribute_button">
           <field name="name">distribute</field>
-          <field name="string">Analysis</field>
+          <field name="string">Distribute</field>
           <field name="model">agronomics.weighing</field>
       </record>
       <record model="ir.model.button-res.group" id="weighing_distribute_button_group_agronomics">
