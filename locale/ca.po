@@ -498,7 +498,7 @@ msgstr "Seqüència de pesada"
 
 msgctxt "field:party.party,parcels:"
 msgid "Parcels"
-msgstr "Parceles"
+msgstr "Parcel·les"
 
 msgctxt "field:party.party,plantations:"
 msgid "Plantation"
@@ -1400,7 +1400,7 @@ msgstr "Línia de contracte"
 
 msgctxt "model:agronomics.create_new_parcels.start,name:"
 msgid "Create New Parcels - Start"
-msgstr "Crea noves parceles - Inici"
+msgstr "Crea noves parcel·les - Inici"
 
 msgctxt "model:agronomics.crop,name:"
 msgid "Crop"
@@ -1577,7 +1577,7 @@ msgstr "Crear Distribució de costos"
 
 msgctxt "model:ir.action,name:wizard_create_new_parcels"
 msgid "Create new Parcels"
-msgstr "Crea noves parceles"
+msgstr "Crea noves parcel·les"
 
 msgctxt ""
 "model:ir.action.act_window.domain,name:act_agronomics_contract_active"
@@ -1607,7 +1607,7 @@ msgstr "Esborrany"
 msgctxt ""
 "model:ir.action.act_window.domain,name:act_weighing_domain_processing"
 msgid "Processing"
-msgstr "Processos"
+msgstr "En procés"
 
 msgctxt "model:ir.message,text:msg_beneficiaris_percent"
 msgid ""
@@ -1827,7 +1827,7 @@ msgstr "Envàs"
 
 msgctxt "model:ir.ui.menu,name:menu_create_new_parcels"
 msgid "Create new Parcels"
-msgstr "Crea noves parceles"
+msgstr "Crea noves parcel·les"
 
 msgctxt "model:ir.ui.menu,name:menu_crop_list"
 msgid "Crop"
@@ -2218,7 +2218,7 @@ msgstr "En anàlisis"
 
 msgctxt "selection:agronomics.weighing,state:"
 msgid "Processing"
-msgstr "Processos"
+msgstr "En procés"
 
 msgctxt "selection:ir.cron,method:"
 msgid "Deactivate Variants"
