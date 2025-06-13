@@ -103,7 +103,6 @@
           <field name="act_window" ref="act_weighing_action"/>
       </record>
 
-
       <menuitem parent="menu_agronomics" sequence="1"
           action="act_weighing_action" id="menu_weighing_list"/>
 
