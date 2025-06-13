@@ -67,6 +67,7 @@ class Irrigation(ModelSQL, ModelView):
 class Plantation(ModelSQL, ModelView):
     "Plantation"
     __name__ = 'agronomics.plantation'
+    _rec_name = 'code'
 
     code = fields.Char("Code", required=True)
     party = fields.Many2One('party.party', "Party", required=True)
@@ -81,11 +82,6 @@ class Plantation(ModelSQL, ModelView):
     remaining_quantity = fields.Function(
         fields.Float("Remainig Quantity", digits=(16, 2)),
         'get_remaining_quantity', searcher='search_remaining_quantity')
-
-    def get_rec_name(self, name):
-        if self.code:
-            return self.code
-        return self.name
 
     def get_do(self, name):
         do = []
@@ -213,6 +209,13 @@ class Parcel(ModelSQL, ModelView):
     def get_rec_name(self, name):
         if self.plantation and self.crop:
             return self.plantation.code + ' - ' + self.crop.rec_name
+
+    @classmethod
+    def search_rec_name(cls, name, clause):
+        return ['OR',
+            ('plantation.code',) + tuple(clause[1:]),
+            ('crop.name',) + tuple(clause[1:]),
+            ]
 
     def get_all_do(self, name):
         return ",".join([x.name for x in self.denomination_origin])
