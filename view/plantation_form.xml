@@ -11,6 +11,10 @@
   <field name="product"/>
   <label name="variety"/>
   <field name="variety"/>
+  <label name="purchased_quantity"/>
+  <field name="purchased_quantity"/>
+  <label name="remaining_quantity"/>
+  <field name="remaining_quantity"/>
   <notebook colspan="4">
     <page name="parcels">
       <field name="parcels" colspan="4"/>
