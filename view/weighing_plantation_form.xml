@@ -1,0 +1,13 @@
+<form>
+    <label name="weighing"/>
+    <field name="weighing"/>
+    <newline/>
+    <label name="plantation"/>
+    <field name="plantation"/>
+    <label name="party"/>
+    <field name="party"/>
+    <label name="purchased_quantity"/>
+    <field name="purchased_quantity"/>
+    <label name="remaining_quantity"/>
+    <field name="remaining_quantity"/>
+</form>
