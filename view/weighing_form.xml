@@ -1,60 +1,59 @@
 <form>
-  <label name="number"/>
-  <field name="number"/>
-  <label name="weighing_date"/>
-  <field name="weighing_date"/>
-  <label name="weighing_center"/>
-  <field name="weighing_center"/>
-  <label name="crop"/>
-  <field name="crop"/>
-  <label name="purchase_contract"/>
-  <field name="purchase_contract"/>
-  <label name="product"/>
-  <field name="product"/>
-  <label name="variety"/>
-  <field name="variety"/>
-  <label name="table"/>
-  <field name="table"/>
-  <label name="ecological"/>
-  <field name="ecological"/>
-  <group col="8" colspan="4" id="weight">
-    <label name="weight"/>
-    <field name="weight"/>
-    <label name="tara"/>
-    <field name="tara"/>
-    <label name="netweight"/>
-    <field name="netweight"/>
-    <label name="grade"/>
-    <field name="grade"/>
-  </group>
-  <label name="product_created"/>
-  <field name="product_created"/>
-  <label name="quality_test"/>
-  <field name="quality_test"/>
-  <label name="inventory_move"/>
-  <field name="inventory_move"/>
-
-  <notebook>
-    <page name="plantations">
-      <field name="plantations" colspan="4"/>
-      <field name="denomination_origin" colspan="4"/>
-    </page>
-    <page name="beneficiaries">
-      <field name="beneficiaries" colspan="4"/>
-      <field name="beneficiaries_invoices_line" colspan="4"/>
-    </page>
-    <page string="Parcel Distribution" id="parcel_distribution" >
-      <field name="parcels" colspan="4"/>
-    </page>
-  </notebook>
-  <label name="state"/>
-  <field name="state"/>
-  <group col="-1" colspan="2" id="buttons">
-      <button name="cancel"/>
-      <button name="draft"/>
-      <button name="process"/>
-      <button name="distribute"/>
-      <button name="force_analysis"/>
-      <button name="do"/>
-  </group>
+    <label name="number"/>
+    <field name="number"/>
+    <label name="weighing_date"/>
+    <field name="weighing_date"/>
+    <label name="weighing_center"/>
+    <field name="weighing_center"/>
+    <label name="crop"/>
+    <field name="crop"/>
+    <group col="8" colspan="4" id="weight">
+        <label name="weight"/>
+        <field name="weight"/>
+        <label name="tara"/>
+        <field name="tara"/>
+        <label name="netweight"/>
+        <field name="netweight"/>
+        <label name="grade"/>
+        <field name="grade"/>
+    </group>
+    <label name="purchase_contract"/>
+    <field name="purchase_contract"/>
+    <label name="product"/>
+    <field name="product"/>
+    <label name="variety"/>
+    <field name="variety"/>
+    <label name="table"/>
+    <field name="table"/>
+    <label name="ecological"/>
+    <field name="ecological"/>
+    <label name="product_created"/>
+    <field name="product_created"/>
+    <label name="quality_test"/>
+    <field name="quality_test"/>
+    <label name="inventory_move"/>
+    <field name="inventory_move"/>
+    <notebook>
+        <page name="plantations">
+          <field name="plantations" colspan="4"/>
+          <field name="denomination_origin" colspan="4"/>
+        </page>
+        <page name="beneficiaries">
+          <field name="beneficiaries" colspan="4"/>
+          <field name="beneficiaries_invoices_line" colspan="4"/>
+        </page>
+        <page string="Parcel Distribution" id="parcel_distribution" >
+          <field name="parcels" colspan="4"/>
+        </page>
+    </notebook>
+    <label name="state"/>
+    <field name="state"/>
+    <group col="-1" colspan="2" id="buttons">
+          <button name="cancel"/>
+          <button name="draft"/>
+          <button name="process"/>
+          <button name="distribute"/>
+          <button name="force_analysis"/>
+          <button name="do"/>
+    </group>
 </form>
