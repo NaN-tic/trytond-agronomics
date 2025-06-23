@@ -218,7 +218,7 @@ class Weighing(Workflow, ModelSQL, ModelView):
         if not value:
             return
 
-    fields.depends('weighing_date')
+    @fields.depends('weighing_date')
     def on_change_weighing_date(self):
         Crop = Pool().get('agronomics.crop')
         crops = Crop.search([
