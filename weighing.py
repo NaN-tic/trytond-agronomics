@@ -542,12 +542,12 @@ class Weighing(Workflow, ModelSQL, ModelView):
             Product.save([weighing.product_created])
 
             session_id, _, _ = RecomputeCostPrice.create()
-            recompute_cost_price = RecomputeCostPrice(session_id)
-            recompute_cost_price.model = Product
-            recompute_cost_price.records = [weighing.product_created]
-            default_values = recompute_cost_price.default_start({})
-            recompute_cost_price.start.from_ = default_values['from_']
-            recompute_cost_price.transition_recompute()
+            with Transaction().set_context(active_model='product.product',
+                    active_ids=[weighing.product_created.id]):
+                recompute_cost_price = RecomputeCostPrice(session_id)
+                default_values = recompute_cost_price.default_start({})
+                recompute_cost_price.start.from_ = default_values['from_']
+                recompute_cost_price.transition_recompute()
 
         WeighingInvoiceLine.save(to_save)
         Move.save(to_save_moves)
