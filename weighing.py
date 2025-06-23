@@ -49,8 +49,8 @@ class Weighing(Workflow, ModelSQL, ModelView):
             }, required=True)
 
     crop = fields.Many2One('agronomics.crop', 'Crop', required=True, domain=[
-            ('start_date', '<=', Eval('weighing_date')),
-            ('end_date', '>=', Eval('weighing_date')),
+            ('start_date', '<=', Eval('weighing_date', None)),
+            ('end_date', '>=', Eval('weighing_date', None)),
             ], states={
             'readonly': Eval('state').in_(READONLY),
             })
