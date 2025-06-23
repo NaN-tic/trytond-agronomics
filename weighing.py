@@ -70,17 +70,21 @@ class Weighing(Workflow, ModelSQL, ModelView):
             'readonly': Eval('state').in_(['done', 'cancelled']),
             'required': Eval('state') == 'in_analysis',
             })
-    weight = fields.Float('Weight', states={
-            #'readonly': Eval('state').in_(READONLY2),
-            'required': Eval('state') == 'in_analysis',
+    weight = fields.Float('Weight', required=True, domain=[
+            If(Bool(Eval('weight')), ('weight', '>', 0), ()),
+            ], states={
+            'readonly': ~Eval('state').in_(['draft']),
             })
-    tara = fields.Float('Tara', states={
-            #'readonly': Eval('state').in_(READONLY2),
-            'required': Eval('state') == 'in_analysis',
-            })
-    netweight = fields.Float('Net Weight', states={
-            #'readonly': Eval('state').in_(READONLY2),
-            'required': Eval('state') == 'in_analysis',
+    tara = fields.Function(fields.Float('Tara', required=True, states={
+            'readonly': ~Eval('state').in_(['draft']),
+            }), 'on_change_with_tara', setter='set_tara')
+    netweight = fields.Float('Net Weight', required=True, domain=[
+            If(Bool(Eval('netweight')), [
+                   ('netweight', '>', 0),
+                   ('netweight', '<=', Eval('weight')),
+               ], ()),
+            ], states={
+            'readonly': ~Eval('state').in_(['draft']),
             })
     grade = fields.Float('Grade', digits=(16, 1), required=True, states={
             #'readonly': Eval('state').in_(READONLY),
@@ -236,66 +240,40 @@ class Weighing(Workflow, ModelSQL, ModelView):
                 break
         return res
 
-    @fields.depends(methods=['get_parcel'])
-    def on_change_with_product(self):
-        parcel = self.get_parcel()
-        if not parcel:
-            return
-        return parcel.product and parcel.product.id
-
-    @fields.depends(methods=['get_parcel'])
-    def on_change_with_variety(self):
-        parcel = self.get_parcel()
-        if not parcel:
-            return
-        return parcel.variety and parcel.variety.id
-
-    @fields.depends(methods=['get_parcel'])
-    def on_change_with_denomination_origin(self):
-        parcel = self.get_parcel()
-        if not parcel:
-            return []
-
-        return [x.id for x in parcel.denomination_origin]
-
-    @fields.depends(methods=['get_parcel'])
-    def on_change_with_table(self):
-        parcel = self.get_parcel()
-        if not parcel:
-            return
-        return parcel.table
-
-    @fields.depends(methods=['get_parcel'])
-    def on_change_with_ecological(self):
-        parcel = self.get_parcel()
-        if not parcel:
-            return
-        return parcel.ecological and parcel.ecological.id
-
-    @fields.depends(methods=['get_parcel'])
-    def on_change_with_purchase_contract(self):
+    @fields.depends('plantations', 'ecological', 'denomination_origin',
+        methods=['get_parcel'])
+    def on_change_plantations(self):
         pool = Pool()
         ContractLine = pool.get('agronomics.contract.line')
 
         parcel = self.get_parcel()
         if not parcel:
             return
+        self.product = parcel.product
+        self.variety = parcel.variety
+        self.table = parcel.table
+        if not self.ecological:
+            self.ecological = parcel.ecological
+        self.denomination_origin = [x.id for x in parcel.denomination_origin]
+        if parcel.producer:
+            contract_lines = ContractLine.search([
+                    ('parcel', '=', parcel),
+                    ('contract.party', '=', parcel.producer),
+                    ('contract.state', '=', 'active'),
+                    ], limit=1)
+            if contract_lines:
+                self.purchase_contract = contract_lines[0].contract
 
-        if not parcel.producer:
-            return
-        contract_lines = ContractLine.search([
-                ('parcel', '=', parcel),
-                ('contract.party', '=', parcel.producer),
-                ('contract.state', '=', 'active'),
-                ], limit=1)
-        if not contract_lines:
-            return
+    @fields.depends('weight', 'netweight')
+    def on_change_with_tara(self, name=None):
+        return (self.weight or 0) - (self.netweight or 0)
 
-        contract = contract_lines[0].contract
-        return contract and contract.id
+    @classmethod
+    def set_tara(cls, weighings, name, value):
+        pass
 
     @fields.depends('weight', 'tara')
-    def on_change_with_netweight(self):
+    def on_change_with_netweight(self, name=None):
         return (self.weight or 0) - (self.tara or 0)
 
     @classmethod
