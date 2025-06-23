@@ -217,6 +217,11 @@
           <field name="name">weighing_parcel_list</field>
       </record>
 
+      <record model="ir.ui.view" id="weighing_plantation_view_form">
+           <field name="model">agronomics.weighing-agronomics.plantation</field>
+           <field name="type">form</field>
+           <field name="name">weighing_plantation_form</field>
+      </record>
       <record model="ir.ui.view" id="weighing_plantation_view_tree">
            <field name="model">agronomics.weighing-agronomics.plantation</field>
            <field name="type">tree</field>
