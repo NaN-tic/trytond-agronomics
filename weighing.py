@@ -55,12 +55,12 @@ class Weighing(Workflow, ModelSQL, ModelView):
             'readonly': Eval('state').in_(READONLY),
             })
     product = fields.Many2One('product.template', 'Product', required=True,
-            states={
-                'readonly': Eval('state').in_(READONLY),
-                })
-    variety = fields.Many2One('product.taxon', 'Variety', states={
-            'readonly': Eval('state').in_(READONLY2),
-            'required': Eval('state') == 'in_analysis',
+        states={
+            'readonly': True,
+            })
+    variety = fields.Many2One('product.taxon', 'Variety', required=True,
+        states={
+            'readonly': True,
             })
     table = fields.Boolean('Table', states={
             'readonly': Eval('state').in_(READONLY2),
