@@ -1,4 +1,7 @@
 <tree sequence="sequence" editable="1">
-  <field name="plantation"/>
-  <field name="party"/>
+    <field name="weighing"/>
+    <field name="plantation"/>
+    <field name="party"/>
+    <field name="purchased_quantity"/>
+    <field name="remaining_quantity"/>
 </tree>
