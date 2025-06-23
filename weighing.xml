@@ -176,13 +176,13 @@
           <field name="group" ref="group_agronomics"/>
       </record>
 
-      <record model="ir.model.button" id="weighing_done_button">
-          <field name="name">done</field>
-          <field name="string">Done</field>
+      <record model="ir.model.button" id="weighing_do_button">
+          <field name="name">do</field>
+          <field name="string">Do</field>
           <field name="model">agronomics.weighing</field>
       </record>
-      <record model="ir.model.button-res.group" id="weighing_done_button_group_agronomics">
-          <field name="button" ref="weighing_done_button"/>
+      <record model="ir.model.button-res.group" id="weighing_do_button_group_agronomics">
+          <field name="button" ref="weighing_do_button"/>
           <field name="group" ref="group_agronomics"/>
       </record>
 
