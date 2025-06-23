@@ -227,7 +227,8 @@ class Parcel(ModelSQL, ModelView):
         domain=[('rank', '=', 'species')], required=True)
     variety = fields.Many2One('product.taxon', 'Variety',
         domain=[('rank', '=', 'variety')], required=True)
-    ecological = fields.Many2One('agronomics.ecological', 'Ecological')
+    ecological = fields.Many2One('agronomics.ecological', 'Ecological',
+         required=True)
     denomination_origin = fields.Many2Many('agronomics.parcel-agronomics.do',
         'parcel', 'do', 'Denomination of Origin')
     table = fields.Boolean('Table')
