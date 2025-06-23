@@ -66,7 +66,7 @@ class Weighing(Workflow, ModelSQL, ModelView):
             'readonly': Eval('state').in_(READONLY2),
             })
     ecological = fields.Many2One('agronomics.ecological', 'Ecological',
-        states={
+        required=True, states={
             'readonly': Eval('state').in_(['done', 'cancelled']),
             'required': Eval('state') == 'in_analysis',
             })
@@ -82,7 +82,7 @@ class Weighing(Workflow, ModelSQL, ModelView):
             #'readonly': Eval('state').in_(READONLY2),
             'required': Eval('state') == 'in_analysis',
             })
-    grade = fields.Float('Grade', states={
+    grade = fields.Float('Grade', digits=(16, 1), required=True, states={
             #'readonly': Eval('state').in_(READONLY),
             'required': Eval('state') == 'in_analysis',
             })
