@@ -645,11 +645,26 @@ class WeighingPlantation(sequence_ordered(), ModelSQL, ModelView):
     weighing = fields.Many2One('agronomics.weighing', 'Weighing', required=True)
     plantation = fields.Many2One('agronomics.plantation', 'Plantation',
         required=True)
-    party = fields.Function(fields.Many2One('party.party', 'Party'), 'get_party')
+    party = fields.Function(fields.Many2One('party.party', 'Party'), 'on_change_with_party')
+    purchased_quantity = fields.Function(fields.Float('Purchased Quantity'),
+        'on_change_with_purchased_quantity')
+    remaining_quantity = fields.Function(fields.Float('Remaining Quantity'),
+        'on_change_with_remaining_quantity')
 
-    def get_party(self, name):
+    @fields.depends('plantation')
+    def on_change_with_party(self, name=None):
         if self.plantation:
             return self.plantation.party.id
+
+    @fields.depends('plantation')
+    def on_change_with_purchased_quantity(self, name=None):
+        if self.plantation:
+            return self.plantation.purchased_quantity
+
+    @fields.depends('plantation')
+    def on_change_with_remaining_quantity(self, name=None):
+        if self.plantation:
+            return self.plantation.remaining_quantity
 
 
 class WeighingParcel(ModelSQL, ModelView):

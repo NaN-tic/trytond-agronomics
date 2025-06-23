@@ -85,6 +85,9 @@ class Plantation(ModelSQL, ModelView):
     varieties = fields.Function(fields.Char('Varieties'), 'get_varieties',
         searcher='search_varieties')
     do = fields.Function(fields.Char('DO'), 'get_do', searcher='search_do')
+    purchased_quantity = fields.Function(
+        fields.Float("Purchased Quantity", digits=(16, 2)),
+        'get_purchased_quantity')
     remaining_quantity = fields.Function(
         fields.Float("Remainig Quantity", digits=(16, 2)),
         'get_remaining_quantity', searcher='search_remaining_quantity')
@@ -105,6 +108,9 @@ class Plantation(ModelSQL, ModelView):
         if not self.parcels:
             return
         return ', '.join({y.variety.name for y in self.parcels if y.variety})
+
+    def get_purchased_quantity(self, name):
+        return sum([y.purchased_quantity or 0 for y in self.parcels])
 
     def get_remaining_quantity(self, name):
         return sum([y.remaining_quantity or 0 for y in self.parcels])
@@ -240,7 +246,7 @@ class Parcel(ModelSQL, ModelView):
     weighings = fields.One2Many('agronomics.weighing-agronomics.parcel',
         'parcel', 'Weighings')
     purchased_quantity = fields.Function(
-        fields.Float("Bought Quantity", digits=(16, 2)),
+        fields.Float("Purchased Quantity", digits=(16, 2)),
         'get_purchased_quantity')
     remaining_quantity = fields.Function(
         fields.Float("Remainig Quantity", digits=(16, 2)),
