@@ -7,6 +7,10 @@
   <field name="plantation_year"/>
   <label name="plantation_owner"/>
   <field name="plantation_owner"/>
+  <label name="product"/>
+  <field name="product"/>
+  <label name="variety"/>
+  <field name="variety"/>
   <notebook colspan="4">
     <page name="parcels">
       <field name="parcels" colspan="4"/>

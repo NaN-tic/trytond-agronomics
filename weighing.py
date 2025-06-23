@@ -9,6 +9,7 @@ from trytond.transaction import Transaction
 from datetime import datetime
 from decimal import Decimal
 
+
 class WeighingCenter(ModelSQL, ModelView):
     """ Weighing Center """
     __name__ = 'agronomics.weighing.center'
@@ -25,6 +26,7 @@ class WeighingCenter(ModelSQL, ModelView):
 READONLY = ['processing', 'distributed', 'in_analysis', 'done', 'cancelled']
 READONLY2 = ['draft', 'distributed', 'in_analysis', 'done', 'cancelled']
 
+
 class Weighing(Workflow, ModelSQL, ModelView):
     """ Weighing """
     __name__ = 'agronomics.weighing'
@@ -33,28 +35,29 @@ class Weighing(Workflow, ModelSQL, ModelView):
     number = fields.Char('Number', readonly=True)
     weighing_date = fields.Date('Date', states={
             'readonly': Eval('state').in_(READONLY),
-            'required': True
-            })
+            }, required=True)
     weighing_center = fields.Many2One('agronomics.weighing.center',
         'Weighing Center', states={
             'readonly': Eval('state').in_(READONLY),
-            'required': True
-        })
+            }, required=True)
 
     purchase_contract = fields.Many2One('agronomics.contract',
-        'Purchase Contract', states={
+        'Purchase Contract', domain=[
+            ('crop', '=', Eval('crop', -1)),
+            ], states={
             'readonly': Eval('state').in_(READONLY),
-            'required': True
-        })
+            }, required=True)
 
-    crop = fields.Many2One('agronomics.crop', 'Crop', states={
+    crop = fields.Many2One('agronomics.crop', 'Crop', required=True, domain=[
+            ('start_date', '<=', Eval('weighing_date')),
+            ('end_date', '>=', Eval('weighing_date')),
+            ], states={
             'readonly': Eval('state').in_(READONLY),
-            'required': Eval('state') == 'in_analysis',
             })
-    product = fields.Many2One('product.template', 'Product', states={
-            'readonly': Eval('state').in_(READONLY),
-            'required': Eval('state') == 'in_analysis',
-            })
+    product = fields.Many2One('product.template', 'Product', required=True,
+            states={
+                'readonly': Eval('state').in_(READONLY),
+                })
     variety = fields.Many2One('product.taxon', 'Variety', states={
             'readonly': Eval('state').in_(READONLY2),
             'required': Eval('state') == 'in_analysis',
@@ -64,37 +67,46 @@ class Weighing(Workflow, ModelSQL, ModelView):
             })
     ecological = fields.Many2One('agronomics.ecological', 'Ecological',
         states={
-            'readonly': Eval('state').in_(READONLY2),
+            'readonly': Eval('state').in_(['done', 'cancelled']),
             'required': Eval('state') == 'in_analysis',
             })
     weight = fields.Float('Weight', states={
-            'readonly': Eval('state').in_(READONLY2),
+            #'readonly': Eval('state').in_(READONLY2),
             'required': Eval('state') == 'in_analysis',
             })
     tara = fields.Float('Tara', states={
-            'readonly': Eval('state').in_(READONLY2),
+            #'readonly': Eval('state').in_(READONLY2),
             'required': Eval('state') == 'in_analysis',
             })
     netweight = fields.Float('Net Weight', states={
-            'readonly': Eval('state').in_(READONLY2),
+            #'readonly': Eval('state').in_(READONLY2),
+            'required': Eval('state') == 'in_analysis',
+            })
+    grade = fields.Float('Grade', states={
+            #'readonly': Eval('state').in_(READONLY),
             'required': Eval('state') == 'in_analysis',
             })
     beneficiaries = fields.One2Many('agronomics.beneficiary', 'weighing',
         'Beneficiaries', states={
                 'readonly': Eval('state').in_(READONLY2),
-                'required': Eval('state') == 'in_analysis',
+                # TODO: Are beneficiaries required??
+                #'required': Eval('state') == 'in_analysis',
                 })
     denomination_origin = fields.Many2Many('agronomics.weighing-agronomics.do',
         'weighing', 'do', 'Denomination of Origin', states={
-            'readonly': Eval('state').in_(READONLY2) | Bool(Eval('table')),
+            'readonly': Eval('state').in_(['done', 'cancelled']) | Bool(Eval('table')),
             'required': Eval('state') == 'in_analysis',
             })
     beneficiaries_invoices_line = fields.Many2Many(
         'agronomics.weighing-account.invoice.line', 'weighing', 'invoice_line',
         "Beneficiaries Invoices", readonly=True)
     plantations = fields.One2Many('agronomics.weighing-agronomics.plantation',
-        'weighing', 'plantations', states={
-            'readonly': Eval('state').in_(READONLY),
+        'weighing', 'plantations', domain=[
+            If(Bool(Eval('product')), ('plantation.product', '=', Eval('product', -1)),
+                ()),
+            ], states={
+            'readonly': (Eval('state').in_(READONLY) | ~Bool(Eval('crop'))
+                | ~Bool(Eval('weighing_center'))),
             'required': Eval('state') == 'process',
             }, size=4)
     state = fields.Selection([
@@ -121,7 +133,6 @@ class Weighing(Workflow, ModelSQL, ModelView):
     forced_analysis = fields.Boolean('Forced Analysis', readonly=True)
     inventory_move = fields.Many2One('stock.move', "Inventory Move",
         readonly=True)
-
 
     @classmethod
     def __setup__(cls):
@@ -196,39 +207,44 @@ class Weighing(Workflow, ModelSQL, ModelView):
         if not value:
             return
 
-    @fields.depends('weighing_date')
-    def on_change_with_crop(self):
+    def on_change_weighing_date(self):
         Crop = Pool().get('agronomics.crop')
-        crop = Crop.search([
-                ('start_date', '>=', self.weighing_date),
-                ('end_date', '<=', self.weighing_date),
-                ], limit=1)
-        if not crop:
-            return
-        return crop[0].id
+        crops = Crop.search([
+                ('start_date', '<=', self.weighing_date),
+                ('end_date', '>=', self.weighing_date),
+                ])
+        if len(crops) == 1:
+            self.crop = crops[0]
 
+    @fields.depends('plantations', 'crop')
     def get_parcel(self):
-        crop = self.on_change_with_crop()
         if not self.plantations:
             return
         plantation = self.plantations[0].plantation
-        if not plantation or not plantation.parcels:
+        if not plantation:
             return
         res = None
         for parcel in plantation.parcels:
-            if parcel.crop.id == crop:
+            if parcel.crop == self.crop:
                 res = parcel
                 break
         return res
 
-    @fields.depends('plantations')
+    @fields.depends(methods=['get_parcel'])
+    def on_change_with_product(self):
+        parcel = self.get_parcel()
+        if not parcel:
+            return
+        return parcel.product and parcel.product.id
+
+    @fields.depends(methods=['get_parcel'])
     def on_change_with_variety(self):
         parcel = self.get_parcel()
         if not parcel:
             return
         return parcel.variety and parcel.variety.id
 
-    @fields.depends('plantations')
+    @fields.depends(methods=['get_parcel'])
     def on_change_with_denomination_origin(self):
         parcel = self.get_parcel()
         if not parcel:
@@ -236,28 +252,21 @@ class Weighing(Workflow, ModelSQL, ModelView):
 
         return [x.id for x in parcel.denomination_origin]
 
-    @fields.depends('plantations')
+    @fields.depends(methods=['get_parcel'])
     def on_change_with_table(self):
         parcel = self.get_parcel()
         if not parcel:
             return
         return parcel.table
 
-    @fields.depends('plantations')
+    @fields.depends(methods=['get_parcel'])
     def on_change_with_ecological(self):
         parcel = self.get_parcel()
         if not parcel:
             return
         return parcel.ecological and parcel.ecological.id
 
-    @fields.depends('plantations')
-    def on_change_with_product(self):
-        parcel = self.get_parcel()
-        if not parcel:
-            return
-        return parcel.product and parcel.product.id
-
-    @fields.depends('plantations')
+    @fields.depends(methods=['get_parcel'])
     def on_change_with_purchase_contract(self):
         pool = Pool()
         ContractLine = pool.get('agronomics.contract.line')
@@ -266,14 +275,13 @@ class Weighing(Workflow, ModelSQL, ModelView):
         if not parcel:
             return
 
-        producer = parcel.producer and parcel.producer.id
-        if not producer:
+        if not parcel.producer:
             return
         contract_lines = ContractLine.search([
-            ('parcel', '=', parcel),
-            ('contract.party', '=', producer),
-            ('contract.state', '=', 'active'),
-        ], limit=1)
+                ('parcel', '=', parcel),
+                ('contract.party', '=', parcel.producer),
+                ('contract.state', '=', 'active'),
+                ], limit=1)
         if not contract_lines:
             return
 
@@ -293,6 +301,7 @@ class Weighing(Workflow, ModelSQL, ModelView):
         Variety = pool.get('product.variety')
         Move = pool.get('stock.move')
         Location = pool.get('stock.location')
+        Company = pool.get('company.company')
 
         supplier_location = Location.search([('code', '=', 'SUP')], limit=1)
         if not supplier_location:
@@ -305,6 +314,8 @@ class Weighing(Workflow, ModelSQL, ModelView):
         default_move_values = Move.default_get(Move._fields.keys(),
                 with_rec_name=False)
         move = Move(**default_move_values)
+
+        company = Company(Transaction().context.get('company'))
 
         to_done = []
         for weighing in weighings:
@@ -339,8 +350,11 @@ class Weighing(Workflow, ModelSQL, ModelView):
                     center=weighing.weighing_center.name))
             move.to_location = weighing.weighing_center.to_location
             move.product = weighing.product_created
+            move.currency = company.currency
             move.unit = weighing.product_created.template.default_uom
-            move.unit_price = weighing.product_created.template.list_price
+            # TODO: Price should be based on price list of the supplier
+            #move.unit_price = weighing.product_created.template.list_price
+            move.unit_price = Decimal(0)
             move.quantity = weighing.netweight or 0
 
             weighing.inventory_move = move
@@ -543,7 +557,6 @@ class Weighing(Workflow, ModelSQL, ModelView):
             if weighing.beneficiaries:
                 Beneficiary.delete([x for x in weighing.beneficiaries])
 
-            parcel = weighing.get_parcel()
             # Check if all plantations has a parcel in the weighing's crop
             for plantation in weighing.plantations:
                 plantation = plantation.plantation
@@ -623,9 +636,9 @@ class WeighingPlantation(sequence_ordered(), ModelSQL, ModelView):
     'Weighing - Plantations'
     __name__ = 'agronomics.weighing-agronomics.plantation'
 
-    weighing = fields.Many2One('agronomics.weighing', 'Weighing')
-    plantation = fields.Many2One('agronomics.plantation',
-        'Plantation')
+    weighing = fields.Many2One('agronomics.weighing', 'Weighing', required=True)
+    plantation = fields.Many2One('agronomics.plantation', 'Plantation',
+        required=True)
     party = fields.Function(fields.Many2One('party.party', 'Party'), 'get_party')
 
     def get_party(self, name):

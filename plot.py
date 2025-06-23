@@ -4,6 +4,7 @@ from sql.aggregate import Sum
 from trytond.model import fields, ModelSQL, ModelView
 from trytond.pool import Pool
 from trytond.wizard import (Wizard, StateView, Button, StateTransition)
+from trytond.pyson import Bool, Eval, If
 
 
 class Enclosure(ModelSQL, ModelView):
@@ -73,7 +74,11 @@ class Plantation(ModelSQL, ModelView):
     party = fields.Many2One('party.party', "Party", required=True)
     enclosures = fields.One2Many('agronomics.enclosure', 'plantation',
         "Enclosure")
-    parcels = fields.One2Many('agronomics.parcel', 'plantation', "Parcel")
+    parcels = fields.One2Many('agronomics.parcel', 'plantation', "Parcel",
+        domain=[
+            If(Bool(Eval('product')), ('product', '=', Eval('product')), ()),
+            If(Bool(Eval('variety')), ('variety', '=', Eval('variety')), ()),
+            ])
     plantation_year = fields.Integer("Plantation Year")
     plantation_owner = fields.Many2One('party.party', "Plantation Owner")
     varieties = fields.Function(fields.Char('Varieties'), 'get_varieties',
@@ -82,6 +87,12 @@ class Plantation(ModelSQL, ModelView):
     remaining_quantity = fields.Function(
         fields.Float("Remainig Quantity", digits=(16, 2)),
         'get_remaining_quantity', searcher='search_remaining_quantity')
+    product = fields.Function(fields.Many2One('product.template', 'Product'),
+        'get_product', searcher='search_product')
+    variety = fields.Function(fields.Many2One('product.taxon', 'Variety'),
+        'get_variety')
+    ecological = fields.Function(fields.Many2One('agronomics.ecological',
+        'Ecological'), 'get_ecological')
 
     def get_do(self, name):
         do = []
@@ -160,6 +171,34 @@ class Plantation(ModelSQL, ModelView):
         query = query2.select(query2.plantation)
         query.where = Operator(query2.remaining_quantity, value)
         return [('id' , 'in', query)]
+
+    def get_product(self, name):
+        if not self.parcels:
+            return
+        product = self.parcels[0].product
+        if not product:
+            return
+        return product.id
+
+    @classmethod
+    def search_product(cls, name, clause):
+        return [('parcels.product',) + tuple(clause[1:])]
+
+    def get_variety(self, name):
+        if not self.parcels:
+            return
+        variety = self.parcels[0].variety
+        if not variety:
+            return
+        return variety.id
+
+    def get_ecological(self, name):
+        if not self.parcels:
+            return
+        ecological = self.parcels[0].ecological
+        if not ecological:
+            return
+        return ecological.id
 
 
 class Ecological(ModelSQL, ModelView):
