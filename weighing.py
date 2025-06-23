@@ -108,6 +108,8 @@ class Weighing(Workflow, ModelSQL, ModelView):
         'weighing', 'plantations', domain=[
             If(Bool(Eval('product')), ('plantation.product', '=', Eval('product', -1)),
                 ()),
+            If(Bool(Eval('variety')), ('plantation.variety', '=', Eval('variety', -1)),
+                ()),
             ], states={
             'readonly': (Eval('state').in_(READONLY) | ~Bool(Eval('crop'))
                 | ~Bool(Eval('weighing_center'))),
