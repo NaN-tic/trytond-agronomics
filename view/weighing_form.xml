@@ -17,13 +17,15 @@
   <field name="table"/>
   <label name="ecological"/>
   <field name="ecological"/>
-  <group col="6" colspan="4" id="weight">
+  <group col="8" colspan="4" id="weight">
     <label name="weight"/>
     <field name="weight"/>
     <label name="tara"/>
     <field name="tara"/>
     <label name="netweight"/>
     <field name="netweight"/>
+    <label name="grade"/>
+    <field name="grade"/>
   </group>
   <label name="product_created"/>
   <field name="product_created"/>
