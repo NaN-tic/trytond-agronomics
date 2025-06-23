@@ -153,13 +153,15 @@ class Weighing(Workflow, ModelSQL, ModelView):
                 ('in_analysis', 'done'),
                 ))
         cls._buttons.update({
-                'done': {
+                'do': {
                     'invisible': ~Eval('state').in_(['in_analysis']),
                     'depends': ['state'],
+                    'icon': 'tryton-forward',
                     },
                 'cancel': {
                     'invisible': ~Eval('state').in_(['draft']),
                     'depends': ['state'],
+                    'icon': 'tryton-cancel',
                     },
                 'draft': {
                     'invisible': ~Eval('state').in_(['processing', 'distributed']),
@@ -171,14 +173,17 @@ class Weighing(Workflow, ModelSQL, ModelView):
                 'process': {
                     'invisible': Eval('state') != 'draft',
                     'depends': ['state'],
+                    'icon': 'tryton-forward',
                     },
                 'distribute': {
                     'invisible': Eval('state') != 'processing',
                     'depends': ['state'],
+                    'icon': 'tryton-forward',
                     },
                 'force_analysis': {
                     'invisible': Eval('state') != 'distributed',
                     'depends': ['state'],
+                    'icon': 'tryton-forward',
                     },
                 })
 
@@ -464,7 +469,7 @@ class Weighing(Workflow, ModelSQL, ModelView):
 
     @classmethod
     @Workflow.transition('done')
-    def done(cls, weighings):
+    def do(cls, weighings):
         pool = Pool()
         InvoiceLine = pool.get('account.invoice.line')
         Product = pool.get('product.product')

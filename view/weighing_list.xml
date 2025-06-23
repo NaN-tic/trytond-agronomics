@@ -3,13 +3,13 @@
   <field name="weighing_date"/>
   <field name="weighing_center"/>
   <field name="crop"/>
-  <field name="product"/>
-  <field name="variety"/>
-  <field name="all_do"/>
-  <field name="table"/>
-  <field name="ecological"/>
-  <field name="weight"/>
-  <field name="tara"/>
-  <field name="netweight"/>
+  <field name="product" optional="0"/>
+  <field name="variety" optional="0"/>
+  <field name="all_do" optional="0"/>
+  <field name="table" optional="0"/>
+  <field name="ecological" optional="1"/>
+  <field name="weight" optional="1"/>
+  <field name="tara" optional="1"/>
+  <field name="netweight" optional="0"/>
   <field name="state"/>
 </tree>
