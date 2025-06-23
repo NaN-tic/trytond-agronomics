@@ -94,9 +94,9 @@ class Plantation(ModelSQL, ModelView):
     product = fields.Function(fields.Many2One('product.template', 'Product'),
         'get_product', searcher='search_product')
     variety = fields.Function(fields.Many2One('product.taxon', 'Variety'),
-        'get_variety')
+        'get_variety', searcher='search_variety')
     ecological = fields.Function(fields.Many2One('agronomics.ecological',
-        'Ecological'), 'get_ecological')
+        'Ecological'), 'get_ecological', searcher='search_variety')
 
     def get_do(self, name):
         do = []
@@ -199,6 +199,10 @@ class Plantation(ModelSQL, ModelView):
             return
         return variety.id
 
+    @classmethod
+    def search_variety(cls, name, clause):
+        return [('parcels.variety',) + tuple(clause[1:])]
+
     def get_ecological(self, name):
         if not self.parcels:
             return
@@ -206,6 +210,10 @@ class Plantation(ModelSQL, ModelView):
         if not ecological:
             return
         return ecological.id
+
+    @classmethod
+    def search_ecological(cls, name, clause):
+        return [('parcels.ecological',) + tuple(clause[1:])]
 
 
 class Ecological(ModelSQL, ModelView):
