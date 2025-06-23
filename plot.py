@@ -78,6 +78,7 @@ class Plantation(ModelSQL, ModelView):
         domain=[
             If(Bool(Eval('product')), ('product', '=', Eval('product')), ()),
             If(Bool(Eval('variety')), ('variety', '=', Eval('variety')), ()),
+            If(Bool(Eval('ecological')), ('ecological', '=', Eval('ecological')), ()),
             ])
     plantation_year = fields.Integer("Plantation Year")
     plantation_owner = fields.Many2One('party.party', "Plantation Owner")
