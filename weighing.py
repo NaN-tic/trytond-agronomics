@@ -23,9 +23,6 @@ class WeighingCenter(ModelSQL, ModelView):
         domain=[('type', '=', 'warehouse')])
     to_location = fields.Many2One('stock.location', "To Location")
 
-READONLY = ['processing', 'distributed', 'in_analysis', 'done', 'cancelled']
-READONLY2 = ['draft', 'distributed', 'in_analysis', 'done', 'cancelled']
-
 
 class Weighing(Workflow, ModelSQL, ModelView):
     """ Weighing """
@@ -34,25 +31,25 @@ class Weighing(Workflow, ModelSQL, ModelView):
 
     number = fields.Char('Number', readonly=True)
     weighing_date = fields.Date('Date', states={
-            'readonly': Eval('state').in_(READONLY),
+            'readonly': Eval('state') != 'draft',
             }, required=True)
     weighing_center = fields.Many2One('agronomics.weighing.center',
         'Weighing Center', states={
-            'readonly': Eval('state').in_(READONLY),
+            'readonly': Eval('state') != 'draft',
             }, required=True)
 
     purchase_contract = fields.Many2One('agronomics.contract',
         'Purchase Contract', domain=[
             ('crop', '=', Eval('crop', -1)),
             ], states={
-            'readonly': Eval('state').in_(READONLY),
+            'readonly': Eval('state') != 'draft',
             }, required=True)
 
     crop = fields.Many2One('agronomics.crop', 'Crop', required=True, domain=[
             ('start_date', '<=', Eval('weighing_date', None)),
             ('end_date', '>=', Eval('weighing_date', None)),
             ], states={
-            'readonly': Eval('state').in_(READONLY),
+            'readonly': Eval('state') != 'draft',
             })
     product = fields.Many2One('product.template', 'Product', required=True,
         states={
@@ -63,7 +60,7 @@ class Weighing(Workflow, ModelSQL, ModelView):
             'readonly': True,
             })
     table = fields.Boolean('Table', states={
-            'readonly': Eval('state').in_(READONLY2),
+            'readonly': Eval('state') != 'draft',
             })
     ecological = fields.Many2One('agronomics.ecological', 'Ecological',
         required=True, states={
@@ -87,12 +84,11 @@ class Weighing(Workflow, ModelSQL, ModelView):
             'readonly': ~Eval('state').in_(['draft']),
             })
     grade = fields.Float('Grade', digits=(16, 1), required=True, states={
-            #'readonly': Eval('state').in_(READONLY),
             'required': Eval('state') == 'in_analysis',
             })
     beneficiaries = fields.One2Many('agronomics.beneficiary', 'weighing',
         'Beneficiaries', states={
-                'readonly': Eval('state').in_(READONLY2),
+                'readonly': Eval('state') != 'draft',
                 # TODO: Are beneficiaries required??
                 #'required': Eval('state') == 'in_analysis',
                 })
@@ -111,8 +107,8 @@ class Weighing(Workflow, ModelSQL, ModelView):
             If(Bool(Eval('variety')), ('plantation.variety', '=', Eval('variety', -1)),
                 ()),
             ], states={
-            'readonly': (Eval('state').in_(READONLY) | ~Bool(Eval('crop'))
-                | ~Bool(Eval('weighing_center'))),
+            'readonly': (Eval('state') != 'draft') | ~Bool(Eval('crop'))
+                | ~Bool(Eval('weighing_center')),
             'required': Eval('state') == 'process',
             }, size=4)
     state = fields.Selection([
@@ -418,8 +414,8 @@ class Weighing(Workflow, ModelSQL, ModelView):
         cls.copy(weighings, default={
                             'netweight': lambda d: (
                                 to_copy_values[d['id']]['netweight']),
-                            'weight': None,
-                            'tara': None,
+                            'weight': lambda d: (
+                                to_copy_values[d['id']]['netweight']),
                             })
         for weighing in weighings:
             weighing.forced_analysis = True
