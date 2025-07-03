@@ -7,3 +7,8 @@ class InvoiceLine(metaclass=PoolMeta):
 
     product_price_list_type = fields.Many2One('product.price_list.type',
         "Product Price List Type")
+
+    @classmethod
+    def _get_origin(cls):
+        return ['agronomics.weighing']
+
