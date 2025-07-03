@@ -97,9 +97,8 @@ class Weighing(Workflow, ModelSQL, ModelView):
             'readonly': Eval('state').in_(['done', 'cancelled']) | Bool(Eval('table')),
             'required': Eval('state') == 'in_analysis',
             })
-    beneficiaries_invoices_line = fields.Many2Many(
-        'agronomics.weighing-account.invoice.line', 'weighing', 'invoice_line',
-        "Beneficiaries Invoices", readonly=True)
+    beneficiaries_invoices_line = fields.One2Many('account.invoice.line',
+        'origin', "Beneficiary Invoice Lines", readonly=True)
     plantations = fields.One2Many('agronomics.weighing-agronomics.plantation',
         'weighing', 'plantations', domain=[
             If(Bool(Eval('product')), ('plantation.product', '=', Eval('product', -1)),
@@ -454,8 +453,6 @@ class Weighing(Workflow, ModelSQL, ModelView):
         context = Transaction().context
         ContractProductPriceListTypePriceList = pool.get(
             'agronomics.contract-product.price_list.type-product.price_list')
-        WeighingInvoiceLine = pool.get(
-            'agronomics.weighing-account.invoice.line')
         RecomputeCostPrice = pool.get('product.recompute_cost_price',
             type='wizard')
         Move = pool.get('stock.move')
@@ -489,6 +486,7 @@ class Weighing(Workflow, ModelSQL, ModelView):
                 invoice_line.quantity = weighing.netweight or 0
                 invoice_line.product_price_list_type = (
                     beneficiary.product_price_list_type)
+                invoice_line.origin = weighing
 
                 unit_price = Product.get_purchase_price(
                     [weighing.product_created],
@@ -504,12 +502,7 @@ class Weighing(Workflow, ModelSQL, ModelView):
                     unit_price = unit_price
                 invoice_line.unit_price = unit_price
                 cost_price += unit_price
-
-                weighing_invoice = WeighingInvoiceLine(
-                    weighing=weighing,
-                    invoice_line=invoice_line
-                )
-                to_save.append(weighing_invoice)
+                to_save.append(invoice_line)
 
             weighing.inventory_move.unit_price = cost_price
             weighing.inventory_move.unit_price_updated = True
@@ -526,7 +519,7 @@ class Weighing(Workflow, ModelSQL, ModelView):
                 recompute_cost_price.start.from_ = default_values['from_']
                 recompute_cost_price.transition_recompute()
 
-        WeighingInvoiceLine.save(to_save)
+        InvoiceLine.save(to_save)
         Move.save(to_save_moves)
 
     @classmethod
@@ -604,14 +597,6 @@ class WeighingDo(ModelSQL):
     weighing = fields.Many2One('agronomics.weighing', 'Weighing')
     do = fields.Many2One('agronomics.denomination_of_origin',
         'Denomination Origin')
-
-
-class WeighingInvoice(ModelSQL):
-    "Weighing - Invoice"
-    __name__ = 'agronomics.weighing-account.invoice.line'
-
-    weighing = fields.Many2One('agronomics.weighing', "Weighing")
-    invoice_line = fields.Many2One('account.invoice.line', "Invoice Line")
 
 
 class WeighingPlantation(sequence_ordered(), ModelSQL, ModelView):
