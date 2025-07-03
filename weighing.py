@@ -88,7 +88,7 @@ class Weighing(Workflow, ModelSQL, ModelView):
             })
     beneficiaries = fields.One2Many('agronomics.beneficiary', 'weighing',
         'Beneficiaries', states={
-                'readonly': Eval('state') != 'draft',
+                'readonly': Eval('state') != 'processing',
                 # TODO: Are beneficiaries required??
                 #'required': Eval('state') == 'in_analysis',
                 })
