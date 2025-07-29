@@ -10,5 +10,6 @@ class InvoiceLine(metaclass=PoolMeta):
 
     @classmethod
     def _get_origin(cls):
-        return ['agronomics.weighing']
-
+        models = super(InvoiceLine, cls)._get_origin()
+        models.append('agronomics.weighing')
+        return models
