@@ -1,0 +1,6 @@
+<tree>
+  <field name="code" expand="2"/>
+  <field name="province"/>
+  <field name="region"/>
+  <field name="municipality"/>
+</tree>
