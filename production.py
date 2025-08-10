@@ -46,8 +46,8 @@ class ProductionTemplate(ModelSQL, ModelView):
         'production.cost_price.distribution.template',
         'production_template', "Cost Distribution Templates")
     transfer_wine_aging = fields.Boolean("Transfer Wine Aging")
-    inputs_products = fields.Function(fields.One2Many('product.product', None,
-         'Products'), 'get_products', searcher='search_input_products')
+    inputs_products = fields.Function(fields.Many2Many('product.product', None,
+         None, 'Products'), 'get_products', searcher='search_input_products')
 
     def get_products(self, name=None):
         products = []
@@ -172,22 +172,20 @@ class Production(metaclass=PoolMeta):
             'invisible': ~Bool(Eval('production_template')),
             'readonly': Eval('state').in_(['cancelled', 'done']),
         })
-    allowed_enology_products = fields.Function(fields.One2Many(
-        'product.product', None, 'Allowed Enology Products', readonly=True,
-        context={
+    allowed_enology_products = fields.Function(fields.Many2Many(
+        'product.product', None, None, 'Allowed Enology Products',
+        readonly=True, context={
             'company': Eval('company', -1),
             },
-        depends=['company']),
-        'on_change_with_allowed_enology_products',
+        depends=['company']), 'on_change_with_allowed_enology_products',
         setter='set_allowed_products')
-    allowed_output_products = fields.Function(fields.One2Many(
-        'product.template', None, 'Allowed Output Products', readonly=True,
-        context={
-            'company': Eval('company', -1),
-            },
-        depends=['company']),
-        'on_change_with_allowed_output_products',
-        setter='set_allowed_products')
+    allowed_output_products = fields.Function(fields.Many2Many(
+            'product.template', None, None, 'Allowed Output Products',
+            readonly=True, context={
+                'company': Eval('company', -1),
+                },
+            depends=['company']),
+        'on_change_with_allowed_output_products', setter='set_allowed_products')
     cost_distributions = fields.One2Many(
         'production.cost_price.distribution',
         'origin', "Cost Distributions",
