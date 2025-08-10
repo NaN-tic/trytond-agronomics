@@ -46,7 +46,7 @@ class ProductionTemplate(ModelSQL, ModelView):
         'production.cost_price.distribution.template',
         'production_template', "Cost Distribution Templates")
     transfer_wine_aging = fields.Boolean("Transfer Wine Aging")
-    inputs_products = fields.Function(fields.One2Many('product.product', None,
+    inputs_products = fields.Function(fields.Many2Many('product.product', None,
          'Products'), 'get_products', searcher='search_input_products')
 
     def get_products(self, name=None):
