@@ -500,9 +500,6 @@ class Weighing(Workflow, ModelSQL, ModelView):
                         weighing.netweight or 0,
                         weighing.product_created.template.default_uom)
                     unit_price = unit_price
-                if not unit_price:
-                    # TODO: Add warning?
-                    unit_price = Decimal(0)
                 invoice_line.unit_price = unit_price
                 cost_price += unit_price
                 to_save.append(invoice_line)
@@ -548,18 +545,12 @@ class Weighing(Workflow, ModelSQL, ModelView):
             if not parcel:
                 continue
 
-            contract = weighing.purchase_contract
-            beneficiary = Beneficiary()
-            beneficiary.party = contract.party
-            beneficiary.weighing = weighing
-            beneficiary.product_price_list_type = contract.price_list_types[0].price_list_type
-            to_save.append(beneficiary)
             for ben in parcel.beneficiaries:
-                beneficiary = Beneficiary()
-                beneficiary.party = ben.party
-                beneficiary.weighing = weighing
-                beneficiary.product_price_list_type = ben.product_price_list_type
-                to_save.append(beneficiary)
+                b = Beneficiary()
+                b.party = ben.party
+                b.weighing = weighing
+                b.product_price_list_type = ben.product_price_list_type
+                to_save.append(b)
 
         if to_save:
             Beneficiary.save(to_save)
