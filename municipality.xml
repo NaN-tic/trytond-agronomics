@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<!-- This file is part party_comment module for Tryton.
+The COPYRIGHT file at the top level of this repository contains the full copyright notices and license terms. -->
+<tryton>
+    <data>
+        <!-- agronomics.sigpac.municipality -->
+            <!-- Access -->
+        <record model="ir.model.access" id="access_sigpac_municipality">
+            <field name="model">agronomics.sigpac.municipality</field>
+            <field name="perm_read" eval="False"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_delete" eval="False"/>
+        </record>
+        <record model="ir.model.access" id="access_sigpac_municipality_group">
+            <field name="model">agronomics.sigpac.municipality</field>
+            <field name="group" ref="agronomics.group_agronomics"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_delete" eval="False"/>
+        </record>
+        <record model="ir.model.access" id="access_sigpac_municipality_admin">
+            <field name="model">agronomics.sigpac.municipality</field>
+            <field name="group" ref="agronomics.group_agronomics_admin"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_delete" eval="True"/>
+        </record>
+
+            <!-- Views -->
+        <record model="ir.ui.view" id="sigpac_municipality_form">
+            <field name="model">agronomics.sigpac.municipality</field>
+            <field name="type">form</field>
+            <field name="name">municipality_form</field>
+        </record>
+        <record model="ir.ui.view" id="sigpac_municipality_list">
+            <field name="model">agronomics.sigpac.municipality</field>
+            <field name="type">tree</field>
+            <field name="name">municipality_list</field>
+        </record>
+
+            <!-- Actions -->
+        <record model="ir.action.act_window" id="act_sigpac_municipality">
+            <field name="name">SIGPAC Municipality</field>
+            <field name="res_model">agronomics.sigpac.municipality</field>
+        </record>
+        <record model="ir.action.act_window.view" id="act_sigpac_municipality_form">
+            <field name="sequence" eval="20"/>
+            <field name="view" ref="sigpac_municipality_form"/>
+            <field name="act_window" ref="act_sigpac_municipality" />
+        </record>
+        <record model="ir.action.act_window.view" id="act_sigpac_municipality_list">
+            <field name="sequence" eval="10"/>
+            <field name="view" ref="sigpac_municipality_list"/>
+            <field name="act_window" ref="act_sigpac_municipality" />
+        </record>
+
+            <!-- Menu -->
+        <menuitem id="menu_sigpac_municipality" name="SIGPAC Municipality" parent="agronomics.menu_agronomics" sequence="100" icon="tryton-list" action="act_sigpac_municipality" />
+    </data>
+</tryton>

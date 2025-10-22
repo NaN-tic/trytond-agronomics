@@ -1,0 +1,10 @@
+<form>
+  <label name="code"/>
+  <field name="code"/>
+  <label name="region"/>
+  <field name="region"/>
+  <label name="province"/>
+  <field name="province"/>
+  <label name="municipality"/>
+  <field name="municipality"/>
+</form>

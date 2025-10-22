@@ -1,4 +1,6 @@
 <form>
+  <label name="municipality"/>
+  <field name="municipality" colspan="3"/>
   <label name="aggregate_sigpac"/>
   <field name="aggregate_sigpac"/>
   <label name="parcel_sigpac"/>
