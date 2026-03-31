@@ -508,7 +508,8 @@ class Production(metaclass=PoolMeta):
         Warning = pool.get('res.user.warning')
 
         for production in productions:
-            if production.production_template.transfer_wine_aging:
+            if (production.production_template
+                    and production.production_template.transfer_wine_aging):
                 if len(production.inputs) > 1:
                     warning_name = 'transfer_wine_aging_input_%s' % production.id
                     if Warning.check(warning_name):
@@ -520,9 +521,12 @@ class Production(metaclass=PoolMeta):
         for production in productions:
             for distrib in production.output_distribution:
                 if distrib.distribution_state == 'draft' and distrib.location:
+                    pass_feature = bool(production.production_template
+                        and production.production_template.pass_feature)
                     product = production.create_variant(distrib.product,
-                        production.production_template.pass_feature)
-                    product = production.pass_feature(product)
+                        pass_feature)
+                    if pass_feature:
+                        product = production.pass_feature(product)
                     product = production.copy_certification(product)
                     move = production._move(
                         'output',
@@ -540,7 +544,8 @@ class Production(metaclass=PoolMeta):
             for output in production.outputs:
                 production.copy_quality(output.product)
                 production.copy_quality_samples(output.product)
-            if production.production_template.transfer_wine_aging:
+            if (production.production_template
+                    and production.production_template.transfer_wine_aging):
                 inputs = production.inputs
                 if len(inputs) == 1:
                     input, = inputs
