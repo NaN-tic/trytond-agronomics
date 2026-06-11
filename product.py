@@ -153,11 +153,13 @@ class Product(WineMixin, metaclass=PoolMeta):
             if config.variant_deactivation_time is not None:
                 products = cls.search(
                     [
-                        ('quantity', '=', 0),
                         ('template.variant_deactivate_stock_zero', '=', True),
                         ('create_date', '<',
                             (datetime.now() - config.variant_deactivation_time))
                     ])
+                # Quantity search with multiple locations may match products
+                # with stock in another location; see issue14887.
+                products = [p for p in products if p.quantity == 0]
                 if products:
                     cls.write(products, {'active': False})
                     histories = WineAgingHistory.search([
