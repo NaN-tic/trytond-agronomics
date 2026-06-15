@@ -158,9 +158,6 @@ class Product(WineMixin, metaclass=PoolMeta):
                         ('create_date', '<',
                             (datetime.now() - config.variant_deactivation_time))
                     ])
-                # Quantity search with multiple locations may match products
-                # with stock in another location; see issue14887.
-                products = [p for p in products if p.quantity <= 0]
                 if products:
                     cls.write(products, {'active': False})
                     histories = WineAgingHistory.search([
