@@ -50,30 +50,30 @@ class PriceList(metaclass=PoolMeta):
                 vintages = source.crop[0].name
             res['names']['vintages'] = vintages
 
-        res['names']['biotritis'] = None
+        res['names']['biotritis'] = 0
         if hasattr(source, 'wine_botrytis'):
             res['names']['biotritis'] = (source.wine_botrytis or 0)
 
-        res['names']['likely_alcohol_content'] = None
+        res['names']['likely_alcohol_content'] = 0
         if hasattr(source, 'wine_likely_alcohol_content'):
             res['names']['likely_alcohol_content'] = (
                 source.wine_likely_alcohol_content or 0)
 
-        res['names']['ph'] = None
+        res['names']['ph'] = 0
         if hasattr(source, 'wine_ph'):
             res['names']['ph'] = (source.wine_ph or 0)
 
-        res['names']['tartaric_acidity'] = None
+        res['names']['tartaric_acidity'] = 0
         if hasattr(source, 'wine_tartaric_acidity'):
             res['names']['tartaric_acidity'] = (source.wine_tartaric_acidity
                 or 0)
 
-        res['names']['glucose_fructose'] = None
+        res['names']['glucose_fructose'] = 0
         if hasattr(source, 'wine_glucose_fructose'):
             res['names']['glucose_fructose'] = (source.wine_glucose_fructose
                 or 0)
 
-        res['names']['overall_impression'] = None
+        res['names']['overall_impression'] = 0
         if hasattr(source, 'wine_overall_impression'):
             res['names']['overall_impression'] = (
                 source.wine_overall_impression or 0)

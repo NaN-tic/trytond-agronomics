@@ -268,6 +268,8 @@ class Parcel(ModelSQL, ModelView):
         if (table.column_exist('product')
                 and not table.column_exist('product_template_legacy')):
             table.column_rename('product', 'product_template_legacy')
+        if table.column_exist('product_template_legacy'):
+            table.not_null_action('product_template_legacy', 'remove')
         super().__register__(module_name)
 
     def get_rec_name(self, name):

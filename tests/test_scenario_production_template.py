@@ -215,11 +215,11 @@ class Test(unittest.TestCase):
             name='Output Cost Distribution',
             production_template=production_template)
         cost_distribution = (
-            cost_distribution_template.cost_distribution_templates.new())
+            cost_distribution_template.cost_distributions.new())
         cost_distribution.product = product5
         cost_distribution.percentatge = Decimal('0.4')
         cost_distribution = (
-            cost_distribution_template.cost_distribution_templates.new())
+            cost_distribution_template.cost_distributions.new())
         cost_distribution.product = product6
         cost_distribution.percentatge = Decimal('0.6')
         cost_distribution_template.save()
@@ -234,31 +234,46 @@ class Test(unittest.TestCase):
         storage, = Location.find([
             ('code', '=', 'STO'),
         ])
+        Lot = Model.get('stock.lot')
+        inventory_lots = {}
+        for input_product in [
+                productA, productB, productC, product2, product3, product4]:
+            lot = Lot(
+                product=input_product,
+                number=f'INPUT-{input_product.id}')
+            lot.save()
+            inventory_lots[input_product.id] = lot
         inventory = Inventory()
         inventory.location = storage
         inventory_line1 = InventoryLine()
         inventory.lines.append(inventory_line1)
         inventory_line1.product = productA
+        inventory_line1.lot = inventory_lots[productA.id]
         inventory_line1.quantity = 5000
         inventory_line2 = InventoryLine()
         inventory.lines.append(inventory_line2)
         inventory_line2.product = productB
+        inventory_line2.lot = inventory_lots[productB.id]
         inventory_line2.quantity = 10000
         inventory_line3 = InventoryLine()
         inventory.lines.append(inventory_line3)
         inventory_line3.product = productC
+        inventory_line3.lot = inventory_lots[productC.id]
         inventory_line3.quantity = 3000
         inventory_line3 = InventoryLine()
         inventory.lines.append(inventory_line3)
         inventory_line3.product = product2
+        inventory_line3.lot = inventory_lots[product2.id]
         inventory_line3.quantity = 1000
         inventory_line3 = InventoryLine()
         inventory.lines.append(inventory_line3)
         inventory_line3.product = product3
+        inventory_line3.lot = inventory_lots[product3.id]
         inventory_line3.quantity = 1000
         inventory_line3 = InventoryLine()
         inventory.lines.append(inventory_line3)
         inventory_line3.product = product4
+        inventory_line3.lot = inventory_lots[product4.id]
         inventory_line3.quantity = 1000
         inventory.click('confirm')
         self.assertEqual(inventory.state, 'done')
@@ -288,11 +303,9 @@ class Test(unittest.TestCase):
         production.reload()
         production.click('wait')
         self.assertEqual(production.state, 'waiting')
-        Lot = Model.get('stock.lot')
         sample_lot = None
         for move in production.inputs:
-            lot = Lot()
-            lot.product = move.product
+            lot = inventory_lots[move.product.id]
             if move.product in [productA, productB, productC]:
                 lot.denominations_of_origin.append(DO(catalunya.id))
                 lot_variety = lot.varieties.new()
@@ -345,6 +358,27 @@ class Test(unittest.TestCase):
             {line.product.id: line.percentatge
                 for line in production.cost_distributions},
             {product5.id: Decimal('0.4'), product6.id: Decimal('0.6')})
+        input_lots = {move.product.id: move.lot.id
+            for move in production.inputs}
+        input_move_ids = {move.id for move in production.inputs}
+        production.click('assign_try')
+        production.click('wait')
+        production.reload()
+        self.assertEqual(production.state, 'waiting')
+        self.assertTrue(input_move_ids.isdisjoint(
+                move.id for move in production.inputs))
+        for move in production.inputs:
+            move.lot = Lot(input_lots[move.product.id])
+            move.save()
+        final_quantities = {
+            product5.id: 5000,
+            product6.id: 10000,
+            }
+        for distribution in production.output_distribution:
+            distribution.location = storage
+            distribution.final_quantity = final_quantities[
+                distribution.product.id]
+            distribution.save()
         production.click('assign_try')
         production.click('run')
         product_ids = [product.id for product in Product.find([])]
@@ -412,19 +446,21 @@ class Test(unittest.TestCase):
         aging_input_move.save()
         aging_distribution, = aging_production.output_distribution
         aging_distribution.location = storage
-        aging_distribution.final_quantity = 100
+        aging_distribution.final_quantity = (
+            aging_distribution.initial_quantity + 100)
         aging_distribution.save()
         aging_production.reload()
-        aging_production.click('assign_try')
-        aging_production.click('run')
+        aging_input_move, = aging_production.inputs
         aging_input_move.lot = None
         aging_input_move.save()
         with self.assertRaises(UserError):
-            aging_production.click('do')
+            aging_production.click('assign_try')
         aging_production.reload()
         aging_input_move, = aging_production.inputs
         aging_input_move.lot = aging_input.lot
         aging_input_move.save()
+        aging_production.click('assign_try')
+        aging_production.click('run')
         aging_production.click('do')
         aging_production.reload()
 

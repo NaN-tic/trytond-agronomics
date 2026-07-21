@@ -403,6 +403,10 @@ msgctxt "field:agronomics.weighing,inventory_move:"
 msgid "Inventory Move"
 msgstr "Movimiento de inventario"
 
+msgctxt "field:agronomics.weighing,lot_created:"
+msgid "Lot Created"
+msgstr "Lote creado"
+
 msgctxt "field:agronomics.weighing,netweight:"
 msgid "Net Weight"
 msgstr "Peso neto"
@@ -617,7 +621,7 @@ msgstr "Tests de calidad"
 
 msgctxt "field:product.product,quality_weighing:"
 msgid "Quality Weighing"
-msgstr "Calidad pesada"
+msgstr "Plantilla test de calidad"
 
 msgctxt "field:product.product,variant_deactivate_stock_zero:"
 msgid "Variant Deactivate Stock 0"
@@ -1461,7 +1465,7 @@ msgstr "Requiere muestras"
 
 msgctxt "field:product.template,quality_weighing:"
 msgid "Quality Weighing"
-msgstr "Calidad pesada"
+msgstr "Plantilla test de calidad"
 
 msgctxt "field:product.template,variant_deactivate_stock_zero:"
 msgid "Variant Deactivate Stock 0"
@@ -1501,7 +1505,7 @@ msgstr "Productos de salida permitidos"
 
 msgctxt "field:production,cost_distribution_template:"
 msgid "Cost Distribution Template"
-msgstr "Plantilla de distribución de costos"
+msgstr "Plantilla de distribución de costes"
 
 msgctxt "field:production,cost_distribution_products:"
 msgid "Cost Products"
@@ -1509,7 +1513,7 @@ msgstr "Productos de coste"
 
 msgctxt "field:production,cost_distributions:"
 msgid "Cost Distributions"
-msgstr "Distribución de costos"
+msgstr "Distribución de costes"
 
 msgctxt "field:production,enology_products:"
 msgid "Enology Products"
@@ -1536,8 +1540,8 @@ msgid "Production Template"
 msgstr "Plantilla producción"
 
 msgctxt "field:production,production_template_cost_distribution_templates:"
-msgid "Cost Distribution Templates"
-msgstr "Plantilla de distribución de costos"
+msgid "Allowed Cost Distribution Templates"
+msgstr "Plantillas de distribución de costes permitidas"
 
 msgctxt "field:production.cost_price.distribution,origin:"
 msgid "Origin"
@@ -1552,9 +1556,9 @@ msgid "Product"
 msgstr "Producto"
 
 msgctxt ""
-"field:production.cost_price.distribution.template,cost_distribution_templates:"
+"field:production.cost_price.distribution.template,cost_distributions:"
 msgid "Cost Distribution"
-msgstr "Distribución de costos"
+msgstr "Distribución de costes"
 
 msgctxt "field:production.cost_price.distribution.template,name:"
 msgid "Name"
@@ -1566,10 +1570,9 @@ msgid "Production Template"
 msgstr "Plantilla producción"
 
 msgctxt ""
-"field:production.cost_price.distribution.template.ask,cost_distribution_templa"
-"tes:"
+"field:production.cost_price.distribution.template.ask,cost_distributions:"
 msgid "Cost Distributions"
-msgstr "Distribución de costos"
+msgstr "Distribución de costes"
 
 msgctxt "field:production.cost_price.distribution.template.ask,name:"
 msgid "Name"
@@ -1641,11 +1644,11 @@ msgstr "UdM"
 
 msgctxt "field:production.template,cost_distribution_template:"
 msgid "Default cost distribution template"
-msgstr "Plantilla de distribución de costos predeterminada"
+msgstr "Plantilla de distribución de costes predeterminada"
 
 msgctxt "field:production.template,cost_distribution_templates:"
-msgid "Cost Distribution Templates"
-msgstr "Plantilla de distribución de costos"
+msgid "Allowed Cost Distribution Templates"
+msgstr "Plantillas de distribución de costes permitidas"
 
 msgctxt "field:production.template,enology_products:"
 msgid "Complementary Products"
@@ -1984,11 +1987,11 @@ msgstr "Historial crianza del vino"
 
 msgctxt "model:ir.action,name:act_production_cost_distribution_template_tree"
 msgid "Templates Cost Price Distribution"
-msgstr "Distribución de precios de costes de plantillas"
+msgstr "Plantillas de distribución de costes"
 
 msgctxt "model:ir.action,name:act_production_cost_price_distribution_tree"
 msgid "Cost Price Distribution"
-msgstr "Distribución de costos"
+msgstr "Distribución de costes"
 
 msgctxt "model:ir.action,name:act_production_enology_product_tree"
 msgid "Production Enology Product"
@@ -2089,14 +2092,14 @@ msgid ""
 "The production \"%(production)s\" has same products in cost distribution."
 msgstr ""
 "La producción \"%(production)s\" tiene los mismos productos en la "
-"distribución de costos."
+"distribución de costes."
 
 msgctxt "model:ir.message,text:msg_check_cost_distribution_template"
 msgid ""
 "There are some products in cost distribution that has not in outputs in the "
 "production \"%(production)s\"."
 msgstr ""
-"Hay algunos productos en distribución de costos que no tienen salidas en la "
+"Hay algunos productos en distribución de costes que no tienen salidas en la "
 "producción \"%(production)s\"."
 
 msgctxt ""
@@ -2267,7 +2270,7 @@ msgstr "Pesada"
 
 msgctxt "model:ir.ui.menu,name:menu_act_production_cost_distribution_template"
 msgid "Templates Cost Price Distribution"
-msgstr "Distribución de precios de costes de plantillas"
+msgstr "Plantillas de distribución de costes"
 
 msgctxt "model:ir.ui.menu,name:menu_agronomics"
 msgid "Agronomics"
@@ -2391,7 +2394,7 @@ msgstr "Coste de la distribución de la producción"
 
 msgctxt "model:production.cost_price.distribution.template,name:"
 msgid "Production Cost Price Distribution Template"
-msgstr "Plantilla de distribución de precios de costos de producción"
+msgstr "Plantilla de distribución de precios de costes de producción"
 
 msgctxt "model:production.cost_price.distribution.template.ask,name:"
 msgid ""
@@ -2801,6 +2804,22 @@ msgid "Quality"
 msgstr "Calidad"
 
 msgctxt "view:product.product:"
+msgid "Wine Aging"
+msgstr "Crianza del vino"
+
+msgctxt "view:stock.lot:"
+msgid "Agronomics"
+msgstr "Agronomics"
+
+msgctxt "view:stock.lot:"
+msgid "Quality"
+msgstr "Calidad"
+
+msgctxt "view:stock.lot:"
+msgid "Quality Samples"
+msgstr "Muestras de calidad"
+
+msgctxt "view:stock.lot:"
 msgid "Wine Aging"
 msgstr "Crianza del vino"
 

@@ -1,6 +1,5 @@
 # This file is part of Tryton.  The COPYRIGHT file at the top level of
 # this repository contains the full copyright notices and license terms.
-from decimal import Decimal
 from datetime import datetime
 from sql.operators import (Less, Greater, LessEqual,
     GreaterEqual, Equal, NotEqual)
@@ -10,7 +9,6 @@ from trytond.pool import Pool, PoolMeta
 from trytond.pyson import Eval
 from trytond.exceptions import UserError
 from trytond.i18n import gettext
-from trytond.modules.agronomics.wine import WineMixin
 from trytond.transaction import Transaction
 
 
@@ -69,6 +67,17 @@ class Template(metaclass=PoolMeta):
 
     variant_deactivate_stock_zero = fields.Boolean("Variant Deactivate Stock 0")
 
+    @classmethod
+    def __setup__(cls):
+        super().__setup__()
+        readonly = cls.lot_required.states.get('readonly')
+        if readonly:
+            readonly |= Eval('producible')
+        else:
+            readonly = Eval('producible')
+        cls.lot_required.states['readonly'] = readonly
+        cls.lot_required.depends.add('producible')
+
     def get_capacity(self, name):
         if self.container:
             return self.container.capacity
@@ -90,7 +99,7 @@ class ProductVariety(ModelSQL, ModelView):
         return f'{self.variety.rec_name} ({self.percent:.0f}%)'
 
 
-class Product(WineMixin, metaclass=PoolMeta):
+class Product(metaclass=PoolMeta):
     __name__ = 'product.product'
 
     vintages = fields.Many2Many('product.product-agronomics.crop', 'product',
@@ -113,12 +122,6 @@ class Product(WineMixin, metaclass=PoolMeta):
                     'bottled-wine']
             )
         })
-    alcohol_volume = fields.Function(fields.Numeric('Alcohol Volume',
-            digits=(16, 2), states={
-            'invisible': ~ Eval('agronomic_type').in_(
-                ['wine', 'unfiltered-wine', 'filtered-wine', 'clarified-wine',
-                    'bottled-wine']
-            )}), 'get_alcohol_volume')
     quality_tests = fields.One2Many('quality.test', 'document', 'Quality Tests')
     quality_samples = fields.Many2Many('product.product-quality.sample',
         'product', 'sample', 'Quality Samples')
@@ -132,6 +135,9 @@ class Product(WineMixin, metaclass=PoolMeta):
     wine_history_duration = fields.Function(fields.Text("History Duration"),
         'get_wine_history', searcher='search_wine_history')
     vintages_str = fields.Function(fields.Char("Vintage"), 'get_vintages_str')
+
+    def lot_is_required(self, from_, to):
+        return self.producible or super().lot_is_required(from_, to)
 
     def get_vintages_str(self, name):
         return ', '.join([v.name for v in self.vintages])
@@ -182,13 +188,6 @@ class Product(WineMixin, metaclass=PoolMeta):
                 if len(product.varieties) > 1:
                     raise UserError(gettext('agronomics.msg_variety_limit',
                     product=product.rec_name))
-
-    def get_alcohol_volume(self, name):
-        if self.template.capacity and self.wine_alcohol_content:
-            return Decimal(
-                (float(self.template.capacity) * float(self.wine_alcohol_content))
-                    / 100).quantize(
-                Decimal(str(10 ** -self.__class__.alcohol_volume.digits[1])))
 
     def get_wine_history(self, name):
         # not implemented

@@ -403,6 +403,10 @@ msgctxt "field:agronomics.weighing,inventory_move:"
 msgid "Inventory Move"
 msgstr "Moviment d'inventari"
 
+msgctxt "field:agronomics.weighing,lot_created:"
+msgid "Lot Created"
+msgstr "Lot creat"
+
 msgctxt "field:agronomics.weighing,netweight:"
 msgid "Net Weight"
 msgstr "Pes net"
@@ -617,7 +621,7 @@ msgstr "Tests de qualitat"
 
 msgctxt "field:product.product,quality_weighing:"
 msgid "Quality Weighing"
-msgstr "Qualitat Pesada"
+msgstr "Plantilla test de qualitat"
 
 msgctxt "field:product.product,variant_deactivate_stock_zero:"
 msgid "Variant Deactivate Stock 0"
@@ -1461,7 +1465,7 @@ msgstr "Necesita mostres"
 
 msgctxt "field:product.template,quality_weighing:"
 msgid "Quality Weighing"
-msgstr "Qualitat pesada"
+msgstr "Plantilla test de qualitat"
 
 msgctxt "field:product.template,variant_deactivate_stock_zero:"
 msgid "Variant Deactivate Stock 0"
@@ -1536,8 +1540,8 @@ msgid "Production Template"
 msgstr "Plantilla de producció"
 
 msgctxt "field:production,production_template_cost_distribution_templates:"
-msgid "Cost Distribution Templates"
-msgstr "Plantilla distribució costos"
+msgid "Allowed Cost Distribution Templates"
+msgstr "Plantilles de distribució de costos permeses"
 
 msgctxt "field:production.cost_price.distribution,origin:"
 msgid "Origin"
@@ -1552,7 +1556,7 @@ msgid "Product"
 msgstr "Producte"
 
 msgctxt ""
-"field:production.cost_price.distribution.template,cost_distribution_templates:"
+"field:production.cost_price.distribution.template,cost_distributions:"
 msgid "Cost Distribution"
 msgstr "Distribució de costos"
 
@@ -1566,8 +1570,7 @@ msgid "Production Template"
 msgstr "Plantilla de producció"
 
 msgctxt ""
-"field:production.cost_price.distribution.template.ask,cost_distribution_templa"
-"tes:"
+"field:production.cost_price.distribution.template.ask,cost_distributions:"
 msgid "Cost Distributions"
 msgstr "Distribució de costos"
 
@@ -1644,8 +1647,8 @@ msgid "Default cost distribution template"
 msgstr "Plantilla distribució de cost per defecte"
 
 msgctxt "field:production.template,cost_distribution_templates:"
-msgid "Cost Distribution Templates"
-msgstr "Plantilla de distribucció de costos"
+msgid "Allowed Cost Distribution Templates"
+msgstr "Plantilles de distribució de costos permeses"
 
 msgctxt "field:production.template,enology_products:"
 msgid "Complementary Products"
@@ -2264,7 +2267,7 @@ msgstr "Pesada"
 
 msgctxt "model:ir.ui.menu,name:menu_act_production_cost_distribution_template"
 msgid "Templates Cost Price Distribution"
-msgstr "Plantilla distribució de preus de cost"
+msgstr "Plantilla distribució de cost"
 
 msgctxt "model:ir.ui.menu,name:menu_agronomics"
 msgid "Agronomics"
@@ -2798,6 +2801,22 @@ msgid "Quality"
 msgstr "Qualitat"
 
 msgctxt "view:product.product:"
+msgid "Wine Aging"
+msgstr "Criança del vi"
+
+msgctxt "view:stock.lot:"
+msgid "Agronomics"
+msgstr "Agronomics"
+
+msgctxt "view:stock.lot:"
+msgid "Quality"
+msgstr "Qualitat"
+
+msgctxt "view:stock.lot:"
+msgid "Quality Samples"
+msgstr "Mostres de qualitat"
+
+msgctxt "view:stock.lot:"
 msgid "Wine Aging"
 msgstr "Criança del vi"
 

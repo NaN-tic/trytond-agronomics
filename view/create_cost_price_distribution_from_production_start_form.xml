@@ -4,6 +4,6 @@ this repository contains the full copyright notices and license terms. -->
 <form>
     <label name="name"/>
     <field name="name"/>
-    <separator name="cost_distribution_templates" colspan="4"/>
-    <field name="cost_distribution_templates" colspan="4"/>
+    <separator name="cost_distributions" colspan="4"/>
+    <field name="cost_distributions" colspan="4"/>
 </form>
