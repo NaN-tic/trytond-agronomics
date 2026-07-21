@@ -28,7 +28,7 @@ this repository contains the full copyright notices and license terms. -->
         <field name="text">Invalid percentatge "%(percentatge)s" in "%(production)s".</field>
     </record>
     <record model="ir.message" id="msg_check_cost_templates">
-        <field name="text">Cost "%(cost)s" has template "%(template)s" not present in Production Template Outputs".</field>
+        <field name="text">Cost "%(cost)s" has product "%(product)s" not present in Production Template Outputs.</field>
     </record>
     <record model="ir.message" id="msg_move_unit_not_match">
         <field name="text">The movement cannot be done because the unit of measure of the movement not matches the unit of mesure of the capacity in the destination location.</field>
@@ -53,6 +53,18 @@ this repository contains the full copyright notices and license terms. -->
     </record>
     <record model="ir.message" id="msg_weighing_with_table_do">
         <field name="text">The weighing "%(weighing)s" has the mark "Table" but has selected denomination of origin.</field>
+    </record>
+    <record model="ir.message" id="msg_lot_sequence_required">
+        <field name="text">Product "%(product)s" must have a lot sequence configured.</field>
+    </record>
+    <record model="ir.message" id="msg_input_lot_required">
+        <field name="text">Production "%(production)s" requires a lot on every input move.</field>
+    </record>
+    <record model="ir.message" id="msg_output_lot_required">
+        <field name="text">Production "%(production)s" requires a lot on every output move.</field>
+    </record>
+    <record model="ir.message" id="msg_output_product_required">
+        <field name="text">Output template "%(template)s" must have exactly one active product variant.</field>
     </record>
 
   </data>

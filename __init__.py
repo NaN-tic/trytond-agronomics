@@ -12,6 +12,7 @@ from . import weighing
 from . import quality
 from . import production
 from . import location
+from . import lot
 from . import move
 from . import price_list
 
@@ -23,6 +24,7 @@ def register():
         invoice.InvoiceLine,
         history.WineAgingHistory,
         history.ProductWineAgingHistory,
+        history.LotWineAgingHistory,
         party.Party,
         plot.Enclosure,
         plot.Crop,
@@ -54,6 +56,7 @@ def register():
         quality.Configuration,
         quality.ConfigurationCompany,
         quality.ProductQualitySample,
+        quality.LotQualitySample,
         quality.QualitySample,
         quality.QualityTest,
         quality.QuantitativeTestLine,
@@ -72,8 +75,14 @@ def register():
         production.ProductionCostPriceDistributionTemplateProductionTemplateAsk,
         location.LocationMaterial,
         location.Location,
+        lot.LotVariety,
+        lot.Lot,
+        lot.LotCrop,
+        lot.LotDO,
+        lot.LotEcological,
         move.Move,
         price_list.PriceList,
+        price_list.PriceListLine,
         module='agronomics', type_='model')
     Pool.register(
         production.ProductionCostPriceDistributionTemplateProductionTemplate,

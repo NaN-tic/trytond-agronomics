@@ -1,7 +1,7 @@
 <tree>
   <field name="production"/>
   <field name="location"/>
-  <field name="product"/>
+  <field name="lot"/>
   <field name="material"/>
   <field name="date_start"/>
   <field name="date_end"/>

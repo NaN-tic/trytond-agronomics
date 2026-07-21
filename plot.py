@@ -91,7 +91,7 @@ class Plantation(ModelSQL, ModelView):
     remaining_quantity = fields.Function(
         fields.Float("Remainig Quantity", digits=(16, 2)),
         'get_remaining_quantity', searcher='search_remaining_quantity')
-    product = fields.Function(fields.Many2One('product.template', 'Product'),
+    product = fields.Function(fields.Many2One('product.product', 'Product'),
         'get_product', searcher='search_product')
     variety = fields.Function(fields.Many2One('product.taxon', 'Variety'),
         'get_variety', searcher='search_variety')
@@ -170,6 +170,7 @@ class Plantation(ModelSQL, ModelView):
             condition=parcel.id==parcel_do.parcel)
         join3 = join2.join(max_production, type_='LEFT',
                 condition=((max_production.crop == parcel.crop) &
+                    (max_production.product == parcel.product) &
                     (max_production.variety == parcel.variety)))
         query2 = join3.select(parcel.plantation,
             Sum(max_production.max_production*parcel.surface -
@@ -230,7 +231,7 @@ class Parcel(ModelSQL, ModelView):
     plantation = fields.Many2One('agronomics.plantation', 'Plantation',
         required=True)
     crop = fields.Many2One('agronomics.crop', 'Crop', required=True)
-    product = fields.Many2One('product.template', 'Product') #, required=True)
+    product = fields.Many2One('product.product', 'Product') #, required=True)
     species = fields.Many2One('product.taxon', 'Spices',
         domain=[('rank', '=', 'species')], required=True)
     variety = fields.Many2One('product.taxon', 'Variety',
@@ -261,6 +262,14 @@ class Parcel(ModelSQL, ModelView):
         fields.Float("Remainig Quantity", digits=(16, 2)),
         'get_remaining_quantity')
 
+    @classmethod
+    def __register__(cls, module_name):
+        table = cls.__table_handler__(module_name)
+        if (table.column_exist('product')
+                and not table.column_exist('product_template_legacy')):
+            table.column_rename('product', 'product_template_legacy')
+        super().__register__(module_name)
+
     def get_rec_name(self, name):
         if self.plantation and self.crop:
             return self.plantation.code + ' - ' + self.crop.rec_name
@@ -276,8 +285,11 @@ class Parcel(ModelSQL, ModelView):
         return ",".join([x.name for x in self.denomination_origin])
 
     def get_max_production(self, name):
+        if not self.product:
+            return None
         MaxProduction = Pool().get('agronomics.max.production.allowed')
         max_production = MaxProduction.search([('crop', '=', self.crop.id),
+            ('product', '=', self.product.id),
             ('variety', '=', self.variety.id), ('denomination_origin', 'in',
                 self.denomination_origin)])
         if not max_production:

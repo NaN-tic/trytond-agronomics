@@ -1,8 +1,10 @@
+import datetime
 import unittest
 from decimal import Decimal
 
 from proteus import Model
 from trytond.modules.company.tests.tools import create_company
+from trytond.exceptions import UserError
 from trytond.tests.test_tryton import drop_db
 from trytond.tests.tools import activate_modules
 
@@ -29,11 +31,26 @@ class Test(unittest.TestCase):
         ProductUom = Model.get('product.uom')
         liter, = ProductUom.find([('name', '=', 'Liter')])
         kg, = ProductUom.find([('name', '=', 'Kilogram')])
+        gram, = ProductUom.find([('name', '=', 'Gram')])
         ProductTemplate = Model.get('product.template')
         Product = Model.get('product.product')
+        Sequence = Model.get('ir.sequence')
+        SequenceType = Model.get('ir.sequence.type')
         Taxon = Model.get('product.taxon')
         DO = Model.get('agronomics.denomination_of_origin')
         Ecological = Model.get('agronomics.ecological')
+
+        IrModel = Model.get('ir.model')
+        QualityConfiguration = Model.get('quality.configuration')
+        quality_sequence, = Sequence.find([
+            ('name', '=', 'Quality Control'),
+        ])
+        lot_model, = IrModel.find([('name', '=', 'stock.lot')])
+        quality_configuration = QualityConfiguration(1)
+        configuration_line = quality_configuration.allowed_documents.new()
+        configuration_line.quality_sequence = quality_sequence
+        configuration_line.document = lot_model
+        quality_configuration.save()
 
         # Create Denomination Of Origin
         catalunya = DO()
@@ -57,6 +74,9 @@ class Test(unittest.TestCase):
         ecological = Ecological()
         ecological.name = 'Ecological'
         ecological.save()
+        Certification = Model.get('agronomics.certification')
+        certification = Certification(number='CERT-1')
+        certification.save()
 
         # # Raim Blanc
         template = ProductTemplate()
@@ -72,38 +92,15 @@ class Test(unittest.TestCase):
         productA = Product()
         productA.code = "A"
         productA.template = template
-        productA.denominations_of_origin.append(catalunya)
         productA.save()
-        catalunya, = DO.find([('name', '=', 'Catalunya')])
         productB = Product()
         productB.code = "B"
         productB.template = template
-        productB.denominations_of_origin.append(catalunya)
         productB.save()
-        catalunya, = DO.find([('name', '=', 'Catalunya')])
         productC = Product()
         productC.code = "C"
         productC.template = template
-        productC.denominations_of_origin.append(catalunya)
         productC.save()
-
-        # Create Variety
-        Variety = Model.get('product.variety')
-        AM = Variety()
-        AM.variety = macabeu
-        AM.percent = 100.0
-        AM.product = productA
-        AM.save()
-        BM = Variety()
-        BM.variety = macabeu
-        BM.percent = 100.0
-        BM.product = productB
-        BM.save()
-        CP = Variety()
-        CP.variety = parellada
-        CP.percent = 100.0
-        CP.product = productC
-        CP.save()
 
         # # Sulforos
         template = ProductTemplate()
@@ -152,6 +149,7 @@ class Test(unittest.TestCase):
         product5, = mostflor.products
         product5.cost_price = Decimal(0)
         product5.save()
+        product5 = Product(product5.id)
 
         # # Most Primeres
         mostprimeres = ProductTemplate()
@@ -164,6 +162,25 @@ class Test(unittest.TestCase):
         product6, = mostprimeres.products
         product6.cost_price = Decimal(0)
         product6.save()
+        product5 = Product(product5.id)
+        product6 = Product(product6.id)
+        product6 = Product(product6.id)
+
+        lot_sequence_type, = SequenceType.find([
+            ('name', '=', 'Stock Lot'),
+        ])
+        lot_sequence = Sequence()
+        lot_sequence.name = 'Lot'
+        lot_sequence.sequence_type = lot_sequence_type
+        lot_sequence.company = None
+        lot_sequence.save()
+        mostflor.lot_sequence = lot_sequence
+        mostflor.save()
+        mostprimeres.lot_sequence = lot_sequence
+        mostprimeres.save()
+        for product in [productA, product2, product3, product4]:
+            product.template.lot_sequence = lot_sequence
+            product.template.save()
 
         # Create Production Template
         ProductionTemplate = Model.get('production.template')
@@ -174,9 +191,10 @@ class Test(unittest.TestCase):
         production_template.quantity = 10000
         production_template.pass_feature = True
         production_template.inputs.append(productA.template)
-        production_template.outputs.append(mostflor)
-        production_template.outputs.append(mostprimeres)
+        production_template.outputs.extend([mostflor, mostprimeres])
         production_template.pass_quality = True
+        production_template.pass_quality_sample = True
+        production_template.pass_certification = True
         line = ProductionTemplateLine()
         line.product = product2
         line.quantity = 100
@@ -189,6 +207,24 @@ class Test(unittest.TestCase):
         line.product = product4
         line.quantity = 150
         production_template.enology_products.append(line)
+        production_template.save()
+
+        CostDistributionTemplate = Model.get(
+            'production.cost_price.distribution.template')
+        cost_distribution_template = CostDistributionTemplate(
+            name='Output Cost Distribution',
+            production_template=production_template)
+        cost_distribution = (
+            cost_distribution_template.cost_distribution_templates.new())
+        cost_distribution.product = product5
+        cost_distribution.percentatge = Decimal('0.4')
+        cost_distribution = (
+            cost_distribution_template.cost_distribution_templates.new())
+        cost_distribution.product = product6
+        cost_distribution.percentatge = Decimal('0.6')
+        cost_distribution_template.save()
+        production_template.cost_distribution_template = (
+            cost_distribution_template)
         production_template.save()
 
         # Create an Inventory
@@ -245,12 +281,41 @@ class Test(unittest.TestCase):
         line.save()
         line = EnologyProduct()
         line.product = productC
-        line.quantity = 3000
+        line.uom = gram
+        line.quantity = 3000000
         line.production = production
         line.save()
         production.reload()
         production.click('wait')
         self.assertEqual(production.state, 'waiting')
+        Lot = Model.get('stock.lot')
+        sample_lot = None
+        for move in production.inputs:
+            lot = Lot()
+            lot.product = move.product
+            if move.product in [productA, productB, productC]:
+                lot.denominations_of_origin.append(DO(catalunya.id))
+                lot_variety = lot.varieties.new()
+                lot_variety.variety = (
+                    parellada if move.product == productC else macabeu)
+                lot_variety.percent = 100.0
+            lot.save()
+            if move.product == productA:
+                sample_lot = lot
+                sample_lot.certification = certification
+                sample_lot.save()
+            move.lot = lot
+            move.save()
+        QualitySample = Model.get('quality.sample')
+        quality_sample = QualitySample(reference='Input grape sample')
+        quality_sample.save()
+        sample_lot.quality_samples.append(quality_sample)
+        sample_lot.save()
+        QualityTest = Model.get('quality.test')
+        input_quality_test = QualityTest(document=sample_lot)
+        input_quality_test.save()
+        QualityTest.confirmed([input_quality_test.id], {})
+        QualityTest.manager_validate([input_quality_test.id], {})
         self.assertEqual(len(production.inputs), 6)
         input, = [i for i in production.inputs if i.product == product2]
         self.assertEqual(input.quantity, 180.0)
@@ -258,6 +323,9 @@ class Test(unittest.TestCase):
         self.assertEqual(input.quantity, 90.0)
         input, = [i for i in production.inputs if i.product == product4]
         self.assertEqual(input.quantity, 270.0)
+        input, = [i for i in production.inputs if i.product == productC]
+        self.assertEqual(input.unit, gram)
+        self.assertEqual(input.quantity, 3000000)
         (o1, o2) = production.output_distribution
         o1.location = storage
         o1.final_quantity = 5000
@@ -273,16 +341,100 @@ class Test(unittest.TestCase):
         self.assertEqual(
             [x.name for x in production.production_template.inputs],
             ['Raim Blanc'])
+        self.assertEqual(
+            {line.product.id: line.percentatge
+                for line in production.cost_distributions},
+            {product5.id: Decimal('0.4'), product6.id: Decimal('0.6')})
         production.click('assign_try')
         production.click('run')
+        product_ids = [product.id for product in Product.find([])]
         production.click('do')
+        production.reload()
         self.assertEqual(len(production.outputs), 2)
-        most = production.outputs[0]
-        self.assertEqual(len(most.product.varieties), 2)
         self.assertEqual(
-            sorted([(x.variety.name, x.percent)
-                    for x in most.product.varieties],
-                   key=lambda x: x[1]), [('Parellada', 16.6667),
-                                         ('Macabeu', 83.3334)])
-        self.assertEqual([x.name for x in most.product.denominations_of_origin],
-                         ['Catalunya'])
+            {move.product.id for move in production.outputs},
+            {product5.id, product6.id})
+        self.assertEqual(
+            [product.id for product in Product.find([])], product_ids)
+        self.assertTrue(all(move.lot for move in production.outputs))
+        self.assertEqual(
+            len({move.lot.id for move in production.outputs}), 2)
+        for output in production.outputs:
+            self.assertEqual(output.product.quality_samples, [])
+            self.assertEqual(output.lot.certification, certification)
+            self.assertEqual(
+                [sample.id for sample in output.lot.quality_samples],
+                [quality_sample.id])
+            quality_tests = QualityTest.find([
+                ('document.id', '=', output.lot.id, 'stock.lot'),
+            ])
+            self.assertEqual(len(quality_tests), 1)
+            self.assertEqual(quality_tests[0].state, 'successful')
+            self.assertEqual(
+                sorted((variety.variety.name, variety.percent)
+                    for variety in output.lot.varieties),
+                [('Macabeu', 83.3334), ('Parellada', 16.6667)])
+            self.assertEqual(
+                [do.name for do in output.lot.denominations_of_origin],
+                ['Catalunya'])
+
+        aging_input, = [move for move in production.outputs
+            if move.product == product5]
+        today = datetime.date.today()
+        WineAgingHistory = Model.get('wine.wine_aging.history')
+        input_history_id, = WineAgingHistory.create([{
+            'production': production.id,
+            'location': storage.id,
+            'lot': aging_input.lot.id,
+            'date_start': today - datetime.timedelta(days=10),
+        }], {})
+        input_history = WineAgingHistory(input_history_id)
+
+        aging_template = ProductionTemplate(
+            name='Age Most Flor',
+            uom=liter,
+            quantity=1,
+            transfer_wine_aging=True)
+        aging_template.inputs.append(product5.template)
+        aging_template.outputs.append(product6.template)
+        aging_template_line = aging_template.enology_products.new()
+        aging_template_line.product = product5
+        aging_template_line.quantity = 100
+        aging_template.save()
+        aging_production = Production(production_template=aging_template)
+        aging_production.save()
+        aging_production.reload()
+        aging_production.click('wait')
+        aging_input_move, = aging_production.inputs
+        self.assertEqual(aging_input_move.product, product5)
+        self.assertEqual(aging_input_move.quantity, 100)
+        aging_input_move.lot = aging_input.lot
+        aging_input_move.save()
+        aging_distribution, = aging_production.output_distribution
+        aging_distribution.location = storage
+        aging_distribution.final_quantity = 100
+        aging_distribution.save()
+        aging_production.reload()
+        aging_production.click('assign_try')
+        aging_production.click('run')
+        aging_input_move.lot = None
+        aging_input_move.save()
+        with self.assertRaises(UserError):
+            aging_production.click('do')
+        aging_production.reload()
+        aging_input_move, = aging_production.inputs
+        aging_input_move.lot = aging_input.lot
+        aging_input_move.save()
+        aging_production.click('do')
+        aging_production.reload()
+
+        input_history.reload()
+        self.assertEqual(input_history.date_end, today)
+        aging_output, = aging_production.outputs
+        output_histories = WineAgingHistory.find([
+            ('lot', '=', aging_output.lot.id),
+        ])
+        self.assertEqual(len(output_histories), 2)
+        self.assertTrue(all(not history.product
+            for history in output_histories))
+        self.assertEqual(len(aging_output.lot.wine_aging), 1)

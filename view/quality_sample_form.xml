@@ -8,5 +8,5 @@
     <field name="code"/>
     <label name="company"/>
     <field name="company"/>
-    <field name="products" colspan="4"/>
+    <field name="lots" colspan="4"/>
 </form>
