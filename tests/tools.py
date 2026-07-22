@@ -21,4 +21,5 @@ def setup():
     return SimpleNamespace(
         config=config,
         product=product,
+        template=template,
         template_model=config.pool.get('product.template'))

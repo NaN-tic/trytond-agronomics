@@ -78,6 +78,23 @@ class Template(metaclass=PoolMeta):
         cls.lot_required.states['readonly'] = readonly
         cls.lot_required.depends.add('producible')
 
+    @classmethod
+    def on_modification(cls, mode, templates, field_names=None):
+        super().on_modification(mode, templates, field_names=field_names)
+        if not (mode == 'create'
+                or (mode == 'write'
+                    and (field_names is None
+                        or 'producible' in field_names))):
+            return
+
+        lot_required = [value
+            for value, _label in cls.lot_required.selection]
+        templates = [template for template in templates
+            if (template.producible
+                and set(template.lot_required or []) != set(lot_required))]
+        if templates:
+            cls.write(templates, {'lot_required': lot_required})
+
     def get_capacity(self, name):
         if self.container:
             return self.container.capacity

@@ -27,6 +27,23 @@ class TestProducibleProductLot(unittest.TestCase):
             self.assertTrue(
                 Product(vars.product.id).lot_is_required(None, None))
 
+        location_types = {
+            value for value, _label
+            in vars.template_model.lot_required.selection}
+        vars.template.reload()
+        self.assertEqual(set(vars.template.lot_required), location_types)
+
+        vars.template.producible = False
+        vars.template.save()
+        vars.template.lot_required = []
+        vars.template.save()
+        self.assertFalse(vars.template.lot_required)
+
+        vars.template.producible = True
+        vars.template.save()
+        vars.template.reload()
+        self.assertEqual(set(vars.template.lot_required), location_types)
+
         template_readonly = vars.template_model.lot_required.states['readonly']
         self.assertTrue(json.loads(
                 json.dumps(template_readonly, cls=PYSONEncoder),
