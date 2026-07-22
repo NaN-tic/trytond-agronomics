@@ -2891,17 +2891,9 @@ msgctxt "model:stock.lot.wine_aging.history,name:"
 msgid "Lot Wine Aging History"
 msgstr "Historial de crianza del lote"
 
-msgctxt "model:ir.message,text:msg_input_lot_required"
-msgid "Production \"%(production)s\" requires a lot on every input move."
-msgstr "La producción \"%(production)s\" requiere un lote en cada movimiento de entrada."
-
 msgctxt "model:ir.message,text:msg_lot_sequence_required"
 msgid "Product \"%(product)s\" must have a lot sequence configured."
 msgstr "El producto \"%(product)s\" debe tener configurada una secuencia de lotes."
-
-msgctxt "model:ir.message,text:msg_output_lot_required"
-msgid "Production \"%(production)s\" requires a lot on every output move."
-msgstr "La producción \"%(production)s\" requiere un lote en cada movimiento de salida."
 
 msgctxt "model:ir.message,text:msg_output_product_required"
 msgid "Output template \"%(template)s\" must have exactly one active product variant."

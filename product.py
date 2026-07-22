@@ -67,34 +67,6 @@ class Template(metaclass=PoolMeta):
 
     variant_deactivate_stock_zero = fields.Boolean("Variant Deactivate Stock 0")
 
-    @classmethod
-    def __setup__(cls):
-        super().__setup__()
-        readonly = cls.lot_required.states.get('readonly')
-        if readonly:
-            readonly |= Eval('producible')
-        else:
-            readonly = Eval('producible')
-        cls.lot_required.states['readonly'] = readonly
-        cls.lot_required.depends.add('producible')
-
-    @classmethod
-    def on_modification(cls, mode, templates, field_names=None):
-        super().on_modification(mode, templates, field_names=field_names)
-        if not (mode == 'create'
-                or (mode == 'write'
-                    and (field_names is None
-                        or 'producible' in field_names))):
-            return
-
-        lot_required = [value
-            for value, _label in cls.lot_required.selection]
-        templates = [template for template in templates
-            if (template.producible
-                and set(template.lot_required or []) != set(lot_required))]
-        if templates:
-            cls.write(templates, {'lot_required': lot_required})
-
     def get_capacity(self, name):
         if self.container:
             return self.container.capacity
@@ -152,9 +124,6 @@ class Product(metaclass=PoolMeta):
     wine_history_duration = fields.Function(fields.Text("History Duration"),
         'get_wine_history', searcher='search_wine_history')
     vintages_str = fields.Function(fields.Char("Vintage"), 'get_vintages_str')
-
-    def lot_is_required(self, from_, to):
-        return self.producible or super().lot_is_required(from_, to)
 
     def get_vintages_str(self, name):
         return ', '.join([v.name for v in self.vintages])

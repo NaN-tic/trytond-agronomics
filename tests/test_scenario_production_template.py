@@ -4,7 +4,6 @@ from decimal import Decimal
 
 from proteus import Model
 from trytond.modules.company.tests.tools import create_company
-from trytond.exceptions import UserError
 from trytond.tests.test_tryton import drop_db
 from trytond.tests.tools import activate_modules
 
@@ -453,12 +452,18 @@ class Test(unittest.TestCase):
         aging_input_move, = aging_production.inputs
         aging_input_move.lot = None
         aging_input_move.save()
-        with self.assertRaises(UserError):
-            aging_production.click('assign_try')
+        aging_production.click('assign_try')
+        self.assertEqual(aging_production.state, 'assigned')
+        aging_production.click('wait')
         aging_production.reload()
         aging_input_move, = aging_production.inputs
         aging_input_move.lot = aging_input.lot
         aging_input_move.save()
+        aging_distribution, = aging_production.output_distribution
+        aging_distribution.location = storage
+        aging_distribution.final_quantity = (
+            aging_distribution.initial_quantity + 100)
+        aging_distribution.save()
         aging_production.click('assign_try')
         aging_production.click('run')
         aging_production.click('do')

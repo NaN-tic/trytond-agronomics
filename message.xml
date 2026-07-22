@@ -57,12 +57,6 @@ this repository contains the full copyright notices and license terms. -->
     <record model="ir.message" id="msg_lot_sequence_required">
         <field name="text">Product "%(product)s" must have a lot sequence configured.</field>
     </record>
-    <record model="ir.message" id="msg_input_lot_required">
-        <field name="text">Production "%(production)s" requires a lot on every input move.</field>
-    </record>
-    <record model="ir.message" id="msg_output_lot_required">
-        <field name="text">Production "%(production)s" requires a lot on every output move.</field>
-    </record>
     <record model="ir.message" id="msg_output_product_required">
         <field name="text">Output template "%(template)s" must have exactly one active product variant.</field>
     </record>

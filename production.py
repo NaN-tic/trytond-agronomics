@@ -1,7 +1,7 @@
 # This file is part of Tryton.  The COPYRIGHT file at the top level of
 # this repository contains the full copyright notices and license terms.
 from decimal import Decimal
-from trytond.model import ModelSQL, ModelView, Workflow, fields, dualmethod
+from trytond.model import ModelSQL, ModelView, Workflow, fields
 from trytond.pool import PoolMeta, Pool
 from trytond.pyson import Eval, Bool
 from trytond.exceptions import UserWarning, UserError
@@ -453,7 +453,8 @@ class Production(metaclass=PoolMeta):
         Variety = Pool().get('agronomics.lot.variety')
         Uom = Pool().get('product.uom')
         inputs = [move for move in self.inputs
-            if move.product.template in self.production_template.inputs]
+            if (move.lot
+                and move.product.template in self.production_template.inputs)]
         total_output = sum(Uom.compute_qty(
                 move.unit, move.quantity, self.production_template.uom)
             for move in inputs)
@@ -525,20 +526,6 @@ class Production(metaclass=PoolMeta):
         return new_histories
 
     @classmethod
-    def check_input_lots(cls, productions):
-        for production in productions:
-            if any(move.quantity and not move.lot
-                    for move in production.inputs):
-                raise UserError(gettext('agronomics.msg_input_lot_required',
-                    production=production.rec_name))
-
-    @dualmethod
-    @ModelView.button
-    def assign_try(cls, productions):
-        cls.check_input_lots(productions)
-        super().assign_try(productions)
-
-    @classmethod
     @ModelView.button
     @Workflow.transition('done')
     @set_employee('done_by')
@@ -586,14 +573,6 @@ class Production(metaclass=PoolMeta):
                     moves.append(move)
 
         Move.save(moves)
-        for production in productions:
-            output_moves = Move.search([
-                    ('production_output', '=', production.id),
-                    ('quantity', '!=', 0),
-                    ])
-            if any(not move.lot for move in output_moves):
-                raise UserError(gettext('agronomics.msg_output_lot_required',
-                    production=production.rec_name))
         super().do(productions)
 
         for production in productions:
@@ -603,7 +582,7 @@ class Production(metaclass=PoolMeta):
             if (production.production_template
                     and production.production_template.transfer_wine_aging):
                 inputs = production.inputs
-                if len(inputs) == 1:
+                if len(inputs) == 1 and inputs[0].lot:
                     input, = inputs
                     outputs = production.outputs
                     production.create_wine_aged_history(input, outputs)
