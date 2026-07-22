@@ -3,17 +3,11 @@
 from trytond.pool import PoolMeta, Pool
 from trytond.i18n import gettext
 from trytond.exceptions import UserError
-from trytond.pyson import Eval, Equal
 from trytond.transaction import Transaction
 
 
 class Move(metaclass=PoolMeta):
     __name__ = 'stock.move'
-
-    @classmethod
-    def __setup__(cls):
-        super().__setup__()
-        cls.lot.states['readonly'] |= Equal(Eval('state'), 'assigned')
 
     @classmethod
     def validate(cls, moves):
