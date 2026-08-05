@@ -5,4 +5,6 @@
   <field name="product_price_list_type"/>
   <label name="parcel"/>
   <field name="parcel"/>
+  <label name="percentage"/>
+  <field name="percentage"/>
 </form>

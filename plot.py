@@ -3,8 +3,9 @@
 from sql.aggregate import Sum
 from trytond.model import fields, ModelSQL, ModelView
 from trytond.pool import Pool
-from trytond.wizard import (Wizard, StateView, Button, StateTransition)
 from trytond.pyson import Bool, Eval, If
+from trytond.transaction import Transaction
+from trytond.wizard import (Wizard, StateView, Button, StateTransition)
 
 
 class Enclosure(ModelSQL, ModelView):
@@ -20,6 +21,27 @@ class Enclosure(ModelSQL, ModelView):
     polygon_sigpac = fields.Numeric('Polygon Sigpac')
     zone_sigpac = fields.Numeric('Zone Sigpac')
     surface_sigpac = fields.Numeric('Surface Sigpac')
+    municipality = fields.Function(
+        fields.Many2One('agronomics.sigpac.municipality', 'Municipality'),
+        'on_change_with_municipality')
+
+    @fields.depends('province_sigpac', 'municipality_sigpac')
+    def on_change_with_municipality(self, name=None):
+        pool = Pool()
+        Municipality = pool.get('agronomics.sigpac.municipality')
+
+        province = self.province_sigpac
+        municipality = self.municipality_sigpac
+        if not (province and municipality):
+            return
+
+        province = str(province).zfill(2)
+        municipality = str(municipality).zfill(3)
+
+        municipalities = Municipality.search([
+            ('code', '=', f'{province}{municipality}')])
+        if municipalities:
+            return municipalities[0].id
 
 
 class Crop(ModelSQL, ModelView):
@@ -71,6 +93,7 @@ class Plantation(ModelSQL, ModelView):
     _rec_name = 'code'
 
     code = fields.Char("Code", required=True)
+    # TODO: Percentage and party One2Many.
     party = fields.Many2One('party.party', "Party", required=True)
     enclosures = fields.One2Many('agronomics.enclosure', 'plantation',
         "Enclosure")
@@ -222,6 +245,23 @@ class Ecological(ModelSQL, ModelView):
 
     name = fields.Char('Name', required=True)
 
+    @classmethod
+    def __register__(cls, module_name):
+        super().__register__(module_name)
+        table = cls.__table__()
+
+        transaction = Transaction()
+        cursor = transaction.connection.cursor()
+
+        update = lambda param: table.update([table.name], [param[0]],
+            where=table.name.ilike(param[1]))
+
+        # Migration for issue #177798: update names to match those used
+        # in the Excel sheet
+        cursor.execute(*update(('Convencional', 'No')))
+        cursor.execute(*update(('Ecològica', 'Ecològic')))
+        cursor.execute(*update(('Integrada', 'Producció integrada')))
+
 
 class Parcel(ModelSQL, ModelView):
     "Parcel"
@@ -314,6 +354,8 @@ class Beneficiaries(ModelSQL, ModelView):
 
     party = fields.Many2One('party.party', "Beneficiary", required=True)
     parcel = fields.Many2One('agronomics.parcel', "Parcel")
+    percentage = fields.Float('Percentage', digits=(5, 2),
+        domain=[('percentage', '>=', 0), ('percentage', '<=', 100)])
     weighing = fields.Many2One('agronomics.weighing', "Weighing")
     product_price_list_type = fields.Many2One('product.price_list.type',
         "Product Price List Type")
