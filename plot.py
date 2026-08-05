@@ -32,7 +32,7 @@ class Enclosure(ModelSQL, ModelView):
 
         province = self.province_sigpac
         municipality = self.municipality_sigpac
-        if not (province and municipality):
+        if province is None or municipality is None:
             return
 
         province = str(province).zfill(2)
