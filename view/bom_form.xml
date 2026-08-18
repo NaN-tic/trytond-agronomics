@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!-- This file is part of Tryton.  The COPYRIGHT file at the top level of
+this repository contains the full copyright notices and license terms. -->
+<data>
+    <xpath expr="/form/notebook" position="inside">
+        <page string="Agronomics" id="agronomics">
+            <label name="pass_feature"/>
+            <field name="pass_feature"/>
+            <label name="pass_quality"/>
+            <field name="pass_quality"/>
+            <label name="pass_quality_sample"/>
+            <field name="pass_quality_sample"/>
+            <label name="pass_certification"/>
+            <field name="pass_certification"/>
+            <label name="transfer_wine_aging"/>
+            <field name="transfer_wine_aging"/>
+        </page>
+        <page string="Cost Distribution" id="agronomics-cost-distribution">
+            <label name="cost_distribution_template"/>
+            <field name="cost_distribution_template"/>
+            <field name="cost_distribution_templates" colspan="4"/>
+        </page>
+    </xpath>
+</data>

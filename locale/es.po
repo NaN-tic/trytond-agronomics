@@ -2898,3 +2898,91 @@ msgstr "El producto \"%(product)s\" debe tener configurada una secuencia de lote
 msgctxt "model:ir.message,text:msg_output_product_required"
 msgid "Output template \"%(template)s\" must have exactly one active product variant."
 msgstr "La plantilla de salida \"%(template)s\" debe tener exactamente una variante de producto activa."
+
+msgctxt "field:production.bom,agronomics_inputs:"
+msgid "Input Materials"
+msgstr "Materiales de entrada"
+
+msgctxt "field:production.bom,agronomics_outputs:"
+msgid "Output Materials"
+msgstr "Materiales de salida"
+
+msgctxt "field:production.bom,pass_feature:"
+msgid "Pass on Feature"
+msgstr "Transferir propiedades"
+
+msgctxt "field:production.bom,pass_quality:"
+msgid "Pass Quality"
+msgstr "Transferir pruebas de calidad"
+
+msgctxt "field:production.bom,pass_certification:"
+msgid "Pass Certification"
+msgstr "Transferir certificación"
+
+msgctxt "field:production.bom,pass_quality_sample:"
+msgid "Pass Quality Sample"
+msgstr "Transferir muestras de calidad"
+
+msgctxt "field:production.bom,transfer_wine_aging:"
+msgid "Transfer Wine Aging"
+msgstr "Transferir crianza del vino"
+
+msgctxt "field:production.bom,cost_distribution_template:"
+msgid "Default Cost Distribution Template"
+msgstr "Plantilla de distribución de costes por defecto"
+
+msgctxt "field:production.bom,cost_distribution_templates:"
+msgid "Allowed Cost Distribution Templates"
+msgstr "Plantillas de distribución de costes permitidas"
+
+msgctxt "field:production.bom.agronomics.material,bom:"
+msgid "BOM"
+msgstr "LDM"
+
+msgctxt "field:production.bom.agronomics.material,kind:"
+msgid "Kind"
+msgstr "Tipo"
+
+msgctxt "field:production.bom.agronomics.material,template:"
+msgid "Product Template"
+msgstr "Plantilla de producto"
+
+msgctxt "field:production.bom.agronomics.material,unit:"
+msgid "Unit"
+msgstr "Unidad"
+
+msgctxt "field:production.bom.agronomics.material,quantity:"
+msgid "Quantity"
+msgstr "Cantidad"
+
+msgctxt "field:production.bom.agronomics.material,required:"
+msgid "Required"
+msgstr "Obligatorio"
+
+msgctxt "help:production.bom.agronomics.material,required:"
+msgid "The warehouse operation cannot be confirmed until this input material has been selected."
+msgstr "No se puede confirmar la operación de almacén hasta que se haya seleccionado este material de entrada."
+
+msgctxt "field:production.bom.agronomics.material,pass_feature:"
+msgid "Pass on Feature"
+msgstr "Transferir propiedades"
+
+msgctxt "selection:production.bom.agronomics.material,kind:"
+msgid "Input"
+msgstr "Entrada"
+
+msgctxt "selection:production.bom.agronomics.material,kind:"
+msgid "Output"
+msgstr "Salida"
+
+msgctxt "model:production.bom.agronomics.material,name:"
+msgid "Agronomics BOM Material"
+msgstr "Material LDM Agronomics"
+
+msgctxt "view:production.bom:"
+msgid "Agronomics"
+msgstr "Agronomics"
+
+msgctxt "view:production.bom:"
+msgid "Cost Distribution"
+msgstr "Distribución de costes"

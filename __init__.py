@@ -66,6 +66,8 @@ def register():
         production.ProductionTemplateLine,
         production.ProductionTemplateInputsProductTemplate,
         production.ProductionTemplateOutputsProductTemplate,
+        production.BOM,
+        production.BOMInput,
         production.Production,
         production.OutputDistribution,
         production.ProductionEnologyProduct,
