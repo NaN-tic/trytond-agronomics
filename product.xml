@@ -25,7 +25,7 @@
             <field name="name">product_variety_list</field>
         </record>
 
-        <!-- Product Variant-->
+        <!-- Product Variant -->
         <record model="ir.ui.view" id="product_view_form">
             <field name="model">product.product</field>
             <field name="name">product_form</field>

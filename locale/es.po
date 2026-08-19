@@ -403,6 +403,10 @@ msgctxt "field:agronomics.weighing,inventory_move:"
 msgid "Inventory Move"
 msgstr "Movimiento de inventario"
 
+msgctxt "field:agronomics.weighing,lot_created:"
+msgid "Lot Created"
+msgstr "Lote creado"
+
 msgctxt "field:agronomics.weighing,netweight:"
 msgid "Net Weight"
 msgstr "Peso neto"
@@ -559,6 +563,10 @@ msgctxt "field:product.product,agronomic_type:"
 msgid "Agronomic Type"
 msgstr "Tipo Agronómico"
 
+msgctxt "field:stock.lot,agronomic_type:"
+msgid "Agronomic Type"
+msgstr "Tipo Agronómico"
+
 msgctxt "field:product.product,alcohol_volume:"
 msgid "Alcohol Volume"
 msgstr "Volumen Alcohol"
@@ -571,6 +579,10 @@ msgctxt "field:product.product,certification:"
 msgid "Certification"
 msgstr "Certificación"
 
+msgctxt "field:stock.lot,certification:"
+msgid "Certification"
+msgstr "Certificación"
+
 msgctxt "field:product.product,container:"
 msgid "Container"
 msgstr "Envase"
@@ -579,7 +591,15 @@ msgctxt "field:product.product,denominations_of_origin:"
 msgid "DOs"
 msgstr "DOs"
 
+msgctxt "field:stock.lot,denominations_of_origin:"
+msgid "DOs"
+msgstr "DOs"
+
 msgctxt "field:product.product,ecologicals:"
+msgid "Ecologicals"
+msgstr "Ecológicos"
+
+msgctxt "field:stock.lot,ecologicals:"
 msgid "Ecologicals"
 msgstr "Ecológicos"
 
@@ -591,13 +611,17 @@ msgctxt "field:product.product,quality_samples:"
 msgid "Quality Samples"
 msgstr "Muestras de calidad"
 
+msgctxt "field:stock.lot,quality_samples:"
+msgid "Quality Samples"
+msgstr "Muestras de calidad"
+
 msgctxt "field:product.product,quality_tests:"
 msgid "Quality Tests"
 msgstr "Tests de calidad"
 
 msgctxt "field:product.product,quality_weighing:"
 msgid "Quality Weighing"
-msgstr "Calidad pesada"
+msgstr "Plantilla test de calidad"
 
 msgctxt "field:product.product,variant_deactivate_stock_zero:"
 msgid "Variant Deactivate Stock 0"
@@ -607,7 +631,15 @@ msgctxt "field:product.product,varieties:"
 msgid "Varieties"
 msgstr "Variedades"
 
+msgctxt "field:stock.lot,varieties:"
+msgid "Varieties"
+msgstr "Variedades"
+
 msgctxt "field:product.product,vintages:"
+msgid "Vintages"
+msgstr "Cosechas"
+
+msgctxt "field:stock.lot,crop:"
 msgid "Vintages"
 msgstr "Cosechas"
 
@@ -619,7 +651,15 @@ msgctxt "field:product.product,wine_aging:"
 msgid "Wine Aging"
 msgstr "Crianza del vino"
 
+msgctxt "field:stock.lot,wine_aging:"
+msgid "Wine Aging"
+msgstr "Crianza del vino"
+
 msgctxt "field:product.product,wine_alcohol_content:"
+msgid "Alcohol Content"
+msgstr "Contenido de alcohol"
+
+msgctxt "field:stock.lot,wine_alcohol_content:"
 msgid "Alcohol Content"
 msgstr "Contenido de alcohol"
 
@@ -627,7 +667,15 @@ msgctxt "field:product.product,wine_alcohol_content_comment:"
 msgid "Alcohol Content Comment"
 msgstr "Comentario del contenido de alcohol"
 
+msgctxt "field:stock.lot,wine_alcohol_content_comment:"
+msgid "Alcohol Content Comment"
+msgstr "Comentario del contenido de alcohol"
+
 msgctxt "field:product.product,wine_alcohol_content_confirm:"
+msgid "Alcohol Content Confirm"
+msgstr "Confirmación del contenido de alcohol"
+
+msgctxt "field:stock.lot,wine_alcohol_content_confirm:"
 msgid "Alcohol Content Confirm"
 msgstr "Confirmación del contenido de alcohol"
 
@@ -635,7 +683,15 @@ msgctxt "field:product.product,wine_alcohol_content_success:"
 msgid "Alcohol Content Success"
 msgstr "Éxito del contenido de alcohol"
 
+msgctxt "field:stock.lot,wine_alcohol_content_success:"
+msgid "Alcohol Content Success"
+msgstr "Éxito del contenido de alcohol"
+
 msgctxt "field:product.product,wine_botrytis:"
+msgid "Botrytis"
+msgstr "Botrytis"
+
+msgctxt "field:stock.lot,wine_botrytis:"
 msgid "Botrytis"
 msgstr "Botrytis"
 
@@ -643,7 +699,15 @@ msgctxt "field:product.product,wine_botrytis_comment:"
 msgid "Botrytis Comment"
 msgstr "Comentario de botrytis"
 
+msgctxt "field:stock.lot,wine_botrytis_comment:"
+msgid "Botrytis Comment"
+msgstr "Comentario de botrytis"
+
 msgctxt "field:product.product,wine_botrytis_confirm:"
+msgid "Botrytis Confirm"
+msgstr "Confimrmación de botrytis"
+
+msgctxt "field:stock.lot,wine_botrytis_confirm:"
 msgid "Botrytis Confirm"
 msgstr "Confimrmación de botrytis"
 
@@ -651,7 +715,15 @@ msgctxt "field:product.product,wine_botrytis_success:"
 msgid "Botrytis Success"
 msgstr "Éxito de botrytis"
 
+msgctxt "field:stock.lot,wine_botrytis_success:"
+msgid "Botrytis Success"
+msgstr "Éxito de botrytis"
+
 msgctxt "field:product.product,wine_clogging:"
+msgid "Clogging"
+msgstr "Clogging"
+
+msgctxt "field:stock.lot,wine_clogging:"
 msgid "Clogging"
 msgstr "Clogging"
 
@@ -659,7 +731,15 @@ msgctxt "field:product.product,wine_clogging_comment:"
 msgid "Clogging Comment"
 msgstr "Comentario de clogging"
 
+msgctxt "field:stock.lot,wine_clogging_comment:"
+msgid "Clogging Comment"
+msgstr "Comentario de clogging"
+
 msgctxt "field:product.product,wine_clogging_confirm:"
+msgid "Clogging Confirm"
+msgstr "Confirmación de clogging"
+
+msgctxt "field:stock.lot,wine_clogging_confirm:"
 msgid "Clogging Confirm"
 msgstr "Confirmación de clogging"
 
@@ -667,7 +747,15 @@ msgctxt "field:product.product,wine_clogging_success:"
 msgid "Clogging Success"
 msgstr "Éxito de clogging"
 
+msgctxt "field:stock.lot,wine_clogging_success:"
+msgid "Clogging Success"
+msgstr "Éxito de clogging"
+
 msgctxt "field:product.product,wine_color_intensity:"
+msgid "Color Intensity"
+msgstr "Intensidad de color"
+
+msgctxt "field:stock.lot,wine_color_intensity:"
 msgid "Color Intensity"
 msgstr "Intensidad de color"
 
@@ -675,7 +763,15 @@ msgctxt "field:product.product,wine_color_intensity_comment:"
 msgid "Color Intensity Comment"
 msgstr "Comentario de intensidad de color"
 
+msgctxt "field:stock.lot,wine_color_intensity_comment:"
+msgid "Color Intensity Comment"
+msgstr "Comentario de intensidad de color"
+
 msgctxt "field:product.product,wine_color_intensity_confirm:"
+msgid "Color Intensity Confirm"
+msgstr "Confirmación de intensidad de color"
+
+msgctxt "field:stock.lot,wine_color_intensity_confirm:"
 msgid "Color Intensity Confirm"
 msgstr "Confirmación de intensidad de color"
 
@@ -683,7 +779,15 @@ msgctxt "field:product.product,wine_color_intensity_success:"
 msgid "Color Intensity Success"
 msgstr "Éxito de intensidad de color"
 
+msgctxt "field:stock.lot,wine_color_intensity_success:"
+msgid "Color Intensity Success"
+msgstr "Éxito de intensidad de color"
+
 msgctxt "field:product.product,wine_density:"
+msgid "Density"
+msgstr "Densidad"
+
+msgctxt "field:stock.lot,wine_density:"
 msgid "Density"
 msgstr "Densidad"
 
@@ -691,7 +795,15 @@ msgctxt "field:product.product,wine_density_comment:"
 msgid "Density Comment"
 msgstr "Comentario de densidad"
 
+msgctxt "field:stock.lot,wine_density_comment:"
+msgid "Density Comment"
+msgstr "Comentario de densidad"
+
 msgctxt "field:product.product,wine_density_confirm:"
+msgid "Density Comment Confirm"
+msgstr "Confirmación del comentario de densidad"
+
+msgctxt "field:stock.lot,wine_density_confirm:"
 msgid "Density Comment Confirm"
 msgstr "Confirmación del comentario de densidad"
 
@@ -699,7 +811,15 @@ msgctxt "field:product.product,wine_density_success:"
 msgid "Density Comment Success"
 msgstr "Éxito del comentario de densidad"
 
+msgctxt "field:stock.lot,wine_density_success:"
+msgid "Density Comment Success"
+msgstr "Éxito del comentario de densidad"
+
 msgctxt "field:product.product,wine_free_sulphur:"
+msgid "Free Sulphur"
+msgstr "Azufre libre"
+
+msgctxt "field:stock.lot,wine_free_sulphur:"
 msgid "Free Sulphur"
 msgstr "Azufre libre"
 
@@ -707,7 +827,15 @@ msgctxt "field:product.product,wine_free_sulphur_comment:"
 msgid "Free Sulphur Comment"
 msgstr "Comentario del azufre libre"
 
+msgctxt "field:stock.lot,wine_free_sulphur_comment:"
+msgid "Free Sulphur Comment"
+msgstr "Comentario del azufre libre"
+
 msgctxt "field:product.product,wine_free_sulphur_confirm:"
+msgid "Free Sulphur Confirm"
+msgstr "Confirmación del azufre libre"
+
+msgctxt "field:stock.lot,wine_free_sulphur_confirm:"
 msgid "Free Sulphur Confirm"
 msgstr "Confirmación del azufre libre"
 
@@ -715,7 +843,15 @@ msgctxt "field:product.product,wine_free_sulphur_success:"
 msgid "Free Sulphur Success"
 msgstr "Éxito del azufre libre"
 
+msgctxt "field:stock.lot,wine_free_sulphur_success:"
+msgid "Free Sulphur Success"
+msgstr "Éxito del azufre libre"
+
 msgctxt "field:product.product,wine_glucose_fructose:"
+msgid "Glucose/Fructose"
+msgstr "Glucosa/Fructosa"
+
+msgctxt "field:stock.lot,wine_glucose_fructose:"
 msgid "Glucose/Fructose"
 msgstr "Glucosa/Fructosa"
 
@@ -723,7 +859,15 @@ msgctxt "field:product.product,wine_glucose_fructose_comment:"
 msgid "Glucose/Fructose Comment"
 msgstr "Comentario de Glucosa/Fructosa"
 
+msgctxt "field:stock.lot,wine_glucose_fructose_comment:"
+msgid "Glucose/Fructose Comment"
+msgstr "Comentario de Glucosa/Fructosa"
+
 msgctxt "field:product.product,wine_glucose_fructose_confirm:"
+msgid "Glucose/Fructose Confirm"
+msgstr "Confimración de Glucosa/Fructosa"
+
+msgctxt "field:stock.lot,wine_glucose_fructose_confirm:"
 msgid "Glucose/Fructose Confirm"
 msgstr "Confimración de Glucosa/Fructosa"
 
@@ -731,7 +875,15 @@ msgctxt "field:product.product,wine_glucose_fructose_success:"
 msgid "Glucose/Fructose Success"
 msgstr "Éxito de Glucosa/Fructosa"
 
+msgctxt "field:stock.lot,wine_glucose_fructose_success:"
+msgid "Glucose/Fructose Success"
+msgstr "Éxito de Glucosa/Fructosa"
+
 msgctxt "field:product.product,wine_history_duration:"
+msgid "History Duration"
+msgstr "Duración historial"
+
+msgctxt "field:stock.lot,wine_history_duration:"
 msgid "History Duration"
 msgstr "Duración historial"
 
@@ -739,7 +891,15 @@ msgctxt "field:product.product,wine_history_material:"
 msgid "History Material"
 msgstr "Historial material"
 
+msgctxt "field:stock.lot,wine_history_material:"
+msgid "History Material"
+msgstr "Historial material"
+
 msgctxt "field:product.product,wine_lactic_acid:"
+msgid "Lactic Acid"
+msgstr "Ácido láctico"
+
+msgctxt "field:stock.lot,wine_lactic_acid:"
 msgid "Lactic Acid"
 msgstr "Ácido láctico"
 
@@ -747,7 +907,15 @@ msgctxt "field:product.product,wine_lactic_acid_comment:"
 msgid "Lactic Acid Comment"
 msgstr "Comentario Ácido láctico"
 
+msgctxt "field:stock.lot,wine_lactic_acid_comment:"
+msgid "Lactic Acid Comment"
+msgstr "Comentario Ácido láctico"
+
 msgctxt "field:product.product,wine_lactic_acid_confirm:"
+msgid "Lactic Acid Confirm"
+msgstr "Confirmación Ácido láctico"
+
+msgctxt "field:stock.lot,wine_lactic_acid_confirm:"
 msgid "Lactic Acid Confirm"
 msgstr "Confirmación Ácido láctico"
 
@@ -755,7 +923,15 @@ msgctxt "field:product.product,wine_lactic_acid_success:"
 msgid "Lactic Acid Success"
 msgstr "Éxito de Ácido láctico"
 
+msgctxt "field:stock.lot,wine_lactic_acid_success:"
+msgid "Lactic Acid Success"
+msgstr "Éxito de Ácido láctico"
+
 msgctxt "field:product.product,wine_likely_alcohol_content:"
+msgid "Likely Alcohol Content"
+msgstr "Contenido de alcohol probable"
+
+msgctxt "field:stock.lot,wine_likely_alcohol_content:"
 msgid "Likely Alcohol Content"
 msgstr "Contenido de alcohol probable"
 
@@ -763,7 +939,15 @@ msgctxt "field:product.product,wine_likely_alcohol_content_comment:"
 msgid "Likely Alcohol Content Comment"
 msgstr "Comentario de contenido de alcohol probable"
 
+msgctxt "field:stock.lot,wine_likely_alcohol_content_comment:"
+msgid "Likely Alcohol Content Comment"
+msgstr "Comentario de contenido de alcohol probable"
+
 msgctxt "field:product.product,wine_likely_alcohol_content_confirm:"
+msgid "Likely Alcohol Content Confirm"
+msgstr "Confirmación del contenido de alcohol probable"
+
+msgctxt "field:stock.lot,wine_likely_alcohol_content_confirm:"
 msgid "Likely Alcohol Content Confirm"
 msgstr "Confirmación del contenido de alcohol probable"
 
@@ -771,7 +955,15 @@ msgctxt "field:product.product,wine_likely_alcohol_content_success:"
 msgid "Likely Alcohol Content Success"
 msgstr "Éxito del contenido de alcohol probable"
 
+msgctxt "field:stock.lot,wine_likely_alcohol_content_success:"
+msgid "Likely Alcohol Content Success"
+msgstr "Éxito del contenido de alcohol probable"
+
 msgctxt "field:product.product,wine_malic_acid:"
+msgid "Malic Acid"
+msgstr "Ácido málico"
+
+msgctxt "field:stock.lot,wine_malic_acid:"
 msgid "Malic Acid"
 msgstr "Ácido málico"
 
@@ -779,7 +971,15 @@ msgctxt "field:product.product,wine_malic_acid_comment:"
 msgid "Malic Acid Comment"
 msgstr "Comentario del Ácido málico"
 
+msgctxt "field:stock.lot,wine_malic_acid_comment:"
+msgid "Malic Acid Comment"
+msgstr "Comentario del Ácido málico"
+
 msgctxt "field:product.product,wine_malic_acid_confirm:"
+msgid "Malic Acid Confirm"
+msgstr "Confirmación del Ácido málico"
+
+msgctxt "field:stock.lot,wine_malic_acid_confirm:"
 msgid "Malic Acid Confirm"
 msgstr "Confirmación del Ácido málico"
 
@@ -787,7 +987,15 @@ msgctxt "field:product.product,wine_malic_acid_success:"
 msgid "Malic Acid Success"
 msgstr "Éxito del Ácido málico"
 
+msgctxt "field:stock.lot,wine_malic_acid_success:"
+msgid "Malic Acid Success"
+msgstr "Éxito del Ácido málico"
+
 msgctxt "field:product.product,wine_observing_phase:"
+msgid "Observing Phase"
+msgstr "Fase de observación"
+
+msgctxt "field:stock.lot,wine_observing_phase:"
 msgid "Observing Phase"
 msgstr "Fase de observación"
 
@@ -795,7 +1003,15 @@ msgctxt "field:product.product,wine_observing_phase_comment:"
 msgid "Observing Phase Comment"
 msgstr "Comentario de la fase de observación"
 
+msgctxt "field:stock.lot,wine_observing_phase_comment:"
+msgid "Observing Phase Comment"
+msgstr "Comentario de la fase de observación"
+
 msgctxt "field:product.product,wine_observing_phase_confirm:"
+msgid "Observing Phase Confirm"
+msgstr "Confirmación de la fase de observación"
+
+msgctxt "field:stock.lot,wine_observing_phase_confirm:"
 msgid "Observing Phase Confirm"
 msgstr "Confirmación de la fase de observación"
 
@@ -803,7 +1019,15 @@ msgctxt "field:product.product,wine_observing_phase_success:"
 msgid "Observing Phase Success"
 msgstr "Éxito de fase de observación"
 
+msgctxt "field:stock.lot,wine_observing_phase_success:"
+msgid "Observing Phase Success"
+msgstr "Éxito de fase de observación"
+
 msgctxt "field:product.product,wine_overall_impression:"
+msgid "Overall Impression"
+msgstr "Impresión general"
+
+msgctxt "field:stock.lot,wine_overall_impression:"
 msgid "Overall Impression"
 msgstr "Impresión general"
 
@@ -811,7 +1035,15 @@ msgctxt "field:product.product,wine_overall_impression_comment:"
 msgid "Overall Impression Comment"
 msgstr "Comentario de la impresión general"
 
+msgctxt "field:stock.lot,wine_overall_impression_comment:"
+msgid "Overall Impression Comment"
+msgstr "Comentario de la impresión general"
+
 msgctxt "field:product.product,wine_overall_impression_confirm:"
+msgid "Overall Impression Confirm"
+msgstr "Confirmación de la impresión general"
+
+msgctxt "field:stock.lot,wine_overall_impression_confirm:"
 msgid "Overall Impression Confirm"
 msgstr "Confirmación de la impresión general"
 
@@ -819,7 +1051,15 @@ msgctxt "field:product.product,wine_overall_impression_success:"
 msgid "Overall Impression Success"
 msgstr "Éxito de la impresión general"
 
+msgctxt "field:stock.lot,wine_overall_impression_success:"
+msgid "Overall Impression Success"
+msgstr "Éxito de la impresión general"
+
 msgctxt "field:product.product,wine_ph:"
+msgid "PH"
+msgstr "PH"
+
+msgctxt "field:stock.lot,wine_ph:"
 msgid "PH"
 msgstr "PH"
 
@@ -827,7 +1067,15 @@ msgctxt "field:product.product,wine_ph_comment:"
 msgid "PH Comment"
 msgstr "Comentario del PH"
 
+msgctxt "field:stock.lot,wine_ph_comment:"
+msgid "PH Comment"
+msgstr "Comentario del PH"
+
 msgctxt "field:product.product,wine_ph_confirm:"
+msgid "PH Confirm"
+msgstr "Confirmación del PH"
+
+msgctxt "field:stock.lot,wine_ph_confirm:"
 msgid "PH Confirm"
 msgstr "Confirmación del PH"
 
@@ -835,7 +1083,15 @@ msgctxt "field:product.product,wine_ph_success:"
 msgid "PH Success"
 msgstr "Éxito del PH"
 
+msgctxt "field:stock.lot,wine_ph_success:"
+msgid "PH Success"
+msgstr "Éxito del PH"
+
 msgctxt "field:product.product,wine_protein_stability:"
+msgid "Protein Stability"
+msgstr "Estabilidad de proteínas"
+
+msgctxt "field:stock.lot,wine_protein_stability:"
 msgid "Protein Stability"
 msgstr "Estabilidad de proteínas"
 
@@ -843,7 +1099,15 @@ msgctxt "field:product.product,wine_protein_stability_comment:"
 msgid "Protein Stability Comment"
 msgstr "Comentario de la estabilidad de proteínas"
 
+msgctxt "field:stock.lot,wine_protein_stability_comment:"
+msgid "Protein Stability Comment"
+msgstr "Comentario de la estabilidad de proteínas"
+
 msgctxt "field:product.product,wine_protein_stability_confirm:"
+msgid "Protein Stability Confirm"
+msgstr "Confirmación de la estabilidad de proteínas"
+
+msgctxt "field:stock.lot,wine_protein_stability_confirm:"
 msgid "Protein Stability Confirm"
 msgstr "Confirmación de la estabilidad de proteínas"
 
@@ -851,7 +1115,15 @@ msgctxt "field:product.product,wine_protein_stability_success:"
 msgid "Protein Stability Success"
 msgstr "Éxito de la estabilidad de proteínas"
 
+msgctxt "field:stock.lot,wine_protein_stability_success:"
+msgid "Protein Stability Success"
+msgstr "Éxito de la estabilidad de proteínas"
+
 msgctxt "field:product.product,wine_quality_comment:"
+msgid "Wine Quality Comments"
+msgstr "Comentarios sobre la calidad del vino"
+
+msgctxt "field:stock.lot,wine_quality_comment:"
 msgid "Wine Quality Comments"
 msgstr "Comentarios sobre la calidad del vino"
 
@@ -859,7 +1131,15 @@ msgctxt "field:product.product,wine_smelling_phase:"
 msgid "Smelling Phase"
 msgstr "Fase de olfato"
 
+msgctxt "field:stock.lot,wine_smelling_phase:"
+msgid "Smelling Phase"
+msgstr "Fase de olfato"
+
 msgctxt "field:product.product,wine_smelling_phase_comment:"
+msgid "Smelling Phase Comment"
+msgstr "Comentario de la fase de olfato"
+
+msgctxt "field:stock.lot,wine_smelling_phase_comment:"
 msgid "Smelling Phase Comment"
 msgstr "Comentario de la fase de olfato"
 
@@ -867,7 +1147,15 @@ msgctxt "field:product.product,wine_smelling_phase_confirm:"
 msgid "Smelling Phase Confirm"
 msgstr "Confirmación de la fase de olfato"
 
+msgctxt "field:stock.lot,wine_smelling_phase_confirm:"
+msgid "Smelling Phase Confirm"
+msgstr "Confirmación de la fase de olfato"
+
 msgctxt "field:product.product,wine_smelling_phase_success:"
+msgid "Smelling Phase Success"
+msgstr "Éxito de la fase de olfato"
+
+msgctxt "field:stock.lot,wine_smelling_phase_success:"
 msgid "Smelling Phase Success"
 msgstr "Éxito de la fase de olfato"
 
@@ -875,7 +1163,15 @@ msgctxt "field:product.product,wine_tartaric_acidity:"
 msgid "Tartaric Acidity"
 msgstr "Acidez tartárica"
 
+msgctxt "field:stock.lot,wine_tartaric_acidity:"
+msgid "Tartaric Acidity"
+msgstr "Acidez tartárica"
+
 msgctxt "field:product.product,wine_tartaric_acidity_comment:"
+msgid "Tartaric Acidity Comment"
+msgstr "Comentario de la acidez tartárica"
+
+msgctxt "field:stock.lot,wine_tartaric_acidity_comment:"
 msgid "Tartaric Acidity Comment"
 msgstr "Comentario de la acidez tartárica"
 
@@ -883,7 +1179,15 @@ msgctxt "field:product.product,wine_tartaric_acidity_confirm:"
 msgid "Tartaric Acidity Confirm"
 msgstr "Confirmación de la acidez tartárica"
 
+msgctxt "field:stock.lot,wine_tartaric_acidity_confirm:"
+msgid "Tartaric Acidity Confirm"
+msgstr "Confirmación de la acidez tartárica"
+
 msgctxt "field:product.product,wine_tartaric_acidity_success:"
+msgid "Tartaric Acidity Success"
+msgstr "Éxito de la acidez tartárica"
+
+msgctxt "field:stock.lot,wine_tartaric_acidity_success:"
 msgid "Tartaric Acidity Success"
 msgstr "Éxito de la acidez tartárica"
 
@@ -891,7 +1195,15 @@ msgctxt "field:product.product,wine_tartaric_stability:"
 msgid "Tartaric Stability"
 msgstr "Estabilidad tartárica"
 
+msgctxt "field:stock.lot,wine_tartaric_stability:"
+msgid "Tartaric Stability"
+msgstr "Estabilidad tartárica"
+
 msgctxt "field:product.product,wine_tartaric_stability_comment:"
+msgid "Tartaric Stability Comment"
+msgstr "Comentario de la estabilidad tartárica"
+
+msgctxt "field:stock.lot,wine_tartaric_stability_comment:"
 msgid "Tartaric Stability Comment"
 msgstr "Comentario de la estabilidad tartárica"
 
@@ -899,7 +1211,15 @@ msgctxt "field:product.product,wine_tartaric_stability_confirm:"
 msgid "Tartaric Stability Confirm"
 msgstr "Confirmación de la estabilidad tartárica"
 
+msgctxt "field:stock.lot,wine_tartaric_stability_confirm:"
+msgid "Tartaric Stability Confirm"
+msgstr "Confirmación de la estabilidad tartárica"
+
 msgctxt "field:product.product,wine_tartaric_stability_success:"
+msgid "Tartaric Stability Success"
+msgstr "Éxito de la estabilidad tartárica"
+
+msgctxt "field:stock.lot,wine_tartaric_stability_success:"
 msgid "Tartaric Stability Success"
 msgstr "Éxito de la estabilidad tartárica"
 
@@ -907,7 +1227,15 @@ msgctxt "field:product.product,wine_tasting_phase:"
 msgid "Tasting Phase"
 msgstr "Fase de Cata"
 
+msgctxt "field:stock.lot,wine_tasting_phase:"
+msgid "Tasting Phase"
+msgstr "Fase de Cata"
+
 msgctxt "field:product.product,wine_tasting_phase_comment:"
+msgid "Tasting Phase Comment"
+msgstr "Comentario de la Fase de Cata"
+
+msgctxt "field:stock.lot,wine_tasting_phase_comment:"
 msgid "Tasting Phase Comment"
 msgstr "Comentario de la Fase de Cata"
 
@@ -915,7 +1243,15 @@ msgctxt "field:product.product,wine_tasting_phase_confirm:"
 msgid "Tasting Phase Confirm"
 msgstr "Confirmación de la Fase de Cata"
 
+msgctxt "field:stock.lot,wine_tasting_phase_confirm:"
+msgid "Tasting Phase Confirm"
+msgstr "Confirmación de la Fase de Cata"
+
 msgctxt "field:product.product,wine_tasting_phase_success:"
+msgid "Tasting Phase Success"
+msgstr "Éxito de la Fase de Cata"
+
+msgctxt "field:stock.lot,wine_tasting_phase_success:"
 msgid "Tasting Phase Success"
 msgstr "Éxito de la Fase de Cata"
 
@@ -923,7 +1259,15 @@ msgctxt "field:product.product,wine_temperature:"
 msgid "Temperature"
 msgstr "Temperatura"
 
+msgctxt "field:stock.lot,wine_temperature:"
+msgid "Temperature"
+msgstr "Temperatura"
+
 msgctxt "field:product.product,wine_temperature_comment:"
+msgid "Temperature Comment"
+msgstr "Comentario de la temperatura"
+
+msgctxt "field:stock.lot,wine_temperature_comment:"
 msgid "Temperature Comment"
 msgstr "Comentario de la temperatura"
 
@@ -931,7 +1275,15 @@ msgctxt "field:product.product,wine_temperature_confirm:"
 msgid "Temperature Confirm"
 msgstr "Confirmación de la temperatura"
 
+msgctxt "field:stock.lot,wine_temperature_confirm:"
+msgid "Temperature Confirm"
+msgstr "Confirmación de la temperatura"
+
 msgctxt "field:product.product,wine_temperature_success:"
+msgid "Temperature Success"
+msgstr "Éxito de la temperatura"
+
+msgctxt "field:stock.lot,wine_temperature_success:"
 msgid "Temperature Success"
 msgstr "Éxito de la temperatura"
 
@@ -939,7 +1291,15 @@ msgctxt "field:product.product,wine_tone:"
 msgid "Tone"
 msgstr "Tono"
 
+msgctxt "field:stock.lot,wine_tone:"
+msgid "Tone"
+msgstr "Tono"
+
 msgctxt "field:product.product,wine_tone_comment:"
+msgid "Tone Comment"
+msgstr "Comentario del tono"
+
+msgctxt "field:stock.lot,wine_tone_comment:"
 msgid "Tone Comment"
 msgstr "Comentario del tono"
 
@@ -947,7 +1307,15 @@ msgctxt "field:product.product,wine_tone_confirm:"
 msgid "Tone Confirm"
 msgstr "Confirmación del tono"
 
+msgctxt "field:stock.lot,wine_tone_confirm:"
+msgid "Tone Confirm"
+msgstr "Confirmación del tono"
+
 msgctxt "field:product.product,wine_tone_success:"
+msgid "Tone Success"
+msgstr "Éxito del tono"
+
+msgctxt "field:stock.lot,wine_tone_success:"
 msgid "Tone Success"
 msgstr "Éxito del tono"
 
@@ -955,7 +1323,15 @@ msgctxt "field:product.product,wine_total_sulphur:"
 msgid "Total Sulphur"
 msgstr "Azufre total"
 
+msgctxt "field:stock.lot,wine_total_sulphur:"
+msgid "Total Sulphur"
+msgstr "Azufre total"
+
 msgctxt "field:product.product,wine_total_sulphur_comment:"
+msgid "Total Sulphur Comment"
+msgstr "Comentario del azufre total"
+
+msgctxt "field:stock.lot,wine_total_sulphur_comment:"
 msgid "Total Sulphur Comment"
 msgstr "Comentario del azufre total"
 
@@ -963,7 +1339,15 @@ msgctxt "field:product.product,wine_total_sulphur_confirm:"
 msgid "Total Sulphur Confirm"
 msgstr "Confirmación del azufre total"
 
+msgctxt "field:stock.lot,wine_total_sulphur_confirm:"
+msgid "Total Sulphur Confirm"
+msgstr "Confirmación del azufre total"
+
 msgctxt "field:product.product,wine_total_sulphur_success:"
+msgid "Total Sulphur Success"
+msgstr "Éxito del azufre total"
+
+msgctxt "field:stock.lot,wine_total_sulphur_success:"
 msgid "Total Sulphur Success"
 msgstr "Éxito del azufre total"
 
@@ -971,7 +1355,15 @@ msgctxt "field:product.product,wine_turbidity:"
 msgid "Turbidity"
 msgstr "Turbiedad"
 
+msgctxt "field:stock.lot,wine_turbidity:"
+msgid "Turbidity"
+msgstr "Turbiedad"
+
 msgctxt "field:product.product,wine_turbidity_comment:"
+msgid "Turbidity Comment"
+msgstr "Comentario de la turbiedad"
+
+msgctxt "field:stock.lot,wine_turbidity_comment:"
 msgid "Turbidity Comment"
 msgstr "Comentario de la turbiedad"
 
@@ -979,7 +1371,15 @@ msgctxt "field:product.product,wine_turbidity_confirm:"
 msgid "Turbidity Confirm"
 msgstr "Confirmación de la turbiedad"
 
+msgctxt "field:stock.lot,wine_turbidity_confirm:"
+msgid "Turbidity Confirm"
+msgstr "Confirmación de la turbiedad"
+
 msgctxt "field:product.product,wine_turbidity_success:"
+msgid "Turbidity Success"
+msgstr "Éxito de la turbiedad"
+
+msgctxt "field:stock.lot,wine_turbidity_success:"
 msgid "Turbidity Success"
 msgstr "Éxito de la turbiedad"
 
@@ -987,7 +1387,15 @@ msgctxt "field:product.product,wine_volatility:"
 msgid "Volatility"
 msgstr "Volatilidad"
 
+msgctxt "field:stock.lot,wine_volatility:"
+msgid "Volatility"
+msgstr "Volatilidad"
+
 msgctxt "field:product.product,wine_volatility_comment:"
+msgid "Volatility Comment"
+msgstr "Comentario de la volatilidad"
+
+msgctxt "field:stock.lot,wine_volatility_comment:"
 msgid "Volatility Comment"
 msgstr "Comentario de la volatilidad"
 
@@ -995,7 +1403,15 @@ msgctxt "field:product.product,wine_volatility_confirm:"
 msgid "Volatility Confirm"
 msgstr "Confirmación de la volatilidad"
 
+msgctxt "field:stock.lot,wine_volatility_confirm:"
+msgid "Volatility Confirm"
+msgstr "Confirmación de la volatilidad"
+
 msgctxt "field:product.product,wine_volatility_success:"
+msgid "Volatility Success"
+msgstr "Éxito de la volatilidad"
+
+msgctxt "field:stock.lot,wine_volatility_success:"
 msgid "Volatility Success"
 msgstr "Éxito de la volatilidad"
 
@@ -1049,7 +1465,7 @@ msgstr "Requiere muestras"
 
 msgctxt "field:product.template,quality_weighing:"
 msgid "Quality Weighing"
-msgstr "Calidad pesada"
+msgstr "Plantilla test de calidad"
 
 msgctxt "field:product.template,variant_deactivate_stock_zero:"
 msgid "Variant Deactivate Stock 0"
@@ -1089,15 +1505,15 @@ msgstr "Productos de salida permitidos"
 
 msgctxt "field:production,cost_distribution_template:"
 msgid "Cost Distribution Template"
-msgstr "Plantilla de distribución de costos"
+msgstr "Plantilla de distribución de costes"
 
-msgctxt "field:production,cost_distribution_templates:"
-msgid "Cost Product Templates"
-msgstr "Plantillas de productos de coste"
+msgctxt "field:production,cost_distribution_products:"
+msgid "Cost Products"
+msgstr "Productos de coste"
 
 msgctxt "field:production,cost_distributions:"
 msgid "Cost Distributions"
-msgstr "Distribución de costos"
+msgstr "Distribución de costes"
 
 msgctxt "field:production,enology_products:"
 msgid "Enology Products"
@@ -1109,23 +1525,23 @@ msgstr "Distribución Salidas"
 
 msgctxt "field:production,pass_certification:"
 msgid "Pass Certification"
-msgstr "Aprobar Certificación"
+msgstr "Transferir la Certificación"
 
 msgctxt "field:production,pass_quality:"
 msgid "Pass Quality"
-msgstr "Calidad de pase"
+msgstr "Transferir pruebas de calidad"
 
 msgctxt "field:production,pass_quality_sample:"
 msgid "Pass Quality Sample"
-msgstr "Aprobar la muestra de calidad"
+msgstr "Transferir muestras de calidad"
 
 msgctxt "field:production,production_template:"
 msgid "Production Template"
 msgstr "Plantilla producción"
 
 msgctxt "field:production,production_template_cost_distribution_templates:"
-msgid "Cost Distribution Templates"
-msgstr "Plantilla de distribución de costos"
+msgid "Allowed Cost Distribution Templates"
+msgstr "Plantillas de distribución de costes permitidas"
 
 msgctxt "field:production.cost_price.distribution,origin:"
 msgid "Origin"
@@ -1135,14 +1551,14 @@ msgctxt "field:production.cost_price.distribution,percentatge:"
 msgid "Percentatge"
 msgstr "Porcentaje"
 
-msgctxt "field:production.cost_price.distribution,template:"
-msgid "Template"
-msgstr "Plantilla"
+msgctxt "field:production.cost_price.distribution,product:"
+msgid "Product"
+msgstr "Producto"
 
 msgctxt ""
-"field:production.cost_price.distribution.template,cost_distribution_templates:"
+"field:production.cost_price.distribution.template,cost_distributions:"
 msgid "Cost Distribution"
-msgstr "Distribución de costos"
+msgstr "Distribución de costes"
 
 msgctxt "field:production.cost_price.distribution.template,name:"
 msgid "Name"
@@ -1154,10 +1570,9 @@ msgid "Production Template"
 msgstr "Plantilla producción"
 
 msgctxt ""
-"field:production.cost_price.distribution.template.ask,cost_distribution_templa"
-"tes:"
+"field:production.cost_price.distribution.template.ask,cost_distributions:"
 msgid "Cost Distributions"
-msgstr "Distribución de costos"
+msgstr "Distribución de costes"
 
 msgctxt "field:production.cost_price.distribution.template.ask,name:"
 msgid "Name"
@@ -1229,11 +1644,11 @@ msgstr "UdM"
 
 msgctxt "field:production.template,cost_distribution_template:"
 msgid "Default cost distribution template"
-msgstr "Plantilla de distribución de costos predeterminada"
+msgstr "Plantilla de distribución de costes predeterminada"
 
 msgctxt "field:production.template,cost_distribution_templates:"
-msgid "Cost Distribution Templates"
-msgstr "Plantilla de distribución de costos"
+msgid "Allowed Cost Distribution Templates"
+msgstr "Plantillas de distribución de costes permitidas"
 
 msgctxt "field:production.template,enology_products:"
 msgid "Complementary Products"
@@ -1257,7 +1672,7 @@ msgstr "Salidas"
 
 msgctxt "field:production.template,pass_certification:"
 msgid "Pass Certification"
-msgstr "Aprobar Certificación"
+msgstr "Transferir la Certificación"
 
 msgctxt "field:production.template,pass_feature:"
 msgid "Pass on Feature"
@@ -1265,11 +1680,11 @@ msgstr "Pasar propiedades"
 
 msgctxt "field:production.template,pass_quality:"
 msgid "Pass Quality"
-msgstr "Calidad de pase"
+msgstr "Transferir tests de calidad"
 
 msgctxt "field:production.template,pass_quality_sample:"
 msgid "Pass Quality Sample"
-msgstr "Aprobar la muestra de calidad"
+msgstr "Transferir muestras de calidad"
 
 msgctxt "field:production.template,quantity:"
 msgid "Quantity"
@@ -1297,7 +1712,7 @@ msgid "Template"
 msgstr "Plantilla"
 
 msgctxt "field:production.template.line,product:"
-msgid "Producte"
+msgid "Product"
 msgstr "Producto"
 
 msgctxt "field:production.template.line,production_template:"
@@ -1572,11 +1987,11 @@ msgstr "Historial crianza del vino"
 
 msgctxt "model:ir.action,name:act_production_cost_distribution_template_tree"
 msgid "Templates Cost Price Distribution"
-msgstr "Distribución de precios de costes de plantillas"
+msgstr "Plantillas de distribución de costes"
 
 msgctxt "model:ir.action,name:act_production_cost_price_distribution_tree"
 msgid "Cost Price Distribution"
-msgstr "Distribución de costos"
+msgstr "Distribución de costes"
 
 msgctxt "model:ir.action,name:act_production_enology_product_tree"
 msgid "Production Enology Product"
@@ -1633,7 +2048,7 @@ msgstr "Todos"
 
 msgctxt "model:ir.action.act_window.domain,name:act_agronomics_contract_draft"
 msgid "Draft"
-msgstr "Esborany"
+msgstr "Borrador"
 
 msgctxt "model:ir.action.act_window.domain,name:act_weighing_domain_all"
 msgid "All"
@@ -1650,7 +2065,7 @@ msgstr "Distribuido"
 
 msgctxt "model:ir.action.act_window.domain,name:act_weighing_domain_draft"
 msgid "Draft"
-msgstr "Esborany"
+msgstr "Borrador"
 
 msgctxt "model:ir.action.act_window.domain,name:act_weighing_domain_processing"
 msgid "Processing"
@@ -1677,14 +2092,14 @@ msgid ""
 "The production \"%(production)s\" has same products in cost distribution."
 msgstr ""
 "La producción \"%(production)s\" tiene los mismos productos en la "
-"distribución de costos."
+"distribución de costes."
 
 msgctxt "model:ir.message,text:msg_check_cost_distribution_template"
 msgid ""
 "There are some products in cost distribution that has not in outputs in the "
 "production \"%(production)s\"."
 msgstr ""
-"Hay algunos productos en distribución de costos que no tienen salidas en la "
+"Hay algunos productos en distribución de costes que no tienen salidas en la "
 "producción \"%(production)s\"."
 
 msgctxt ""
@@ -1694,11 +2109,11 @@ msgstr "Porcentaje no válido \"%(percentatge)s\" en \"%(distribution)s\"."
 
 msgctxt "model:ir.message,text:msg_check_cost_templates"
 msgid ""
-"Cost \"%(cost)s\" has template \"%(template)s\" not present in Production "
-"Template Outputs\"."
+"Cost \"%(cost)s\" has product \"%(product)s\" not present in Production "
+"Template Outputs."
 msgstr ""
-"El costo \"%(cost)s\" tiene la plantilla \"%(template)s\" que no está "
-"presente en las salidas de la plantilla de producción \". "
+"El coste \"%(cost)s\" tiene el producto \"%(product)s\" que no está "
+"presente en las salidas de la plantilla de producción."
 
 msgctxt "model:ir.message,text:msg_check_production_percentatge"
 msgid "Invalid percentatge \"%(percentatge)s\" in \"%(production)s\"."
@@ -1790,7 +2205,7 @@ msgstr "Activo"
 
 msgctxt "model:ir.model.button,string:agronomics_contract_cancel_button"
 msgid "Cancel"
-msgstr "Cancel·lar"
+msgstr "Cancelar"
 
 msgctxt "model:ir.model.button,string:agronomics_contract_done_button"
 msgid "Done"
@@ -1798,7 +2213,7 @@ msgstr "Realizar"
 
 msgctxt "model:ir.model.button,string:agronomics_contract_draft_button"
 msgid "Draft"
-msgstr "Esborany"
+msgstr "Borrador"
 
 msgctxt ""
 "model:ir.model.button,string:production_output_distribution_done_button"
@@ -1807,7 +2222,7 @@ msgstr "Realizar"
 
 msgctxt "model:ir.model.button,string:weighing_cancel_button"
 msgid "Cancel"
-msgstr "Cancel·lar"
+msgstr "Cancelar"
 
 msgctxt "model:ir.model.button,string:weighing_distribute_button"
 msgid "Distribute"
@@ -1819,7 +2234,7 @@ msgstr "Realizar"
 
 msgctxt "model:ir.model.button,string:weighing_draft_button"
 msgid "Draft"
-msgstr "Esborany"
+msgstr "Borrador"
 
 msgctxt "model:ir.model.button,string:weighing_force_analysis_button"
 msgid "Force Analysis"
@@ -1855,7 +2270,7 @@ msgstr "Pesada"
 
 msgctxt "model:ir.ui.menu,name:menu_act_production_cost_distribution_template"
 msgid "Templates Cost Price Distribution"
-msgstr "Distribución de precios de costes de plantillas"
+msgstr "Plantillas de distribución de costes"
 
 msgctxt "model:ir.ui.menu,name:menu_agronomics"
 msgid "Agronomics"
@@ -1979,7 +2394,7 @@ msgstr "Coste de la distribución de la producción"
 
 msgctxt "model:production.cost_price.distribution.template,name:"
 msgid "Production Cost Price Distribution Template"
-msgstr "Plantilla de distribución de precios de costos de producción"
+msgstr "Plantilla de distribución de precios de costes de producción"
 
 msgctxt "model:production.cost_price.distribution.template.ask,name:"
 msgid ""
@@ -2246,7 +2661,7 @@ msgstr "Realizar"
 
 msgctxt "selection:agronomics.contract,state:"
 msgid "Draft"
-msgstr "Esborany"
+msgstr "Borrador"
 
 msgctxt "selection:agronomics.weighing,state:"
 msgid "Cancelled"
@@ -2262,7 +2677,7 @@ msgstr "Realizado"
 
 msgctxt "selection:agronomics.weighing,state:"
 msgid "Draft"
-msgstr "Esborany"
+msgstr "Borrador"
 
 msgctxt "selection:agronomics.weighing,state:"
 msgid "In Analysis"
@@ -2392,6 +2807,22 @@ msgctxt "view:product.product:"
 msgid "Wine Aging"
 msgstr "Crianza del vino"
 
+msgctxt "view:stock.lot:"
+msgid "Agronomics"
+msgstr "Agronomics"
+
+msgctxt "view:stock.lot:"
+msgid "Quality"
+msgstr "Calidad"
+
+msgctxt "view:stock.lot:"
+msgid "Quality Samples"
+msgstr "Muestras de calidad"
+
+msgctxt "view:stock.lot:"
+msgid "Wine Aging"
+msgstr "Crianza del vino"
+
 msgctxt "view:production.cost_price.distribution:"
 msgid "%"
 msgstr "%"
@@ -2418,4 +2849,140 @@ msgctxt ""
 "wizard_button:production.cost_price.distribution.template.from.production.temp"
 "late,ask,end:"
 msgid "Cancel"
-msgstr "Cancel·lar"
+msgstr "Cancelar"
+
+msgctxt "field:agronomics.lot.variety,lot:"
+msgid "Lot"
+msgstr "Lote"
+
+msgctxt "field:agronomics.lot.variety,percent:"
+msgid "Percent"
+msgstr "Porcentaje"
+
+msgctxt "field:agronomics.lot.variety,variety:"
+msgid "Variety"
+msgstr "Variedad"
+
+msgctxt "field:quality.sample,lots:"
+msgid "Lots"
+msgstr "Lotes"
+
+msgctxt "field:stock.lot.wine_aging.history,duration:"
+msgid "Duration"
+msgstr "Duración"
+
+msgctxt "field:stock.lot.wine_aging.history,lot:"
+msgid "Lot"
+msgstr "Lote"
+
+msgctxt "field:stock.lot.wine_aging.history,material:"
+msgid "Material"
+msgstr "Material"
+
+msgctxt "field:wine.wine_aging.history,lot:"
+msgid "Lot"
+msgstr "Lote"
+
+msgctxt "model:agronomics.lot.variety,name:"
+msgid "Lot Variety"
+msgstr "Variedad del lote"
+
+msgctxt "model:stock.lot.wine_aging.history,name:"
+msgid "Lot Wine Aging History"
+msgstr "Historial de crianza del lote"
+
+msgctxt "model:ir.message,text:msg_lot_sequence_required"
+msgid "Product \"%(product)s\" must have a lot sequence configured."
+msgstr "El producto \"%(product)s\" debe tener configurada una secuencia de lotes."
+
+msgctxt "model:ir.message,text:msg_output_product_required"
+msgid "Output template \"%(template)s\" must have exactly one active product variant."
+msgstr "La plantilla de salida \"%(template)s\" debe tener exactamente una variante de producto activa."
+
+msgctxt "field:production.bom,agronomics_inputs:"
+msgid "Input Materials"
+msgstr "Materiales de entrada"
+
+msgctxt "field:production.bom,agronomics_outputs:"
+msgid "Output Materials"
+msgstr "Materiales de salida"
+
+msgctxt "field:production.bom,pass_feature:"
+msgid "Pass on Feature"
+msgstr "Transferir propiedades"
+
+msgctxt "field:production.bom,pass_quality:"
+msgid "Pass Quality"
+msgstr "Transferir pruebas de calidad"
+
+msgctxt "field:production.bom,pass_certification:"
+msgid "Pass Certification"
+msgstr "Transferir certificación"
+
+msgctxt "field:production.bom,pass_quality_sample:"
+msgid "Pass Quality Sample"
+msgstr "Transferir muestras de calidad"
+
+msgctxt "field:production.bom,transfer_wine_aging:"
+msgid "Transfer Wine Aging"
+msgstr "Transferir crianza del vino"
+
+msgctxt "field:production.bom,cost_distribution_template:"
+msgid "Default Cost Distribution Template"
+msgstr "Plantilla de distribución de costes por defecto"
+
+msgctxt "field:production.bom,cost_distribution_templates:"
+msgid "Allowed Cost Distribution Templates"
+msgstr "Plantillas de distribución de costes permitidas"
+
+msgctxt "field:production.bom.agronomics.material,bom:"
+msgid "BOM"
+msgstr "LDM"
+
+msgctxt "field:production.bom.agronomics.material,kind:"
+msgid "Kind"
+msgstr "Tipo"
+
+msgctxt "field:production.bom.agronomics.material,template:"
+msgid "Product Template"
+msgstr "Plantilla de producto"
+
+msgctxt "field:production.bom.agronomics.material,unit:"
+msgid "Unit"
+msgstr "Unidad"
+
+msgctxt "field:production.bom.agronomics.material,quantity:"
+msgid "Quantity"
+msgstr "Cantidad"
+
+msgctxt "field:production.bom.agronomics.material,required:"
+msgid "Required"
+msgstr "Obligatorio"
+
+msgctxt "help:production.bom.agronomics.material,required:"
+msgid "The warehouse operation cannot be confirmed until this input material has been selected."
+msgstr "No se puede confirmar la operación de almacén hasta que se haya seleccionado este material de entrada."
+
+msgctxt "field:production.bom.agronomics.material,pass_feature:"
+msgid "Pass on Feature"
+msgstr "Transferir propiedades"
+
+msgctxt "selection:production.bom.agronomics.material,kind:"
+msgid "Input"
+msgstr "Entrada"
+
+msgctxt "selection:production.bom.agronomics.material,kind:"
+msgid "Output"
+msgstr "Salida"
+
+msgctxt "model:production.bom.agronomics.material,name:"
+msgid "Agronomics BOM Material"
+msgstr "Material LDM Agronomics"
+
+msgctxt "view:production.bom:"
+msgid "Agronomics"
+msgstr "Agronomics"
+
+msgctxt "view:production.bom:"
+msgid "Cost Distribution"
+msgstr "Distribución de costes"

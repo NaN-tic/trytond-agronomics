@@ -16,8 +16,8 @@ class WineAgingHistory(ModelSQL, ModelView):
         required=True, readonly=True)
     location = fields.Many2One('stock.location', "Location", required=True,
         readonly=True)
-    product = fields.Many2One('product.product', "Product", required=True,
-        readonly=True)
+    product = fields.Many2One('product.product', "Product", readonly=True)
+    lot = fields.Many2One('stock.lot', "Lot", readonly=True)
     material = fields.Many2One('stock.location.material', "Material",
         readonly=True)
     date_start = fields.Date("Date Start", required=True, readonly=True)
@@ -69,3 +69,38 @@ class ProductWineAgingHistory(ModelSQL, ModelView):
             query.where = sql_where
 
         return query
+
+
+class LotWineAgingHistory(ModelSQL, ModelView):
+    "Lot Wine Aging History"
+    __name__ = 'stock.lot.wine_aging.history'
+
+    lot = fields.Many2One('stock.lot', "Lot")
+    material = fields.Many2One('stock.location.material', "Material")
+    duration = fields.Integer("Duration")
+
+    @classmethod
+    def table_query(cls):
+        pool = Pool()
+        WineAgingHistory = pool.get('wine.wine_aging.history')
+
+        wine_aging_history = WineAgingHistory.__table__()
+
+        lot_id = Transaction().context.get('lot')
+        sql_where = (wine_aging_history.lot != Null)
+        if lot_id:
+            sql_where &= (wine_aging_history.lot == lot_id)
+
+        return wine_aging_history.select(
+            (Min(wine_aging_history.id * 2)).as_('id'),
+            Literal(0).as_('create_uid'),
+            CurrentTimestamp().as_('create_date'),
+            cls.write_uid.sql_cast(Literal(Null)).as_('write_uid'),
+            cls.write_date.sql_cast(Literal(Null)).as_('write_date'),
+            wine_aging_history.lot.as_('lot'),
+            wine_aging_history.material.as_('material'),
+            Sum(wine_aging_history.date_end
+                - wine_aging_history.date_start).as_('duration'),
+            where=sql_where,
+            group_by=[wine_aging_history.lot,
+                wine_aging_history.material])

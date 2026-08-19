@@ -3,6 +3,8 @@
 this repository contains the full copyright notices and license terms. -->
 <data>
     <xpath expr="/form/label[@name='bom']" position="before">
+      <label name="agronomics_bom"/>
+      <field name="agronomics_bom"/>
       <label name="production_template"/>
       <field name="production_template"/>
     </xpath>
@@ -13,6 +15,10 @@ this repository contains the full copyright notices and license terms. -->
       <field name="pass_quality_sample"/>
       <label name="pass_certification"/>
       <field name="pass_certification"/>
+      <label name="pass_feature_enabled"/>
+      <field name="pass_feature_enabled"/>
+      <label name="transfer_wine_aging"/>
+      <field name="transfer_wine_aging"/>
     </xpath>
     <xpath expr="/form/notebook" position="inside">
         <page name="enology_products">
@@ -28,7 +34,7 @@ this repository contains the full copyright notices and license terms. -->
             <field name="cost_distribution_template"/>
             <newline/>
             <field name="cost_distributions" colspan="4"/>
-            <field name="cost_distribution_templates" invisible="1"/>
+            <field name="cost_distribution_products" invisible="1"/>
         </page>
     </xpath>
 </data>

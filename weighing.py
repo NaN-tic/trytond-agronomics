@@ -51,7 +51,7 @@ class Weighing(Workflow, ModelSQL, ModelView):
             ], states={
             'readonly': Eval('state') != 'draft',
             })
-    product = fields.Many2One('product.template', 'Product', required=True,
+    product = fields.Many2One('product.product', 'Product', required=True,
         states={
             'readonly': True,
             })
@@ -127,6 +127,7 @@ class Weighing(Workflow, ModelSQL, ModelView):
         'get_quality_test', 'set_quality_test')
     product_created = fields.Many2One('product.product', 'Product Created',
         readonly=True)
+    lot_created = fields.Many2One('stock.lot', 'Lot Created', readonly=True)
     parcels = fields.One2Many('agronomics.weighing-agronomics.parcel',
         'weighing', 'Parcels', readonly=True)
     not_assigned_weight = fields.Function(
@@ -134,6 +135,16 @@ class Weighing(Workflow, ModelSQL, ModelView):
     forced_analysis = fields.Boolean('Forced Analysis', readonly=True)
     inventory_move = fields.Many2One('stock.move', "Inventory Move",
         readonly=True)
+
+    @classmethod
+    def __register__(cls, module_name):
+        table = cls.__table_handler__(module_name)
+        if (table.column_exist('product')
+                and not table.column_exist('product_template_legacy')):
+            table.column_rename('product', 'product_template_legacy')
+        if table.column_exist('product_template_legacy'):
+            table.not_null_action('product_template_legacy', 'remove')
+        super().__register__(module_name)
 
     @classmethod
     def __setup__(cls):
@@ -201,9 +212,9 @@ class Weighing(Workflow, ModelSQL, ModelView):
         return ",".join([x.name for x in self.denomination_origin])
 
     def get_quality_test(self, name):
-        if not self.product_created:
+        if not self.lot_created:
             return
-        tests = self.product_created.quality_tests
+        tests = self.lot_created.quality_tests
         if not tests:
             return
         return tests and tests[0] and tests[0].id
@@ -243,6 +254,14 @@ class Weighing(Workflow, ModelSQL, ModelView):
         pool = Pool()
         ContractLine = pool.get('agronomics.contract.line')
 
+        # if not self.plantations:
+        #     self.product = None
+        #     self.variety = None
+        #     self.table = None
+        #     self.ecological = None
+        #     self.denomination_origin = []
+        #     return
+
         parcel = self.get_parcel()
         if not parcel:
             return
@@ -277,9 +296,8 @@ class Weighing(Workflow, ModelSQL, ModelView):
     @Workflow.transition('in_analysis')
     def analysis(cls, weighings):
         pool = Pool()
-        Product = pool.get('product.product')
+        Lot = pool.get('stock.lot')
         Quality = pool.get('quality.test')
-        Variety = pool.get('product.variety')
         Move = pool.get('stock.move')
         Location = pool.get('stock.location')
         Company = pool.get('company.company')
@@ -289,17 +307,14 @@ class Weighing(Workflow, ModelSQL, ModelView):
             #Supplier location not found
             raise UserError()
 
-        default_product_values = Product.default_get(Product._fields.keys(),
-            with_rec_name=False)
-        product = Product(**default_product_values)
         default_move_values = Move.default_get(Move._fields.keys(),
-                with_rec_name=False)
-        move = Move(**default_move_values)
+            with_rec_name=False)
 
         company = Company(Transaction().context.get('company'))
 
         to_done = []
         for weighing in weighings:
+            move = Move(**default_move_values)
             if weighing.not_assigned_weight and not weighing.forced_analysis:
                 raise UserError(gettext('agronomics.msg_not_assigned_weight',
                     weighing=weighing.rec_name))
@@ -308,17 +323,24 @@ class Weighing(Workflow, ModelSQL, ModelView):
                 raise UserError(gettext('agronomics.msg_weighing_with_table_do',
                     weighing=weighing.rec_name))
 
-            product.template = weighing.product
-            product.denominations_of_origin = weighing.denomination_origin
+            if not weighing.product:
+                raise UserError()
+            lot = Lot(product=weighing.product)
+            if not lot.product.lot_sequence:
+                raise UserError(gettext('agronomics.msg_lot_sequence_required',
+                    product=lot.product.rec_name))
+            lot.number = lot.product.lot_sequence.get()
+            lot.crop = [weighing.crop]
+            lot.denominations_of_origin = weighing.denomination_origin
             if weighing.ecological:
-                product.ecologicals = [weighing.ecological]
+                lot.ecologicals = [weighing.ecological]
             if weighing.variety:
-                new_variety = Variety()
+                new_variety = pool.get('agronomics.lot.variety')()
                 new_variety.percent = 100
                 new_variety.variety = weighing.variety
-                product.varieties = [new_variety]
-            product.vintages = [weighing.crop.id]
-            weighing.product_created = product
+                lot.varieties = [new_variety]
+            Lot.save([lot])
+            weighing.lot_created = lot
 
             if not weighing.weighing_center:
                 raise UserError()
@@ -330,9 +352,10 @@ class Weighing(Workflow, ModelSQL, ModelView):
                     gettext('agronomics.msg_location_no_configured',
                     center=weighing.weighing_center.name))
             move.to_location = weighing.weighing_center.to_location
-            move.product = weighing.product_created
+            move.product = weighing.product
+            move.lot = lot
             move.currency = company.currency
-            move.unit = weighing.product_created.template.default_uom
+            move.unit = weighing.product.template.default_uom
             # TODO: Price should be based on price list of the supplier
             #move.unit_price = weighing.product_created.template.list_price
             move.unit_price = Decimal(0)
@@ -347,7 +370,7 @@ class Weighing(Workflow, ModelSQL, ModelView):
         tests = []
         for weighing in weighings:
             tests.append(weighing.create_quality_test())
-        Quality.save(tests)
+        Quality.save([t for t in tests if t])
 
     @classmethod
     @ModelView.button
@@ -433,7 +456,7 @@ class Weighing(Workflow, ModelSQL, ModelView):
             test = QualityTest(
                 test_date=datetime.now(),
                 templates=[template],
-                document=str(self.product_created))
+                document=str(self.lot_created))
             test.apply_template_values()
 
         return test
@@ -453,8 +476,6 @@ class Weighing(Workflow, ModelSQL, ModelView):
         context = Transaction().context
         ContractProductPriceListTypePriceList = pool.get(
             'agronomics.contract-product.price_list.type-product.price_list')
-        RecomputeCostPrice = pool.get('product.recompute_cost_price',
-            type='wizard')
         Move = pool.get('stock.move')
 
         default_invoice_line_values = InvoiceLine.default_get(
@@ -463,7 +484,6 @@ class Weighing(Workflow, ModelSQL, ModelView):
 
         to_save = []
         to_save_moves = []
-        to_recompute_products = []
         for weighing in weighings:
             cost_price = Decimal(0)
             for beneficiary in weighing.beneficiaries:
@@ -481,24 +501,28 @@ class Weighing(Workflow, ModelSQL, ModelView):
                     Company(context['company']).currency)
                 invoice_line.company = Company(context['company'])
                 invoice_line.description = ''
-                invoice_line.product = weighing.product_created
+                invoice_line.product = weighing.product
                 invoice_line.on_change_product()
                 invoice_line.quantity = weighing.netweight or 0
                 invoice_line.product_price_list_type = (
                     beneficiary.product_price_list_type)
                 invoice_line.origin = weighing
 
-                unit_price = Product.get_purchase_price(
-                    [weighing.product_created],
-                    abs(weighing.netweight or 0))[
-                        weighing.product_created.id]
+                if hasattr(Product, 'get_purchase_price'):
+                    unit_price = Product.get_purchase_price(
+                        [weighing.product],
+                        abs(weighing.netweight or 0))[
+                            weighing.product.id]
+                else:
+                    unit_price = weighing.product.cost_price or Decimal(0)
                 if price_list:
                     if price_list[0].price_list:
                         price_list = price_list[0].price_list
                     unit_price = price_list.compute(
-                        weighing.product_created,
+                        weighing.product,
                         weighing.netweight or 0,
-                        weighing.product_created.template.default_uom)
+                        weighing.product.template.default_uom,
+                        pattern={'lot': weighing.lot_created.id})
                     unit_price = unit_price
                 invoice_line.unit_price = unit_price
                 cost_price += unit_price
@@ -506,18 +530,7 @@ class Weighing(Workflow, ModelSQL, ModelView):
 
             weighing.inventory_move.unit_price = cost_price
             weighing.inventory_move.unit_price_updated = True
-            weighing.product_created.cost_price = cost_price
             to_save_moves.append(weighing.inventory_move)
-            to_recompute_products.append(weighing.product_created)
-            Product.save([weighing.product_created])
-
-            session_id, _, _ = RecomputeCostPrice.create()
-            with Transaction().set_context(active_model='product.product',
-                    active_ids=[weighing.product_created.id]):
-                recompute_cost_price = RecomputeCostPrice(session_id)
-                default_values = recompute_cost_price.default_start({})
-                recompute_cost_price.start.from_ = default_values['from_']
-                recompute_cost_price.transition_recompute()
 
         InvoiceLine.save(to_save)
         Move.save(to_save_moves)
@@ -584,6 +597,7 @@ class Weighing(Workflow, ModelSQL, ModelView):
         default.setdefault('beneficiaries', None)
         default.setdefault('beneficiaries_invoices_line', None)
         default.setdefault('product_created', None)
+        default.setdefault('lot_created', None)
         default.setdefault('number', None)
         default.setdefault('parcels', None)
         default.setdefault('inventory_move', None)
