@@ -2,8 +2,10 @@
 <!-- This file is part of Tryton.  The COPYRIGHT file at the top level of
 this repository contains the full copyright notices and license terms. -->
 <form>
-    <label name="name"/>
-    <field name="name"/>
-    <separator name="cost_distributions" colspan="4"/>
-    <field name="cost_distributions" colspan="4"/>
+    <label name="lot"/>
+    <field name="lot"/>
+    <label name="material"/>
+    <field name="material"/>
+    <label name="duration"/>
+    <field name="duration"/>
 </form>

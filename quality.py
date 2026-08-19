@@ -76,6 +76,12 @@ class QualitySample(ModelSQL, ModelView):
             'company': Eval('company', -1),
             },
         depends=['company'])
+    lots = fields.Many2Many('stock.lot-quality.sample', 'sample', 'lot',
+        "Lots",
+        context={
+            'company': Eval('company', -1),
+            },
+        depends=['company'])
     collection_date = fields.DateTime('Collection Date', required=True)
     company = fields.Many2One('company.company', 'Company', required=True)
 
@@ -118,13 +124,23 @@ class ProductQualitySample(ModelSQL):
         required=True)
 
 
+class LotQualitySample(ModelSQL):
+    'Lot - Quality Sample'
+    __name__ = 'stock.lot-quality.sample'
+
+    lot = fields.Many2One('stock.lot', 'Lot', required=True,
+        ondelete='CASCADE')
+    sample = fields.Many2One('quality.sample', 'Sample', required=True,
+        ondelete='CASCADE')
+
+
 class QualityTest(metaclass=PoolMeta):
     __name__ = 'quality.test'
 
     @classmethod
     def confirmed(cls, tests):
         pool = Pool()
-        Product = pool.get('product.product')
+        Lot = pool.get('stock.lot')
         ModelData = pool.get('ir.model.data')
         Date = pool.get('ir.date')
 
@@ -136,7 +152,7 @@ class QualityTest(metaclass=PoolMeta):
         to_write = []
         proof_ids = []
         for test in tests:
-            if not test.document or not isinstance(test.document, Product):
+            if not test.document or not isinstance(test.document, Lot):
                 continue
 
             proof_ids += [line.proof for line in test.quantitative_lines
@@ -151,9 +167,9 @@ class QualityTest(metaclass=PoolMeta):
             ])
         data_key = dict((x.db_id, x.fs_id) for x in datas)
 
-        # check all quantitative lines has key and update the product
+        # check all quantitative lines has key and update the lot
         for test in tests:
-            if not test.document or not isinstance(test.document, Product):
+            if not test.document or not isinstance(test.document, Lot):
                 continue
 
             values = {}
@@ -172,7 +188,7 @@ class QualityTest(metaclass=PoolMeta):
                 to_write.extend(([test.document], values))
 
         if to_write:
-            Product.write(*to_write)
+            Lot.write(*to_write)
 
 
 class TestLineMixin(Model):
@@ -182,8 +198,12 @@ class TestLineMixin(Model):
 
     def get_product(self, name):
         Product = Pool().get('product.product')
+        Lot = Pool().get('stock.lot')
         if isinstance(self.test.document, Product):
             return self.test.document.id
+        if (isinstance(self.test.document, Lot)
+                and self.test.document.product):
+            return self.test.document.product.id
 
     @classmethod
     def search_product(cls, name, clause):
@@ -196,7 +216,10 @@ class TestLineMixin(Model):
         else:
             values = '%s,%s' % ('product.product',
                 value.id if isinstance(value, Product) else value)
-        return [('test.document', operator, values)]
+        return ['OR',
+            ('test.document', operator, values),
+            ('test.document.product', operator, value, 'stock.lot'),
+            ]
 
 
 class QuantitativeTestLine(TestLineMixin, metaclass=PoolMeta):
