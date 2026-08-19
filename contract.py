@@ -154,7 +154,7 @@ class AgronomicsContractLine(ModelSQL, ModelView):
             ('crop', '=', Eval('_parent_contract.crop'))
         ])
     product = fields.Function(
-        fields.Many2One('product.template', "Product"),
+        fields.Many2One('product.product', "Product"),
         'on_change_with_product')
     unit = fields.Function(fields.Many2One('product.uom', "Unit"),
         'on_change_with_unit')

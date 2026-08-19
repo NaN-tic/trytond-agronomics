@@ -1,6 +1,5 @@
 # This file is part of Tryton.  The COPYRIGHT file at the top level of
 # this repository contains the full copyright notices and license terms.
-from decimal import Decimal
 from datetime import datetime
 from sql.operators import (Less, Greater, LessEqual,
     GreaterEqual, Equal, NotEqual)
@@ -10,7 +9,6 @@ from trytond.pool import Pool, PoolMeta
 from trytond.pyson import Eval
 from trytond.exceptions import UserError
 from trytond.i18n import gettext
-from trytond.modules.agronomics.wine import WineMixin
 from trytond.transaction import Transaction
 
 
@@ -90,7 +88,7 @@ class ProductVariety(ModelSQL, ModelView):
         return f'{self.variety.rec_name} ({self.percent:.0f}%)'
 
 
-class Product(WineMixin, metaclass=PoolMeta):
+class Product(metaclass=PoolMeta):
     __name__ = 'product.product'
 
     vintages = fields.Many2Many('product.product-agronomics.crop', 'product',
@@ -113,12 +111,6 @@ class Product(WineMixin, metaclass=PoolMeta):
                     'bottled-wine']
             )
         })
-    alcohol_volume = fields.Function(fields.Numeric('Alcohol Volume',
-            digits=(16, 2), states={
-            'invisible': ~ Eval('agronomic_type').in_(
-                ['wine', 'unfiltered-wine', 'filtered-wine', 'clarified-wine',
-                    'bottled-wine']
-            )}), 'get_alcohol_volume')
     quality_tests = fields.One2Many('quality.test', 'document', 'Quality Tests')
     quality_samples = fields.Many2Many('product.product-quality.sample',
         'product', 'sample', 'Quality Samples')
@@ -182,13 +174,6 @@ class Product(WineMixin, metaclass=PoolMeta):
                 if len(product.varieties) > 1:
                     raise UserError(gettext('agronomics.msg_variety_limit',
                     product=product.rec_name))
-
-    def get_alcohol_volume(self, name):
-        if self.template.capacity and self.wine_alcohol_content:
-            return Decimal(
-                (float(self.template.capacity) * float(self.wine_alcohol_content))
-                    / 100).quantize(
-                Decimal(str(10 ** -self.__class__.alcohol_volume.digits[1])))
 
     def get_wine_history(self, name):
         # not implemented
