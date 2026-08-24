@@ -6,7 +6,7 @@ from sql.operators import (Less, Greater, LessEqual,
 from sql import Null
 from trytond.model import ModelSQL, ModelView, fields
 from trytond.pool import Pool, PoolMeta
-from trytond.pyson import Eval
+from trytond.pyson import Bool, Eval
 from trytond.exceptions import UserError
 from trytond.i18n import gettext
 from trytond.transaction import Transaction
@@ -123,11 +123,14 @@ class Product(metaclass=PoolMeta):
         'get_wine_history', searcher='search_wine_history')
     wine_history_duration = fields.Function(fields.Text("History Duration"),
         'get_wine_history', searcher='search_wine_history')
-    vintages_str = fields.Function(fields.Char("Vintage"), 'get_vintages_str')
 
-    def get_vintages_str(self, name):
-        return ', '.join([v.name for v in self.vintages])
-
+    @classmethod
+    def view_attributes(cls):
+        return super().view_attributes() + [
+            ('//group[@id="agronomics-variant"]', 'states', {
+                'invisible': Bool(Eval('lot_required')),
+                }, ['lot_required']),
+            ]
 
     @classmethod
     def deactivate_no_stock_variants_cron(cls):
@@ -171,6 +174,12 @@ class Product(metaclass=PoolMeta):
                 if len(product.varieties) > 1:
                     raise UserError(gettext('agronomics.msg_variety_limit',
                     product=product.rec_name))
+
+    @classmethod
+    def copy(cls, products, default=None):
+        default = default.copy() if default is not None else {}
+        default.setdefault('vintages', None)
+        return super().copy(products, default=default)
 
     def get_wine_history(self, name):
         # not implemented
@@ -218,15 +227,6 @@ class Product(metaclass=PoolMeta):
 
         return [('id', 'in', query)]
 
-
-    def get_rec_name(self, name):
-        rec_name = super().get_rec_name(name)
-        if not self.vintages:
-            return rec_name
-
-        aging = ",".join(x.name for x in self.vintages)
-        rec_name = rec_name + "-" + aging
-        return rec_name
 
 class Cron(metaclass=PoolMeta):
     __name__ = 'ir.cron'

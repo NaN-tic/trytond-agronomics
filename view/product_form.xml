@@ -1,1 +1,18 @@
-<data/>
+<data>
+    <xpath expr="/form/notebook" position="inside">
+        <page string="Agronomics" id="agronomics">
+            <group col="2" colspan="4" id="agronomics-variant">
+                <field name="vintages" colspan="2"/>
+                <field name="varieties" colspan="2"/>
+                <field name="denominations_of_origin" colspan="2"/>
+                <field name="ecologicals" colspan="2"/>
+                <label name="certification"/>
+                <field name="certification"/>
+            </group>
+            <label name="container"/>
+            <field name="container"/>
+            <label name="capacity"/>
+            <field name="capacity"/>
+        </page>
+    </xpath>
+</data>
