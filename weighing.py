@@ -465,19 +465,6 @@ class Weighing(Workflow, ModelSQL, ModelView):
             if not weighing.table:
                 if weighing.parcels:
                     WeighingParcel.delete(weighing.parcels)
-                # KNOWN LIMITATION (low priority): only the first
-                # crop-matching parcel of each plantation line is ever added
-                # to allowed_parcels (the 'break' stops at the first match
-                # regardless of its remaining_quantity). A plantation with
-                # more than one parcel for the same crop would have its
-                # extra parcels ignored here even with capacity left.
-                # Checked against every real plantation in carviresa-local
-                # (1157, excluding test data): none has more than one parcel
-                # for the same crop, and task #059962 (which fixed parcel
-                # selection to match by crop) only ever describes a
-                # plantation having parcels of *different* crops, never two
-                # for the same one. So this precondition does not seem to
-                # occur in practice; kept documented in case that changes.
                 allowed_parcels = []
                 for wp in weighing.plantations:
                     plantation = wp.plantation
@@ -642,16 +629,6 @@ class Weighing(Workflow, ModelSQL, ModelView):
             if not weighing.plantations:
                 continue
 
-            # Check every plantation has a parcel in the weighing's crop, and
-            # collect beneficiaries from every matched parcel. Until 2022
-            # (task #059962, commit 92309d3) this loop's 'parcel' variable
-            # accidentally shadowed a `parcel = weighing.get_parcel()` call
-            # that fed the beneficiaries loop below, so only the LAST
-            # plantation's beneficiaries ever got copied; the dead
-            # get_parcel() line was later removed as cleanup (commit
-            # a641c824, 2025-06-23), cementing that as the only behaviour.
-            # Beneficiaries must cover every plantation on the weighing, not
-            # just one, so we accumulate here instead of reassigning.
             seen = set()
             for plantation in weighing.plantations:
                 plantation = plantation.plantation
