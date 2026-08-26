@@ -36,5 +36,8 @@ this repository contains the full copyright notices and license terms. -->
             <field name="cost_distributions" colspan="4"/>
             <field name="cost_distribution_products" invisible="1"/>
         </page>
+        <page name="quality_tests">
+            <field name="quality_tests" colspan="4"/>
+        </page>
     </xpath>
 </data>
