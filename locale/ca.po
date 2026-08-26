@@ -1543,6 +1543,10 @@ msgctxt "field:production,production_template_cost_distribution_templates:"
 msgid "Allowed Cost Distribution Templates"
 msgstr "Plantilles de distribució de costos permeses"
 
+msgctxt "field:production,quality_tests:"
+msgid "Quality Tests"
+msgstr "Proves de qualitat"
+
 msgctxt "field:production.cost_price.distribution,origin:"
 msgid "Origin"
 msgstr "Origen"

@@ -227,6 +227,18 @@ class TestWeighingLotQuality(unittest.TestCase):
             second_weighing.inventory_move.lot,
             second_weighing.lot_created)
         self.assertEqual(weighing.inventory_move.lot, weighing.lot_created)
+
+        Lot = Model.get('stock.lot')
+        with weighing._config.set_context(locations=[storage.id]):
+            lots_in_stock = Lot.find([
+                ('product', '=', product.id),
+                ('quantity', '>', 0),
+                ])
+        self.assertEqual(len(lots_in_stock), 1)
+        self.assertEqual(lots_in_stock[0].quantity, 150)
+        self.assertNotIn(lots_in_stock[0].id,
+            [weighing.lot_created.id, second_weighing.lot_created.id])
+
         QualityTest = Model.get('quality.test')
         quality_tests = QualityTest.find([
             ('document.id', '=', weighing.lot_created.id, 'stock.lot'),
@@ -258,3 +270,10 @@ class TestWeighingLotQuality(unittest.TestCase):
         weighing.reload()
         invoice_line, = weighing.beneficiaries_invoices_line
         self.assertEqual(invoice_line.unit_price, Decimal('3.5'))
+
+        price_list.lines.remove(price_list.lines[0])
+        price_list.save()
+        second_weighing.click('do')
+        second_weighing.reload()
+        invoice_line, = second_weighing.beneficiaries_invoices_line
+        self.assertEqual(invoice_line.unit_price, Decimal(0))

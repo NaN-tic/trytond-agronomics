@@ -228,6 +228,8 @@ class Production(metaclass=PoolMeta):
     pass_quality_sample = fields.Boolean('Pass Quality Sample')
     pass_feature_enabled = fields.Boolean('Pass on Feature')
     transfer_wine_aging = fields.Boolean('Transfer Wine Aging')
+    quality_tests = fields.Function(fields.Many2Many(
+        'quality.test', None, None, "Quality Tests"), 'get_quality_tests')
 
     @classmethod
     def create(cls, vlist):
@@ -259,6 +261,11 @@ class Production(metaclass=PoolMeta):
     @classmethod
     def set_allowed_products(cls, productions, name, value):
         pass
+
+    def get_quality_tests(self, name=None):
+        return [test.id
+            for move in self.outputs if move.lot
+            for test in move.lot.quality_tests]
 
     @fields.depends('production_template', 'agronomics_bom')
     def on_change_with_pass_quality(self):
