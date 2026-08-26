@@ -60,6 +60,9 @@ this repository contains the full copyright notices and license terms. -->
     <record model="ir.message" id="msg_output_product_required">
         <field name="text">Output template "%(template)s" must have exactly one active product variant.</field>
     </record>
+    <record model="ir.message" id="msg_weighing_location_lot_mismatch">
+        <field name="text">The stock at location "%(location)s" does not share the same crop, denomination of origin, ecological or variety and cannot be merged into a single lot.</field>
+    </record>
 
   </data>
 

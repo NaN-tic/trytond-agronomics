@@ -6,8 +6,90 @@ from trytond.pool import Pool
 from trytond.i18n import gettext
 from trytond.exceptions import UserError
 from trytond.transaction import Transaction
-from datetime import datetime
+from datetime import date, datetime
 from decimal import Decimal
+
+
+def merge_location_lots(company, product, location):
+    pool = Pool()
+    Product = pool.get('product.product')
+    Lot = pool.get('stock.lot')
+    Move = pool.get('stock.move')
+    Production = pool.get('production')
+
+    quantities = Product.products_by_location(
+        [location.id], grouping=('product', 'lot'))
+    sources = [
+        (Lot(lot_id), quantity)
+        for (_location_id, product_id, lot_id), quantity
+        in quantities.items()
+        if product_id == product.id and quantity and lot_id]
+
+    first_lot, _quantity = sources[0]
+    for existing_lot, _quantity in sources[1:]:
+        if (set(c.id for c in existing_lot.crop)
+                != set(c.id for c in first_lot.crop)
+                or set(d.id for d in existing_lot.denominations_of_origin)
+                != set(d.id for d in first_lot.denominations_of_origin)
+                or set(e.id for e in existing_lot.ecologicals)
+                != set(e.id for e in first_lot.ecologicals)
+                or set(v.variety.id for v in existing_lot.varieties)
+                != set(v.variety.id for v in first_lot.varieties)):
+            raise UserError(gettext(
+                'agronomics.msg_weighing_location_lot_mismatch',
+                location=location.rec_name))
+
+    LotVariety = pool.get('agronomics.lot.variety')
+    lot = Lot(product=product)
+    lot.number = product.lot_sequence.get()
+    lot.crop = first_lot.crop
+    lot.denominations_of_origin = first_lot.denominations_of_origin
+    lot.ecologicals = first_lot.ecologicals
+    lot.varieties = [
+        LotVariety(variety=v.variety, percent=v.percent)
+        for v in first_lot.varieties]
+    Lot.save([lot])
+
+    uom = product.template.default_uom
+    total_quantity = sum(quantity for _lot, quantity in sources)
+    production, = Production.create([{
+        'company': company.id,
+        'warehouse': location.warehouse.id,
+        'location': location.warehouse.production_location.id,
+        'type': 'disassembly',
+        'product': product.id,
+        'unit': uom.id,
+        'quantity': total_quantity,
+        'planned_start_date': date.today(),
+        'planned_date': date.today(),
+        }])
+
+    input_moves = []
+    for source_lot, quantity in sources:
+        move = production._move('input', product, uom, quantity)
+        move.from_location = location
+        move.to_location = production.location
+        move.lot = source_lot
+        input_moves.append(move)
+    Move.save(input_moves)
+    production = Production(production.id)
+
+    output_move = production._move('output', product, uom, total_quantity)
+    output_move.production_output = production
+    output_move.from_location = production.location
+    output_move.to_location = location
+    output_move.lot = lot
+    Move.save([output_move])
+
+    with Transaction().set_context(production_mobile_manual_outputs=True):
+        Production.wait([production])
+    production = Production(production.id)
+    Production.assign_force([production])
+    production = Production(production.id)
+    if production.state != 'assigned':
+        raise UserError()
+    Production.run([production])
+    Production.do([Production(production.id)])
 
 
 class WeighingCenter(ModelSQL, ModelView):
@@ -306,15 +388,14 @@ class Weighing(Workflow, ModelSQL, ModelView):
         if not supplier_location:
             #Supplier location not found
             raise UserError()
+        supplier_location = supplier_location[0]
 
         default_move_values = Move.default_get(Move._fields.keys(),
             with_rec_name=False)
 
         company = Company(Transaction().context.get('company'))
 
-        to_done = []
         for weighing in weighings:
-            move = Move(**default_move_values)
             if weighing.not_assigned_weight and not weighing.forced_analysis:
                 raise UserError(gettext('agronomics.msg_not_assigned_weight',
                     weighing=weighing.rec_name))
@@ -344,29 +425,29 @@ class Weighing(Workflow, ModelSQL, ModelView):
 
             if not weighing.weighing_center:
                 raise UserError()
-
-            # Create Move
-            move.from_location = supplier_location[0]
             if not weighing.weighing_center.to_location:
                 raise UserError(
                     gettext('agronomics.msg_location_no_configured',
                     center=weighing.weighing_center.name))
-            move.to_location = weighing.weighing_center.to_location
+            destination = weighing.weighing_center.to_location
+
+            move = Move(**default_move_values)
+            move.from_location = supplier_location
+            move.to_location = destination
             move.product = weighing.product
             move.lot = lot
             move.currency = company.currency
             move.unit = weighing.product.template.default_uom
-            # TODO: Price should be based on price list of the supplier
-            #move.unit_price = weighing.product_created.template.list_price
             move.unit_price = Decimal(0)
             move.quantity = weighing.netweight or 0
-
+            Move.save([move])
             weighing.inventory_move = move
-            to_done.append(move)
+
+            with Transaction().set_context(_skip_warnings=True):
+                Move.do([move])
+                merge_location_lots(company, weighing.product, destination)
 
         cls.save(weighings)
-        with Transaction().set_context(_skip_warnings=True):
-            Move.do(to_done)
         tests = []
         for weighing in weighings:
             tests.append(weighing.create_quality_test())
@@ -523,7 +604,7 @@ class Weighing(Workflow, ModelSQL, ModelView):
                         weighing.netweight or 0,
                         weighing.product.template.default_uom,
                         pattern={'lot': weighing.lot_created.id})
-                    unit_price = unit_price
+                unit_price = unit_price or Decimal(0)
                 invoice_line.unit_price = unit_price
                 cost_price += unit_price
                 to_save.append(invoice_line)
@@ -545,7 +626,10 @@ class Weighing(Workflow, ModelSQL, ModelView):
             if weighing.beneficiaries:
                 Beneficiary.delete([x for x in weighing.beneficiaries])
 
-            # Check if all plantations has a parcel in the weighing's crop
+            if not weighing.plantations:
+                continue
+
+            seen = set()
             for plantation in weighing.plantations:
                 plantation = plantation.plantation
                 for parcel in plantation.parcels:
@@ -555,15 +639,17 @@ class Weighing(Workflow, ModelSQL, ModelView):
                     raise UserError(gettext('agronomics.msg_parcel_without_current_crop',
                         weighing=weighing.rec_name, plantation=plantation.code))
 
-            if not parcel:
-                continue
-
-            for ben in parcel.beneficiaries:
-                b = Beneficiary()
-                b.party = ben.party
-                b.weighing = weighing
-                b.product_price_list_type = ben.product_price_list_type
-                to_save.append(b)
+                for ben in parcel.beneficiaries:
+                    key = (ben.party.id, ben.product_price_list_type
+                        and ben.product_price_list_type.id)
+                    if key in seen:
+                        continue
+                    seen.add(key)
+                    b = Beneficiary()
+                    b.party = ben.party
+                    b.weighing = weighing
+                    b.product_price_list_type = ben.product_price_list_type
+                    to_save.append(b)
 
         if to_save:
             Beneficiary.save(to_save)
