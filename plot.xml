@@ -7,15 +7,6 @@
             <field name="name">Agronomics Administration</field>
             <field name="parent" ref="group_agronomics"/>
         </record>
-        <record model="res.user-res.group" id="user_admin_group_agronomics">
-            <field name="user" ref="res.user_admin"/>
-            <field name="group" ref="group_agronomics"/>
-        </record>
-        <record model="res.user-res.group" id="user_admin_group_agronomics_admin">
-            <field name="user" ref="res.user_admin"/>
-            <field name="group" ref="group_agronomics_admin"/>
-        </record>
-
         <menuitem name="Agronomics" sequence="0" id="menu_agronomics"
             icon="tryton-settings"/>
 

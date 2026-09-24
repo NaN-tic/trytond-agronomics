@@ -130,11 +130,6 @@
       </record>
 
       <record model="ir.sequence.type-res.group"
-          id="sequence_type_weighing_group_admin">
-          <field name="sequence_type" ref="sequence_type_weighing"/>
-          <field name="group" ref="res.group_admin"/>
-      </record>
-      <record model="ir.sequence.type-res.group"
           id="sequence_type_weighing_group_sale_admin">
           <field name="sequence_type" ref="sequence_type_weighing"/>
           <field name="group" ref="group_agronomics_admin"/>
