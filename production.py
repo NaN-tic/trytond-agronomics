@@ -232,22 +232,22 @@ class Production(metaclass=PoolMeta):
         'quality.test', None, None, "Quality Tests"), 'get_quality_tests')
 
     @classmethod
-    def create(cls, vlist):
-        vlist = [values.copy() for values in vlist]
+    def preprocess_values(cls, mode, values):
+        values = super().preprocess_values(mode, values)
+        if mode != 'create' or not values.get('agronomics_bom'):
+            return values
+
         BOM = Pool().get('production.bom')
-        for values in vlist:
-            if not values.get('agronomics_bom'):
-                continue
-            bom = BOM(values['agronomics_bom'])
-            if bom.cost_distribution_template:
-                values.setdefault('cost_distribution_template',
-                    bom.cost_distribution_template.id)
-            for field in (
-                    'pass_feature_enabled', 'pass_quality', 'pass_certification',
-                    'pass_quality_sample', 'transfer_wine_aging'):
-                bom_field = field.replace('_enabled', '')
-                values.setdefault(field, getattr(bom, bom_field))
-        return super().create(vlist)
+        bom = BOM(values['agronomics_bom'])
+        if bom.cost_distribution_template:
+            values.setdefault('cost_distribution_template',
+                bom.cost_distribution_template.id)
+        for field in (
+                'pass_feature_enabled', 'pass_quality', 'pass_certification',
+                'pass_quality_sample', 'transfer_wine_aging'):
+            bom_field = field.replace('_enabled', '')
+            values.setdefault(field, getattr(bom, bom_field))
+        return values
 
     def is_pass_feature_enabled(self):
         return bool(self.pass_feature_enabled or (

@@ -5,7 +5,7 @@ from trytond.pool import PoolMeta, Pool
 from trytond.model import fields, Model, ModelSQL, ModelView
 from trytond.pyson import Eval, Id
 from trytond.modules.agronomics.wine import _WINE_DIGITS
-from trytond.transaction import Transaction
+from trytond.transaction import Transaction, without_check_access
 
 class ConfigurationCompany(ModelSQL):
     'Company Quality configuration'
@@ -94,16 +94,17 @@ class QualitySample(ModelSQL, ModelView):
         return datetime.datetime.now()
 
     @classmethod
-    def create(cls, vlist):
+    def preprocess_values(cls, mode, values):
+        values = super().preprocess_values(mode, values)
+        if mode != 'create' or values.get('code'):
+            return values
+
         pool = Pool()
         Config = pool.get('quality.configuration')
-
-        vlist = [x.copy() for x in vlist]
         sequence = Config(1).sample_sequence
-        for value in vlist:
-            if sequence and not value.get('code'):
-                value['code'] = sequence.get()
-        return super(QualitySample, cls).create(vlist)
+        if sequence:
+            values['code'] = sequence.get()
+        return values
 
     @classmethod
     def copy(cls, samples, default=None):
@@ -188,7 +189,8 @@ class QualityTest(metaclass=PoolMeta):
                 to_write.extend(([test.document], values))
 
         if to_write:
-            Lot.write(*to_write)
+            with without_check_access():
+                Lot.write(*to_write)
 
 
 class TestLineMixin(Model):

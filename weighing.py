@@ -135,11 +135,11 @@ class Weighing(Workflow, ModelSQL, ModelView):
             })
     product = fields.Many2One('product.product', 'Product', required=True,
         states={
-            'readonly': True,
+            'editable': False,
             })
     variety = fields.Many2One('product.taxon', 'Variety', required=True,
         states={
-            'readonly': True,
+            'editable': False,
             })
     table = fields.Boolean('Table', states={
             'readonly': Eval('state') != 'draft',
@@ -390,7 +390,10 @@ class Weighing(Workflow, ModelSQL, ModelView):
             raise UserError()
         supplier_location = supplier_location[0]
 
-        default_move_values = Move.default_get(Move._fields.keys(),
+        default_move_values = Move.default_get([
+                name for name, field in Move._fields.items()
+                if not field.readonly
+                ],
             with_rec_name=False)
 
         company = Company(Transaction().context.get('company'))
@@ -543,11 +546,13 @@ class Weighing(Workflow, ModelSQL, ModelView):
         return test
 
     @classmethod
+    @ModelView.button
     @Workflow.transition('draft')
     def draft(cls, weighings):
         pass
 
     @classmethod
+    @ModelView.button
     @Workflow.transition('done')
     def do(cls, weighings):
         pool = Pool()
@@ -560,7 +565,10 @@ class Weighing(Workflow, ModelSQL, ModelView):
         Move = pool.get('stock.move')
 
         default_invoice_line_values = InvoiceLine.default_get(
-            InvoiceLine._fields.keys(), with_rec_name=False)
+            [
+                    name for name, field in InvoiceLine._fields.items()
+                    if not field.readonly
+                    ], with_rec_name=False)
         invoice_line = InvoiceLine(**default_invoice_line_values)
 
         to_save = []
@@ -617,6 +625,7 @@ class Weighing(Workflow, ModelSQL, ModelView):
         Move.save(to_save_moves)
 
     @classmethod
+    @ModelView.button
     @Workflow.transition('processing')
     def process(cls, weighings):
         Beneficiary = Pool().get('agronomics.beneficiary')
@@ -655,6 +664,7 @@ class Weighing(Workflow, ModelSQL, ModelView):
             Beneficiary.save(to_save)
 
     @classmethod
+    @ModelView.button
     @Workflow.transition('cancel')
     def cancel(cls, weighings):
         pass
@@ -667,12 +677,11 @@ class Weighing(Workflow, ModelSQL, ModelView):
             weighing_center.weighing_sequence.get())
 
     @classmethod
-    def create(cls, vlist):
-        vlist = [v.copy() for v in vlist]
-        for values in vlist:
-            if not values.get('number'):
-                values['number'] = cls.set_number(values.get('weighing_center'))
-        return super().create(vlist)
+    def preprocess_values(cls, mode, values):
+        values = super().preprocess_values(mode, values)
+        if mode == 'create' and not values.get('number'):
+            values['number'] = cls.set_number(values.get('weighing_center'))
+        return values
 
     @classmethod
     def copy(cls, weighings, default=None):

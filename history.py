@@ -13,15 +13,17 @@ class WineAgingHistory(ModelSQL, ModelView):
     'Wine Aging History'
     __name__ = 'wine.wine_aging.history'
     production = fields.Many2One('production', "Production",
-        required=True, readonly=True)
+        required=True, states={'editable': False})
     location = fields.Many2One('stock.location', "Location", required=True,
-        readonly=True)
-    product = fields.Many2One('product.product', "Product", readonly=True)
-    lot = fields.Many2One('stock.lot', "Lot", readonly=True)
+        states={'editable': False})
+    product = fields.Many2One('product.product', "Product",
+        states={'editable': False})
+    lot = fields.Many2One('stock.lot', "Lot", states={'editable': False})
     material = fields.Many2One('stock.location.material', "Material",
-        readonly=True)
-    date_start = fields.Date("Date Start", required=True, readonly=True)
-    date_end = fields.Date("Date End", readonly=True,
+        states={'editable': False})
+    date_start = fields.Date("Date Start", required=True,
+        states={'editable': False})
+    date_end = fields.Date("Date End", states={'editable': False},
         domain=[
                 ['OR',
                     ('date_end', '=', None),
