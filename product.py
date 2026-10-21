@@ -238,6 +238,8 @@ class Cron(metaclass=PoolMeta):
             ('product.product|deactivate_no_stock_variants_cron',
                 "Deactivate Variants"),
             )
+        cls.methods_company_needed.add(
+            'product.product|deactivate_no_stock_variants_cron')
 
 
 class ProductCrop(ModelSQL):
