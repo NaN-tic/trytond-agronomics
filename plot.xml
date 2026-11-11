@@ -551,4 +551,14 @@
     sequence="90"
     id="menu_create_new_parcels"/>
   </data>
+    <data>
+        <record model="ir.action-res.group" id="create_new_parcels_group_agronomics">
+            <field name="action" ref="wizard_create_new_parcels"/>
+            <field name="group" ref="group_agronomics"/>
+        </record>
+        <record model="ir.action-res.group" id="create_new_parcels_group_agronomics_admin">
+            <field name="action" ref="wizard_create_new_parcels"/>
+            <field name="group" ref="group_agronomics_admin"/>
+        </record>
+    </data>
 </tryton>
